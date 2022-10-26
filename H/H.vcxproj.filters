@@ -14,24 +14,33 @@
     <Filter Include="src\ListBook">
       <UniqueIdentifier>{376ee22f-bfef-4690-ac68-53867cb844ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Journal">
+      <UniqueIdentifier>{122d2b67-ffc0-4961-9487-a74a20b00a16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cc">
+    <ClCompile Include="src\Main.cc">
       <Filter>src\Main</Filter>
     </ClCompile>
-    <ClCompile Include="Window.cc">
+    <ClCompile Include="src\Window.cc">
       <Filter>src\Main</Filter>
     </ClCompile>
-    <ClCompile Include="ListBook.cc">
+    <ClCompile Include="src\ListBook.cc">
       <Filter>src\ListBook</Filter>
     </ClCompile>
+    <ClCompile Include="src\Journal.cc">
+      <Filter>src\Journal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Window.h">
+    <ClInclude Include="src\Window.h">
       <Filter>src\Main</Filter>
     </ClInclude>
-    <ClInclude Include="ListBook.h">
+    <ClInclude Include="src\ListBook.h">
       <Filter>src\ListBook</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Journal.h">
+      <Filter>src\Journal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

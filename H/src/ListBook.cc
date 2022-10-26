@@ -5,3 +5,8 @@ Listbook::Listbook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 {
 
 }
+
+void Listbook::SetupTabs()
+{
+
+}
