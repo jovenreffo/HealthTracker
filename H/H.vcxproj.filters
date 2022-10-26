@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{3fb1b469-dd55-417f-be31-b7045c272ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Main">
+      <UniqueIdentifier>{d5b8df40-7f0e-4678-a9b4-9e00d61ec881}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ListBook">
+      <UniqueIdentifier>{376ee22f-bfef-4690-ac68-53867cb844ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cc">
+      <Filter>src\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cc">
+      <Filter>src\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ListBook.cc">
+      <Filter>src\ListBook</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Window.h">
+      <Filter>src\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ListBook.h">
+      <Filter>src\ListBook</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
