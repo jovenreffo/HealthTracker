@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "StandardPath.hpp"
 
 // Event table
 BEGIN_EVENT_TABLE(Frame, wxFrame)
@@ -16,6 +17,7 @@ void Frame::Init()
 {
 	this->SetupMenuBar();
 	this->SetupSizes();
+	this->SetupBitmaps();
 	this->SetupListbook();
 }
 
@@ -40,10 +42,29 @@ void Frame::SetupSizes()
 	this->SetMinSize(WINDOW_SIZE);
 }
 
+void Frame::SetupBitmaps()
+{
+	m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
+	m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
+
+	// Set up the image list to be used with the listbook
+	m_pImageList = new wxImageList(38, 38);
+	m_pImageList->Add(m_journalBmp);
+	m_pImageList->Add(m_calendarBmp);
+}
+
 void Frame::SetupListbook()
 {
-	m_pListbook = new Listbook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLB_TOP);
+	m_pListbook = new Listbook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pListbook->AssignImageList(m_pImageList);
 	m_pListbook->Show(true);
+
+	m_pJournal = new Journal(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pCalendar = new Calendar(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	// Add tabs to the list
+	m_pListbook->AddPage(m_pJournal, _T("Journal"), true, 0);
+	m_pListbook->AddPage(m_pCalendar, _T("Calendar"), false, 1);
 }
 
 // Events

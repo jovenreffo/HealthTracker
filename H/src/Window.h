@@ -2,6 +2,8 @@
 
 #include <wx/wx.h>
 #include "ListBook.h"
+#include "Journal.h"
+#include "Calendar.h"
 
 class App : public wxApp
 {
@@ -20,7 +22,15 @@ private:
 	wxMenuBar* m_pMenuBar;
 	wxMenu* m_pFileMenu;
 
+	// Navigation tabs
+	Journal* m_pJournal;
+	Calendar* m_pCalendar;
+
 	Listbook* m_pListbook;
+	wxImageList* m_pImageList;
+	wxBitmap m_journalBmp;
+	wxBitmap m_calendarBmp;
+	wxBitmap m_exerciseBmp;
 
 public:
 	Frame();
@@ -29,6 +39,7 @@ public:
 	void Init();
 	void SetupMenuBar();
 	void SetupSizes();
+	void SetupBitmaps();
 	void SetupListbook();
 
 	// Events
