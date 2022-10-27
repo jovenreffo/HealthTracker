@@ -14,16 +14,14 @@ private:
 private:
 	wxBoxSizer* m_pTopSizer; // vertical
 	wxBoxSizer* m_pDateSizer; // horizontal
-	wxBoxSizer* m_pEntrySizer; // horizontal
-	wxBoxSizer* m_pTextSizer; // vertical
-	wxBoxSizer* m_pPrevEntrySizer; // vertical
+	wxFlexGridSizer* m_pFlexSizer;
 
 	wxStaticText* m_pDateText;
 	wxStaticText* m_pMessageText;
 	wxStaticText* m_pPrevEntryText;
 
 	wxTextCtrl* m_pTextCtrl;
-	wxListCtrl* m_pListCtrl;
+	wxListCtrl* m_pEntryCtrl;
 
 	wxButton* m_pSaveButton;
 
@@ -34,8 +32,10 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
-	// Window setup
-
+	// Panel setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 
 	// Events
 
