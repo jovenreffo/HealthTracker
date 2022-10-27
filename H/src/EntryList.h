@@ -5,6 +5,7 @@
 
 class EntryList: public wxListView
 {
+public:
 
 };
 
