@@ -51,12 +51,14 @@ void Frame::SetupBitmaps()
 {
 	m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
 	m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
+	m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise.png"), wxBITMAP_TYPE_PNG);
 	m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\settings.png"), wxBITMAP_TYPE_PNG);
 
 	// Set up the image list to be used with the listbook
 	m_pImageList = new wxImageList(38, 38);
 	m_pImageList->Add(m_journalBmp);
 	m_pImageList->Add(m_calendarBmp);
+	m_pImageList->Add(m_exerciseBmp);
 	m_pImageList->Add(m_settingsBmp);
 }
 
@@ -69,11 +71,13 @@ void Frame::SetupListbook()
 	m_pJournal = new Journal(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pCalendar = new Calendar(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pSettings = new Settings(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pExercisePanel = new ExercisePanel(m_pListbook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	// Add tabs to the list
 	m_pListbook->AddPage(m_pJournal, _T("Journal"), true, 0);
 	m_pListbook->AddPage(m_pCalendar, _T("Calendar"), false, 1);
-	m_pListbook->AddPage(m_pSettings, _T("Settings"), false, 2);
+	m_pListbook->AddPage(m_pExercisePanel, _T("Exercise"), false, 2);
+	m_pListbook->AddPage(m_pSettings, _T("Settings"), false, 3);
 }
 
 // Events

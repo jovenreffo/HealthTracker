@@ -5,6 +5,7 @@
 #include "Journal.h"
 #include "Calendar.h"
 #include "Settings.h"
+#include "ExercisePanel.h"
 
 class App : public wxApp
 {
@@ -33,6 +34,7 @@ private:
 	// Navigation tabs
 	Journal* m_pJournal;
 	Calendar* m_pCalendar;
+	ExercisePanel* m_pExercisePanel;
 	Settings* m_pSettings;
 	// Images
 	Listbook* m_pListbook;
