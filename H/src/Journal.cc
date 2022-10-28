@@ -1,4 +1,5 @@
 #include <wx/log.h>
+#include <wx/filedlg.h>
 #include "Journal.h"
 
 BEGIN_EVENT_TABLE(Journal, wxPanel)
@@ -26,8 +27,9 @@ void Journal::SetupControls()
 	m_pPrevEntryText = new wxStaticText(this, wxID_STATIC, _T("Previous Entries:"), wxDefaultPosition, wxDefaultSize);
 
 	// Control classes
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
 	m_pEntryList = new EntryList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	m_pTextCtrl->DragAcceptFiles(true);
 
 	// Buttons
 	m_pSaveButton = new wxButton(this, ID_SAVE, _T("Save to Entries"), wxDefaultPosition, wxDefaultSize);
@@ -56,8 +58,23 @@ void Journal::SetupSizers()
 
 void Journal::OnSaveToEntries(wxCommandEvent& event)
 {
+	m_pEntryDialog = new EntryDialog(this, wxID_ANY, _T("Add New Entry"));
+
+	if (m_pEntryDialog->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void Journal::OnExport(wxCommandEvent& event)
 {
+	wxFileDialog* pFileDialog = new wxFileDialog(this, _T("Save entry"), wxEmptyString, wxEmptyString, _T("Text Files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+	if (pFileDialog->ShowModal() == wxID_OK)
+	{
+		m_pTextCtrl->SaveFile(pFileDialog->GetPath());
+		m_bFileSaved = true;
+	}
+
+	pFileDialog->Destroy();
 }

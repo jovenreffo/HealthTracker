@@ -7,6 +7,7 @@
 #include <wx/listctrl.h>
 #include <wx/button.h>
 #include "EntryList.h"
+#include "EntryDialog.h"
 
 enum
 {
@@ -20,6 +21,10 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	bool m_bFileSaved{ false };
+
+	EntryDialog* m_pEntryDialog;
+
 	wxBoxSizer* m_pTopSizer; // vertical
 	wxBoxSizer* m_pButtonSizer;
 
