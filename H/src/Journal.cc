@@ -62,7 +62,11 @@ void Journal::OnSaveToEntries(wxCommandEvent& event)
 
 	if (m_pEntryDialog->ShowModal() == wxID_OK)
 	{
+		// Add an item to the entry list
+		m_pEntryList->InsertItem(0, m_pEntryDialog->GetEntryName());
 
+		// Save the item to the pair list
+		// TODO:
 	}
 }
 
