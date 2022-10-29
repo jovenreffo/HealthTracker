@@ -21,6 +21,7 @@ void EntryDialog::SetupSizes()
 {
 	this->SetMinSize(ENTRY_DIALOG_SIZE);
 	this->SetInitialSize(ENTRY_DIALOG_SIZE);
+	this->SetMaxSize(ENTRY_DIALOG_MAXSIZE);
 }
 
 void EntryDialog::SetupControls()

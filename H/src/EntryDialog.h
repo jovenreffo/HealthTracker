@@ -9,7 +9,8 @@
 #include <wx/statline.h>
 
 #define ENTRY_DIALOG_STYLE (wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
-#define ENTRY_DIALOG_SIZE (wxSize(300, 250))
+#define ENTRY_DIALOG_SIZE (wxSize(300, 150))
+#define ENTRY_DIALOG_MAXSIZE (wxSize(350, 200))
 
 class EntryDialog: public wxDialog
 {
