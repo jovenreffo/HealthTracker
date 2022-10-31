@@ -57,6 +57,9 @@ void EntryDialog::SetupSizers()
 
 void EntryDialog::OnOK(wxCommandEvent& event)
 {
+	// Set the member string for use
+	m_entryName = m_pTextCtrl->GetValue();
+
 	if (Validate() && TransferDataFromWindow())
 	{
 		if (IsModal())

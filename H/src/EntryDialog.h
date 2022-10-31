@@ -27,6 +27,8 @@ private:
 	wxBoxSizer* m_pNameSizer;
 	wxBoxSizer* m_pButtonSizer;
 
+	wxString m_entryName;
+
 public:
 	EntryDialog(wxWindow* parent,
 		wxWindowID id,
@@ -40,6 +42,8 @@ public:
 	void SetupSizes();
 	void SetupControls();
 	void SetupSizers();
+
+	const wxString& GetEntryName() const { return m_entryName; }
 
 	// Events
 	void OnOK(wxCommandEvent& event);

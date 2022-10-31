@@ -76,7 +76,7 @@ void Frame::SetupListbook()
 	// Add tabs to the list
 	m_pListbook->AddPage(m_pJournal, _T("Journal"), true, 0);
 	m_pListbook->AddPage(m_pCalendar, _T("Calendar"), false, 1);
-	m_pListbook->AddPage(m_pExercisePanel, _T("Exercise"), false, 2);
+	m_pListbook->AddPage(m_pExercisePanel, _T("Physical Health"), false, 2);
 	m_pListbook->AddPage(m_pSettings, _T("Settings"), false, 3);
 }
 

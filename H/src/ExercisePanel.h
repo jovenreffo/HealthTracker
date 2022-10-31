@@ -2,11 +2,17 @@
 #define _EXERCISEPANEL_H_
 
 #include <wx/panel.h>
+#include "ExerciseBook.h"
 
 class ExercisePanel : public wxPanel
 {
 private:
 	DECLARE_EVENT_TABLE()
+
+private:
+	ExerciseBook* m_pExerciseBook;
+
+	wxBoxSizer* m_pBoxSizer;
 
 public:
 	ExercisePanel(wxWindow* parent,
@@ -14,6 +20,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	// Setup
+	void Init();
+	void SetupExerciseBook();
+	void SetupSizers();
 };
 
 #endif

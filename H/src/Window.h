@@ -6,6 +6,7 @@
 #include "Calendar.h"
 #include "Settings.h"
 #include "ExercisePanel.h"
+#include "ExerciseBook.h"
 
 class App : public wxApp
 {

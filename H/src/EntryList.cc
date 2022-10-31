@@ -1,6 +1,6 @@
+#include <wx/msgdlg.h>
 #include "EntryList.h"
 #include "StandardPath.hpp"
-#include <wx/msgdlg.h>
 
 BEGIN_EVENT_TABLE(EntryList, wxListView)
 	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, EntryList::OnRightClick)

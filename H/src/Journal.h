@@ -8,6 +8,7 @@
 #include <wx/button.h>
 #include "EntryList.h"
 #include "EntryDialog.h"
+#include "EntryPair.h"
 
 enum
 {
