@@ -88,6 +88,6 @@ void EntryDialog::OnCheck(wxCommandEvent& event)
 {
 	if (event.IsChecked())
 		m_pTextCtrl->SetValue(GetDate());
-	else
+	else // Reset the text control's value if the user unselects it. Saves them time deleting it.
 		m_pTextCtrl->SetValue(wxEmptyString);
 }
