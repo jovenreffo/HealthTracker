@@ -5,6 +5,7 @@
 #include <wx/button.h>
 #include <wx/textctrl.h>
 #include <wx/sizer.h>
+#include <wx/checkbox.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
 
@@ -20,6 +21,7 @@ private:
 private:
 	wxButton* m_pOkButton;
 	wxButton* m_pCancelButton;
+	wxCheckBox* m_pUseDate;
 	wxTextCtrl* m_pTextCtrl;
 	wxStaticText* m_pNameText;
 
@@ -44,9 +46,11 @@ public:
 	void SetupSizers();
 
 	const wxString& GetEntryName() const { return m_entryName; }
+	wxString GetDate();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
+	void OnCheck(wxCommandEvent& event);
 };
 
 #endif
