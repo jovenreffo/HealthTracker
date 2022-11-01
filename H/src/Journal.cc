@@ -1,5 +1,7 @@
 #include <wx/log.h>
 #include <wx/filedlg.h>
+#include <wx/string.h>
+#include <wx/datetime.h>
 #include "Journal.h"
 
 BEGIN_EVENT_TABLE(Journal, wxPanel)
@@ -13,6 +15,13 @@ Journal::Journal(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 	this->Init();
 }
 
+wxString Journal::GetDate()
+{
+	wxDateTime dt;
+	dt.SetToCurrent();
+	return dt.FormatDate();
+}
+
 void Journal::Init()
 {
 	this->SetupControls();
@@ -21,8 +30,11 @@ void Journal::Init()
 
 void Journal::SetupControls()
 {
+	// Date
+	m_date = this->GetDate();
+
 	// Text
-	m_pDateText = new wxStaticText(this, wxID_STATIC, _T("Date:"), wxDefaultPosition, wxDefaultSize);
+	m_pDateText = new wxStaticText(this, wxID_STATIC, wxString("Date: ") << m_date, wxDefaultPosition, wxDefaultSize);
 	m_pMessageText = new wxStaticText(this, wxID_STATIC, _T("What is going on today?"), wxDefaultPosition, wxDefaultSize);
 	m_pPrevEntryText = new wxStaticText(this, wxID_STATIC, _T("Previous Entries:"), wxDefaultPosition, wxDefaultSize);
 

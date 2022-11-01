@@ -24,6 +24,8 @@ private:
 private:
 	bool m_bFileSaved{ false };
 
+	wxString m_date;
+
 	EntryDialog* m_pEntryDialog;
 
 	wxBoxSizer* m_pTopSizer; // vertical
@@ -45,6 +47,9 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	// Get the current date
+	wxString GetDate();
 
 	// Panel setup
 	void Init();
