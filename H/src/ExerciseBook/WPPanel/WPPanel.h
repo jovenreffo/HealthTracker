@@ -16,6 +16,7 @@ private:
 private:
 	wxListCtrl* m_pWorkoutList;
 	wxListCtrl* m_pRoutineList;
+	wxTextCtrl* m_pTextInput;
 
 	wxButton* m_pHelpButton;
 	wxButton* m_pAddWorkoutButton;
@@ -23,6 +24,7 @@ private:
 
 	wxBoxSizer* m_pBoxSizer;
 	wxBoxSizer* m_pButtonSizer;
+	wxBoxSizer* m_pWorkoutSizer;
 
 public:
 	WPPanel(wxWindow* parent,

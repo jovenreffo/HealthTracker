@@ -1,3 +1,4 @@
+#include <wx/statline.h>
 #include "WPPanel.h"
 
 BEGIN_EVENT_TABLE(WPPanel, wxPanel)
@@ -18,13 +19,21 @@ void WPPanel::Init()
 
 void WPPanel::SetupControls()
 {
+	m_pWorkoutList = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	//m_pRoutineList = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
 	m_pHelpButton = new wxButton(this, wxID_HELP, _T("Help"), wxDefaultPosition, wxDefaultSize);
 	m_pAddWorkoutButton = new wxButton(this, wxID_ADD, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
-
 }
 
 void WPPanel::SetupSizers()
 {
+	m_pBoxSizer = new wxBoxSizer(wxVERTICAL);
+	this->SetSizerAndFit(m_pBoxSizer);
+
+	m_pBoxSizer->Add(m_pHelpButton, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pBoxSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
+	m_pBoxSizer->Add(m_pWorkoutList, 1, wxEXPAND | wxALL, 5);
 }
 
 // Events
