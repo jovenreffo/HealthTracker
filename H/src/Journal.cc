@@ -50,6 +50,7 @@ void Journal::SetupSizers()
 	m_pTopSizer->Add(m_pMessageText, 0, wxLEFT | wxALL, 5);
 	m_pTopSizer->Add(m_pTextCtrl, 1, wxEXPAND | wxALL, 5);
 	m_pTopSizer->Add(m_pButtonSizer);
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
 	m_pTopSizer->Add(m_pPrevEntryText, 0, wxLEFT | wxALL, 5);
 	m_pTopSizer->Add(m_pEntryList, 1, wxEXPAND | wxALL, 5);
 }
