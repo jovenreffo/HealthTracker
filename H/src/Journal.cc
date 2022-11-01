@@ -44,7 +44,7 @@ void Journal::SetupSizers()
 
 	m_pButtonSizer->Add(m_pSaveButton, 0, wxALIGN_LEFT | wxALL, 5);
 	m_pButtonSizer->Add(m_pExportButton, 0, wxALIGN_LEFT | wxALL, 5);
-	
+
 	// Add elements
 	m_pTopSizer->Add(m_pDateText, 0, wxLEFT | wxALL, 5);
 	m_pTopSizer->Add(m_pMessageText, 0, wxLEFT | wxALL, 5);

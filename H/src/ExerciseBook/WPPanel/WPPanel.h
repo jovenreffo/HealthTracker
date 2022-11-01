@@ -18,8 +18,11 @@ private:
 	wxListCtrl* m_pRoutineList;
 
 	wxButton* m_pHelpButton;
-	wxButton* m_pWorkoutButton;
+	wxButton* m_pAddWorkoutButton;
 	wxButton* m_pRoutineButton;
+
+	wxBoxSizer* m_pBoxSizer;
+	wxBoxSizer* m_pButtonSizer;
 
 public:
 	WPPanel(wxWindow* parent,
@@ -27,6 +30,15 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+	void OnHelp(wxCommandEvent& event);
+	void OnAddWorkout(wxCommandEvent& event);
 };
 
 #endif
