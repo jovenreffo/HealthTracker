@@ -37,6 +37,8 @@ public:
 	// Setup
 	void Init();
 	void SetupControls();
+	void SetupPanels();
+	void SetupSplitter();
 
 	// Events
 	void OnHelp(wxCommandEvent& event);

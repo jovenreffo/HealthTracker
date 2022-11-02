@@ -14,6 +14,8 @@ WPPanel::WPPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 void WPPanel::Init()
 {
 	this->SetupControls();
+	this->SetupPanels();
+	this->SetupSplitter();
 }
 
 void WPPanel::SetupControls()
@@ -23,6 +25,14 @@ void WPPanel::SetupControls()
 
 	m_pHelpButton = new wxButton(this, wxID_HELP, _T("Help"), wxDefaultPosition, wxDefaultSize);
 	m_pAddWorkoutButton = new wxButton(this, wxID_ADD, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+}
+
+void WPPanel::SetupPanels()
+{
+}
+
+void WPPanel::SetupSplitter()
+{
 }
 
 // Events
