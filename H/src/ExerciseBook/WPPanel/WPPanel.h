@@ -3,12 +3,13 @@
 
 #include <wx/panel.h>
 #include <wx/button.h>
+#include <wx/splitter.h>
 #include <wx/textctrl.h>
 #include <wx/listctrl.h>
 #include <wx/sizer.h>
 
 // WP = workout plan
-class WPPanel: public wxPanel
+class WPPanel: public wxSplitterWindow
 {
 private:
 	DECLARE_EVENT_TABLE()
@@ -36,7 +37,6 @@ public:
 	// Setup
 	void Init();
 	void SetupControls();
-	void SetupSizers();
 
 	// Events
 	void OnHelp(wxCommandEvent& event);
