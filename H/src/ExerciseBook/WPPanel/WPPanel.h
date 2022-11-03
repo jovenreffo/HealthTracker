@@ -9,7 +9,7 @@
 #include <wx/sizer.h>
 
 // WP = workout plan
-class WPPanel: public wxSplitterWindow
+class WPPanel: public wxPanel
 {
 private:
 	DECLARE_EVENT_TABLE()
@@ -24,8 +24,12 @@ private:
 	wxButton* m_pRoutineButton;
 
 	wxBoxSizer* m_pBoxSizer;
-	wxBoxSizer* m_pButtonSizer;
 	wxBoxSizer* m_pWorkoutSizer;
+	wxBoxSizer* m_pRoutineSizer;
+
+	wxSplitterWindow* m_pSplitter;
+	wxPanel* m_pWorkoutPanel;
+	wxPanel* m_pRoutinePanel;
 
 public:
 	WPPanel(wxWindow* parent,
