@@ -13,19 +13,20 @@ WPPanel::WPPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 
 void WPPanel::Init()
 {
-	this->SetupControls();
 	this->SetupSplitter();
 	this->SetupPanels();
+	this->SetupControls();
 	this->ArrangeElements();
 }
 
 void WPPanel::SetupControls()
 {
-	m_pWorkoutList = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pRoutineList = new wxListCtrl(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pWorkoutList = new wxListCtrl(m_pWorkoutPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pRoutineList = new wxListCtrl(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	
 	m_pHelpButton = new wxButton(this, wxID_HELP, _T("Help"), wxDefaultPosition, wxDefaultSize);
-	m_pAddWorkoutButton = new wxButton(this, wxID_ADD, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, (int)WP::ID_NEW_WORKOUT, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, (int)WP::ID_NEW_ROUTINE, _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
 }
 
 void WPPanel::SetupPanels()
@@ -54,7 +55,18 @@ void WPPanel::SetupSplitter()
 
 void WPPanel::ArrangeElements()
 {
+	// Top-level sizer
+	m_pBoxSizer->Add(m_pHelpButton, 0, wxALIGN_LEFT | wxALL, 5);
 
+	// Workout sizer
+	m_pWorkoutSizer->Add(m_pAddWorkoutButton, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pWorkoutSizer->Add(new wxStaticLine(m_pWorkoutPanel, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
+	m_pWorkoutSizer->Add(m_pWorkoutList, 1, wxEXPAND | wxALL, 5);
+
+	// Routine sizer
+	m_pRoutineSizer->Add(m_pAddRoutineButton, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pRoutineSizer->Add(new wxStaticLine(m_pRoutinePanel, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
+	m_pRoutineSizer->Add(m_pRoutineList, 1, wxEXPAND | wxALL, 5);
 }
 
 // Events
