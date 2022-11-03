@@ -8,6 +8,12 @@
 #include <wx/listctrl.h>
 #include <wx/sizer.h>
 
+enum class WP
+{
+	ID_NEW_WORKOUT,
+	ID_NEW_ROUTINE
+};
+
 // WP = workout plan
 class WPPanel: public wxPanel
 {
@@ -21,7 +27,7 @@ private:
 
 	wxButton* m_pHelpButton;
 	wxButton* m_pAddWorkoutButton;
-	wxButton* m_pRoutineButton;
+	wxButton* m_pAddRoutineButton;
 
 	wxBoxSizer* m_pBoxSizer;
 	wxBoxSizer* m_pWorkoutSizer;
