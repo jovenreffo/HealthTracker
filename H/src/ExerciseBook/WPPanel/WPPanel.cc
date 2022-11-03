@@ -16,6 +16,7 @@ void WPPanel::Init()
 	this->SetupControls();
 	this->SetupSplitter();
 	this->SetupPanels();
+	this->ArrangeElements();
 }
 
 void WPPanel::SetupControls()
@@ -49,6 +50,11 @@ void WPPanel::SetupSplitter()
 	m_pSplitter = new wxSplitterWindow(this, wxID_ANY);
 	m_pSplitter->SetSashGravity(0.5);
 	m_pSplitter->SetMinimumPaneSize(100);
+}
+
+void WPPanel::ArrangeElements()
+{
+
 }
 
 // Events
