@@ -12,7 +12,7 @@
 
 enum
 {
-	ID_SAVE = 50,
+	ID_SAVE_ENTRY = 50,
 	ID_EXPORT
 };
 

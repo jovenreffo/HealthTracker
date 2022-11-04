@@ -18,7 +18,7 @@ public:
 
 enum
 {
-	ID_FULLSCREEN
+	ID_ENABLE_FULLSCREEN
 };
 
 class Frame : public wxFrame

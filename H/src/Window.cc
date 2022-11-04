@@ -4,7 +4,7 @@
 // Event table
 BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
-	EVT_MENU(ID_FULLSCREEN, Frame::OnFullScreen)
+	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
 END_EVENT_TABLE()
 
 Frame::Frame()

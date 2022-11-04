@@ -5,7 +5,7 @@
 #include "Journal.h"
 
 BEGIN_EVENT_TABLE(Journal, wxPanel)
-	EVT_BUTTON(ID_SAVE, Journal::OnSaveToEntries)
+	EVT_BUTTON(ID_SAVE_ENTRY, Journal::OnSaveToEntries)
 	EVT_BUTTON(ID_EXPORT, Journal::OnExport)
 END_EVENT_TABLE()
 
@@ -44,7 +44,7 @@ void Journal::SetupControls()
 	m_pTextCtrl->DragAcceptFiles(true);
 
 	// Buttons
-	m_pSaveButton = new wxButton(this, ID_SAVE, _T("Save to Entries"), wxDefaultPosition, wxDefaultSize);
+	m_pSaveButton = new wxButton(this, ID_SAVE_ENTRY, _T("Save to Entries"), wxDefaultPosition, wxDefaultSize);
 	m_pExportButton = new wxButton(this, ID_EXPORT, _T("Export"), wxDefaultPosition, wxDefaultSize);
 }
 
