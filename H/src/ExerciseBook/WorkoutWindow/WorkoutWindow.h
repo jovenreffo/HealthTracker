@@ -6,6 +6,7 @@
 #include <wx/textctrl.h>
 #include <wx/fontdlg.h>
 #include <wx/sizer.h>
+#include <wx/button.h>
 
 #define WORKOUT_WINDOW_SIZE (wxSize(670, 500))
 #define WORKOUT_WINDOW_STYLE (wxDEFAULT_FRAME_STYLE)
@@ -23,6 +24,7 @@ enum
 	ID_OPEN,
 	ID_SAVE,
 	ID_SAVEAS,
+	ID_STW,
 	ID_CLEAR_TEXT,
 	ID_CHANGE_FONT,
 	ID_FULLSCREEN
@@ -48,6 +50,7 @@ private:
 	wxTextCtrl* m_pTextBox;
 	wxButton* m_clearButton;
 	wxButton* m_fontButton;
+	wxButton* m_stwButton; // save to workouts button
 
 	wxToolBar* m_pToolBar;
 	wxMenuBar* m_pMenuBar;
@@ -83,6 +86,7 @@ public:
 	void ZoomOut();
 
 	// Events
+	void OnSTW(wxCommandEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
 	void OnDropFile(wxDropFilesEvent& event);
 	void OnMouse(wxMouseEvent& event);

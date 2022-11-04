@@ -1,8 +1,10 @@
 #include "WorkoutWindow.h"
+#include "xpm/xpm_include.h"
 
 BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
 	EVT_DROP_FILES(WorkoutWindow::OnDropFile)
 	EVT_TEXT(wxID_ANY, WorkoutWindow::OnText)
+	EVT_BUTTON(ID_STW, WorkoutWindow::OnSTW)
 	EVT_BUTTON(ID_CLEAR_TEXT, WorkoutWindow::OnClearText)
 	EVT_BUTTON(ID_CHANGE_FONT, WorkoutWindow::OnChangeFont)
 	// Menu events
@@ -35,8 +37,9 @@ END_EVENT_TABLE()
 WorkoutWindow::WorkoutWindow()
 	: wxFrame(nullptr, wxID_ANY, _T("Create Workout Routine"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE)
 {
+	this->Init();
+	this->SetMinSize(WORKOUT_WINDOW_SIZE);
 }
-
 
 void WorkoutWindow::Init()
 {
@@ -49,16 +52,16 @@ void WorkoutWindow::Init()
 
 void WorkoutWindow::SetupBitmaps()
 {
-	//m_cutBmp = wxBitmap(cut_xpm);
-	//m_copyBmp = wxBitmap(copy_xpm);
-	//m_pasteBmp = wxBitmap(paste_xpm);
-	//m_undoBmp = wxBitmap(undo_xpm);
-	//m_redoBmp = wxBitmap(redo_xpm);
-	//m_zoomInBmp = wxBitmap(zoomin_xpm);
-	//m_zoomOutBmp = wxBitmap(zoomout_xpm);
-	//m_openBmp = wxBitmap(open_xpm);
-	//m_saveBmp = wxBitmap(save_xpm);
-	//m_saveAsBmp = wxBitmap(saveas_xpm);
+	m_cutBmp = wxBitmap(cut_xpm);
+	m_copyBmp = wxBitmap(copy_xpm);
+	m_pasteBmp = wxBitmap(paste_xpm);
+	m_undoBmp = wxBitmap(undo_xpm);
+	m_redoBmp = wxBitmap(redo_xpm);
+	m_zoomInBmp = wxBitmap(zoomin_xpm);
+	m_zoomOutBmp = wxBitmap(zoomout_xpm);
+	m_openBmp = wxBitmap(open_xpm);
+	m_saveBmp = wxBitmap(save_xpm);
+	m_saveAsBmp = wxBitmap(saveas_xpm);
 }
 
 void WorkoutWindow::SetupToolBar()
@@ -121,6 +124,7 @@ void WorkoutWindow::SetupControls()
 {
 	m_clearButton = new wxButton(this, ID_CLEAR_TEXT, _T("Clear Text"), wxDefaultPosition, wxDefaultSize);
 	m_fontButton = new wxButton(this, ID_CHANGE_FONT, _T("Change Font"), wxDefaultPosition, wxDefaultSize);
+	m_stwButton = new wxButton(this, ID_STW, _T("Save to Workouts"), wxDefaultPosition, wxDefaultSize);
 	m_pTextBox = new wxTextCtrl(this, wxID_ANY, _T("Open (Ctrl + 0) or drag in a text file.\n"), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
 
 	m_pTextBox->DragAcceptFiles(true);
@@ -141,6 +145,7 @@ void WorkoutWindow::SetupSizers()
 	m_buttonSizer->Add(m_fontButton, 0, wxALIGN_LEFT | wxALL, 5);
 	//m_topSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
 	m_topSizer->Add(m_pTextBox, 1, wxEXPAND | wxALL, 5);
+	m_topSizer->Add(m_stwButton, 0, wxLEFT | wxALL, 5);
 }
 
 // Zooming
@@ -161,6 +166,11 @@ void WorkoutWindow::ZoomOut()
 }
 
 // Events
+
+void WorkoutWindow::OnSTW(wxCommandEvent& event)
+{
+
+}
 
 void WorkoutWindow::OnFullScreen(wxCommandEvent& event)
 {
