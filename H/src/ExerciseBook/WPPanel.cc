@@ -3,6 +3,7 @@
 
 BEGIN_EVENT_TABLE(WPPanel, wxPanel)
 	EVT_BUTTON(wxID_HELP, WPPanel::OnHelp)
+	EVT_BUTTON(static_cast<int>(WP::ID_NEW_WORKOUT), WPPanel::OnAddWorkout)
 END_EVENT_TABLE()
 
 WPPanel::WPPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -48,7 +49,7 @@ void WPPanel::SetupPanels()
 
 void WPPanel::SetupSplitter()
 {
-	m_pSplitter = new wxSplitterWindow(this, wxID_ANY);
+	m_pSplitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
 	m_pSplitter->SetSashGravity(0.5);
 	m_pSplitter->SetMinimumPaneSize(100);
 }
@@ -77,5 +78,6 @@ void WPPanel::OnHelp(wxCommandEvent& event)
 
 void WPPanel::OnAddWorkout(wxCommandEvent& event)
 {
-
+	m_pWorkoutWindow = new WorkoutWindow();
+	m_pWorkoutWindow->Show(true);
 }
