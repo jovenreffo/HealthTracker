@@ -5,6 +5,7 @@
 BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
 	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
+	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -28,6 +29,7 @@ void Frame::SetupMenuBar()
 	m_pMenuBar = new wxMenuBar();
 	m_pFileMenu = new wxMenu();
 	m_pViewMenu = new wxMenu();
+	m_pHelpMenu = new wxMenu();
 
 	// File menu
 	m_pFileMenu->AppendSeparator();
@@ -36,8 +38,12 @@ void Frame::SetupMenuBar()
 	// View menu
 	m_pViewMenu->Append(ID_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
 
+	// Help menu
+	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
+
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
+	m_pMenuBar->Append(m_pHelpMenu, _T("&Help"));
 	this->SetMenuBar(m_pMenuBar);
 }
 
@@ -91,4 +97,9 @@ void Frame::OnExit(wxCommandEvent& event)
 void Frame::OnFullScreen(wxCommandEvent& event)
 {
 	this->ShowFullScreen(!IsFullScreen(), wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
+}
+
+void Frame::OnAbout(wxCommandEvent& event)
+{
+	m_pAboutDialog = new AboutDialog();
 }

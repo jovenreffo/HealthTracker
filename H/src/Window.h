@@ -7,6 +7,7 @@
 #include "Settings.h"
 #include "ExercisePanel.h"
 #include "ExerciseBook.h"
+#include "AboutDialog/AboutDialog.h"
 
 class App : public wxApp
 {
@@ -31,6 +32,7 @@ private:
 	wxMenuBar* m_pMenuBar;
 	wxMenu* m_pFileMenu;
 	wxMenu* m_pViewMenu;
+	wxMenu* m_pHelpMenu;
 
 	// Navigation tabs
 	Journal* m_pJournal;
@@ -44,6 +46,8 @@ private:
 	wxBitmap m_calendarBmp;
 	wxBitmap m_exerciseBmp;
 	wxBitmap m_settingsBmp;
+
+	AboutDialog* m_pAboutDialog;
 	
 public:
 	Frame();
@@ -58,4 +62,5 @@ public:
 	// Events
 	void OnExit(wxCommandEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
+	void OnAbout(wxCommandEvent& event);
 };
