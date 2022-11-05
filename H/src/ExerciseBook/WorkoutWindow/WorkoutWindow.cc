@@ -35,8 +35,8 @@ BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
 	EVT_TOOL(ID_SAVEAS, WorkoutWindow::OnSaveAs)
 END_EVENT_TABLE()
 
-WorkoutWindow::WorkoutWindow()
-	: wxFrame(nullptr, wxID_ANY, _T("Create Workout Routine"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE)
+WorkoutWindow::WorkoutWindow(wxWindow* parent, wxWindowID id)
+	: wxFrame(nullptr, wxID_ANY, _T("Create Workout Routine"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE), m_pParent{ parent }
 {
 	this->Init();
 	this->SetMinSize(WORKOUT_WINDOW_SIZE);
@@ -170,7 +170,12 @@ void WorkoutWindow::ZoomOut()
 
 void WorkoutWindow::OnSTW(wxCommandEvent& event)
 {
+	m_pSaveWorkoutDlg = new SaveWorkoutDialog(this, wxID_ANY, _T("Save Workout"));
 
+	if (m_pSaveWorkoutDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void WorkoutWindow::OnClose(wxCloseEvent& event)

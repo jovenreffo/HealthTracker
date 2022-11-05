@@ -8,6 +8,8 @@
 #include <wx/sizer.h>
 #include <wx/button.h>
 
+#include "SaveWorkoutDialog/SaveWorkoutDialog.h"
+
 #define WORKOUT_WINDOW_SIZE (wxSize(670, 500))
 #define WORKOUT_WINDOW_STYLE (wxDEFAULT_FRAME_STYLE)
 
@@ -40,6 +42,8 @@ private:
 	bool m_bActiveFile{ false };
 	bool m_bFileSaved{ false };
 
+	wxWindow* m_pParent;
+
 	wxString m_currentFileName;
 	wxString m_currentFilePath;
 	wxString m_saveFilePath;
@@ -71,8 +75,10 @@ private:
 
 	wxFontDialog* m_pFontDialog;
 
+	SaveWorkoutDialog* m_pSaveWorkoutDlg;
+
 public:
-	WorkoutWindow();
+	WorkoutWindow(wxWindow* parent, wxWindowID id);
 
 	// Window functions
 	void Init();
