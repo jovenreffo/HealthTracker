@@ -36,7 +36,7 @@ void Frame::SetupMenuBar()
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
 
 	// View menu
-	m_pViewMenu->Append(ID_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
+	m_pViewMenu->Append(ID_ENABLE_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
 
 	// Help menu
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
