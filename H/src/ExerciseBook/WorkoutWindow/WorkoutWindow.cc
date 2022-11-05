@@ -3,6 +3,7 @@
 
 BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
 	EVT_DROP_FILES(WorkoutWindow::OnDropFile)
+	EVT_CLOSE(WorkoutWindow::OnClose)
 	EVT_TEXT(wxID_ANY, WorkoutWindow::OnText)
 	EVT_BUTTON(ID_STW, WorkoutWindow::OnSTW)
 	EVT_BUTTON(ID_CLEAR_TEXT, WorkoutWindow::OnClearText)
@@ -170,6 +171,11 @@ void WorkoutWindow::ZoomOut()
 void WorkoutWindow::OnSTW(wxCommandEvent& event)
 {
 
+}
+
+void WorkoutWindow::OnClose(wxCloseEvent& event)
+{
+	this->Destroy();
 }
 
 void WorkoutWindow::OnFullScreen(wxCommandEvent& event)

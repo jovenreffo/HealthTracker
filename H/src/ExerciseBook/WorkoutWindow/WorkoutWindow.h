@@ -87,6 +87,7 @@ public:
 
 	// Events
 	void OnSTW(wxCommandEvent& event);
+	void OnClose(wxCloseEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
 	void OnDropFile(wxDropFilesEvent& event);
 	void OnMouse(wxMouseEvent& event);
