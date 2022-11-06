@@ -9,6 +9,8 @@
 #include <wx/sizer.h>
 
 #include "WorkoutWindow.h"
+#include "WPLists/WPLists.h"
+
 
 enum class WP
 {
@@ -24,8 +26,8 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
-	wxListCtrl* m_pWorkoutList;
-	wxListCtrl* m_pRoutineList;
+	WorkoutList* m_pWorkoutList;
+	RoutineList* m_pRoutineList;
 	wxTextCtrl* m_pTextInput;
 
 	wxButton* m_pHelpButton;
@@ -52,7 +54,6 @@ public:
 	// Setup
 	void Init();
 	void SetupControls();
-	void SetupLists();
 	void SetupPanels();
 	void SetupSplitter();
 	void ArrangeElements();
