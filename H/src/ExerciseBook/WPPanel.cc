@@ -22,12 +22,33 @@ void WPPanel::Init()
 
 void WPPanel::SetupControls()
 {
-	m_pWorkoutList = new wxListCtrl(m_pWorkoutPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pRoutineList = new wxListCtrl(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pWorkoutList = new wxListCtrl(m_pWorkoutPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
+	m_pRoutineList = new wxListCtrl(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	// initialize columns for the lists
+	this->SetupLists();
 	
 	m_pHelpButton = new wxButton(this, wxID_HELP, _T("Help"), wxDefaultPosition, wxDefaultSize);
 	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, (int)WP::ID_NEW_WORKOUT, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
 	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, (int)WP::ID_NEW_ROUTINE, _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
+}
+
+void WPPanel::SetupLists()
+{
+	wxListItem routineCol;
+	wxListItem workoutCol;
+
+	routineCol.SetText(_T("Routines"));
+	workoutCol.SetText(_T("Workouts"));
+
+	routineCol.SetImage(-1);
+	workoutCol.SetImage(-1);
+
+	m_pRoutineList->InsertColumn(0, routineCol);
+	m_pWorkoutList->InsertColumn(0, workoutCol);
+
+	m_pRoutineList->SetColumnWidth(0, 200);
+	m_pWorkoutList->SetColumnWidth(0, 200);
 }
 
 void WPPanel::SetupPanels()
@@ -78,6 +99,7 @@ void WPPanel::OnHelp(wxCommandEvent& event)
 
 void WPPanel::OnAddWorkout(wxCommandEvent& event)
 {
-	m_pWorkoutWindow = new WorkoutWindow();
+	m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW));
 	m_pWorkoutWindow->Show(true);
+
 }

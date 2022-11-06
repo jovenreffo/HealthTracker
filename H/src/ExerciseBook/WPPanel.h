@@ -8,12 +8,13 @@
 #include <wx/listctrl.h>
 #include <wx/sizer.h>
 
-#include "WorkoutWindow/WorkoutWindow.h"
+#include "WorkoutWindow.h"
 
 enum class WP
 {
 	ID_NEW_WORKOUT,
-	ID_NEW_ROUTINE
+	ID_NEW_ROUTINE,
+	ID_WORKOUT_WINDOW
 };
 
 // WP = workout plan
@@ -51,6 +52,7 @@ public:
 	// Setup
 	void Init();
 	void SetupControls();
+	void SetupLists();
 	void SetupPanels();
 	void SetupSplitter();
 	void ArrangeElements();
