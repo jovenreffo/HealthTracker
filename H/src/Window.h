@@ -8,6 +8,7 @@
 #include "ExercisePanel.h"
 #include "ExerciseBook.h"
 #include "AboutDialog/AboutDialog.h"
+#include "TaskbarIcon.h"
 
 class App : public wxApp
 {
@@ -48,6 +49,8 @@ private:
 	wxBitmap m_settingsBmp;
 
 	AboutDialog* m_pAboutDialog;
+
+	TaskbarIcon* m_pTaskbarIcon;
 	
 public:
 	Frame();
