@@ -1,5 +1,7 @@
+#include <wx/msgdlg.h>
 #include "Window.h"
 #include "StandardPath.hpp"
+#include "ExerciseBook/xpm/xpm_include.h"
 
 // Event table
 BEGIN_EVENT_TABLE(Frame, wxFrame)
@@ -12,6 +14,10 @@ Frame::Frame()
 	: wxFrame{ nullptr, -1, _T("Health Trackr"), wxDefaultPosition, WINDOW_SIZE }
 {
 	this->Init();
+	m_pTaskbarIcon = new TaskbarIcon();
+	// set the icon
+	if (!m_pTaskbarIcon->SetIcon(wxIcon(undo_xpm), _T("Icon")))
+		wxMessageBox("Failed");
 }
 
 void Frame::Init()
