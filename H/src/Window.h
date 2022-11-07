@@ -54,9 +54,11 @@ private:
 	
 public:
 	Frame();
+	~Frame();
 
 	// Window setup
 	void Init();
+	void SetupTaskbarIcon();
 	void SetupMenuBar();
 	void SetupSizes();
 	void SetupBitmaps();

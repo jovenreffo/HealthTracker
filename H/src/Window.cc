@@ -14,14 +14,17 @@ Frame::Frame()
 	: wxFrame{ nullptr, -1, _T("Health Trackr"), wxDefaultPosition, WINDOW_SIZE }
 {
 	this->Init();
-	m_pTaskbarIcon = new TaskbarIcon();
-	// set the icon
-	if (!m_pTaskbarIcon->SetIcon(wxIcon(undo_xpm), _T("Icon")))
-		wxMessageBox("Failed");
+	
+}
+
+Frame::~Frame()
+{
+	delete m_pTaskbarIcon;
 }
 
 void Frame::Init()
 {
+	this->SetupTaskbarIcon();
 	this->SetupMenuBar();
 	this->SetupSizes();
 	this->SetupBitmaps();
@@ -29,6 +32,15 @@ void Frame::Init()
 }
 
 // Window setup
+
+void Frame::SetupTaskbarIcon()
+{
+	m_pTaskbarIcon = new TaskbarIcon();
+
+	// set the icon
+	if (!m_pTaskbarIcon->SetIcon(wxIcon(heart_xpm), _T("Health++")))
+		wxMessageBox("Failed");
+}
 
 void Frame::SetupMenuBar()
 {
