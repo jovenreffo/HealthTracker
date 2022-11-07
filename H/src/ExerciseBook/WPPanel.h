@@ -7,6 +7,7 @@
 #include <wx/textctrl.h>
 #include <wx/listctrl.h>
 #include <wx/sizer.h>
+#include <wx/notebook.h>
 
 #include "WorkoutWindow.h"
 #include "WPLists/WPLists.h"
@@ -26,6 +27,8 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	wxNotebook* m_pWPNotebook; // 2 tabs: 1 will be for planned workouts, other for `plan-as-you-go`
+
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
 	wxTextCtrl* m_pTextInput;
@@ -57,6 +60,7 @@ public:
 	void SetupPanels();
 	void SetupSplitter();
 	void ArrangeElements();
+	void SetupNotebook();
 
 	// Events
 	void OnHelp(wxCommandEvent& event);
