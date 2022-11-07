@@ -11,5 +11,6 @@
 #include "save.xpm"
 #include "saveas.xpm"
 #include "open.xpm"
+#include "heart.xpm"
 
 #endif
