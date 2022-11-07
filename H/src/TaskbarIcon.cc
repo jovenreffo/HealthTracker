@@ -18,6 +18,7 @@ void TaskbarIcon::SetupPopupMenu()
 {
 	m_pMenu = new wxMenu();
 
+	m_pMenu->AppendSeparator();
 	m_pMenu->Append(static_cast<int>(TBI::ID_TBI_EXIT), _T("&Exit"));
 }
 
@@ -37,4 +38,5 @@ void TaskbarIcon::OnRestore(wxCommandEvent& WXUNUSED)
 
 void TaskbarIcon::OnExit(wxCommandEvent& WXUNUSED)
 {
+	this->Destroy();
 }
