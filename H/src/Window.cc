@@ -35,7 +35,7 @@ void Frame::Init()
 
 void Frame::SetupTaskbarIcon()
 {
-	m_pTaskbarIcon = new TaskbarIcon();
+	m_pTaskbarIcon = new TaskbarIcon(this);
 
 	// set the icon
 	if (!m_pTaskbarIcon->SetIcon(wxIcon(heart_xpm), _T("Health++")))
