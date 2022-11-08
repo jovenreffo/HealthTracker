@@ -5,7 +5,7 @@
 #include <wx/notebook.h>
 #include <wx/imaglist.h>
 #include "ExerciseBook/NutritionPanel/NutritionPanel.h"
-#include "ExerciseBook/WPPanel.h"
+#include "WPPanel.h"
 
 #define EXERCISEBOOK_STYLE (wxNB_MULTILINE, wxNB_TOP)
 
