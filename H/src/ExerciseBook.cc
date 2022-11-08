@@ -16,7 +16,7 @@ void ExerciseBook::Init()
 
 void ExerciseBook::SetupBitmaps()
 {
-	m_pImgList = new wxImageList(25, 25);
+	m_pImgList = new wxImageList(30, 30);
 	m_workoutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\workout.png"), wxBITMAP_TYPE_PNG);
 	m_nutrBmp = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition.png"), wxBITMAP_TYPE_PNG);
 
