@@ -11,8 +11,8 @@
 
 struct EntryContent
 {
-	std::string m_name;
-	std::string m_content;
+	wxString m_name;
+	wxString m_content;
 };
 
 class EntryList: public wxListView

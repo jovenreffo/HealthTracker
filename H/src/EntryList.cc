@@ -18,7 +18,7 @@ EntryList::EntryList(wxTextCtrl* pTextCtrl, wxWindow* parent, wxWindowID id, con
 void EntryList::AddItem(const wxString& name, const wxString& content)
 {
 	this->InsertItem(0, name);
-
+	m_entryContent.push_back({ name, content });
 }
 
 void EntryList::Init()
@@ -69,7 +69,11 @@ void EntryList::OnItemSelected(wxListEvent& event)
 
 void EntryList::OnOpenEntry(wxCommandEvent& event)
 {
+	// loop through the content array and check if the currently selected item's text matches the name, then open it
+	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
+	{
 
+	}
 }
 
 void EntryList::OnRemoveEntry(wxCommandEvent& event)
