@@ -5,7 +5,7 @@
 #include <wx/notebook.h>
 #include <wx/imaglist.h>
 #include "ExerciseBook/NutritionPanel/NutritionPanel.h"
-#include "WPPanel.h"
+#include "WPNotebook.h"
 
 #define EXERCISEBOOK_STYLE (wxNB_MULTILINE, wxNB_TOP)
 
@@ -13,7 +13,7 @@ class ExerciseBook: public wxNotebook
 {
 private:
 	// Main panels
-	WPPanel* m_pWPPanel;
+	WPNotebook* m_pWPPanel;
 	NutritionPanel* m_pNutrPanel;
 
 	// Icons

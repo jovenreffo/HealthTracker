@@ -27,7 +27,7 @@ void ExerciseBook::SetupBitmaps()
 
 void ExerciseBook::SetupPanels()
 {
-	m_pWPPanel = new WPPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pWPPanel = new WPNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pNutrPanel = new NutritionPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 }
 
