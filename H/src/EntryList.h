@@ -4,8 +4,16 @@
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
 #include <wx/menu.h>
+#include <vector>
 
-#define LIST_STYLE (wxLC_REPORT | wxLC_EDIT_LABELS)
+#define LIST_STYLE ( wxLC_REPORT | wxLC_EDIT_LABELS )
+#define EC_SIZE	   ( 365 )
+
+struct EntryContent
+{
+	std::string m_name;
+	std::string m_content;
+};
 
 class EntryList: public wxListView
 {
@@ -14,21 +22,26 @@ private:
 
 private:
 	wxMenu* m_pPopUpMenu;
+	wxTextCtrl* m_pTextCtrl;
 
 	wxImageList* m_pImageList;
 	wxBitmap m_pencilBmp;
 
 	wxListItem m_itemCol;
-
+	
+	std::vector<EntryContent> m_entryContent;
 	wxString m_currentItemName;
 	long m_selectionIndex;
 
 public:
-	EntryList(wxWindow* parent,
+	EntryList(wxTextCtrl* pTextCtrl,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = LIST_STYLE);
+
+	void AddItem(const wxString& name, const wxString& content);
 
 	// Initialization
 	void Init();

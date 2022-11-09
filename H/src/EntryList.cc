@@ -9,10 +9,16 @@ BEGIN_EVENT_TABLE(EntryList, wxListView)
 	EVT_MENU(wxID_OPEN, EntryList::OnOpenEntry)
 END_EVENT_TABLE()
 
-EntryList::EntryList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style)
+EntryList::EntryList(wxTextCtrl* pTextCtrl, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style), m_pTextCtrl{ pTextCtrl }
 {
 	this->Init();
+}
+
+void EntryList::AddItem(const wxString& name, const wxString& content)
+{
+	this->InsertItem(0, name);
+
 }
 
 void EntryList::Init()
@@ -63,6 +69,7 @@ void EntryList::OnItemSelected(wxListEvent& event)
 
 void EntryList::OnOpenEntry(wxCommandEvent& event)
 {
+
 }
 
 void EntryList::OnRemoveEntry(wxCommandEvent& event)
