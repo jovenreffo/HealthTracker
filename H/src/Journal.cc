@@ -39,8 +39,8 @@ void Journal::SetupControls()
 	m_pPrevEntryText = new wxStaticText(this, wxID_STATIC, _T("Previous Entries:"), wxDefaultPosition, wxDefaultSize);
 
 	// Control classes
-	m_pEntryList = new EntryList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	m_pEntryList = new EntryList(m_pTextCtrl, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTextCtrl->DragAcceptFiles(true);
 
 	// Buttons
@@ -75,11 +75,8 @@ void Journal::OnSaveToEntries(wxCommandEvent& event)
 
 	if (m_pEntryDialog->ShowModal() == wxID_OK)
 	{
-		// Add an item to the entry list
-		m_pEntryList->InsertItem(0, m_pEntryDialog->GetEntryName());
-
 		// Save the item to the pair list
-		// TODO:
+		m_pEntryList->AddItem(m_pEntryDialog->GetEntryName(), m_pTextCtrl->GetValue());
 	}
 }
 
