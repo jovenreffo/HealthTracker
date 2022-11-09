@@ -1,0 +1,85 @@
+#include <wx/statline.h>
+#include "WPNotebook.h"
+#include "StandardPath.hpp"
+
+BEGIN_EVENT_TABLE(WPNotebook, wxNotebook)
+	EVT_BUTTON(static_cast<int>(WP::ID_NEW_WORKOUT), WPNotebook::OnAddWorkout)
+END_EVENT_TABLE()
+
+WPNotebook::WPNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxNotebook(parent, id, pos, size, style)
+{
+	this->Init();
+
+}
+
+void WPNotebook::Init()
+{
+	this->SetupNotebook();
+	this->SetupSplitter();
+	this->SetupPanels();
+	this->SetupControls();
+	this->ArrangeElements();
+}
+
+void WPNotebook::SetupControls()
+{
+	m_pWorkoutList = new WorkoutList(m_pWorkoutPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pRoutineList = new RoutineList(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, (int)WP::ID_NEW_WORKOUT, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, (int)WP::ID_NEW_ROUTINE, _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
+}
+
+void WPNotebook::SetupPanels()
+{
+	m_pWorkoutPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pRoutinePanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	m_pWorkoutSizer = new wxBoxSizer(wxVERTICAL);
+	m_pRoutineSizer = new wxBoxSizer(wxVERTICAL);
+	m_pWorkoutPanel->SetSizerAndFit(m_pWorkoutSizer);
+	m_pRoutinePanel->SetSizerAndFit(m_pRoutineSizer);
+
+	m_pSplitter->SplitVertically(m_pWorkoutPanel, m_pRoutinePanel);
+
+	this->AddPage(m_pSplitter, _T("Planned Workouts"), true, 0);
+}
+
+void WPNotebook::SetupSplitter()
+{
+	m_pSplitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_BORDER | wxSP_LIVE_UPDATE);
+	m_pSplitter->SetSashGravity(0.5);
+	m_pSplitter->SetMinimumPaneSize(100);
+}
+
+void WPNotebook::ArrangeElements()
+{
+	// Workout sizer
+	m_pWorkoutSizer->Add(m_pAddWorkoutButton, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pWorkoutSizer->Add(new wxStaticLine(m_pWorkoutPanel, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
+	m_pWorkoutSizer->Add(m_pWorkoutList, 1, wxEXPAND | wxALL, 5);
+
+	// Routine sizer
+	m_pRoutineSizer->Add(m_pAddRoutineButton, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pRoutineSizer->Add(new wxStaticLine(m_pRoutinePanel, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
+	m_pRoutineSizer->Add(m_pRoutineList, 1, wxEXPAND | wxALL, 5);
+}
+
+void WPNotebook::SetupNotebook()
+{
+	// icons
+	m_checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check.png"), wxBITMAP_TYPE_PNG);
+
+	m_pImageList = new wxImageList(26, 26);
+	m_pImageList->Add(m_checkBmp);
+	this->AssignImageList(m_pImageList);
+}
+
+// Events
+
+void WPNotebook::OnAddWorkout(wxCommandEvent& event)
+{
+	m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW), m_pWorkoutList);
+	m_pWorkoutWindow->Show(true);
+}
