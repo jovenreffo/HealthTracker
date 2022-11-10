@@ -24,7 +24,7 @@ WorkoutList::WorkoutList(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 void WorkoutList::SetupColumn()
 {
 	wxListItem routineCol;
-	routineCol.SetText(_T("Routines"));
+	routineCol.SetText(_T("Workouts"));
 	routineCol.SetImage(-1); 
 	this->InsertColumn(0, routineCol);
 	this->SetColumnWidth(0, 200);
@@ -71,7 +71,7 @@ RoutineList::RoutineList(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 void RoutineList::SetupColumn()
 {
 	wxListItem workoutCol;
-	workoutCol.SetText(_T("Workouts"));
+	workoutCol.SetText(_T("Routines"));
 	workoutCol.SetImage(-1);
 	this->InsertColumn(0, workoutCol);
 	this->SetColumnWidth(0, 200);
