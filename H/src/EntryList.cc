@@ -72,7 +72,8 @@ void EntryList::OnOpenEntry(wxCommandEvent& event)
 	// loop through the content array and check if the currently selected item's text matches the name, then open it
 	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
 	{
-
+		if (m_currentItemName == m_entryContent[i].m_name)
+			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
 	}
 }
 
