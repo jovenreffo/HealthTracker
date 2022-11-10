@@ -6,20 +6,6 @@
 
 #define WPLIST_STYLE ( wxLC_REPORT | wxLC_SINGLE_SEL )
 
-// this struct will store a wxString array of <size> elements. Each workout will be stored in a string
-template<int size>
-struct ContentStore
-{
-	wxString m_content[size];
-
-	wxString& operator[](int i)
-	{
-		return m_content[i];
-	}
-
-	int GetSize() const { return size; }
-};
-
 class WorkoutList: public wxListView
 {
 private:
@@ -27,7 +13,6 @@ private:
 
 private:
 	wxMenu* m_pMenu;
-	ContentStore<100> m_contentStore;
 
 public:
 	WorkoutList(wxWindow* parent,

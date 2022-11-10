@@ -9,8 +9,8 @@
 #include <wx/listctrl.h>
 #include <wx/button.h>
 
-#include "SaveWorkoutDialog/SaveWorkoutDialog.h"
-#include "WPLists/WPLists.h"
+#include "SaveWorkoutDialog.h"
+#include "WPLists.h"
 
 #define WORKOUT_WINDOW_SIZE (wxSize(670, 500))
 #define WORKOUT_WINDOW_STYLE (wxDEFAULT_FRAME_STYLE)

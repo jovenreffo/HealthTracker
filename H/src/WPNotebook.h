@@ -11,8 +11,8 @@
 #include <wx/sizer.h>
 #include <wx/notebook.h>
 
-#include "ExerciseBook/WorkoutWindow.h"
-#include "ExerciseBook/WPLists/WPLists.h"
+#include "WorkoutWindow.h"
+#include "WPLists.h"
 
 
 enum class WP

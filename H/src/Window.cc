@@ -1,7 +1,7 @@
 #include <wx/msgdlg.h>
 #include "Window.h"
 #include "StandardPath.hpp"
-#include "ExerciseBook/xpm/xpm_include.h"
+#include "xpm/xpm_include.h"
 
 // Event table
 BEGIN_EVENT_TABLE(Frame, wxFrame)
