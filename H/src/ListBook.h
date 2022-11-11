@@ -5,12 +5,24 @@
 #include <wx/bitmap.h>
 
 #include "Journal.h"
+#include "Calendar.h"
+#include "ExercisePanel.h"
+#include "Settings.h"
 
 class Listbook: public wxListbook
 {
 private:
 	// Tabs
 	Journal* m_pJournal;
+	Calendar* m_pCalendar;
+	ExercisePanel* m_pExercisePanel;
+	Settings* m_pSettings;
+
+	wxImageList* m_pImageList;
+	wxBitmap m_journalBmp;
+	wxBitmap m_calendarBmp;
+	wxBitmap m_exerciseBmp;
+	wxBitmap m_settingsBmp;
 
 public:
 	Listbook(wxWindow* parent,
@@ -20,6 +32,7 @@ public:
 		long style = 0L);
 
 	// Setup
+	void SetupBitmaps();
 	void SetupTabs();
 };
 

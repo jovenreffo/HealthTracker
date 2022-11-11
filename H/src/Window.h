@@ -61,7 +61,6 @@ public:
 	void SetupTaskbarIcon();
 	void SetupMenuBar();
 	void SetupSizes();
-	void SetupBitmaps();
 	void SetupListbook();
 
 	// Events
