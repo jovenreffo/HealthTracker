@@ -20,6 +20,9 @@ void ExerciseBook::SetupBitmaps()
 	m_workoutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\workout.png"), wxBITMAP_TYPE_PNG);
 	m_nutrBmp = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition.png"), wxBITMAP_TYPE_PNG);
 
+	m_workoutBmp.ResetAlpha();
+	m_nutrBmp.ResetAlpha();
+
 	m_pImgList->Add(m_workoutBmp);
 	m_pImgList->Add(m_nutrBmp);
 	this->AssignImageList(m_pImgList);
