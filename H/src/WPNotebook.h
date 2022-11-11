@@ -13,7 +13,7 @@
 
 #include "WorkoutWindow.h"
 #include "WPLists.h"
-
+#include "DynamicPlan.h"
 
 enum class WP
 {
@@ -36,8 +36,8 @@ private:
 
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
-	wxTextCtrl* m_pTextInput;
 
+	// Controls for planned workouts tab
 	wxButton* m_pAddWorkoutButton;
 	wxButton* m_pAddRoutineButton;
 
@@ -51,8 +51,9 @@ private:
 	wxPanel* m_pRoutinePanel;
 
 	WorkoutWindow* m_pWorkoutWindow;
-
-	wxPanel* temp;
+	
+	// Member for the dynamic logging panel
+	DynamicPlan* m_pDynamicPlan;
 
 public:
 	WPNotebook(wxWindow* parent,

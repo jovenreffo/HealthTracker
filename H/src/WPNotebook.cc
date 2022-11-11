@@ -35,6 +35,7 @@ void WPNotebook::SetupPanels()
 {
 	m_pWorkoutPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pRoutinePanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pDynamicPlan = new DynamicPlan(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	m_pWorkoutSizer = new wxBoxSizer(wxVERTICAL);
 	m_pRoutineSizer = new wxBoxSizer(wxVERTICAL);
@@ -44,6 +45,7 @@ void WPNotebook::SetupPanels()
 	m_pSplitter->SplitVertically(m_pWorkoutPanel, m_pRoutinePanel);
 
 	this->AddPage(m_pSplitter, _T("Planned Workouts"), true, 0);
+	this->AddPage(m_pDynamicPlan, _T("Track-As-You-Go"), false, 1);
 }
 
 void WPNotebook::SetupSplitter()
@@ -70,10 +72,13 @@ void WPNotebook::SetupNotebook()
 {
 	// icons
 	m_checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check.png"), wxBITMAP_TYPE_PNG);
+	m_randomBmp = wxBitmap(path_data::dataDir + _T("\\Images\\random.png"), wxBITMAP_TYPE_PNG);
 	m_checkBmp.ResetAlpha();
+	m_randomBmp.ResetAlpha();
 
 	m_pImageList = new wxImageList(26, 26);
 	m_pImageList->Add(m_checkBmp);
+	m_pImageList->Add(m_randomBmp);
 	this->AssignImageList(m_pImageList);
 }
 
