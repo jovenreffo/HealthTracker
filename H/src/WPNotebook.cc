@@ -70,6 +70,7 @@ void WPNotebook::SetupNotebook()
 {
 	// icons
 	m_checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check.png"), wxBITMAP_TYPE_PNG);
+	m_checkBmp.ResetAlpha();
 
 	m_pImageList = new wxImageList(26, 26);
 	m_pImageList->Add(m_checkBmp);
