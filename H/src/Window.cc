@@ -11,7 +11,7 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 END_EVENT_TABLE()
 
 Frame::Frame()
-	: wxFrame{ nullptr, -1, _T("Health Trackr"), wxDefaultPosition, WINDOW_SIZE }
+	: wxFrame{ nullptr, -1, _T("Health++"), wxDefaultPosition, WINDOW_SIZE }
 {
 	this->Init();
 	
