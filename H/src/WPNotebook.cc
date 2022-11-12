@@ -4,6 +4,7 @@
 
 BEGIN_EVENT_TABLE(WPNotebook, wxNotebook)
 	EVT_BUTTON(static_cast<int>(WP::ID_NEW_WORKOUT), WPNotebook::OnAddWorkout)
+	EVT_BUTTON(static_cast<int>(WP::ID_NEW_ROUTINE), WPNotebook::OnAddRoutine)
 END_EVENT_TABLE()
 
 WPNotebook::WPNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -45,7 +46,7 @@ void WPNotebook::SetupPanels()
 	m_pSplitter->SplitVertically(m_pWorkoutPanel, m_pRoutinePanel);
 
 	this->AddPage(m_pSplitter, _T("Planned Workouts"), true, 0);
-	this->AddPage(m_pDynamicPlan, _T("Track-As-You-Go"), false, 1);
+	this->AddPage(m_pDynamicPlan, _T("Track-On-The-Go"), false, 1);
 }
 
 void WPNotebook::SetupSplitter()
@@ -84,8 +85,14 @@ void WPNotebook::SetupNotebook()
 
 // Events
 
-void WPNotebook::OnAddWorkout(wxCommandEvent& event)
+void WPNotebook::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW), m_pWorkoutList);
 	m_pWorkoutWindow->Show(true);
+}
+
+void WPNotebook::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
+{
+	m_pRoutineDialog = new RoutineDialog(this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
+	m_pRoutineDialog->Show(true);
 }
