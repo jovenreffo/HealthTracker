@@ -7,7 +7,7 @@
 #include "NutritionPanel.h"
 #include "WPNotebook.h"
 
-#define EXERCISEBOOK_STYLE (wxNB_MULTILINE, wxNB_TOP)
+#define EXERCISEBOOK_STYLE (wxNB_MULTILINE | wxNB_TOP)
 
 class ExerciseBook: public wxNotebook
 {
