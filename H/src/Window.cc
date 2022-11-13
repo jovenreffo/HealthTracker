@@ -19,6 +19,7 @@ Frame::Frame()
 
 Frame::~Frame()
 {
+	this->DestroyChildren();
 	delete m_pTaskbarIcon;
 }
 
