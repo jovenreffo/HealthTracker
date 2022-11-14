@@ -135,7 +135,7 @@ void WorkoutWindow::SetupControls()
 	m_clearButton = new wxButton(this, ID_CLEAR_TEXT, _T("Clear Text"), wxDefaultPosition, wxDefaultSize);
 	m_fontButton = new wxButton(this, ID_CHANGE_FONT, _T("Change Font"), wxDefaultPosition, wxDefaultSize);
 	m_stwButton = new wxButton(this, ID_STW, _T("Save to Workouts"), wxDefaultPosition, wxDefaultSize);
-	m_pTextBox = new wxTextCtrl(this, wxID_ANY, _T("Open (Ctrl + 0) or drag in a text file.\n"), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
+	m_pTextBox = new wxTextCtrl(this, wxID_ANY, _T("Begin creating your workout:\n"), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE);
 
 	m_pTextBox->DragAcceptFiles(true);
 	m_pTextBox->Bind(wxEVT_MOUSEWHEEL, &WorkoutWindow::OnMouse, this); // Connect the mouse event handler so zooming is not processed outside of the textbox.
