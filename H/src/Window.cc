@@ -1,7 +1,6 @@
 #include <wx/msgdlg.h>
 #include "Window.h"
 #include "StandardPath.hpp"
-#include "xpm/xpm_include.h"
 
 // Event table
 BEGIN_EVENT_TABLE(Frame, wxFrame)
@@ -25,6 +24,7 @@ Frame::~Frame()
 void Frame::Init()
 {
 	this->SetupTaskbarIcon();
+	this->SetupProgramIcon();
 	this->SetupMenuBar();
 	this->SetupSizes();
 	this->SetupListbook();
@@ -39,6 +39,11 @@ void Frame::SetupTaskbarIcon()
 	// set the icon
 	if (!m_pTaskbarIcon->SetIcon(wxIcon(heart_xpm), _T("Health++")))
 		wxMessageBox("Failed");
+}
+
+void Frame::SetupProgramIcon()
+{
+	this->SetIcon(wxIcon(heart_xpm));
 }
 
 void Frame::SetupMenuBar()

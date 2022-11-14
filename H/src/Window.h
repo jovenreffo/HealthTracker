@@ -9,6 +9,7 @@
 #include "ExerciseBook.h"
 #include "AboutDialog/AboutDialog.h"
 #include "TaskbarIcon.h"
+#include "xpm/xpm_include.h"
 
 class App : public wxApp
 {
@@ -59,6 +60,7 @@ public:
 	// Window setup
 	void Init();
 	void SetupTaskbarIcon();
+	void SetupProgramIcon();
 	void SetupMenuBar();
 	void SetupSizes();
 	void SetupListbook();
