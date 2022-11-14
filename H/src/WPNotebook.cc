@@ -14,6 +14,11 @@ WPNotebook::WPNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, cons
 
 }
 
+WPNotebook::~WPNotebook()
+{
+	this->DestroyChildren();
+}
+
 void WPNotebook::Init()
 {
 	this->SetupNotebook();
@@ -93,6 +98,6 @@ void WPNotebook::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 
 void WPNotebook::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
-	m_pRoutineDialog = new RoutineDialog(this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
 	m_pRoutineDialog->Show(true);
 }

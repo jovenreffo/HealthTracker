@@ -52,7 +52,6 @@ private:
 	wxSplitterWindow* m_pSplitter;
 	wxPanel* m_pWorkoutPanel;
 	wxPanel* m_pRoutinePanel;
-
 	
 	DynamicPlan* m_pDynamicPlan;
 
@@ -62,6 +61,8 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	~WPNotebook();
 
 	// Setup
 	void Init();
