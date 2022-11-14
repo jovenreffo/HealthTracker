@@ -196,7 +196,6 @@ void WorkoutWindow::OnSTW(wxCommandEvent& event)
 	{
 		m_workoutName = m_pSaveWorkoutDlg->GetWorkoutName();
 		this->AddItemToWorkoutList();
-		this->Destroy();
 	}
 }
 
