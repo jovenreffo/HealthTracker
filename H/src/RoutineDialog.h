@@ -3,10 +3,16 @@
 
 #include <wx/dialog.h>
 #include <wx/arrstr.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/choice.h>
 #include "EntryList.h"
 
 #define RDLG_SIZE ( wxSize(250, 400) )
 #define RDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+
+// Choice list size
+#define CL_SIZE ( 7 )
 
 class RoutineDialog: public wxDialog
 {
@@ -17,6 +23,9 @@ private:
 	// the ctor will take an EC vec so we can add the correct items to a selection list
 	std::vector<EntryContent> m_content;
 	wxArrayString m_contentNames;
+
+	wxArrayString m_choiceArray;
+	wxChoice* m_pChoice[CL_SIZE];
 
 public:
 	RoutineDialog(const std::vector<EntryContent>& content,
@@ -29,6 +38,7 @@ public:
 
 	// Setup
 	void Init();
+	void RetrieveAllNames();
 	void SetupControls();
 	void CreateControls();
 
