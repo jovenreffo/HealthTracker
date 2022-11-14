@@ -75,6 +75,7 @@ private:
 	wxBitmap m_openBmp;
 	wxBitmap m_saveBmp;
 	wxBitmap m_saveAsBmp;
+	wxIcon m_programIcon;
 
 	wxFontDialog* m_pFontDialog;
 
@@ -87,6 +88,7 @@ public:
 	// Window functions
 	void Init();
 	void SetupBitmaps();
+	void SetupIcon();
 	void SetupToolBar();
 	void SetupMenuBar();
 	void SetupControls();
@@ -97,6 +99,7 @@ public:
 
 	const wxString GetWorkoutName() const { return m_workoutName; }
 	void AddItemToWorkoutList();
+	void OpenWorkout(const wxString& content);
 
 	// Events
 	void OnSTW(wxCommandEvent& event);

@@ -1,4 +1,5 @@
 #include "WorkoutWindow.h"
+#include "StandardPath.hpp"
 #include "xpm/xpm_include.h"
 
 BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
@@ -36,7 +37,7 @@ BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
 END_EVENT_TABLE()
 
 WorkoutWindow::WorkoutWindow(wxWindow* parent, wxWindowID id, WorkoutList* pWorkoutList)
-	: wxFrame(nullptr, wxID_ANY, _T("Create Workout Routine"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE),
+	: wxFrame(parent, wxID_ANY, _T("Create Workout"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE),
 	m_pParent{ parent }, m_pWorkoutList{ pWorkoutList }
 {
 	this->Init();
@@ -46,6 +47,7 @@ WorkoutWindow::WorkoutWindow(wxWindow* parent, wxWindowID id, WorkoutList* pWork
 void WorkoutWindow::Init()
 {
 	this->SetupBitmaps();
+	this->SetupIcon();
 	this->SetupToolBar();
 	this->SetupMenuBar();
 	this->SetupControls();
@@ -64,6 +66,12 @@ void WorkoutWindow::SetupBitmaps()
 	m_openBmp = wxBitmap(open_xpm);
 	m_saveBmp = wxBitmap(save_xpm);
 	m_saveAsBmp = wxBitmap(saveas_xpm);
+}
+
+void WorkoutWindow::SetupIcon()
+{
+	m_programIcon = wxIcon(path_data::dataDir + _T("\\Images\\workout.png"), wxBITMAP_TYPE_PNG);
+	this->SetIcon(m_programIcon);
 }
 
 void WorkoutWindow::SetupToolBar()
@@ -169,7 +177,13 @@ void WorkoutWindow::ZoomOut()
 
 void WorkoutWindow::AddItemToWorkoutList()
 {
-	m_pWorkoutList->InsertItem(0, this->GetWorkoutName());
+	m_pWorkoutList->AddItem(m_pSaveWorkoutDlg->GetWorkoutName(), m_pTextBox->GetValue());
+}
+
+void WorkoutWindow::OpenWorkout(const wxString& content)
+{
+	this->Show(true);
+	m_pTextBox->SetValue(content);
 }
 
 // Events
@@ -182,6 +196,7 @@ void WorkoutWindow::OnSTW(wxCommandEvent& event)
 	{
 		m_workoutName = m_pSaveWorkoutDlg->GetWorkoutName();
 		this->AddItemToWorkoutList();
+		this->Destroy();
 	}
 }
 
@@ -260,7 +275,7 @@ void WorkoutWindow::OnOpen(wxCommandEvent& event)
 		m_currentFilePath = openDialog->GetPath();
 		m_currentFileName = openDialog->GetFilename();
 		m_pTextBox->LoadFile(m_currentFilePath);
-		this->SetLabel(wxString("Note Viewer - ") << m_currentFileName);
+		this->SetLabel(wxString("Workout - ") << m_currentFileName);
 		m_bActiveFile = true;
 	}
 
