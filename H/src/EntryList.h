@@ -9,10 +9,23 @@
 #define LIST_STYLE ( wxLC_REPORT | wxLC_EDIT_LABELS )
 #define EC_SIZE	   ( 365 )
 
-struct EntryContent
+class EntryContent
 {
+private:
 	wxString m_name;
 	wxString m_content;
+
+public:
+	EntryContent(const wxString& name, const wxString& content)
+		: m_name{ name }, m_content{ content }
+	{
+	}
+
+	const wxString& GetName() const { return m_name; }
+	const wxString& GetContent() const { return m_content; }
+
+	void SetName(const wxString& name) { m_name = name; }
+	void SetContent(const wxString& content) { m_content = content; }
 };
 
 class EntryList: public wxListView

@@ -83,7 +83,7 @@ void RoutineDialog::CreateControls()
 {
 	// Initialise the choice array
 	for (auto i{ 0 }; i < m_content.size(); ++i)
-		m_choiceArray.Add(m_content[i].m_name);
+		m_choiceArray.Add(m_content[i].GetName());
 	for (auto i{ 0 }; i < CL_SIZE; ++i)
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
