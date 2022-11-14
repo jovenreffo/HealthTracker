@@ -5,10 +5,13 @@
 #include <wx/arrstr.h>
 #include <wx/sizer.h>
 #include <wx/stattext.h>
+#include <wx/button.h>
+#include <wx/statline.h>
 #include <wx/choice.h>
 #include "EntryList.h"
 
-#define RDLG_SIZE ( wxSize(250, 400) )
+#define RDLG_SIZE ( wxSize(250, 350) )
+#define RDLG_MAX_SIZE ( wxSize(285, 365) )
 #define RDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 
 // Choice list size
@@ -27,6 +30,12 @@ private:
 	wxArrayString m_choiceArray;
 	wxChoice* m_pChoice[CL_SIZE];
 
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pDaySizer; // This sizer will be re-initialised and recycled to format all the days in the week.
+
 public:
 	RoutineDialog(const std::vector<EntryContent>& content,
 		wxWindow* parent,
@@ -39,6 +48,7 @@ public:
 	// Setup
 	void Init();
 	void RetrieveAllNames();
+	void SetupSizing();
 	void SetupControls();
 	void CreateControls();
 
