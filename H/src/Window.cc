@@ -14,7 +14,6 @@ Frame::Frame()
 	: wxFrame{ nullptr, -1, _T("Health++"), wxDefaultPosition, WINDOW_SIZE }
 {
 	this->Init();
-	
 }
 
 Frame::~Frame()
