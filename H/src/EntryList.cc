@@ -22,6 +22,15 @@ void EntryList::AddItem(const wxString& name, const wxString& content)
 	m_entryContent.push_back({ name, content });
 }
 
+void EntryList::OpenEntry()
+{
+	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
+	{
+		if (m_currentItemName == m_entryContent[i].m_name)
+			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
+	}
+}
+
 void EntryList::Init()
 {
 	this->SetupPopUpMenu();
@@ -64,12 +73,7 @@ void EntryList::OnRightClick(wxListEvent& event)
 
 void EntryList::OnDoubleClick(wxListEvent& event)
 {
-	// open the selected item on dclick
-	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
-	{
-		if (m_currentItemName == m_entryContent[i].m_name)
-			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
-	}
+	this->OpenEntry();
 }
 
 void EntryList::OnItemSelected(wxListEvent& event)
@@ -80,12 +84,7 @@ void EntryList::OnItemSelected(wxListEvent& event)
 
 void EntryList::OnOpenEntry(wxCommandEvent& event)
 {
-	// loop through the content array and check if the currently selected item's text matches the name, then open it
-	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
-	{
-		if (m_currentItemName == m_entryContent[i].m_name)
-			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
-	}
+	this->OpenEntry();
 }
 
 void EntryList::OnRemoveEntry(wxCommandEvent& event)

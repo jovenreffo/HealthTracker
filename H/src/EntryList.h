@@ -42,6 +42,7 @@ public:
 		long style = LIST_STYLE);
 
 	void AddItem(const wxString& name, const wxString& content);
+	void OpenEntry();
 
 	// Initialization
 	void Init();
