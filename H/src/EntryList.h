@@ -51,6 +51,7 @@ public:
 
 	// Events
 	void OnRightClick(wxListEvent& event);
+	void OnDoubleClick(wxListEvent& event);
 	void OnItemSelected(wxListEvent& event);
 	void OnOpenEntry(wxCommandEvent& event);
 	void OnRemoveEntry(wxCommandEvent& event);

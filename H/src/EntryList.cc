@@ -5,6 +5,7 @@
 BEGIN_EVENT_TABLE(EntryList, wxListView)
 	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, EntryList::OnRightClick)
 	EVT_LIST_ITEM_SELECTED(wxID_ANY, EntryList::OnItemSelected)
+	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, EntryList::OnDoubleClick)
 	EVT_MENU(wxID_DELETE, EntryList::OnRemoveEntry)
 	EVT_MENU(wxID_OPEN, EntryList::OnOpenEntry)
 END_EVENT_TABLE()
@@ -59,6 +60,16 @@ void EntryList::SetupList()
 void EntryList::OnRightClick(wxListEvent& event)
 {
 	this->PopupMenu(m_pPopUpMenu);
+}
+
+void EntryList::OnDoubleClick(wxListEvent& event)
+{
+	// open the selected item on dclick
+	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
+	{
+		if (m_currentItemName == m_entryContent[i].m_name)
+			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
+	}
 }
 
 void EntryList::OnItemSelected(wxListEvent& event)
