@@ -74,8 +74,8 @@ void WorkoutList::OpenWorkout()
 	{
 		for (auto i{ 0 }; i < m_content.size(); ++i)
 		{
-			if (m_currentItemName == m_content[i].m_name)
-				pWorkoutWindow->OpenWorkout(m_content[i].m_content);
+			if (m_currentItemName == m_content[i].GetName())
+				pWorkoutWindow->OpenWorkout(m_content[i].GetContent());
 		}
 	}
 	catch (std::exception& e)

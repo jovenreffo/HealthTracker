@@ -26,8 +26,8 @@ void EntryList::OpenEntry()
 {
 	for (auto i{ 0 }; i < m_entryContent.size(); ++i)
 	{
-		if (m_currentItemName == m_entryContent[i].m_name)
-			m_pTextCtrl->SetValue(m_entryContent[i].m_content);
+		if (m_currentItemName == m_entryContent[i].GetName())
+			m_pTextCtrl->SetValue(m_entryContent[i].GetContent());
 	}
 }
 
