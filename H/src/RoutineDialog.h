@@ -17,7 +17,14 @@
 // Choice list size
 #define CL_SIZE ( 7 )
 
-class RoutineDialog : public wxDialog
+class RoutineInfo
+{
+private:
+	int m_index;
+	wxString m_choice;
+};
+
+class RoutineDialog: public wxDialog
 {
 private:
 	DECLARE_EVENT_TABLE()
