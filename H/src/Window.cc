@@ -38,7 +38,8 @@ void Frame::SetupTaskbarIcon()
 
 	// set the icon
 	if (!m_pTaskbarIcon->SetIcon(wxIcon(heart_xpm), _T("Health++")))
-		wxMessageBox("Failed");
+		wxMessageBox(_T("Failed to create taskbar icon."));
+	
 }
 
 void Frame::SetupProgramIcon()
