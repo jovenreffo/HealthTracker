@@ -32,8 +32,11 @@ void EntryDialog::SetupControls()
 	m_pOkButton = new wxButton(this, wxID_OK, _T("OK"));
 	m_pUseDate = new wxCheckBox(this, wxID_ANY, _T("Use today's date"));
 	m_pCancelButton = new wxButton(this, wxID_CANCEL, _T("Cancel"));
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	m_pNameText = new wxStaticText(this, wxID_STATIC, _T("Entry name:"));
+
+	// Attach OnEnter event to the text ctrl for UX
+	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &EntryDialog::OnEnter, this);
 }
 
 void EntryDialog::SetupSizers()
@@ -78,7 +81,7 @@ void EntryDialog::OnOK(wxCommandEvent& event)
 			EndModal(wxID_OK);
 		else
 		{
-			SetReturnCode(wxID_OK);
+			this->SetReturnCode(wxID_OK);
 			this->Show(false);
 		}
 	}
@@ -90,4 +93,11 @@ void EntryDialog::OnCheck(wxCommandEvent& event)
 		m_pTextCtrl->SetValue(GetDate());
 	else // Reset the text control's value if the user unselects it. Saves them time deleting it.
 		m_pTextCtrl->SetValue(wxEmptyString);
+}
+
+void EntryDialog::OnEnter(wxCommandEvent& event)
+{
+	m_entryName = m_pTextCtrl->GetValue();
+	this->SetReturnCode(wxID_OK);
+	this->Show(false);
 }

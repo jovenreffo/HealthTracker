@@ -51,6 +51,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCheck(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 #endif
