@@ -63,6 +63,8 @@ public:
 	void SetupBitmaps();
 	void SetupList();
 
+	void ResetList();
+
 	// Events
 	void OnRightClick(wxListEvent& event);
 	void OnDoubleClick(wxListEvent& event);

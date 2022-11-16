@@ -7,6 +7,11 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
 	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
 	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
+	// reset events
+	EVT_MENU(wxID_RESET, Frame::OnResetAll)
+	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
+	EVT_MENU(ID_RESET_WORKOUTS, Frame::OnResetWorkouts)
+	EVT_MENU(ID_RESET_ROUTINES, Frame::OnResetRoutines)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -54,8 +59,16 @@ void Frame::SetupMenuBar()
 	m_pFileMenu = new wxMenu();
 	m_pViewMenu = new wxMenu();
 	m_pHelpMenu = new wxMenu();
+	m_pResetMenu = new wxMenu();
 
+	// Reset menu to be used with the file menu
+	m_pResetMenu->Append(ID_RESET_ENTRIES, _T("&Reset Entry List"));
+	m_pResetMenu->Append(ID_RESET_WORKOUTS, _T("&Reset Workout List"));
+	m_pResetMenu->Append(ID_RESET_ROUTINES, _T("&Reset Routine List"));
 	// File menu
+	m_pFileMenu->AppendSeparator();
+	m_pFileMenu->AppendSubMenu(m_pResetMenu, _T("&Reset..."));
+	m_pFileMenu->Append(wxID_RESET, _T("&Reset All\tCtrl+Shift+R"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
 
@@ -84,18 +97,35 @@ void Frame::SetupListbook()
 
 // Events
 
-void Frame::OnExit(wxCommandEvent& event)
+void Frame::OnExit(wxCommandEvent& WXUNUSED(event))
 {
 	if (wxMessageBox(_T("Are you sure you want to exit?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
 		this->Close(true);
 }
 
-void Frame::OnFullScreen(wxCommandEvent& event)
+void Frame::OnFullScreen(wxCommandEvent& WXUNUSED(event))
 {
 	this->ShowFullScreen(!IsFullScreen(), wxFULLSCREEN_NOBORDER | wxFULLSCREEN_NOCAPTION);
 }
 
-void Frame::OnAbout(wxCommandEvent& event)
+void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pAboutDialog = new AboutDialog();
+}
+
+void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
+{
+
+}
+
+void Frame::OnResetEntries(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void Frame::OnResetWorkouts(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
+{
 }

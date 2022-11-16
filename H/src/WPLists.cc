@@ -65,6 +65,11 @@ void WorkoutList::AddItem(const wxString& name, const wxString& content)
 	m_content.push_back({ name, content });
 }
 
+void WorkoutList::ResetList()
+{
+	this->DeleteAllItems();
+}
+
 void WorkoutList::OpenWorkout()
 {
 	WorkoutWindow* pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, this);
@@ -122,6 +127,14 @@ RoutineList::RoutineList(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	this->SetupColumn();
 }
 
+void RoutineList::Init()
+{
+}
+
+void RoutineList::SetupImageList()
+{
+}
+
 void RoutineList::SetupColumn()
 {
 	wxListItem workoutCol;
@@ -129,4 +142,21 @@ void RoutineList::SetupColumn()
 	workoutCol.SetImage(-1);
 	this->InsertColumn(0, workoutCol);
 	this->SetColumnWidth(0, 200);
+}
+
+void RoutineList::SetupMenu()
+{
+}
+
+void RoutineList::AddItem(const wxString& name, const wxString& content)
+{
+}
+
+void RoutineList::ResetList()
+{
+	this->DeleteAllItems();
+}
+
+void RoutineList::OpenRoutine()
+{
 }
