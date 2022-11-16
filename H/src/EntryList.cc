@@ -64,6 +64,11 @@ void EntryList::SetupList()
 	this->SetColumnWidth(0, 500);
 }
 
+void EntryList::ResetList()
+{
+	this->DeleteAllItems();
+}
+
 // Events
 
 void EntryList::OnRightClick(wxListEvent& event)
