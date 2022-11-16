@@ -7,6 +7,11 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
 	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
 	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
+	// reset events
+	EVT_MENU(wxID_RESET, Frame::OnResetAll)
+	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
+	EVT_MENU(ID_RESET_WORKOUTS, Frame::OnResetWorkouts)
+	EVT_MENU(ID_RESET_ROUTINES, Frame::OnResetRoutines)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -62,7 +67,7 @@ void Frame::SetupMenuBar()
 	// File menu
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->AppendSubMenu(m_pResetMenu, _T("&Reset..."));
-	m_pFileMenu->Append(wxID_RESET, _T("&Reset All"));
+	m_pFileMenu->Append(wxID_RESET, _T("&Reset All\tCtrl+Shift+R"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
 
@@ -109,7 +114,7 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
-	
+
 }
 
 void Frame::OnResetEntries(wxCommandEvent& WXUNUSED(event))
