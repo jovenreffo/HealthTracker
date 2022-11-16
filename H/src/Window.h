@@ -51,6 +51,7 @@ private:
 
 	AboutDialog* m_pAboutDialog;
 
+	wxIcon m_heartIcon;
 	TaskbarIcon* m_pTaskbarIcon;
 	
 public:

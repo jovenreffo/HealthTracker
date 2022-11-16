@@ -23,8 +23,8 @@ Frame::~Frame()
 
 void Frame::Init()
 {
-	this->SetupTaskbarIcon();
 	this->SetupProgramIcon();
+	this->SetupTaskbarIcon();
 	this->SetupMenuBar();
 	this->SetupSizes();
 	this->SetupListbook();
@@ -37,14 +37,15 @@ void Frame::SetupTaskbarIcon()
 	m_pTaskbarIcon = new TaskbarIcon(this);
 
 	// set the icon
-	if (!m_pTaskbarIcon->SetIcon(wxIcon(heart_xpm), _T("Health++")))
+	if (!m_pTaskbarIcon->SetIcon(m_heartIcon, _T("Health++")))
 		wxMessageBox(_T("Failed to create taskbar icon."));
 	
 }
 
 void Frame::SetupProgramIcon()
 {
-	this->SetIcon(wxIcon(heart_xpm));
+	m_heartIcon = wxIcon(path_data::dataDir + _T("\\Images\\heart.png"), wxBITMAP_TYPE_PNG);
+	this->SetIcon(m_heartIcon);
 }
 
 void Frame::SetupMenuBar()
