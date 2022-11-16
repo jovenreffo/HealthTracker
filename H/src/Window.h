@@ -21,7 +21,10 @@ public:
 
 enum
 {
-	ID_ENABLE_FULLSCREEN
+	ID_ENABLE_FULLSCREEN,
+	ID_RESET_ENTRIES,
+	ID_RESET_WORKOUTS,
+	ID_RESET_ROUTINES
 };
 
 class Frame : public wxFrame
@@ -35,19 +38,10 @@ private:
 	wxMenu* m_pFileMenu;
 	wxMenu* m_pViewMenu;
 	wxMenu* m_pHelpMenu;
+	wxMenu* m_pResetMenu; // submenu
 
-	// Navigation tabs
-	Journal* m_pJournal;
-	Calendar* m_pCalendar;
-	ExercisePanel* m_pExercisePanel;
-	Settings* m_pSettings;
 	// Images
 	Listbook* m_pListbook;
-	wxImageList* m_pImageList;
-	wxBitmap m_journalBmp;
-	wxBitmap m_calendarBmp;
-	wxBitmap m_exerciseBmp;
-	wxBitmap m_settingsBmp;
 
 	AboutDialog* m_pAboutDialog;
 
@@ -69,4 +63,9 @@ public:
 	void OnExit(wxCommandEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
+	// reset events
+	void OnResetAll(wxCommandEvent& WXUNUSED(event));
+	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
+	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
+	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
 };
