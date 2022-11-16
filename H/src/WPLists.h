@@ -38,6 +38,7 @@ public:
 	void SetupMenu();
 
 	void AddItem(const wxString& name, const wxString& content);
+	void ResetList();
 	void OpenWorkout();
 
 	const std::vector<EntryContent>& GetContent() const { return m_content; }
@@ -62,7 +63,14 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = WPLIST_STYLE);
 
+	void Init();
+	void SetupImageList();
 	void SetupColumn();
+	void SetupMenu();
+
+	void AddItem(const wxString& name, const wxString& content);
+	void ResetList();
+	void OpenRoutine();
 };
 
 #endif
