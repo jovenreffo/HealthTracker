@@ -26,6 +26,14 @@ Frame::~Frame()
 	delete m_pTaskbarIcon;
 }
 
+bool Frame::ConfirmReset()
+{
+	if (wxMessageBox(_T("Are you sure you want to reset this list?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		return true;
+	else
+		return false;
+}
+
 void Frame::Init()
 {
 	this->SetupProgramIcon();
@@ -113,19 +121,33 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 	m_pAboutDialog = new AboutDialog();
 }
 
+// class hierarchy reference for accessing the lists: (doing it this way to prevent use of global vars)
+// listbook -> exercisepanel -> exercisebook -> wpnotebook
+
 void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
-
+	if (wxMessageBox(_T("Are you sure you want to delete all your saved items?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
+	{
+		m_pListbook->GetJournal()->GetEntryList()->DeleteAllItems();
+		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList()->DeleteAllItems();
+		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList()->DeleteAllItems();
+	}
 }
 
 void Frame::OnResetEntries(wxCommandEvent& WXUNUSED(event))
 {
+	if (ConfirmReset())
+		m_pListbook->GetJournal()->GetEntryList()->DeleteAllItems();
 }
 
 void Frame::OnResetWorkouts(wxCommandEvent& WXUNUSED(event))
 {
+	if (ConfirmReset())
+		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList()->DeleteAllItems();
 }
 
 void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
+	if (ConfirmReset())
+		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList()->DeleteAllItems();
 }

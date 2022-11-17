@@ -52,6 +52,8 @@ public:
 	Frame();
 	~Frame();
 
+	bool ConfirmReset();
+
 	// Window setup
 	void Init();
 	void SetupTaskbarIcon();
