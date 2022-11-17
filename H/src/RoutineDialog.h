@@ -20,8 +20,14 @@
 class RoutineInfo
 {
 private:
-	int m_index;
+	int m_index; // 0-6
 	wxString m_choice;
+
+public:
+	RoutineInfo(int index, const wxString& choice)
+		: m_index{ index }, m_choice{ choice }
+	{
+	}
 };
 
 class RoutineDialog: public wxDialog
