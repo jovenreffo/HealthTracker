@@ -21,6 +21,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
+	ExerciseBook* GetExerciseBook() const { return m_pExerciseBook; }
+
 	// Setup
 	void Init();
 	void SetupExerciseBook();

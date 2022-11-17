@@ -31,6 +31,9 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
+	ExercisePanel* GetExercisePanel() const { return m_pExercisePanel; }
+	Journal* GetJournal() const { return m_pJournal; }
+
 	// Setup
 	void SetupBitmaps();
 	void SetupTabs();
