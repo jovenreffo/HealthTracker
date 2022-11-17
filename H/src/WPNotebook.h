@@ -64,6 +64,9 @@ public:
 
 	~WPNotebook();
 
+	WorkoutList* GetWorkoutList() const { return m_pWorkoutList; }
+	RoutineList* GetRoutineList() const { return m_pRoutineList; }
+
 	// Setup
 	void Init();
 	void SetupControls();

@@ -28,6 +28,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = EXERCISEBOOK_STYLE);
 
+	WPNotebook* GetNotebook() const { return m_pWPPanel; }
+
 	// Book setup
 	void Init();
 	void SetupBitmaps();

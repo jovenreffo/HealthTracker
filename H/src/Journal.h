@@ -48,8 +48,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
-	// Get the current date
 	wxString GetDate();
+	EntryList* GetEntryList() const { return m_pEntryList; }
 
 	// Panel setup
 	void Init();
