@@ -63,6 +63,8 @@ public:
 	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
 	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
 	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
+
+	bool ConfirmReset();
 };
 
 #endif
