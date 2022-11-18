@@ -20,7 +20,6 @@ void Listbook::SetupBitmaps()
 	m_journalBmp.ResetAlpha();
 	m_settingsBmp.ResetAlpha();
 
-
 	// Set up the image list to be used with the listbook
 	m_pImageList = new wxImageList(38, 38);
 	m_pImageList->Add(m_journalBmp);
@@ -36,8 +35,8 @@ void Listbook::SetupTabs()
 
 	m_pJournal = new Journal(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pCalendar = new Calendar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pSettings = new Settings(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pExercisePanel = new ExercisePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pSettings = new Settings(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	// Add tabs to the list
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
