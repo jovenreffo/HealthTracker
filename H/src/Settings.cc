@@ -46,8 +46,10 @@ void Settings::AddAllControls()
 
 void Settings::AddResetGroup()
 {
-	m_pResetBox->Add(m_pResetAll, 0, wxALIGN_LEFT | wxALL, 5);
-	m_pResetBox->Add(m_pResetWorkouts, 0, wxALIGN_LEFT | wxALL, 5);
-	m_pResetBox->Add(m_pResetRoutines, 0, wxALIGN_LEFT | wxALL, 5);
+	wxBoxSizer* pResetSizer = new wxBoxSizer(wxVERTICAL);
+	m_pResetBox->Add(pResetSizer);
 
+	pResetSizer->Add(m_pResetAll, 0, wxALIGN_LEFT | wxALL, 5);
+	pResetSizer->Add(m_pResetWorkouts, 0, wxALIGN_LEFT | wxALL, 5);
+	pResetSizer->Add(m_pResetRoutines, 0, wxALIGN_LEFT | wxALL, 5);
 }
