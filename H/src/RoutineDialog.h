@@ -17,27 +17,11 @@
 // Choice list size
 #define CL_SIZE ( 7 )
 
-class Routine
+struct Routine
 {
-private:
 	std::pair<int, wxString> m_pairs[CL_SIZE];
 
-public:
-	Routine()
-	{
-	}
-};
-
-class RoutineInfo
-{
-private:
-	Routine m_routine;
-
-public:
-	RoutineInfo(Routine routine)
-		: m_routine{ routine }
-	{
-	}
+	const wxString& GetStringAt(int index) const { return m_pairs[index].second; }
 };
 
 class RoutineDialog: public wxDialog
@@ -52,7 +36,7 @@ private:
 
 	wxArrayString m_choiceArray;
 	wxChoice* m_pChoice[CL_SIZE];
-	std::vector<RoutineInfo> m_routineInfo;
+	std::vector<Routine> m_routineInfo;
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
