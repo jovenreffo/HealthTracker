@@ -25,7 +25,7 @@ void Settings::SetupControls()
 	m_pResetAll = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ALL), _T("Reset All"), wxDefaultPosition, wxDefaultSize);
 	m_pResetEntries = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ENTRIES), _T("Reset Entries"), wxDefaultPosition, wxDefaultSize);
 	m_pResetWorkouts = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_WORKOUTS), _T("Reset Workouts"), wxDefaultPosition, wxDefaultSize);
-	m_pResetRoutines = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ROUTINES), _T("Reset Workouts"), wxDefaultPosition, wxDefaultSize);
+	m_pResetRoutines = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ROUTINES), _T("Reset Routines"), wxDefaultPosition, wxDefaultSize);
 }
 
 void Settings::SetupSizers()
@@ -62,22 +62,36 @@ void Settings::AddResetGroup()
 
 void Settings::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
-	m_pJournal->GetEntryList()->ResetList();
-	m_WPNotebook->GetWorkoutList()->ResetList();
-	m_WPNotebook->GetRoutineList()->ResetList();
+	if (wxMessageBox(_T("Are you sure you want to delete all of your saved items?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
+	{
+		m_pJournal->GetEntryList()->ResetList();
+		m_WPNotebook->GetWorkoutList()->ResetList();
+		m_WPNotebook->GetRoutineList()->ResetList();
+	}
 }
 
 void Settings::OnResetEntries(wxCommandEvent& WXUNUSED(event))
 {
-	m_pJournal->GetEntryList()->ResetList();
+	if (ConfirmReset())
+		m_pJournal->GetEntryList()->ResetList();
 }
 
 void Settings::OnResetWorkouts(wxCommandEvent& WXUNUSED(event))
 {
-	m_WPNotebook->GetWorkoutList()->ResetList();
+	if (ConfirmReset())
+		m_WPNotebook->GetWorkoutList()->ResetList();
 }
 
 void Settings::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
-	m_WPNotebook->GetRoutineList()->ResetList();
+	if (ConfirmReset())
+		m_WPNotebook->GetRoutineList()->ResetList();
+}
+
+bool Settings::ConfirmReset()
+{
+	if (wxMessageBox(_T("Are you sure you want to reset this list?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		return true;
+	else
+		return false;
 }
