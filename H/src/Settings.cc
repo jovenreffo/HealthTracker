@@ -39,7 +39,7 @@ void Settings::SetupSizers()
 	// Initialise the content sizers and controls before arranging the items
 	m_pResetBox = new wxStaticBoxSizer(wxVERTICAL, m_pTopParent, _T("Reset Items"));
 	
-	m_pTopSizer->Add(m_pResetBox, 0, wxALIGN_LEFT | wxALL, 5);
+	m_pTopSizer->Add(m_pResetBox, wxSizerFlags().Border(wxLEFT | wxALL, 5).Align(wxLEFT));
 
 	this->SetupControls();
 }
@@ -54,10 +54,10 @@ void Settings::AddResetGroup()
 	wxBoxSizer* pResetSizer = new wxBoxSizer(wxVERTICAL);
 	m_pResetBox->Add(pResetSizer);
 
-	pResetSizer->Add(m_pResetAll, 0, wxALIGN_LEFT | wxALL, 5);
-	pResetSizer->Add(m_pResetEntries, 0, wxALIGN_LEFT | wxALL, 5);
-	pResetSizer->Add(m_pResetWorkouts, 0, wxALIGN_LEFT | wxALL, 5);
-	pResetSizer->Add(m_pResetRoutines, 0, wxALIGN_LEFT | wxALL, 5);
+	pResetSizer->Add(m_pResetAll, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
+	pResetSizer->Add(m_pResetEntries, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
+	pResetSizer->Add(m_pResetRoutines, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
+	pResetSizer->Add(m_pResetWorkouts, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
 }
 
 void Settings::OnResetAll(wxCommandEvent& WXUNUSED(event))
