@@ -1,8 +1,8 @@
 #include "RoutineDialog.h"
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
-EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
-EVT_CLOSE(RoutineDialog::OnClose)
+	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
+	EVT_CLOSE(RoutineDialog::OnClose)
 END_EVENT_TABLE()
 
 RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -100,6 +100,21 @@ void RoutineDialog::CreateControls()
 
 void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
+	Routine r;
+	for (auto i{ 0 }; i < CL_SIZE; ++i)
+	{
+	}
+
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+			this->SetReturnCode(wxID_OK);
+			this->Show(false);
+		}
+	}
 }
 
 void RoutineDialog::OnClose(wxCloseEvent& WXUNUSED(event))
