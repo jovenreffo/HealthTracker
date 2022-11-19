@@ -98,6 +98,6 @@ void WPNotebook::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 
 void WPNotebook::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
-	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
 	m_pRoutineDialog->Show(true);
 }
