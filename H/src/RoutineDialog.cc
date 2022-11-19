@@ -1,3 +1,5 @@
+#include <wx/msgdlg.h>
+#include <wx/log.h>
 #include "RoutineDialog.h"
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
@@ -100,9 +102,11 @@ void RoutineDialog::CreateControls()
 
 void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
-	Routine r;
 	for (auto i{ 0 }; i < CL_SIZE; ++i)
 	{
+		Routine r;
+		r.m_pairs[i] = { i, m_pChoice[i]->GetStringSelection() };
+		m_routineInfo.push_back(r);
 	}
 
 	if (Validate() && TransferDataFromWindow())
