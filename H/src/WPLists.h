@@ -6,6 +6,7 @@
 #include <wx/imaglist.h>
 #include <vector>
 #include "EntryList.h"
+#include "RoutineStruct/Routine.h"
 
 #define WPLIST_STYLE ( wxLC_REPORT | wxLC_SINGLE_SEL )
 
@@ -56,6 +57,9 @@ class RoutineList: public wxListView
 private:
 	DECLARE_EVENT_TABLE()
 
+private:
+	std::vector<Routine> m_routineInfo;
+
 public:
 	RoutineList(wxWindow* parent,
 		wxWindowID id,
@@ -63,6 +67,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = WPLIST_STYLE);
 
+	// Setup
 	void Init();
 	void SetupImageList();
 	void SetupColumn();
