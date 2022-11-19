@@ -7,8 +7,8 @@ BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_CLOSE(RoutineDialog::OnClose)
 END_EVENT_TABLE()
 
-RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog{ parent, id, title, pos, size, style }, m_content{ content }
+RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, RoutineList* pRoutineList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog{ parent, id, title, pos, size, style }, m_content{ content }, m_pRoutineList{ pRoutineList }
 {
 	this->Init();
 }

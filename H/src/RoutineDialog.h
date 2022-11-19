@@ -9,20 +9,12 @@
 #include <wx/statline.h>
 #include <wx/choice.h>
 #include "EntryList.h"
+#include "WPLists.h"
+#include "RoutineStruct/Routine.h"
 
 #define RDLG_SIZE ( wxSize(250, 350) )
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
 #define RDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-
-// Choice list size
-#define CL_SIZE ( 7 )
-
-struct Routine
-{
-	std::pair<int, wxString> m_pairs[CL_SIZE];
-
-	const wxString& GetStringAt(int index) const { return m_pairs[index].second; }
-};
 
 class RoutineDialog: public wxDialog
 {
@@ -34,6 +26,7 @@ private:
 	std::vector<EntryContent> m_content;
 	wxArrayString m_contentNames;
 
+	RoutineList* m_pRoutineList;
 	wxArrayString m_choiceArray;
 	wxChoice* m_pChoice[CL_SIZE];
 	std::vector<Routine> m_routineInfo;
@@ -46,12 +39,15 @@ private:
 
 public:
 	RoutineDialog(const std::vector<EntryContent>& content,
+		RoutineList* pRoutineList,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = RDLG_SIZE,
 		long style = RDLG_STYLE);
+
+	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
 
 	// Setup
 	void Init();
