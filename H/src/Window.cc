@@ -126,7 +126,7 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
-	if (wxMessageBox(_T("Are you sure you want to delete all your saved items?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
+	if (wxMessageBox(_T("Are you sure you want to delete all of your saved items?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
 	{
 		m_pListbook->GetJournal()->GetEntryList()->DeleteAllItems();
 		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList()->DeleteAllItems();
