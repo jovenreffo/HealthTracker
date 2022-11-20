@@ -37,43 +37,43 @@ void RoutineDialog::SetupControls()
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// For each day
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[0], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 27);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[0], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 27));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	// Re-init the sizer
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[1], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 22);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[1], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 22));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Tuesday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[2], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 23);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Tuesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[2], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 23));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Wednesday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[3], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 5);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Wednesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[3], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Thursday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[4], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 18);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Thursday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[4], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 18));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Friday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[5], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 34);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Friday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[5], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 34));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Saturday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-	m_pDaySizer->Add(m_pChoice[6], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 20);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Saturday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pChoice[6], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 20));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 	m_pDaySizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 34));
 	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
