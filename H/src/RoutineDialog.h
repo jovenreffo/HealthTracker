@@ -37,6 +37,9 @@ private:
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pDaySizer; // This sizer will be re-initialised and recycled to format all the days in the week.
 
+	wxTextCtrl* m_pTextCtrl;
+	wxString m_routineName;
+
 public:
 	RoutineDialog(const std::vector<EntryContent>& content,
 		RoutineList* pRoutineList,
@@ -48,6 +51,7 @@ public:
 		long style = RDLG_STYLE);
 
 	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
+	const wxString& GetRoutineName() const { return m_routineName; }
 
 	// Setup
 	void Init();

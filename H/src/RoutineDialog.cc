@@ -39,46 +39,51 @@ void RoutineDialog::SetupControls()
 	// For each day
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[0], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 27);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	// Re-init the sizer
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[1], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 22);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Tuesday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[2], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 23);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Wednesday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[3], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 5);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Thursday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[4], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 18);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Friday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[5], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 34);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Saturday:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_pDaySizer->Add(m_pChoice[6], 0, wxALIGN_CENTER_VERTICAL | wxLEFT, 20);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_LEFT);
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
+
+	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	m_pDaySizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 34));
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT));
 
 	// Separate the choices and buttons
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
 
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pDaySizer->Add(m_pOk, 0, wxALIGN_CENTRE | wxALL, 5);
-	m_pDaySizer->Add(m_pCancel, 0, wxALIGN_CENTRE | wxALL, 5);
-	m_pTopSizer->Add(m_pDaySizer, 0, wxALIGN_CENTRE);
+	m_pDaySizer->Add(m_pOk, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE).Border(wxALL, 5));
+	m_pDaySizer->Add(m_pCancel, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE).Border(wxALL, 5));
+	m_pTopSizer->Add(m_pDaySizer, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE).Border(wxALL, 5));
 }
 
 void RoutineDialog::CreateControls()
@@ -96,18 +101,24 @@ void RoutineDialog::CreateControls()
 	// Sizers
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
+
+	// Textctrl
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 }
 
 // events
 
 void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
+	Routine r;
 	for (auto i{ 0 }; i < CL_SIZE; ++i)
 	{
-		Routine r;
 		r.m_pairs[i] = { i, m_pChoice[i]->GetStringSelection() };
 		m_routineInfo.push_back(r);
 	}
+
+	m_routineName = m_pTextCtrl->GetValue();
+	m_pRoutineList->AddItem(m_routineName, r);
 
 	if (Validate() && TransferDataFromWindow())
 	{

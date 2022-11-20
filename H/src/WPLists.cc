@@ -14,7 +14,11 @@ END_EVENT_TABLE()
 
 // event table for RoutineList
 BEGIN_EVENT_TABLE(RoutineList, wxListView)
-
+	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, RoutineList::OnRightClick)
+	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, RoutineList::OnDoubleClick)
+	EVT_LIST_ITEM_SELECTED(wxID_ANY, RoutineList::OnItemSelected)
+	EVT_MENU(wxID_OPEN, RoutineList::OnOpen)
+	EVT_MENU(wxID_DELETE, RoutineList::OnDelete)
 END_EVENT_TABLE()
 
 WorkoutList::WorkoutList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -124,15 +128,25 @@ void WorkoutList::OnDelete(wxCommandEvent& event)
 RoutineList::RoutineList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView{ parent, id, pos, size, style }
 {
-	this->SetupColumn();
+	this->Init();
 }
 
 void RoutineList::Init()
 {
+	this->SetupColumn();
+	this->SetupImageList();
+	this->SetupMenu();
 }
 
 void RoutineList::SetupImageList()
 {
+	m_pImageList = new wxImageList(16, 16);
+
+	m_routineBmp = wxBitmap(path_data::dataDir + _T("\\Images\\routine.png"), wxBITMAP_TYPE_PNG);
+	m_routineBmp.ResetAlpha();
+
+	m_pImageList->Add(m_routineBmp);
+	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
 
 void RoutineList::SetupColumn()
@@ -148,8 +162,10 @@ void RoutineList::SetupMenu()
 {
 }
 
-void RoutineList::AddItem(const wxString& name, const wxString& content)
+void RoutineList::AddItem(const wxString& name, const Routine& routine)
 {
+	m_routineInfo.push_back(routine);
+	this->InsertItem(0, name);
 }
 
 void RoutineList::ResetList()
@@ -158,5 +174,25 @@ void RoutineList::ResetList()
 }
 
 void RoutineList::OpenRoutine()
+{
+}
+
+void RoutineList::OnRightClick(wxListEvent& event)
+{
+}
+
+void RoutineList::OnDoubleClick(wxListEvent& event)
+{
+}
+
+void RoutineList::OnItemSelected(wxListEvent& event)
+{
+}
+
+void RoutineList::OnOpen(wxCommandEvent& event)
+{
+}
+
+void RoutineList::OnDelete(wxCommandEvent& event)
 {
 }

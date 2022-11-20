@@ -58,7 +58,12 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	wxMenu* m_pMenu;
+
 	std::vector<Routine> m_routineInfo;
+	
+	wxImageList* m_pImageList;
+	wxBitmap m_routineBmp;
 
 public:
 	RoutineList(wxWindow* parent,
@@ -73,9 +78,16 @@ public:
 	void SetupColumn();
 	void SetupMenu();
 
-	void AddItem(const wxString& name, const wxString& content);
+	void AddItem(const wxString& name, const Routine& routine);
 	void ResetList();
 	void OpenRoutine();
+
+	// Events
+	void OnRightClick(wxListEvent& event);
+	void OnDoubleClick(wxListEvent& event);
+	void OnItemSelected(wxListEvent& event);
+	void OnOpen(wxCommandEvent& event);
+	void OnDelete(wxCommandEvent& event);
 };
 
 #endif
