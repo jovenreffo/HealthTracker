@@ -49,9 +49,11 @@ void EntryList::SetupPopUpMenu()
 
 void EntryList::SetupBitmaps()
 {
-	m_pencilBmp = wxBitmap(path_data::dataDir + _T("\\Images\\pencil.png"), wxBITMAP_TYPE_PNG);
-
 	m_pImageList = new wxImageList(16, 16);
+
+	m_pencilBmp = wxBitmap(path_data::dataDir + _T("\\Images\\pencil.png"), wxBITMAP_TYPE_PNG);
+	m_pencilBmp.ResetAlpha();
+
 	m_pImageList->Add(m_pencilBmp);
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
