@@ -162,6 +162,7 @@ void RoutineList::SetupMenu()
 {
 	m_pMenu = new wxMenu();
 
+	m_pMenu->Append(wxID_OPEN, _T("&Open Routine"));
 	m_pMenu->AppendSeparator();
 	m_pMenu->Append(wxID_DELETE, _T("&Delete"));
 }
