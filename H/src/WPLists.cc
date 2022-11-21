@@ -160,6 +160,10 @@ void RoutineList::SetupColumn()
 
 void RoutineList::SetupMenu()
 {
+	m_pMenu = new wxMenu();
+
+	m_pMenu->AppendSeparator();
+	m_pMenu->Append(wxID_DELETE, _T("&Delete"));
 }
 
 void RoutineList::AddItem(const wxString& name, const Routine& routine)
@@ -179,20 +183,27 @@ void RoutineList::OpenRoutine()
 
 void RoutineList::OnRightClick(wxListEvent& event)
 {
+	this->PopupMenu(m_pMenu);
 }
 
 void RoutineList::OnDoubleClick(wxListEvent& event)
 {
+	this->OpenRoutine();
 }
 
 void RoutineList::OnItemSelected(wxListEvent& event)
 {
+	m_selectionIndex = this->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	m_currentItemName = this->GetItemText(m_selectionIndex);
 }
 
 void RoutineList::OnOpen(wxCommandEvent& event)
 {
+	this->OpenRoutine();
 }
 
 void RoutineList::OnDelete(wxCommandEvent& event)
 {
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->DeleteItem(m_selectionIndex);
 }
