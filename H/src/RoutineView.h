@@ -34,6 +34,17 @@ private:
 	wxBitmap m_viewBmp;
 	wxBitmapButton* m_pViewButton;
 
+	wxArrayString m_choiceArray;
+	wxChoice* m_pChoice[CL_SIZE];
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pDaySizer;
+
+	wxTextCtrl* m_pTextCtrl;
+
 public:
 	RoutineView(const std::vector<Routine>& routineInfo,
 		RoutineDialog* pRoutineDialog,
