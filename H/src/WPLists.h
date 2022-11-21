@@ -65,6 +65,9 @@ private:
 	wxImageList* m_pImageList;
 	wxBitmap m_routineBmp;
 
+	wxString m_currentItemName;
+	long m_selectionIndex;
+
 public:
 	RoutineList(wxWindow* parent,
 		wxWindowID id,

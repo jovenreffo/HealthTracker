@@ -60,9 +60,12 @@ public:
 	void SetupControls();
 	void CreateControls();
 
+	void HandleExit();
+
 	// Events
 	void OnOK(wxCommandEvent& WXUNUSED(event));
 	void OnClose(wxCloseEvent& WXUNUSED(event));
+	void OnEnter(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif
