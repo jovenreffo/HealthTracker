@@ -11,6 +11,7 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/statline.h>
 #include <wx/choice.h>
 #include "EntryList.h"
@@ -29,6 +30,9 @@ private:
 private:
 	std::vector<Routine> m_routineInfo;
 	RoutineDialog* m_pRoutineDialog;
+
+	wxBitmap m_viewBmp;
+	wxBitmapButton* m_pViewButton;
 
 public:
 	RoutineView(const std::vector<Routine>& routineInfo,
