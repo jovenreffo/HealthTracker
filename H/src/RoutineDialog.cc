@@ -5,6 +5,7 @@
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
 	EVT_CLOSE(RoutineDialog::OnClose)
+	EVT_TEXT_ENTER(wxID_ANY, RoutineDialog::OnEnter)
 END_EVENT_TABLE()
 
 RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, RoutineList* pRoutineList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -103,22 +104,30 @@ void RoutineDialog::CreateControls()
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// Textctrl
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &RoutineDialog::OnEnter, this);
+}
+
+void RoutineDialog::HandleExit()
+{
+	Routine r;
+	for (auto i{ 0 }; i < CL_SIZE; ++i)
+	{
+		// store the selected workout at index i in the current routine
+		r.m_pairs[i] = { i, m_pChoice[i]->GetStringSelection() };
+		m_routineInfo.push_back(r);
+	}
+
+	// get the value the user input to the text ctrl
+	m_routineName = m_pTextCtrl->GetValue();
+	m_pRoutineList->AddItem(m_routineName, r);
 }
 
 // events
 
 void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
-	Routine r;
-	for (auto i{ 0 }; i < CL_SIZE; ++i)
-	{
-		r.m_pairs[i] = { i, m_pChoice[i]->GetStringSelection() };
-		m_routineInfo.push_back(r);
-	}
-
-	m_routineName = m_pTextCtrl->GetValue();
-	m_pRoutineList->AddItem(m_routineName, r);
+	this->HandleExit();
 
 	if (Validate() && TransferDataFromWindow())
 	{
@@ -135,4 +144,12 @@ void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 void RoutineDialog::OnClose(wxCloseEvent& WXUNUSED(event))
 {
 	this->Destroy();
+}
+
+void RoutineDialog::OnEnter(wxCommandEvent& WXUNUSED(event))
+{
+	this->HandleExit();
+
+	this->SetReturnCode(wxID_OK);
+	this->Show(false);
 }
