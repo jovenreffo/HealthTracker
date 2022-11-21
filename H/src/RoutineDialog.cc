@@ -21,11 +21,6 @@ void RoutineDialog::Init()
 	this->SetupSizing();
 }
 
-void RoutineDialog::RetrieveAllNames()
-{
-
-}
-
 void RoutineDialog::SetupSizing()
 {
 	this->SetMinSize(RDLG_SIZE);

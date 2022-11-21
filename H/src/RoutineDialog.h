@@ -55,7 +55,6 @@ public:
 
 	// Setup
 	void Init();
-	void RetrieveAllNames();
 	void SetupSizing();
 	void SetupControls();
 	void CreateControls();
