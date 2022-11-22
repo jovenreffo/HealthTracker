@@ -16,7 +16,6 @@
 #include <wx/choice.h>
 #include "EntryList.h"
 #include "RoutineStruct/Routine.h"
-#include "RoutineDialog.h"
 
 #define RVDLG_SIZE ( wxSize(250, 350) )
 #define RVDLG_MAX_SIZE ( wxSize(285, 365) )
@@ -29,7 +28,6 @@ private:
 
 private:
 	std::vector<Routine> m_routineInfo;
-	RoutineDialog* m_pRoutineDialog;
 
 	wxBitmap m_viewBmp;
 	wxBitmapButton* m_pViewButton;
@@ -47,13 +45,23 @@ private:
 
 public:
 	RoutineView(const std::vector<Routine>& routineInfo,
-		RoutineDialog* pRoutineDialog,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = RVDLG_SIZE,
 		long style = RVDLG_STYLE);
+
+	// Setup
+	void Init();
+	void SetupSizing();
+	void SetupControls();
+	void CreateControls();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
+	void OnClose(wxCloseEvent& event);
 };
 
 #endif
