@@ -61,6 +61,8 @@ private:
 private:
 	wxMenu* m_pMenu;
 
+	std::vector<EntryContent> m_content;
+
 	std::vector<Routine> m_routineInfo;
 	RoutineView* m_pRoutineView;
 	
@@ -83,6 +85,7 @@ public:
 	void SetupColumn();
 	void SetupMenu();
 
+	void SetContent(const std::vector<EntryContent>& content) { m_content = content; }
 	void AddItem(const wxString& name, const Routine& routine);
 	void ResetList();
 	void OpenRoutine();
