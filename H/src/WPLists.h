@@ -7,6 +7,7 @@
 #include <vector>
 #include "EntryList.h"
 #include "RoutineStruct/Routine.h"
+#include "RoutineView.h"
 
 #define WPLIST_STYLE ( wxLC_REPORT | wxLC_SINGLE_SEL )
 
@@ -61,6 +62,7 @@ private:
 	wxMenu* m_pMenu;
 
 	std::vector<Routine> m_routineInfo;
+	RoutineView* m_pRoutineView;
 	
 	wxImageList* m_pImageList;
 	wxBitmap m_routineBmp;

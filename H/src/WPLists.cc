@@ -180,6 +180,8 @@ void RoutineList::ResetList()
 
 void RoutineList::OpenRoutine()
 {
+	m_pRoutineView = new RoutineView(m_routineInfo, this, wxID_ANY, wxString(_T("View Routine - ")) << m_currentItemName, wxDefaultPosition, wxDefaultSize);
+	m_pRoutineView->Show(true);
 }
 
 void RoutineList::OnRightClick(wxListEvent& event)
