@@ -27,6 +27,7 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	std::vector<EntryContent> m_content;
 	std::vector<Routine> m_routineInfo;
 
 	wxBitmap m_viewBmp;
@@ -45,6 +46,7 @@ private:
 
 public:
 	RoutineView(const std::vector<Routine>& routineInfo,
+		const std::vector<EntryContent>& content,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title,
