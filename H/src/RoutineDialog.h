@@ -24,7 +24,6 @@ private:
 private:
 	// the ctor will take an EC vec so we can add the correct items to a selection list
 	std::vector<EntryContent> m_content;
-	wxArrayString m_contentNames;
 
 	RoutineList* m_pRoutineList;
 	wxArrayString m_choiceArray;
@@ -55,9 +54,9 @@ public:
 
 	// Setup
 	void Init();
+	void CreateControls();
 	void SetupSizing();
 	void SetupControls();
-	void CreateControls();
 
 	void HandleExit();
 
