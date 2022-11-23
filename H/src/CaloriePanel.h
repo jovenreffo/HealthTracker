@@ -5,6 +5,11 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 
+enum CAL
+{
+	ID_NEW_ITEM
+};
+
 class CaloriePanel: public wxPanel
 {
 private:
@@ -19,6 +24,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	// Setup
+
+	// Events
+	void OnNewItem(wxCommandEvent& event);
 };
 
 #endif
