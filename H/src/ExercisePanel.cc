@@ -30,5 +30,5 @@ void ExercisePanel::SetupSizers()
 	this->SetSizerAndFit(m_pBoxSizer);
 
 	// Add any elements
-	m_pBoxSizer->Add(m_pExerciseBook, 1, wxEXPAND | wxALL, 5);
+	m_pBoxSizer->Add(m_pExerciseBook, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
