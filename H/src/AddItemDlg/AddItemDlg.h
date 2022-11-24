@@ -31,6 +31,9 @@ private:
 	wxBoxSizer* m_pItemSizer;
 	wxBoxSizer* m_pButtonSizer;
 
+	wxString m_itemName;
+	int m_calorieContent;
+
 public:
 	AddItemDlg(wxWindow* parent,
 		wxWindowID id,
@@ -38,6 +41,9 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = ADDITEMDLG_STYLE);
+
+	const wxString& GetItemName() const { return m_itemName; }
+	const int GetCalorieContent() const { return m_calorieContent; }
 
 	// Setup
 	void Init();
