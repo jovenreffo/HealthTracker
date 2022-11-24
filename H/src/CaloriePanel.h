@@ -5,7 +5,7 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 
-enum CAL
+enum class C
 {
 	ID_NEW_ITEM
 };
@@ -26,6 +26,9 @@ public:
 		long style = 0L);
 
 	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 
 	// Events
 	void OnNewItem(wxCommandEvent& event);
