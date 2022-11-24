@@ -20,6 +20,7 @@ void CaloriePanel::SetupListView()
 {
 	m_pListView->AppendColumn(_T("Food/Item"));
 	m_pListView->AppendColumn(_T("Calories"));
+	m_pListView->AppendColumn(_T("Total"));
 }
 
 void CaloriePanel::SetupControls()
@@ -43,5 +44,6 @@ void CaloriePanel::SetupSizers()
 
 void CaloriePanel::OnNewItem(wxCommandEvent& event)
 {
-
+	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Item"), wxDefaultPosition, wxDefaultSize);
+	m_pAddItemDlg->Show(true);
 }

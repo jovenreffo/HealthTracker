@@ -5,6 +5,7 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
+#include "AddItemDlg/AddItemDlg.h"
 
 enum class C
 {
@@ -20,6 +21,8 @@ private:
 	wxBoxSizer* m_pBoxSizer;
 	wxListView* m_pListView;
 	wxButton* m_pAddButton;
+
+	AddItemDlg* m_pAddItemDlg;
 
 public:
 	CaloriePanel(wxWindow* parent,
