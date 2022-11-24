@@ -1,7 +1,9 @@
+#include <wx/log.h>
 #include "AddItemDlg.h"
 
 BEGIN_EVENT_TABLE(AddItemDlg, wxDialog)
-
+	EVT_BUTTON(wxID_OK, AddItemDlg::OnOK)
+	EVT_BUTTON(wxID_CANCEL, AddItemDlg::OnCancel)
 END_EVENT_TABLE()
 
 AddItemDlg::AddItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -30,7 +32,7 @@ void AddItemDlg::SetupControls()
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 
 	m_pFoodName = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
-	m_pCalories = new wxSpinCtrl(this, wxID_ANY, _T("0"), wxDefaultPosition, wxDefaultSize, 0, 0);
+	m_pCalories = new wxSpinCtrl(this, wxID_ANY, _T("0"), wxDefaultPosition, wxDefaultSize, 0, 0, 10000);
 }
 
 void AddItemDlg::SetupSizers()
@@ -43,11 +45,16 @@ void AddItemDlg::SetupSizers()
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Item name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Item name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 5));
 	m_pTopSizer->Add(m_pItemSizer);
 
-	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
+	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pItemSizer->Add(m_pCalories, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pTopSizer->Add(m_pItemSizer);
+
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxLEFT, 5));
 	m_pTopSizer->Add(m_pButtonSizer);
 }
 
@@ -55,6 +62,16 @@ void AddItemDlg::SetupSizers()
 
 void AddItemDlg::OnOK(wxCommandEvent& event)
 {
+	// Get the values the user entered
+	m_itemName = m_pFoodName->GetValue();
+	m_calorieContent = m_pCalories->GetValue();
+
+#ifdef _DEBUG
+	wxLogMessage("%s\n%d",
+		m_itemName,
+		m_calorieContent);
+#endif
+
 	if (Validate() && TransferDataFromWindow())
 	{
 		if (IsModal())
