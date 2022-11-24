@@ -4,6 +4,7 @@
 #include <wx/panel.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
+#include <wx/listctrl.h>
 
 enum class C
 {
@@ -16,7 +17,9 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
-
+	wxBoxSizer* m_pBoxSizer;
+	wxListView* m_pListView;
+	wxButton* m_pAddButton;
 
 public:
 	CaloriePanel(wxWindow* parent,
@@ -27,6 +30,7 @@ public:
 
 	// Setup
 	void Init();
+	void SetupListView();
 	void SetupControls();
 	void SetupSizers();
 
