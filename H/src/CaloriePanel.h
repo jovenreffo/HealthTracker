@@ -3,6 +3,7 @@
 
 #include <wx/panel.h>
 #include <wx/button.h>
+#include <wx/imaglist.h>
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
 #include "AddItemDlg/AddItemDlg.h"
@@ -24,6 +25,9 @@ private:
 
 	AddItemDlg* m_pAddItemDlg;
 
+	wxImageList* m_pImageList;
+	wxBitmap m_calorieBmp;
+
 public:
 	CaloriePanel(wxWindow* parent,
 		wxWindowID id,
@@ -34,6 +38,7 @@ public:
 	// Setup
 	void Init();
 	void SetupListView();
+	void SetupImageList();
 	void SetupControls();
 	void SetupSizers();
 

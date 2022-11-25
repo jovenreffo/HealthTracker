@@ -1,4 +1,5 @@
 #include "CaloriePanel.h"
+#include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
 	EVT_BUTTON(static_cast<int>(C::ID_NEW_ITEM), CaloriePanel::OnNewItem)
@@ -20,6 +21,17 @@ void CaloriePanel::SetupListView()
 {
 	m_pListView->AppendColumn(_T("Food/Item"));
 	m_pListView->AppendColumn(_T("Calories"));
+	this->SetupImageList();
+}
+
+void CaloriePanel::SetupImageList()
+{
+	m_pImageList = new wxImageList(16, 16);
+
+	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calorie_small.png"), wxBITMAP_TYPE_PNG);
+	m_calorieBmp.ResetAlpha();
+
+	m_pListView->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
 
 void CaloriePanel::SetupControls()
