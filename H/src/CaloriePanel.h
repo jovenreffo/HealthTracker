@@ -2,6 +2,7 @@
 #define _CALORIEPANEL_H_
 
 #include <wx/panel.h>
+#include <wx/menu.h>
 #include <wx/button.h>
 #include <wx/imaglist.h>
 #include <wx/sizer.h>
@@ -51,12 +52,20 @@ class CalorieList: public wxListView
 private:
 	DECLARE_EVENT_TABLE()
 
+private:
+	wxMenu* m_pMenu;
+
 public:
 	CalorieList(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	// Events
+	void OnRightClick(wxListEvent& event);
+	void OnDoubleClick(wxListEvent& event);
+	void OnDeleteItem(wxCommandEvent& event);
 };
 
 #endif

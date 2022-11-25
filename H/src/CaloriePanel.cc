@@ -6,7 +6,9 @@ BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
 END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE(CalorieList, wxListView)
-
+	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, CalorieList::OnRightClick)
+	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, CalorieList::OnDoubleClick)
+	EVT_MENU(wxID_DELETE, CalorieList::OnDeleteItem)
 END_EVENT_TABLE()
 
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -68,5 +70,17 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 
 CalorieList::CalorieList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView(parent, id, pos, size, style)
+{
+}
+
+void CalorieList::OnRightClick(wxListEvent& event)
+{
+}
+
+void CalorieList::OnDoubleClick(wxListEvent& event)
+{
+}
+
+void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
 }
