@@ -12,8 +12,8 @@
 #include <wx/textctrl.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDITEMDLG_SIZE  ( wxSize(300, 225) )
-#define ADDITEMDLG_MAX	 ( wxSize(350, 275) )
+#define ADDITEMDLG_SIZE  ( wxSize(300, 180) )
+#define ADDITEMDLG_MAX	 ( wxSize(350, 230) )
 
 enum class AID
 {
