@@ -31,6 +31,7 @@ void CaloriePanel::SetupImageList()
 	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calorie_small.png"), wxBITMAP_TYPE_PNG);
 	m_calorieBmp.ResetAlpha();
 
+	m_pImageList->Add(m_calorieBmp);
 	m_pListView->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
 
