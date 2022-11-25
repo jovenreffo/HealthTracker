@@ -31,8 +31,9 @@ void AddItemDlg::SetupControls()
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 
-	m_pFoodName = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize);
-	m_pCalories = new wxSpinCtrl(this, wxID_ANY, _T("0"), wxDefaultPosition, wxDefaultSize, 0, 0, 10000);
+	m_pFoodName = new wxTextCtrl(this, static_cast<int>(AID::ID_CALORIE_TEXT), wxEmptyString, wxDefaultPosition, wxDefaultSize);
+	m_pCalories = new wxSpinCtrl(this, static_cast<int>(AID::ID_CALORIE_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, 0, 0, 10000);
+	m_pCalories->Bind(wxEVT_SPINCTRL, &AddItemDlg::OnSpinUp, this);
 }
 
 void AddItemDlg::SetupSizers()
@@ -88,4 +89,10 @@ void AddItemDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
+}
+
+void AddItemDlg::OnSpinUp(wxSpinEvent& event)
+{
+	if (event.GetEventType() == wxEVT_SPIN_UP)
+		m_pCalories->SetValue(m_pCalories->GetValue() + 25);
 }

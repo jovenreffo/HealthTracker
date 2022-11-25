@@ -15,6 +15,12 @@
 #define ADDITEMDLG_SIZE  ( wxSize(300, 225) )
 #define ADDITEMDLG_MAX	 ( wxSize(350, 275) )
 
+enum class AID
+{
+	ID_CALORIE_TEXT,
+	ID_CALORIE_SPIN
+};
+
 class AddItemDlg: public wxDialog
 {
 private:
@@ -54,6 +60,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnSpinUp(wxSpinEvent& event);
 };
 
 #endif
