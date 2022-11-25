@@ -20,7 +20,6 @@ void CaloriePanel::SetupListView()
 {
 	m_pListView->AppendColumn(_T("Food/Item"));
 	m_pListView->AppendColumn(_T("Calories"));
-	m_pListView->AppendColumn(_T("Total"));
 }
 
 void CaloriePanel::SetupControls()
