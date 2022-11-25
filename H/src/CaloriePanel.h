@@ -46,4 +46,17 @@ public:
 	void OnNewItem(wxCommandEvent& event);
 };
 
+class CalorieList: public wxListView
+{
+private:
+	DECLARE_EVENT_TABLE()
+
+public:
+	CalorieList(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+};
+
 #endif

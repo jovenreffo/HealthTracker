@@ -5,6 +5,10 @@ BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
 	EVT_BUTTON(static_cast<int>(C::ID_NEW_ITEM), CaloriePanel::OnNewItem)
 END_EVENT_TABLE()
 
+BEGIN_EVENT_TABLE(CalorieList, wxListView)
+
+END_EVENT_TABLE()
+
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style)
 {
@@ -58,4 +62,11 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 {
 	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 	m_pAddItemDlg->Show(true);
+}
+
+// ======================== CalorieList class ========================
+
+CalorieList::CalorieList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style)
+{
 }
