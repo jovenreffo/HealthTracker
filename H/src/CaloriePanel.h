@@ -11,7 +11,8 @@
 
 enum class C
 {
-	ID_NEW_ITEM
+	ID_NEW_ITEM,
+	ID_TOTAL
 };
 
 class CalorieList;
@@ -26,6 +27,9 @@ private:
 	CalorieList* m_pCalorieList;
 	wxButton* m_pAddButton;
 
+	wxStaticText* m_pTotalText;
+	long m_total;
+
 	AddItemDlg* m_pAddItemDlg;
 
 	wxImageList* m_pImageList;
@@ -37,6 +41,8 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+
+	void DoTotalCalc();
 
 	// Setup
 	void Init();
