@@ -47,6 +47,12 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 {
 	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 	m_pAddItemDlg->Show(true);
+
+	if (m_pAddItemDlg->ShowModal() == wxID_OK)
+	{
+		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(),
+			m_pAddItemDlg->GetCalorieContent());
+	}
 }
 
 // ======================== CalorieList class ========================
@@ -55,6 +61,12 @@ CalorieList::CalorieList(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	: wxListView(parent, id, pos, size, style)
 {
 	this->Init();
+}
+
+void CalorieList::AddItem(const wxString& item, int cal_count)
+{
+	this->InsertItem(0, item);
+	this->SetItem(0, 1, std::to_string(cal_count));
 }
 
 void CalorieList::Init()
