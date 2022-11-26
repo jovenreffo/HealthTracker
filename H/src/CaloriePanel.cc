@@ -1,5 +1,6 @@
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
+#include <wx/msgdlg.h>
 
 // CaloriePanel event table
 BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
@@ -71,8 +72,16 @@ void CalorieList::AddItem(const wxString& item, int cal_count)
 
 void CalorieList::Init()
 {
+	this->SetupMenu();
 	this->SetupColumns();
 	this->SetupImageList();
+}
+
+void CalorieList::SetupMenu()
+{
+	m_pMenu = new wxMenu();
+
+	m_pMenu->Append(wxID_DELETE, _T("Delete"));
 }
 
 void CalorieList::SetupColumns()
@@ -96,6 +105,7 @@ void CalorieList::SetupImageList()
 
 void CalorieList::OnRightClick(wxListEvent& event)
 {
+	this->PopupMenu(m_pMenu);
 }
 
 void CalorieList::OnDoubleClick(wxListEvent& event)
@@ -104,4 +114,6 @@ void CalorieList::OnDoubleClick(wxListEvent& event)
 
 void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->DeleteItem(GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED));
 }
