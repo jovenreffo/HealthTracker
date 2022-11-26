@@ -68,6 +68,7 @@ public:
 
 	// Setup
 	void Init();
+	void SetupMenu();
 	void SetupColumns();
 	void SetupImageList();
 
