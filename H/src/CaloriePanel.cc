@@ -1,10 +1,12 @@
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
 
+// CaloriePanel event table
 BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
 	EVT_BUTTON(static_cast<int>(C::ID_NEW_ITEM), CaloriePanel::OnNewItem)
 END_EVENT_TABLE()
 
+// CalorieList event table
 BEGIN_EVENT_TABLE(CalorieList, wxListView)
 	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, CalorieList::OnRightClick)
 	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, CalorieList::OnDoubleClick)
@@ -23,28 +25,9 @@ void CaloriePanel::Init()
 	this->SetupSizers();
 }
 
-void CaloriePanel::SetupListView()
-{
-	m_pListView->AppendColumn(_T("Food/Item"));
-	m_pListView->AppendColumn(_T("Calories"));
-	this->SetupImageList();
-}
-
-void CaloriePanel::SetupImageList()
-{
-	m_pImageList = new wxImageList(16, 16);
-
-	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calorie_small.png"), wxBITMAP_TYPE_PNG);
-	m_calorieBmp.ResetAlpha();
-
-	m_pImageList->Add(m_calorieBmp);
-	m_pListView->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
-}
-
 void CaloriePanel::SetupControls()
 {
-	m_pListView = new wxListView(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
-	this->SetupListView();
+	m_pCalorieList = new CalorieList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	m_pAddButton = new wxButton(this, static_cast<int>(C::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 }
@@ -54,7 +37,7 @@ void CaloriePanel::SetupSizers()
 	m_pBoxSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pBoxSizer);
 
-	m_pBoxSizer->Add(m_pListView, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pBoxSizer->Add(m_pCalorieList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 	m_pBoxSizer->Add(m_pAddButton, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 }
 
@@ -71,7 +54,33 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 CalorieList::CalorieList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView(parent, id, pos, size, style)
 {
+	this->Init();
 }
+
+void CalorieList::Init()
+{
+	this->SetupColumns();
+	this->SetupImageList();
+}
+
+void CalorieList::SetupColumns()
+{
+	this->AppendColumn(_T("Food/Items"));
+	this->AppendColumn(_T("Calories"));
+}
+
+void CalorieList::SetupImageList()
+{
+	m_pImageList = new wxImageList(16, 16);
+
+	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calorie_small.png"), wxBITMAP_TYPE_PNG);
+	m_calorieBmp.ResetAlpha();
+
+	m_pImageList->Add(m_calorieBmp);
+	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
+}
+
+// Events
 
 void CalorieList::OnRightClick(wxListEvent& event)
 {

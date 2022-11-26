@@ -14,6 +14,8 @@ enum class C
 	ID_NEW_ITEM
 };
 
+class CalorieList;
+
 class CaloriePanel: public wxPanel
 {
 private:
@@ -21,7 +23,7 @@ private:
 
 private:
 	wxBoxSizer* m_pBoxSizer;
-	wxListView* m_pListView;
+	CalorieList* m_pCalorieList;
 	wxButton* m_pAddButton;
 
 	AddItemDlg* m_pAddItemDlg;
@@ -38,8 +40,6 @@ public:
 
 	// Setup
 	void Init();
-	void SetupListView();
-	void SetupImageList();
 	void SetupControls();
 	void SetupSizers();
 
@@ -54,6 +54,8 @@ private:
 
 private:
 	wxMenu* m_pMenu;
+	wxImageList* m_pImageList;
+	wxBitmap m_calorieBmp;
 
 public:
 	CalorieList(wxWindow* parent,
@@ -61,6 +63,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	// Setup
+	void Init();
+	void SetupColumns();
+	void SetupImageList();
 
 	// Events
 	void OnRightClick(wxListEvent& event);
