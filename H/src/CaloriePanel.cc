@@ -1,6 +1,8 @@
+#include <wx/msgdlg.h>
+#include <wx/string.h>
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
-#include <wx/msgdlg.h>
+#include "Font/Font.hpp"
 
 // CaloriePanel event table
 BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
@@ -20,6 +22,19 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Init();
 }
 
+void CaloriePanel::DoTotalCalc()
+{
+	// Loop through the calorie list's contents and accumulate a total
+	for (auto i{ 0 }; i < m_pCalorieList->GetItemCount(); ++i)
+	{
+		m_total += wxAtoi(m_pCalorieList->GetItemText(i, 1));
+	}
+
+	// Update the label
+	m_pTotalText->SetLabel(wxString("Total: ") << m_total << " kcal");
+	m_total = 0; // reset the total for next use
+}
+
 void CaloriePanel::Init()
 {
 	this->SetupControls();
@@ -31,6 +46,9 @@ void CaloriePanel::SetupControls()
 	m_pCalorieList = new CalorieList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	m_pAddButton = new wxButton(this, static_cast<int>(C::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
+
+	m_pTotalText = new wxStaticText(this, static_cast<int>(C::ID_TOTAL), _T("Total:"), wxDefaultPosition, wxDefaultSize);
+	m_pTotalText->SetFont(Fonts::GetBoldFont(12));
 }
 
 void CaloriePanel::SetupSizers()
@@ -38,8 +56,12 @@ void CaloriePanel::SetupSizers()
 	m_pBoxSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pBoxSizer);
 
+	wxBoxSizer* m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pHorizontalSizer->Add(m_pAddButton, wxSizerFlags().Proportion(0).Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pTotalText, wxSizerFlags().Proportion(0).Border(wxTOP, 8));
+
 	m_pBoxSizer->Add(m_pCalorieList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pBoxSizer->Add(m_pAddButton, wxSizerFlags().Proportion(0).Border(wxALL, 5));
+	m_pBoxSizer->Add(m_pHorizontalSizer);
 }
 
 // Events
@@ -53,6 +75,7 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 	{
 		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(),
 			m_pAddItemDlg->GetCalorieContent());
+		this->DoTotalCalc(); // update the total
 	}
 }
 
