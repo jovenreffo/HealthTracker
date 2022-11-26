@@ -67,12 +67,6 @@ void AddItemDlg::OnOK(wxCommandEvent& event)
 	m_itemName = m_pFoodName->GetValue();
 	m_calorieContent = m_pCalories->GetValue();
 
-#ifdef _DEBUG
-	wxLogMessage("%s\n%d",
-		m_itemName,
-		m_calorieContent);
-#endif
-
 	if (Validate() && TransferDataFromWindow())
 	{
 		if (IsModal())
