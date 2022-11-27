@@ -62,9 +62,11 @@ private:
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
 	wxBitmap m_calorieBmp;
+	CaloriePanel* m_pCaloriePanel;
 
 public:
-	CalorieList(wxWindow* parent,
+	CalorieList(CaloriePanel* pCaloriePanel,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
