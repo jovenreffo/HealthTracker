@@ -43,7 +43,7 @@ void CaloriePanel::Init()
 
 void CaloriePanel::SetupControls()
 {
-	m_pCalorieList = new CalorieList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
+	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	m_pAddButton = new wxButton(this, static_cast<int>(C::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 
@@ -81,8 +81,8 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 
 // ======================== CalorieList class ========================
 
-CalorieList::CalorieList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style)
+CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style), m_pCaloriePanel{ pCaloriePanel }
 {
 	this->Init();
 }
@@ -138,5 +138,8 @@ void CalorieList::OnDoubleClick(wxListEvent& event)
 void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
 	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	{
 		this->DeleteItem(GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED));
+		m_pCaloriePanel->DoTotalCalc(); // We will need to recalculate the total
+	}
 }
