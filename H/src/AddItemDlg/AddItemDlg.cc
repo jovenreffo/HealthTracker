@@ -56,7 +56,7 @@ void AddItemDlg::SetupSizers()
 
 	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pCalories, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pItemSizer->Add(m_pCalories, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 20));
 	m_pTopSizer->Add(m_pItemSizer);
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxLEFT, 5));
