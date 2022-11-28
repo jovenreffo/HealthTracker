@@ -1,5 +1,6 @@
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
+#include <wx/valtext.h>
 #include "SaveWorkoutDialog.h"
 
 BEGIN_EVENT_TABLE(SaveWorkoutDialog, wxDialog)
@@ -17,7 +18,7 @@ SaveWorkoutDialog::SaveWorkoutDialog(wxWindow* parent, wxWindowID id, const wxSt
 
 void SaveWorkoutDialog::Init()
 {
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_ALPHA, &m_textValue));
 	m_pNameText = new wxStaticText(this, wxID_STATIC, _T("Workout name:"));
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
@@ -48,9 +49,6 @@ void SaveWorkoutDialog::SetupControls()
 
 void SaveWorkoutDialog::OnOK(wxCommandEvent& event)
 {
-	// set the value of our wxString member to what the user has entered for later use
-	m_textValue = m_pTextCtrl->GetValue();
-
 	if (Validate() && TransferDataFromWindow())
 	{
 		if (IsModal())
