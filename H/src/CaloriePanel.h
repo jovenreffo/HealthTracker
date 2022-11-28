@@ -72,7 +72,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 
-	void AddItem(const wxString& item, int cal_count);
+	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
 
 	// Setup
 	void Init();

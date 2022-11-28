@@ -73,8 +73,7 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 
 	if (m_pAddItemDlg->ShowModal() == wxID_OK)
 	{
-		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(),
-			m_pAddItemDlg->GetCalorieContent());
+		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(), m_pAddItemDlg);
 		this->DoTotalCalc(); // update the total
 	}
 }
@@ -87,10 +86,10 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 	this->Init();
 }
 
-void CalorieList::AddItem(const wxString& item, int cal_count)
+void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 {
 	this->InsertItem(0, item);
-	this->SetItem(0, 1, std::to_string(cal_count));
+	this->SetItem(0, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
 }
 
 void CalorieList::Init()
