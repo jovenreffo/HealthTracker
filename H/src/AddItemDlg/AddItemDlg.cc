@@ -7,6 +7,7 @@ BEGIN_EVENT_TABLE(AddItemDlg, wxDialog)
 	EVT_UPDATE_UI(wxID_OK, AddItemDlg::OnUpdateOK)
 	EVT_BUTTON(wxID_OK, AddItemDlg::OnOK)
 	EVT_BUTTON(wxID_CANCEL, AddItemDlg::OnCancel)
+	EVT_TEXT_ENTER(wxID_ANY, AddItemDlg::OnEnter)
 END_EVENT_TABLE()
 
 AddItemDlg::AddItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -33,11 +34,21 @@ void AddItemDlg::SetupControls()
 {
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
-	;
+	
 	m_pFoodName = new wxTextCtrl(this, static_cast<int>(AID::ID_CALORIE_TEXT), wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(wxFILTER_ALPHA, &m_itemName));
+
+	// Initialize spin controls
 	m_pCalories = new wxSpinCtrl(this, static_cast<int>(AID::ID_CALORIE_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
 	m_pCalories->SetValidator(wxGenericValidator(&m_calorieContent)); // wxSpinCtrl does not take a validator in the ctor, so set it here.
-	m_pCalories->Bind(wxEVT_TEXT_ENTER, &AddItemDlg::OnEnter, this);
+
+	m_pCarbCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_CARB_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
+	m_pCarbCtrl->SetValidator(wxGenericValidator(&m_carbContent));
+
+	m_pProteinCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_PROTEIN_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
+	m_pProteinCtrl->SetValidator(wxGenericValidator(&m_proteinContent));
+
+	m_pFiberCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_FIBER_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
+	m_pFiberCtrl->SetValidator(wxGenericValidator(&m_fiberContent));
 }
 
 void AddItemDlg::SetupSizers()
@@ -62,6 +73,11 @@ void AddItemDlg::SetupSizers()
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxLEFT, 5));
 	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")),
 		wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
+
+	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Carbohydrates:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pItemSizer->Add(m_pCarbCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
+	m_pTopSizer->Add(m_pItemSizer);
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer);

@@ -90,6 +90,7 @@ void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 {
 	this->InsertItem(0, item);
 	this->SetItem(0, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
+	this->SetItem(0, 2, std::to_string(pAddItemDlg->GetCarbContent()));
 }
 
 void CalorieList::Init()
@@ -110,9 +111,9 @@ void CalorieList::SetupColumns()
 {
 	this->AppendColumn(_T("Food/Items"));
 	this->AppendColumn(_T("Calories"));
-	this->AppendColumn(_T("Carbohydrates"), wxLIST_FORMAT_LEFT, 100);
-	this->AppendColumn(_T("Protein"));
-	this->AppendColumn(_T("Fibre"));
+	this->AppendColumn(_T("Carbohydrates (g)"), wxLIST_FORMAT_LEFT, 115);
+	this->AppendColumn(_T("Protein (g)"));
+	this->AppendColumn(_T("Fibre (g)"));
 }
 
 void CalorieList::SetupImageList()
