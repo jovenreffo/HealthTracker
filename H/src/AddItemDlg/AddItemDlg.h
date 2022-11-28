@@ -12,13 +12,16 @@
 #include <wx/textctrl.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDITEMDLG_SIZE  ( wxSize(300, 180) )
+#define ADDITEMDLG_SIZE  ( wxSize(400, 230) )
 #define ADDITEMDLG_MAX	 ( wxSize(350, 230) )
 
 enum class AID
 {
 	ID_CALORIE_TEXT,
-	ID_CALORIE_SPIN
+	ID_CALORIE_SPIN,
+	ID_CARB_SPIN,
+	ID_PROTEIN_SPIN,
+	ID_FIBER_SPIN
 };
 
 class AddItemDlg: public wxDialog
@@ -32,6 +35,9 @@ private:
 
 	wxTextCtrl* m_pFoodName;
 	wxSpinCtrl* m_pCalories;
+	wxSpinCtrl* m_pCarbCtrl;
+	wxSpinCtrl* m_pProteinCtrl;
+	wxSpinCtrl* m_pFiberCtrl;
 
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pItemSizer;
@@ -39,6 +45,9 @@ private:
 
 	wxString m_itemName;
 	int m_calorieContent;
+	int m_carbContent;
+	int m_proteinContent;
+	int m_fiberContent;
 
 public:
 	AddItemDlg(wxWindow* parent,
@@ -48,8 +57,13 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = ADDITEMDLG_STYLE);
 
+
+	// Getters
 	const wxString& GetItemName() const { return m_itemName; }
 	const int GetCalorieContent() const { return m_calorieContent; }
+	const int GetCarbContent() const { return m_carbContent; }
+	const int GetProteinContent() const { return m_proteinContent; }
+	const int GetFiberContent() const { return m_fiberContent; }
 
 	// Setup
 	void Init();
@@ -57,7 +71,11 @@ public:
 	void SetupControls();
 	void SetupSizers();
 
+	void HandleExit();
+
 	// Events
+	void OnUpdateOK(wxUpdateUIEvent& event);
+	void OnEnter(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	void OnSpinUp(wxSpinEvent& event);
