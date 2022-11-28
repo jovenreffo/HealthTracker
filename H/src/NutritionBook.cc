@@ -41,5 +41,5 @@ void NutritionBook::SetupCaloriePanel()
 
 void NutritionBook::SetupPages()
 {
-	this->AddPage(m_pCaloriePanel, _T("Calorie Tracker"), true, 0);
+	this->AddPage(m_pCaloriePanel, _T("Nutrient Tracker"), true, 0);
 }
