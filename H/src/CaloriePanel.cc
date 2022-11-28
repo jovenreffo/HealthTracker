@@ -6,7 +6,7 @@
 
 // CaloriePanel event table
 BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
-	EVT_BUTTON(static_cast<int>(C::ID_NEW_ITEM), CaloriePanel::OnNewItem)
+	EVT_BUTTON(static_cast<int>(CP::ID_NEW_ITEM), CaloriePanel::OnNewItem)
 END_EVENT_TABLE()
 
 // CalorieList event table
@@ -45,9 +45,9 @@ void CaloriePanel::SetupControls()
 {
 	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
-	m_pAddButton = new wxButton(this, static_cast<int>(C::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
+	m_pAddButton = new wxButton(this, static_cast<int>(CP::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 
-	m_pTotalText = new wxStaticText(this, static_cast<int>(C::ID_TOTAL), _T("Total:"), wxDefaultPosition, wxDefaultSize);
+	m_pTotalText = new wxStaticText(this, static_cast<int>(CP::ID_TOTAL), _T("Total:"), wxDefaultPosition, wxDefaultSize);
 	m_pTotalText->SetFont(Fonts::GetBoldFont(12));
 }
 
@@ -111,6 +111,9 @@ void CalorieList::SetupColumns()
 {
 	this->AppendColumn(_T("Food/Items"));
 	this->AppendColumn(_T("Calories"));
+	this->AppendColumn(_T("Carbohydrates"), wxLIST_FORMAT_LEFT, 100);
+	this->AppendColumn(_T("Protein"));
+	this->AppendColumn(_T("Fibre"));
 }
 
 void CalorieList::SetupImageList()

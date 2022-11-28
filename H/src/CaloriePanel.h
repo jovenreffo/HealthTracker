@@ -9,7 +9,7 @@
 #include <wx/listctrl.h>
 #include "AddItemDlg/AddItemDlg.h"
 
-enum class C
+enum class CP
 {
 	ID_NEW_ITEM,
 	ID_TOTAL
