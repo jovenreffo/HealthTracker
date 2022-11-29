@@ -88,17 +88,27 @@ void WPNotebook::SetupNotebook()
 	this->AssignImageList(m_pImageList);
 }
 
-// Events
+void WPNotebook::CreateNewRoutine()
+{
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
+	m_pRoutineList->SetContent(m_pWorkoutList->GetContent());
+	m_pRoutineDialog->Show(true);
+}
 
-void WPNotebook::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
+void WPNotebook::CreateNewWorkout()
 {
 	m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW), m_pWorkoutList);
 	m_pWorkoutWindow->Show(true);
 }
 
+// Events
+
+void WPNotebook::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
+{
+	this->CreateNewWorkout();
+}
+
 void WPNotebook::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
-	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
-	m_pRoutineList->SetContent(m_pWorkoutList->GetContent());
-	m_pRoutineDialog->Show(true);
+	this->CreateNewRoutine();
 }

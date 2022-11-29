@@ -75,6 +75,9 @@ public:
 	void ArrangeElements();
 	void SetupNotebook();
 
+	void CreateNewRoutine();
+	void CreateNewWorkout();
+
 	// Events
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
