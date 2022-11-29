@@ -12,6 +12,9 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
 	EVT_MENU(ID_RESET_WORKOUTS, Frame::OnResetWorkouts)
 	EVT_MENU(ID_RESET_ROUTINES, Frame::OnResetRoutines)
+	// add events
+	EVT_MENU(ID_ADD_WORKOUT, Frame::OnAddWorkout)
+	EVT_MENU(ID_ADD_ROUTINE, Frame::OnAddRoutine)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -41,6 +44,7 @@ void Frame::Init()
 	this->SetupMenuBar();
 	this->SetupSizes();
 	this->SetupListbook();
+	this->SetupLists();
 }
 
 // Window setup
@@ -68,12 +72,17 @@ void Frame::SetupMenuBar()
 	m_pViewMenu = new wxMenu();
 	m_pHelpMenu = new wxMenu();
 	m_pResetMenu = new wxMenu();
+	m_pAddMenu = new wxMenu();
 
 	// Reset menu to be used with the file menu
 	m_pResetMenu->Append(ID_RESET_ENTRIES, _T("&Reset Entry List"));
 	m_pResetMenu->Append(ID_RESET_WORKOUTS, _T("&Reset Workout List"));
 	m_pResetMenu->Append(ID_RESET_ROUTINES, _T("&Reset Routine List"));
+	// Add menu to be used with the file menu
+	m_pAddMenu->Append(ID_ADD_WORKOUT, _T("&New Workout"));
+	m_pAddMenu->Append(ID_ADD_ROUTINE, _T("&New Routine"));
 	// File menu
+	m_pFileMenu->AppendSubMenu(m_pAddMenu, _T("&Add..."));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->AppendSubMenu(m_pResetMenu, _T("&Reset..."));
 	m_pFileMenu->Append(wxID_RESET, _T("&Reset All\tCtrl+Shift+R"));
@@ -101,6 +110,13 @@ void Frame::SetupSizes()
 void Frame::SetupListbook()
 {
 	m_pListbook = new Listbook(this, wxID_ANY);
+}
+
+void Frame::SetupLists()
+{
+	m_pWorkoutList = m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList();
+	m_pRoutineList = m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList();
+	m_pEntryList = m_pListbook->GetJournal()->GetEntryList();
 }
 
 // Events
@@ -137,17 +153,29 @@ void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
 void Frame::OnResetEntries(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
-		m_pListbook->GetJournal()->GetEntryList()->DeleteAllItems();
+		m_pEntryList->DeleteAllItems();
 }
 
 void Frame::OnResetWorkouts(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
-		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList()->DeleteAllItems();
+		m_pWorkoutList->DeleteAllItems();
 }
 
 void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
-		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList()->DeleteAllItems();
+		m_pRoutineList->DeleteAllItems();
+}
+
+void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED)
+{
+	m_pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList());
+	m_pWorkoutWindow->Show(true);
+}
+
+void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED)
+{
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
+	m_pRoutineDialog->Show(true);
 }

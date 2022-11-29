@@ -10,6 +10,8 @@
 #include "AboutDialog/AboutDialog.h"
 #include "TaskbarIcon.h"
 #include "xpm/xpm_include.h"
+#include "WorkoutWindow.h"
+#include "RoutineDialog.h"
 
 class App : public wxApp
 {
@@ -24,7 +26,9 @@ enum
 	ID_ENABLE_FULLSCREEN,
 	ID_RESET_ENTRIES,
 	ID_RESET_WORKOUTS,
-	ID_RESET_ROUTINES
+	ID_RESET_ROUTINES,
+	ID_ADD_WORKOUT,
+	ID_ADD_ROUTINE
 };
 
 class Frame : public wxFrame
@@ -39,6 +43,7 @@ private:
 	wxMenu* m_pViewMenu;
 	wxMenu* m_pHelpMenu;
 	wxMenu* m_pResetMenu; // submenu
+	wxMenu* m_pAddMenu; // submenu
 
 	// Images
 	Listbook* m_pListbook;
@@ -47,6 +52,12 @@ private:
 
 	wxIcon m_heartIcon;
 	TaskbarIcon* m_pTaskbarIcon;
+
+	WorkoutList* m_pWorkoutList;
+	RoutineList* m_pRoutineList;
+	EntryList* m_pEntryList;
+	WorkoutWindow* m_pWorkoutWindow;
+	RoutineDialog* m_pRoutineDialog;
 	
 public:
 	Frame();
@@ -61,6 +72,7 @@ public:
 	void SetupMenuBar();
 	void SetupSizes();
 	void SetupListbook();
+	void SetupLists();
 
 	// Events
 	void OnExit(wxCommandEvent& event);
@@ -71,4 +83,7 @@ public:
 	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
 	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
 	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
+	// add events
+	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
+	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 };
