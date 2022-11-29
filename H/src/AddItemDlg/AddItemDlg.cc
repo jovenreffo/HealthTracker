@@ -70,7 +70,7 @@ void AddItemDlg::SetupSizers()
 	m_pItemSizer->Add(m_pCalories, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 25));
 	m_pTopSizer->Add(m_pItemSizer);
 
-	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxLEFT, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")),
 		wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 
