@@ -91,6 +91,8 @@ void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 	this->InsertItem(0, item);
 	this->SetItem(0, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
 	this->SetItem(0, 2, std::to_string(pAddItemDlg->GetCarbContent()));
+	this->SetItem(0, 3, std::to_string(pAddItemDlg->GetProteinContent()));
+	this->SetItem(0, 4, std::to_string(pAddItemDlg->GetFiberContent()));
 }
 
 void CalorieList::Init()
