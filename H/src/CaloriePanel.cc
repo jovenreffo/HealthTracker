@@ -32,7 +32,7 @@ void CaloriePanel::DoTotalCalc()
 
 	// Update the label
 	m_pTotalText->SetLabel(wxString("Total: ") << m_total << " kcal");
-	m_total = 0; // reset the total for next use
+	m_total = 0; // reset the total for next calculation
 }
 
 void CaloriePanel::Init()
@@ -88,11 +88,11 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 
 void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 {
-	this->InsertItem(0, item);
-	this->SetItem(0, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
-	this->SetItem(0, 2, std::to_string(pAddItemDlg->GetCarbContent()));
-	this->SetItem(0, 3, std::to_string(pAddItemDlg->GetProteinContent()));
-	this->SetItem(0, 4, std::to_string(pAddItemDlg->GetFiberContent()));
+	this->InsertItem(1, item);
+	this->SetItem(1, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
+	this->SetItem(1, 2, std::to_string(pAddItemDlg->GetCarbContent()));
+	this->SetItem(1, 3, std::to_string(pAddItemDlg->GetProteinContent()));
+	this->SetItem(1, 4, std::to_string(pAddItemDlg->GetFiberContent()));
 }
 
 void CalorieList::Init()
@@ -100,6 +100,12 @@ void CalorieList::Init()
 	this->SetupMenu();
 	this->SetupColumns();
 	this->SetupImageList();
+	this->SetupTotalItem();
+}
+
+void CalorieList::SetupTotalItem()
+{
+	this->InsertItem(0, _T("Total"), 0);
 }
 
 void CalorieList::SetupMenu()
