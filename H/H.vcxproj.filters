@@ -31,6 +31,25 @@
     <ClCompile Include="src\Journal.cc">
       <Filter>src\Journal</Filter>
     </ClCompile>
+    <ClCompile Include="src\AboutDialog\AboutDialog.cc" />
+    <ClCompile Include="src\Calendar.cc" />
+    <ClCompile Include="src\DynamicPlan.cc" />
+    <ClCompile Include="src\EntryDialog.cc" />
+    <ClCompile Include="src\EntryList.cc" />
+    <ClCompile Include="src\ExerciseBook.cc" />
+    <ClCompile Include="src\ExercisePanel.cc" />
+    <ClCompile Include="src\NutritionPanel.cc" />
+    <ClCompile Include="src\RoutineDialog.cc" />
+    <ClCompile Include="src\SaveWorkoutDialog.cc" />
+    <ClCompile Include="src\Settings.cc" />
+    <ClCompile Include="src\TaskbarIcon.cc" />
+    <ClCompile Include="src\WorkoutWindow.cc" />
+    <ClCompile Include="src\WPLists.cc" />
+    <ClCompile Include="src\WPNotebook.cc" />
+    <ClCompile Include="src\RoutineView.cc" />
+    <ClCompile Include="src\NutritionBook.cc" />
+    <ClCompile Include="src\CaloriePanel.cc" />
+    <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -41,6 +60,75 @@
     </ClInclude>
     <ClInclude Include="src\Journal.h">
       <Filter>src\Journal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AboutDialog\AboutDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\xpm\xpm_include.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Calendar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DynamicPlan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntryDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntryList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntryPair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExerciseBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ExercisePanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NutritionPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutineDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SaveWorkoutDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StandardPath.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TaskbarIcon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WorkoutWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WPLists.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WPNotebook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutineView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\NutritionBook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CaloriePanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AddItemDlg\AddItemDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Font\Font.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -111,10 +111,12 @@ void Settings::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 
 void Settings::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
+	m_WPNotebook->CreateNewWorkout();
 }
 
 void Settings::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
+	m_WPNotebook->CreateNewRoutine();
 }
 
 bool Settings::ConfirmReset()
