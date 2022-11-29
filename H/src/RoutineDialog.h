@@ -16,6 +16,11 @@
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
 #define RDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 
+enum class RD
+{
+	ID_ROUTINE_NAME
+};
+
 class RoutineDialog: public wxDialog
 {
 private:
