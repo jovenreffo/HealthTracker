@@ -56,7 +56,6 @@ void Frame::SetupTaskbarIcon()
 	// set the icon
 	if (!m_pTaskbarIcon->SetIcon(m_heartIcon, _T("Health++")))
 		wxMessageBox(_T("Failed to create taskbar icon."));
-	
 }
 
 void Frame::SetupProgramIcon()
@@ -144,9 +143,9 @@ void Frame::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
 	if (wxMessageBox(_T("Are you sure you want to delete all of your saved items?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
 	{
-		m_pListbook->GetJournal()->GetEntryList()->DeleteAllItems();
-		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList()->DeleteAllItems();
-		m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList()->DeleteAllItems();
+		m_pEntryList->DeleteAllItems();
+		m_pWorkoutList->DeleteAllItems();
+		m_pRoutineList->DeleteAllItems();
 	}
 }
 
