@@ -5,6 +5,8 @@ BEGIN_EVENT_TABLE(Settings, wxPanel)
 	EVT_BUTTON(static_cast<int>(SE::ID_RESET_ENTRIES), Settings::OnResetEntries)
 	EVT_BUTTON(static_cast<int>(SE::ID_RESET_WORKOUTS), Settings::OnResetWorkouts)
 	EVT_BUTTON(static_cast<int>(SE::ID_RESET_ROUTINES), Settings::OnResetRoutines)
+	EVT_BUTTON(static_cast<int>(SE::ID_ADD_WORKOUT), Settings::OnAddWorkout)
+	EVT_BUTTON(static_cast<int>(SE::ID_ADD_ROUTINE), Settings::OnAddRoutine)
 END_EVENT_TABLE()
 
 Settings::Settings(ExercisePanel* pExercisePanel, Journal* pJournal, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -22,10 +24,15 @@ void Settings::Init()
 
 void Settings::SetupControls()
 {
+	// Reset controls
 	m_pResetAll = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ALL), _T("Reset All"), wxDefaultPosition, wxDefaultSize);
 	m_pResetEntries = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ENTRIES), _T("Reset Entries"), wxDefaultPosition, wxDefaultSize);
 	m_pResetWorkouts = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_WORKOUTS), _T("Reset Workouts"), wxDefaultPosition, wxDefaultSize);
 	m_pResetRoutines = new wxButton(m_pTopParent, static_cast<int>(SE::ID_RESET_ROUTINES), _T("Reset Routines"), wxDefaultPosition, wxDefaultSize);
+
+	// Add item controls
+	m_pAddWorkout = new wxButton(m_pTopParent, static_cast<int>(SE::ID_ADD_WORKOUT), _T("Add Workout"));
+	m_pAddRoutine = new wxButton(m_pTopParent, static_cast<int>(SE::ID_ADD_ROUTINE), _T("Add Routine"));
 }
 
 void Settings::SetupSizers()
@@ -38,8 +45,10 @@ void Settings::SetupSizers()
 
 	// Initialise the content sizers and controls before arranging the items
 	m_pResetBox = new wxStaticBoxSizer(wxVERTICAL, m_pTopParent, _T("Reset Items"));
+	m_pAddItemBox = new wxStaticBoxSizer(wxVERTICAL, m_pTopParent, _T("Add Items"));
 	
 	m_pTopSizer->Add(m_pResetBox, wxSizerFlags().Border(wxLEFT | wxALL, 5).Align(wxLEFT));
+	m_pTopSizer->Add(m_pAddItemBox, wxSizerFlags().Border(wxALL, 5).Align(wxLEFT));
 
 	this->SetupControls();
 }
@@ -47,6 +56,7 @@ void Settings::SetupSizers()
 void Settings::AddAllControls()
 {
 	this->AddResetGroup();
+	this->AddItemsGroup();
 }
 
 void Settings::AddResetGroup()
@@ -54,11 +64,22 @@ void Settings::AddResetGroup()
 	wxBoxSizer* pResetSizer = new wxBoxSizer(wxVERTICAL);
 	m_pResetBox->Add(pResetSizer);
 
-	pResetSizer->Add(m_pResetAll, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
-	pResetSizer->Add(m_pResetEntries, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
-	pResetSizer->Add(m_pResetRoutines, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
-	pResetSizer->Add(m_pResetWorkouts, wxSizerFlags().Border(wxALIGN_LEFT | wxALL, 5));
+	pResetSizer->Add(m_pResetAll, wxSizerFlags().Border(wxALL, 5));
+	pResetSizer->Add(m_pResetEntries, wxSizerFlags().Border(wxALL, 5));
+	pResetSizer->Add(m_pResetRoutines, wxSizerFlags().Border(wxALL, 5));
+	pResetSizer->Add(m_pResetWorkouts, wxSizerFlags().Border(wxALL, 5));
 }
+
+void Settings::AddItemsGroup()
+{
+	wxBoxSizer* pAddItemsSizer = new wxBoxSizer(wxVERTICAL);
+	m_pAddItemBox->Add(pAddItemsSizer);
+
+	pAddItemsSizer->Add(m_pAddRoutine, wxSizerFlags().Border(wxALL, 5));
+	pAddItemsSizer->Add(m_pAddWorkout, wxSizerFlags().Border(wxALL, 5));
+}
+
+// ====================================== Events ======================================
 
 void Settings::OnResetAll(wxCommandEvent& WXUNUSED(event))
 {
@@ -86,6 +107,14 @@ void Settings::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
 		m_WPNotebook->GetRoutineList()->ResetList();
+}
+
+void Settings::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
+{
+}
+
+void Settings::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
+{
 }
 
 bool Settings::ConfirmReset()
