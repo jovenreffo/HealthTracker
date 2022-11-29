@@ -17,7 +17,9 @@ enum class SE
 	ID_RESET_ALL,
 	ID_RESET_ENTRIES,
 	ID_RESET_WORKOUTS,
-	ID_RESET_ROUTINES
+	ID_RESET_ROUTINES,
+	ID_ADD_WORKOUT,
+	ID_ADD_ROUTINE
 };
 
 class Settings: public wxPanel
@@ -28,12 +30,16 @@ private:
 private:
 	wxStaticBoxSizer* m_pTopSizer;
 	wxStaticBoxSizer* m_pResetBox;
+	wxStaticBoxSizer* m_pAddItemBox;
 	wxStaticBox* m_pTopParent;
 	
 	wxButton* m_pResetAll;
 	wxButton* m_pResetEntries;
 	wxButton* m_pResetWorkouts;
 	wxButton* m_pResetRoutines;
+
+	wxButton* m_pAddWorkout;
+	wxButton* m_pAddRoutine;
 
 	// Vars that are passed to the ctor
 	ExercisePanel* m_pExercisePanel;
@@ -57,12 +63,15 @@ public:
 	// Controls
 	void AddAllControls();
 	void AddResetGroup();
+	void AddItemsGroup();
 
 	// Events
 	void OnResetAll(wxCommandEvent& WXUNUSED(event));
 	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
 	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
 	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
+	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
+	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 
 	bool ConfirmReset();
 };
