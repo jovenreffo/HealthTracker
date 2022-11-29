@@ -1,5 +1,6 @@
 #include <wx/msgdlg.h>
 #include <wx/log.h>
+#include <wx/valtext.h>
 #include "RoutineDialog.h"
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
@@ -99,7 +100,7 @@ void RoutineDialog::CreateControls()
 	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 
 	// Textctrl
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	m_pTextCtrl = new wxTextCtrl(this, static_cast<int>(RD::ID_ROUTINE_NAME), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_NONE, &m_routineName));
 	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &RoutineDialog::OnEnter, this);
 }
 
