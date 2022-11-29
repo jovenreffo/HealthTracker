@@ -27,7 +27,7 @@ void AddItemDlg::SetupSizing()
 {
 	this->SetMinSize(ADDITEMDLG_SIZE);
 	this->SetInitialSize(ADDITEMDLG_SIZE);
-	//this->SetMaxSize(ADDITEMDLG_MAX);
+	this->SetMaxSize(ADDITEMDLG_MAX);
 }
 
 void AddItemDlg::SetupControls()
@@ -35,7 +35,7 @@ void AddItemDlg::SetupControls()
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 	
-	m_pFoodName = new wxTextCtrl(this, static_cast<int>(AID::ID_CALORIE_TEXT), wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(wxFILTER_ALPHA, &m_itemName));
+	m_pFoodName = new wxTextCtrl(this, static_cast<int>(AID::ID_CALORIE_TEXT), wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(0, &m_itemName));
 
 	// Initialize spin controls
 	m_pCalories = new wxSpinCtrl(this, static_cast<int>(AID::ID_CALORIE_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
