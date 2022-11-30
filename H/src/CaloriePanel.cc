@@ -148,9 +148,12 @@ void CalorieList::OnDoubleClick(wxListEvent& event)
 
 void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
-	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+	// != 0 because we dont want the deleting the running total
+	if (selected != 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
-		this->DeleteItem(GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED));
+		this->DeleteItem(selected);
 		m_pCaloriePanel->DoTotalCalc(); // We will need to recalculate the total
 	}
 }
