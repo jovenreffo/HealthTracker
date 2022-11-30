@@ -27,8 +27,9 @@ private:
 	CalorieList* m_pCalorieList;
 	wxButton* m_pAddButton;
 
-	Total m_total;
-	//long m_total;
+	wxStaticText* m_pTotalText;
+	//Total m_total;
+	long m_total;
 
 	AddItemDlg* m_pAddItemDlg;
 
@@ -73,11 +74,9 @@ public:
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
-	void SetTotal(const Total& t);
 
 	// Setup
 	void Init();
-	void SetupTotalItem();
 	void SetupMenu();
 	void SetupColumns();
 	void SetupImageList();

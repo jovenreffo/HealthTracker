@@ -27,15 +27,12 @@ void CaloriePanel::DoTotalCalc()
 	// Loop through the calorie list's contents and accumulate a total
 	for (auto i{ 0 }; i < m_pCalorieList->GetItemCount(); ++i)
 	{
-		m_total.m_calTotal += wxAtoi(m_pCalorieList->GetItemText(i, 1)); //cal
-		m_total.m_carbTotal += wxAtoi(m_pCalorieList->GetItemText(i, 2)); //carb
-		m_total.m_proteinTotal += wxAtoi(m_pCalorieList->GetItemText(i, 3)); //protein
-		m_total.m_fiberTotal += wxAtoi(m_pCalorieList->GetItemText(i, 4)); //fiber
+		m_total += wxAtoi(m_pCalorieList->GetItemText(i, 1)); //cal
 	}
 
 	// Update the total list
-	m_pCalorieList->SetTotal(m_total);
-	m_total.ResetTotal();
+	m_pTotalText->SetLabel(wxString("Total: ") << m_total << " kcal");
+	m_total = 0; // reset the total for the next item
 }
 
 void CaloriePanel::Init()
@@ -47,8 +44,9 @@ void CaloriePanel::Init()
 void CaloriePanel::SetupControls()
 {
 	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
-
 	m_pAddButton = new wxButton(this, static_cast<int>(CP::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize);
+	m_pTotalText = new wxStaticText(this, wxID_STATIC, _T("Total:"), wxDefaultPosition, wxDefaultSize);
+	m_pTotalText->SetFont(Fonts::GetBoldFont(12));
 }
 
 void CaloriePanel::SetupSizers()
@@ -58,6 +56,7 @@ void CaloriePanel::SetupSizers()
 
 	wxBoxSizer* m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pHorizontalSizer->Add(m_pAddButton, wxSizerFlags().Proportion(0).Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pTotalText, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 
 	m_pBoxSizer->Add(m_pCalorieList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 	m_pBoxSizer->Add(m_pHorizontalSizer);
@@ -87,19 +86,11 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 
 void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 {
-	this->InsertItem(1, item);
-	this->SetItem(1, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
-	this->SetItem(1, 2, std::to_string(pAddItemDlg->GetCarbContent()));
-	this->SetItem(1, 3, std::to_string(pAddItemDlg->GetProteinContent()));
-	this->SetItem(1, 4, std::to_string(pAddItemDlg->GetFiberContent()));
-}
-
-void CalorieList::SetTotal(const Total& t)
-{
-	this->SetItem(0, 1, std::to_string(t.m_calTotal));
-	this->SetItem(0, 2, std::to_string(t.m_carbTotal));
-	this->SetItem(0, 3, std::to_string(t.m_proteinTotal));
-	this->SetItem(0, 4, std::to_string(t.m_fiberTotal));
+	this->InsertItem(0, item);
+	this->SetItem(0, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
+	this->SetItem(0, 2, std::to_string(pAddItemDlg->GetCarbContent()));
+	this->SetItem(0, 3, std::to_string(pAddItemDlg->GetProteinContent()));
+	this->SetItem(0, 4, std::to_string(pAddItemDlg->GetFiberContent()));
 }
 
 void CalorieList::Init()
@@ -107,12 +98,6 @@ void CalorieList::Init()
 	this->SetupMenu();
 	this->SetupColumns();
 	this->SetupImageList();
-	this->SetupTotalItem();
-}
-
-void CalorieList::SetupTotalItem()
-{
-	this->InsertItem(0, _T("Total"), 0);
 }
 
 void CalorieList::SetupMenu()
@@ -157,8 +142,7 @@ void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
 	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
-	// != 0 because we dont want the deleting the running total
-	if (selected != 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
 		this->DeleteItem(selected);
 		m_pCaloriePanel->DoTotalCalc(); // We will need to recalculate the total
