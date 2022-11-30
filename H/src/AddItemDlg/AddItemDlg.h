@@ -15,6 +15,43 @@
 #define ADDITEMDLG_SIZE  ( wxSize(400, 260) )
 #define ADDITEMDLG_MAX	 ( wxSize(450, 280) )
 
+struct Total
+{
+	int m_calTotal;
+	int m_carbTotal;
+	int m_proteinTotal;
+	int m_fiberTotal;
+
+	void ResetTotal()
+	{
+		m_calTotal = 0;
+		m_carbTotal = 0;
+		m_proteinTotal = 0;
+		m_fiberTotal = 0;
+	}
+
+	Total& operator++()
+	{
+		++m_calTotal;
+		++m_carbTotal;
+		++m_proteinTotal;
+		++m_fiberTotal;
+	
+		return *this;
+	}
+	
+	Total& operator--()
+	{
+		--m_calTotal;
+		--m_carbTotal;
+		--m_proteinTotal;
+		--m_fiberTotal;
+	
+		return *this;
+	}
+};
+
+
 enum class AID
 {
 	ID_CALORIE_TEXT,
@@ -44,6 +81,7 @@ private:
 	wxBoxSizer* m_pButtonSizer;
 
 	wxString m_itemName;
+	Total m_total;
 	int m_calorieContent;
 	int m_carbContent;
 	int m_proteinContent;
