@@ -13,7 +13,8 @@
 enum
 {
 	ID_SAVE_ENTRY = 50,
-	ID_EXPORT
+	ID_EXPORT,
+	ID_ENTRY_TEXT
 };
 
 class Journal: public wxPanel

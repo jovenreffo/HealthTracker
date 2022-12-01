@@ -88,10 +88,9 @@ void Frame::SetupMenuBar()
 	m_pFileMenu->AppendSubMenu(m_pResetMenu, _T("&Reset..."));
 	m_pFileMenu->Append(wxID_RESET, _T("&Reset All\tCtrl+Shift+R"));
 	m_pFileMenu->AppendSeparator();
+	m_pFileMenu->Append(ID_PREFERENCES, _T("&Preferences..."));
+	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
-
-	// Edit menu
-	m_pEditMenu->Append(ID_PREFERENCES, _T("&Preferences"));
 
 	// View menu
 	m_pViewMenu->Append(ID_ENABLE_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
@@ -100,7 +99,6 @@ void Frame::SetupMenuBar()
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
 
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
-	m_pMenuBar->Append(m_pEditMenu, _T("&Edit"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
 	m_pMenuBar->Append(m_pHelpMenu, _T("&Help"));
 	this->SetMenuBar(m_pMenuBar);
@@ -144,7 +142,7 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnPreferences(wxCommandEvent& event)
 {
-	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
+	m_pPrefsDlg = new PrefsDlg(_T("Preferences..."));
 	m_pPrefsDlg->Show(this);
 }
 
