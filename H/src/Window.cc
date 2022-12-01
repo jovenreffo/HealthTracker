@@ -142,7 +142,7 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnPreferences(wxCommandEvent& event)
 {
-	m_pPrefsDlg = new PrefsDlg(_T("Preferences..."));
+	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
 	m_pPrefsDlg->Show(this);
 }
 
