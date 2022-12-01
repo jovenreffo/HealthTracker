@@ -71,9 +71,10 @@ private:
 
 	void SetupJournalCtrl()
 	{
-		// traverse back to main frame
+		// trace back to main frame
 		m_pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
-		m_pJournalTxtCtrl = wxDynamicCast(m_pMainWin, wxTextCtrl);
+		m_pJournalTxtCtrl = wxDynamicCast(m_pMainWin, wxTextCtrl); // cast the window to a wxTextCtrl so we have control over it
+
 		if (m_pJournalTxtCtrl)
 			m_pJournalTxtCtrl->SetValue("From Preferences");
 	}
