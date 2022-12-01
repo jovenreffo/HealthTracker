@@ -4,10 +4,12 @@
 #include <wx/preferences.h>
 #include <wx/dialog.h>
 
-class PrefsDlg : public wxDialog
+class PrefsDlg : public wxPreferencesEditor
 {
 private:
 
+public:
+	PrefsDlg(const wxString& title);
 };
 
 #endif
