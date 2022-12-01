@@ -1,4 +1,5 @@
 #include <wx/msgdlg.h>
+#include <wx/log.h>
 #include <wx/config.h>
 #include <wx/translation.h>
 #include <wx/fontpicker.h>
@@ -7,6 +8,7 @@
 #include <wx/checkbox.h>
 #include "PrefsDlg.h"
 #include "Font/Font.hpp"
+#include "Journal.h"
 
 namespace lang
 {
@@ -31,11 +33,14 @@ class GeneralPagePanel : public wxPanel
 private:
 	wxCheckBox* m_pCheckCustomFont;
 	wxFontPickerCtrl* m_pFontPicker;
+	wxWindow* m_pMainWin;
+	wxTextCtrl* m_pJournalTxtCtrl;
 
 public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent)
 	{
+		this->SetupJournalCtrl();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
 
@@ -57,17 +62,37 @@ public:
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
 
+
 		this->Fit();
 		this->SetMinSize(wxSize(300, 350));
 	}
 
 private:
+
+	void SetupJournalCtrl()
+	{
+		// traverse back to main frame
+		m_pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
+		m_pJournalTxtCtrl = wxDynamicCast(m_pMainWin, wxTextCtrl);
+		if (m_pJournalTxtCtrl)
+			m_pJournalTxtCtrl->SetValue("From Preferences");
+	}
+
+	// events
+
 	void OnUseCustomFont(wxCommandEvent& event)
 	{
-#ifdef _DEBUG
 		if (event.IsChecked())
+		{
+#ifdef _DEBUG
 			wxMessageBox(_("Custom font checked."));
 #endif
+			// set the font of the entry list
+		}
+		else
+		{
+			// revert the font back to the original
+		}
 	}
 };
 
