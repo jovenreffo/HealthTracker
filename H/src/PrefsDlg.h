@@ -6,8 +6,6 @@
 
 class PrefsDlg : public wxPreferencesEditor
 {
-private:
-
 public:
 	PrefsDlg(const wxString& title);
 };
