@@ -12,6 +12,7 @@
 #include "xpm/xpm_include.h"
 #include "WorkoutWindow.h"
 #include "RoutineDialog.h"
+#include "PrefsDlg.h"
 
 class App : public wxApp
 {
@@ -28,7 +29,8 @@ enum
 	ID_RESET_WORKOUTS,
 	ID_RESET_ROUTINES,
 	ID_ADD_WORKOUT,
-	ID_ADD_ROUTINE
+	ID_ADD_ROUTINE,
+	ID_PREFERENCES
 };
 
 class Frame : public wxFrame
@@ -40,18 +42,17 @@ private:
 	// Menu bar
 	wxMenuBar* m_pMenuBar;
 	wxMenu* m_pFileMenu;
+	wxMenu* m_pEditMenu;
 	wxMenu* m_pViewMenu;
 	wxMenu* m_pHelpMenu;
 	wxMenu* m_pResetMenu; // submenu
 	wxMenu* m_pAddMenu; // submenu
 
-	// Images
 	Listbook* m_pListbook;
-
 	AboutDialog* m_pAboutDialog;
-
 	wxIcon m_heartIcon;
 	TaskbarIcon* m_pTaskbarIcon;
+	PrefsDlg* m_pPrefsDlg;
 
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
@@ -78,6 +79,7 @@ public:
 	void OnExit(wxCommandEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
+	void OnPreferences(wxCommandEvent& event);
 	// reset events
 	void OnResetAll(wxCommandEvent& WXUNUSED(event));
 	void OnResetEntries(wxCommandEvent& WXUNUSED(event));

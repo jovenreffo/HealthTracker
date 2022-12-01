@@ -7,6 +7,7 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
 	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
 	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
+	EVT_MENU(ID_PREFERENCES, Frame::OnPreferences)
 	// reset events
 	EVT_MENU(wxID_RESET, Frame::OnResetAll)
 	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
@@ -68,6 +69,7 @@ void Frame::SetupMenuBar()
 {
 	m_pMenuBar = new wxMenuBar();
 	m_pFileMenu = new wxMenu();
+	m_pEditMenu = new wxMenu();
 	m_pViewMenu = new wxMenu();
 	m_pHelpMenu = new wxMenu();
 	m_pResetMenu = new wxMenu();
@@ -88,6 +90,9 @@ void Frame::SetupMenuBar()
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
 
+	// Edit menu
+	m_pEditMenu->Append(ID_PREFERENCES, _T("&Preferences"));
+
 	// View menu
 	m_pViewMenu->Append(ID_ENABLE_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
 
@@ -95,6 +100,7 @@ void Frame::SetupMenuBar()
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
 
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
+	m_pMenuBar->Append(m_pEditMenu, _T("&Edit"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
 	m_pMenuBar->Append(m_pHelpMenu, _T("&Help"));
 	this->SetMenuBar(m_pMenuBar);
@@ -134,6 +140,12 @@ void Frame::OnFullScreen(wxCommandEvent& WXUNUSED(event))
 void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pAboutDialog = new AboutDialog();
+}
+
+void Frame::OnPreferences(wxCommandEvent& event)
+{
+	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
+	m_pPrefsDlg->Show(this);
 }
 
 // class hierarchy reference for accessing the lists: (doing it this way to prevent use of global vars)
