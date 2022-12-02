@@ -102,7 +102,6 @@ public:
 	const int GetCarbContent() const { return m_carbContent; }
 	const int GetProteinContent() const { return m_proteinContent; }
 	const int GetFiberContent() const { return m_fiberContent; }
-	const Total& GetTotal() const { return m_total; }
 
 	// Setup
 	void Init();

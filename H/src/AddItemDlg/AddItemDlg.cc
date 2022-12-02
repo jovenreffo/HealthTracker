@@ -95,11 +95,6 @@ void AddItemDlg::SetupSizers()
 
 void AddItemDlg::HandleExit()
 {
-	m_total.m_calTotal = m_calorieContent;
-	m_total.m_carbTotal = m_carbContent;
-	m_total.m_proteinTotal = m_proteinContent;
-	m_total.m_fiberTotal = m_fiberContent;
-
 	if (Validate() && TransferDataFromWindow())
 	{
 		if (IsModal())
