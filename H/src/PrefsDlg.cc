@@ -2,7 +2,8 @@
 #include <wx/log.h>
 #include <wx/config.h>
 #include <wx/translation.h>
-#include <wx/fontpicker.h>
+#include <wx/app.h>
+#include <wx/fontdlg.h>
 #include <wx/stattext.h>
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
@@ -25,16 +26,19 @@ namespace lang
 enum class Prefs
 {
 	ID_CHECK_FONT,
-	ID_FONT_PICKER
+	ID_SELECT_FONT,
 };
 
 class GeneralPagePanel : public wxPanel
 {
 private:
 	wxCheckBox* m_pCheckCustomFont;
-	wxFontPickerCtrl* m_pFontPicker;
+	wxButton* m_pSelectFont;
+	wxFontDialog* m_pFontDialog;
 	wxWindow* m_pMainWin;
 	wxTextCtrl* m_pJournalTxtCtrl;
+
+	wxFont m_selectedFont;
 
 public:
 	GeneralPagePanel(wxWindow* parent)
@@ -53,46 +57,76 @@ public:
 		pAppearanceSizer->AddGrowableCol(1);
 		pTopSizer->Add(pAppearanceSizer, wxSizerFlags().Expand());
 
-		m_pFontPicker = new wxFontPickerCtrl(this, (int)Prefs::ID_FONT_PICKER);
+		m_pFontDialog = new wxFontDialog(this);
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
+		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _T("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+		m_pSelectFont->Disable();
 
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-		pAppearanceSizer->Add(m_pFontPicker, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
-
+		m_pSelectFont->Bind(wxEVT_BUTTON, &GeneralPagePanel::OnFontSelect, this);
+		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 
 		this->Fit();
 		this->SetMinSize(wxSize(300, 350));
+	}
+
+	virtual bool TransferDataToWindow() override
+	{
+		return true;
 	}
 
 private:
 
 	void SetupJournalCtrl()
 	{
-		// trace back to main frame
+		// trace back to main frame to find the entry list's text control, as it is a distant child window
 		m_pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
 		m_pJournalTxtCtrl = wxDynamicCast(m_pMainWin, wxTextCtrl); // cast the window to a wxTextCtrl so we have control over it
-
-		if (m_pJournalTxtCtrl)
-			m_pJournalTxtCtrl->SetValue("From Preferences");
 	}
 
 	// events
+
+	void UpdateFontSelect(wxUpdateUIEvent& event)
+	{
+		if (m_pCheckCustomFont->IsChecked())
+			event.Enable(true);
+	}
+
+	void DoFontSelect()
+	{
+		m_pFontDialog = new wxFontDialog(this);
+		m_pFontDialog->Show(true);
+		if (m_pFontDialog->ShowModal() == wxID_OK)
+		{
+			wxFontData fontData = m_pFontDialog->GetFontData();
+			m_selectedFont = fontData.GetChosenFont();
+
+			// set the font of the entry list
+			if (m_selectedFont.IsOk())
+				m_pJournalTxtCtrl->SetFont(m_selectedFont);
+		}
+	}
+
+	void OnFontSelect(wxCommandEvent& event)
+	{
+		this->DoFontSelect();
+	}
 
 	void OnUseCustomFont(wxCommandEvent& event)
 	{
 		if (event.IsChecked())
 		{
-#ifdef _DEBUG
-			wxMessageBox(_("Custom font checked."));
-#endif
-			// set the font of the entry list
+			m_pSelectFont->Enable(true);
+			this->DoFontSelect();
 		}
 		else
 		{
 			// revert the font back to the original
+			m_pJournalTxtCtrl->SetFont(Fonts::GetDefaultFont(10));
 		}
 	}
 };
