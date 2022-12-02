@@ -17,7 +17,7 @@ namespace Fonts
 
 	static __forceinline wxFont GetDefaultFont(int pt)
 	{
-		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	}
 }
 
