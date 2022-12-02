@@ -8,7 +8,7 @@ public:
 	__forceinline wxString GetExecPath() const { return GetExecutablePath(); }
 	__forceinline wxString GetDataDire() const { return GetLocalDataDir(); }
 	__forceinline wxString GetDocumentsDire() const { return GetDocumentsDir(); }
-	__forceinline wxString GetConfigDire() const { return GetConfigDir(); }
+	//__forceinline wxString GetConfigDire() const { return GetConfigDir(); }
 };
 
 namespace path_data
@@ -17,4 +17,5 @@ namespace path_data
 	static const wxString execPath = path.GetExecPath();
 	static const wxString dataDir = path.GetDataDire();
 	static const wxString documentsDir = path.GetDocumentsDire();
+	//static const wxString configDir = path.GetConfigDire();
 }
