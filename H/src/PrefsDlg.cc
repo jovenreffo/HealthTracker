@@ -35,7 +35,6 @@ private:
 	wxCheckBox* m_pCheckCustomFont;
 	wxButton* m_pSelectFont;
 	wxFontDialog* m_pFontDialog;
-	wxWindow* m_pMainWin;
 	wxTextCtrl* m_pJournalTxtCtrl;
 
 	wxFont m_selectedFont;
@@ -44,7 +43,7 @@ public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent)
 	{
-		this->SetupJournalCtrl();
+		this->SetupWindowPointers();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
 
@@ -81,11 +80,11 @@ public:
 
 private:
 
-	void SetupJournalCtrl()
+	void SetupWindowPointers()
 	{
 		// trace back to main frame to find the entry list's text control, as it is a distant child window
-		m_pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
-		m_pJournalTxtCtrl = wxDynamicCast(m_pMainWin, wxTextCtrl); // cast the window to a wxTextCtrl so we have control over it
+		wxWindow* pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
+		m_pJournalTxtCtrl = wxDynamicCast(pMainWin, wxTextCtrl); // cast the window to a wxTextCtrl so we have control over it
 	}
 
 	// events
@@ -125,6 +124,7 @@ private:
 		}
 		else
 		{
+			m_pSelectFont->Enable(false);
 			// revert the font back to the original
 			m_pJournalTxtCtrl->SetFont(Fonts::GetDefaultFont(10));
 		}
