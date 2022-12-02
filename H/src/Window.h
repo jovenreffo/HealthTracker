@@ -74,6 +74,7 @@ public:
 	void SetupSizes();
 	void SetupListbook();
 	void SetupLists();
+	void SetupOther();
 
 	// Events
 	void OnExit(wxCommandEvent& event);

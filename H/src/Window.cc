@@ -46,6 +46,7 @@ void Frame::Init()
 	this->SetupSizes();
 	this->SetupListbook();
 	this->SetupLists();
+	this->SetupOther();
 }
 
 // Window setup
@@ -122,6 +123,14 @@ void Frame::SetupLists()
 	m_pEntryList = m_pListbook->GetJournal()->GetEntryList();
 }
 
+void Frame::SetupOther()
+{
+	// Initialize these here but do not show them until their respective events have been triggered
+	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
+	m_pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList());
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
+}
+
 // Events
 
 void Frame::OnExit(wxCommandEvent& WXUNUSED(event))
@@ -142,7 +151,6 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnPreferences(wxCommandEvent& event)
 {
-	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
 	m_pPrefsDlg->Show(this);
 }
 
@@ -179,12 +187,10 @@ void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED)
 {
-	m_pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList());
 	m_pWorkoutWindow->Show(true);
 }
 
 void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED)
 {
-	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
 	m_pRoutineDialog->Show(true);
 }
