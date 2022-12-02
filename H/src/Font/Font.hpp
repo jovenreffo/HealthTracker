@@ -14,6 +14,11 @@ namespace Fonts
 	{
 		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_EXTRABOLD, false);
 	}
+
+	static __forceinline wxFont GetDefaultFont(int pt)
+	{
+		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_BOLD, false);
+	}
 }
 
 #endif
