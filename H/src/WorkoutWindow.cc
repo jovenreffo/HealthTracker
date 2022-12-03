@@ -37,7 +37,7 @@ BEGIN_EVENT_TABLE(WorkoutWindow, wxFrame)
 END_EVENT_TABLE()
 
 WorkoutWindow::WorkoutWindow(wxWindow* parent, wxWindowID id, WorkoutList* pWorkoutList)
-	: wxFrame(parent, wxID_ANY, _T("Create Workout"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE),
+	: wxFrame(parent, wxID_ANY, _T("Create Workout"), wxDefaultPosition, WORKOUT_WINDOW_SIZE, WORKOUT_WINDOW_STYLE, _T("workoutwin")),
 	m_pParent{ parent }, m_pWorkoutList{ pWorkoutList }
 {
 	this->Init();
