@@ -6,6 +6,7 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/button.h>
+#include <wx/listbook.h>
 
 #include "WPNotebook.h"
 #include "ExercisePanel.h"
@@ -41,10 +42,10 @@ private:
 	wxButton* m_pAddWorkout;
 	wxButton* m_pAddRoutine;
 
-	// Vars that are passed to the ctor
 	ExercisePanel* m_pExercisePanel;
 	WPNotebook* m_WPNotebook;
 	Journal* m_pJournal;
+	wxListbook* m_pListbook;
 
 public:
 	Settings(ExercisePanel* pExercisePanel,
