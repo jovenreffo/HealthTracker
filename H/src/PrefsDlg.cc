@@ -110,8 +110,10 @@ private:
 
 			// set the font of the entry list
 			if (m_selectedFont.IsOk())
+			{
 				m_pJournalTxtCtrl->SetFont(m_selectedFont);
-			m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_selectedFont.GetFaceName());
+				m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_selectedFont.GetFaceName());
+			}
 		}
 	}
 
