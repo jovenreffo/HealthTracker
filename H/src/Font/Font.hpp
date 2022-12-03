@@ -19,6 +19,11 @@ namespace Fonts
 	{
 		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	}
+
+	static __forceinline wxFont GetLightFont(int pt)
+	{
+		return wxFont(pt, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_THIN, false);
+	}
 }
 
 #endif
