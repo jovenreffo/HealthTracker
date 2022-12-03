@@ -13,7 +13,9 @@ Settings::Settings(ExercisePanel* pExercisePanel, Journal* pJournal, wxWindow* p
 	: wxPanel(parent, id, pos, size, style), m_pExercisePanel{ pExercisePanel }, m_pJournal{ pJournal }
 {
 	this->Init();
+
 	m_WPNotebook = m_pExercisePanel->GetExerciseBook()->GetNotebook();
+	m_pListbook = dynamic_cast<wxListbook*>(m_pJournal->GetParent()); // wxDynamicCast otherwise
 }
 
 void Settings::Init()
@@ -94,29 +96,40 @@ void Settings::OnResetAll(wxCommandEvent& WXUNUSED(event))
 void Settings::OnResetEntries(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
+	{
 		m_pJournal->GetEntryList()->ResetList();
+		m_pListbook->SetSelection(0);
+	}
 }
 
 void Settings::OnResetWorkouts(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
+	{
 		m_WPNotebook->GetWorkoutList()->ResetList();
+		m_pListbook->SetSelection(1);
+	}
 }
 
 void Settings::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
+	{
 		m_WPNotebook->GetRoutineList()->ResetList();
+		m_pListbook->SetSelection(1);
+	}
 }
 
 void Settings::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_WPNotebook->CreateNewWorkout();
+	m_pListbook->SetSelection(1);
 }
 
 void Settings::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
 	m_WPNotebook->CreateNewRoutine();
+	m_pListbook->SetSelection(1);
 }
 
 bool Settings::ConfirmReset()
