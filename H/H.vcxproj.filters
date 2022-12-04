@@ -50,7 +50,6 @@
     <ClCompile Include="src\NutritionBook.cc" />
     <ClCompile Include="src\CaloriePanel.cc" />
     <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
-    <ClCompile Include="src\PrefsDlg.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -129,9 +128,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Font\Font.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PrefsDlg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

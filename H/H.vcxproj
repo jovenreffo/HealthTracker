@@ -76,14 +76,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;WXUSINGDLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.1.5\lib\vc_dll\mswud;C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.1.5\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\lib\vc_dll\mswud;C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.1.5\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wxbase31ud.lib;wxmsw31ud_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxbase32ud.lib;wxmsw32ud_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -145,7 +145,6 @@
     <ClCompile Include="src\Main.cc" />
     <ClCompile Include="src\NutritionBook.cc" />
     <ClCompile Include="src\NutritionPanel.cc" />
-    <ClCompile Include="src\PrefsDlg.cc" />
     <ClCompile Include="src\RoutineDialog.cc" />
     <ClCompile Include="src\RoutineView.cc" />
     <ClCompile Include="src\SaveWorkoutDialog.cc" />
@@ -172,7 +171,6 @@
     <ClInclude Include="src\ListBook.h" />
     <ClInclude Include="src\NutritionBook.h" />
     <ClInclude Include="src\NutritionPanel.h" />
-    <ClInclude Include="src\PrefsDlg.h" />
     <ClInclude Include="src\RoutineDialog.h" />
     <ClInclude Include="src\RoutineView.h" />
     <ClInclude Include="src\SaveWorkoutDialog.h" />
