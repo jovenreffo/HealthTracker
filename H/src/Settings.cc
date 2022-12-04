@@ -42,7 +42,6 @@ void Settings::SetupSizers()
 	// Set up the top level sizer
 	m_pTopSizer = new wxStaticBoxSizer(wxVERTICAL, this, _T("Settings"));
 	m_pTopParent = m_pTopSizer->GetStaticBox();
-	m_pTopSizer->Layout();
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Initialise the content sizers and controls before arranging the items
