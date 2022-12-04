@@ -27,10 +27,6 @@ private:
 	CalorieList* m_pCalorieList;
 	wxButton* m_pAddButton;
 
-	wxStaticText* m_pTotalText;
-	//Total m_total;
-	long m_total;
-
 	AddItemDlg* m_pAddItemDlg;
 
 	wxImageList* m_pImageList;
@@ -42,8 +38,6 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
-
-	void DoTotalCalc();
 
 	// Setup
 	void Init();
@@ -65,6 +59,8 @@ private:
 	wxBitmap m_calorieBmp;
 	CaloriePanel* m_pCaloriePanel;
 
+	Total m_total;
+
 public:
 	CalorieList(CaloriePanel* pCaloriePanel,
 		wxWindow* parent,
@@ -74,12 +70,14 @@ public:
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
+	void UpdateTotal();
 
 	// Setup
 	void Init();
 	void SetupMenu();
 	void SetupColumns();
 	void SetupImageList();
+	void SetupTotalItem();
 
 	// Events
 	void OnRightClick(wxListEvent& event);
