@@ -1,6 +1,8 @@
-#pragma once
+#ifndef _WINDOW_H_
+#define _WINDOW_H_
 
 #include <wx/wx.h>
+#include <wx/config.h>
 #include "ListBook.h"
 #include "Journal.h"
 #include "Calendar.h"
@@ -90,3 +92,5 @@ public:
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 };
+
+#endif
