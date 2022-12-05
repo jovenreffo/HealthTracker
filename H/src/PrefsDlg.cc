@@ -29,7 +29,7 @@ enum class Prefs
 	ID_SELECT_FONT,
 };
 
-class GeneralPagePanel : public wxPanel
+class GeneralPagePanel: public wxPanel
 {
 private:
 	wxCheckBox* m_pCheckCustomFont;
@@ -138,10 +138,10 @@ private:
 	}
 };
 
-class GeneralPage : public wxStockPreferencesPage
+class GeneralPage: public wxStockPreferencesPage
 {
 public:
-	GeneralPage() : wxStockPreferencesPage(wxStockPreferencesPage::Kind::Kind_General)
+	GeneralPage(): wxStockPreferencesPage(wxStockPreferencesPage::Kind::Kind_General)
 	{
 	}
 
@@ -151,9 +151,32 @@ public:
 	}
 };
 
+class AdvancedPagePanel: public wxPanel
+{
+public:
+	AdvancedPagePanel(wxWindow* parent)
+		: wxPanel(parent)
+	{
+		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
+	}
+};
+
+class AdvancedPage: public wxStockPreferencesPage
+{
+public:
+	AdvancedPage() : wxStockPreferencesPage(wxStockPreferencesPage::Kind::Kind_Advanced)
+	{
+	}
+
+	virtual wxWindow* CreateWindow(wxWindow* parent) override
+	{
+		return new AdvancedPagePanel(parent);
+	}
+};
+
 PrefsDlg::PrefsDlg(const wxString& title)
 	: wxPreferencesEditor(title)
 {
 	this->AddPage(new GeneralPage());
-	
+	this->AddPage(new AdvancedPage());
 }
