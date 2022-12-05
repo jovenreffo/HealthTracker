@@ -7,6 +7,20 @@ bool App::OnInit()
 
 	Frame* frame = new Frame();
 	frame->Show(true);
+	
+	this->SetVendorName(_T("wxWidgets"));
+	this->SetAppName(_T("Health++"));
+
+	// Handle config setup
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	pConfig->SetRecordDefaults();
 
 	return true;
+}
+
+int App::OnExit()
+{
+	delete wxConfigBase::Set(nullptr);
+
+	return 0;
 }
