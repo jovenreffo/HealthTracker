@@ -38,10 +38,10 @@ Frame::~Frame()
 	int x, y, w, h;
 	GetClientSize(&w, &h);
 	GetPosition(&x, &y);
-	pConfig->Write("/Frame/x", (long)x);
-	pConfig->Write("/Frame/y", (long)y);
-	pConfig->Write("/Frame/w", (long)w);
-	pConfig->Write("/Frame/h", (long)h);
+	pConfig->Write("/Frame/x", static_cast<long>(x));
+	pConfig->Write("/Frame/y", static_cast<long>(y));
+	pConfig->Write("/Frame/w", static_cast<long>(w));
+	pConfig->Write("/Frame/h", static_cast<long>(h));
 }
 
 bool Frame::ConfirmReset()
