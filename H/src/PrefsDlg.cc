@@ -158,6 +158,12 @@ public:
 		: wxPanel(parent)
 	{
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
+		this->SetSizerAndFit(pTopSizer);
+
+		wxStaticText* pDesc = new wxStaticText(this, wxID_STATIC, _("These options directly affect the program's configuration."));
+		pDesc->SetForegroundColour(wxColour(128, 128, 128));
+
+		pTopSizer->Add(pDesc, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 	}
 };
 
