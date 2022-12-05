@@ -70,7 +70,7 @@ public:
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
-		m_pSelectFont->Bind(wxEVT_BUTTON, &GeneralPagePanel::OnFontSelect, this);
+		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 
 		this->Fit();
@@ -117,11 +117,6 @@ private:
 		}
 	}
 
-	void OnFontSelect(wxCommandEvent& event)
-	{
-		this->DoFontSelect();
-	}
-
 	void OnUseCustomFont(wxCommandEvent& event)
 	{
 		if (event.IsChecked())
@@ -163,7 +158,38 @@ public:
 		wxStaticText* pDesc = new wxStaticText(this, wxID_STATIC, _("These options directly affect the program's configuration."));
 		pDesc->SetForegroundColour(wxColour(128, 128, 128));
 
+		wxStaticText* pResetConfigTxt = new wxStaticText(this, wxID_STATIC, _("Reset program configuration:"));
+		wxButton* pResetConfigBtn = new wxButton(this, wxID_ANY, _("Reset"));
+		pResetConfigBtn->Bind(wxEVT_BUTTON, &AdvancedPagePanel::OnResetConfig, this);
+
+		wxFlexGridSizer* pAdvancedSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+
 		pTopSizer->Add(pDesc, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+		pTopSizer->Add(pAdvancedSizer, wxSizerFlags().Expand());
+		pAdvancedSizer->Add(pResetConfigTxt, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+		pAdvancedSizer->Add(pResetConfigBtn, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+	}
+
+	void OnResetConfig(wxCommandEvent& event)
+	{
+		wxConfigBase* pConfig = wxConfigBase::Get();
+
+		if (pConfig == nullptr)
+		{
+			wxLogError(_("No configuration to delete."));
+			return;
+		}
+
+		if (pConfig->DeleteAll())
+		{
+			wxLogMessage(_("Successfully deleted program configuration."));
+			delete wxConfigBase::Set(nullptr);
+			wxConfigBase::DontCreateOnDemand();
+		}
+		else
+		{
+			wxLogError(_("Failed to delete program configuration."));
+		}
 	}
 };
 
