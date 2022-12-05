@@ -16,10 +16,11 @@
 #include "RoutineDialog.h"
 #include "PrefsDlg.h"
 
-class App : public wxApp
+class App: public wxApp
 {
 public:
-	virtual bool OnInit();
+	virtual bool OnInit() override;
+	virtual int OnExit() override;
 };
 
 #define WINDOW_SIZE (wxSize(640, 480))
@@ -35,7 +36,7 @@ enum
 	ID_PREFERENCES
 };
 
-class Frame : public wxFrame
+class Frame: public wxFrame
 {
 private:
 	DECLARE_EVENT_TABLE()
@@ -61,6 +62,8 @@ private:
 	EntryList* m_pEntryList;
 	WorkoutWindow* m_pWorkoutWindow;
 	RoutineDialog* m_pRoutineDialog;
+
+	wxConfigBase* m_pConfig;
 	
 public:
 	Frame();
@@ -70,6 +73,7 @@ public:
 
 	// Window setup
 	void Init();
+	void InitConfig();
 	void SetupTaskbarIcon();
 	void SetupProgramIcon();
 	void SetupMenuBar();

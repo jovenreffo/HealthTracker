@@ -22,12 +22,26 @@ Frame::Frame()
 	: wxFrame{ nullptr, -1, _T("Health++"), wxDefaultPosition, WINDOW_SIZE }
 {
 	this->Init();
+	this->InitConfig();
 }
 
 Frame::~Frame()
 {
 	this->DestroyChildren();
 	delete m_pTaskbarIcon;
+
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (!pConfig)
+		return;
+
+	// Save the window's position and size
+	int x, y, w, h;
+	GetClientSize(&w, &h);
+	GetPosition(&x, &y);
+	pConfig->Write("/Frame/x", (long)x);
+	pConfig->Write("/Frame/y", (long)y);
+	pConfig->Write("/Frame/w", (long)w);
+	pConfig->Write("/Frame/h", (long)h);
 }
 
 bool Frame::ConfirmReset()
@@ -47,6 +61,20 @@ void Frame::Init()
 	this->SetupListbook();
 	this->SetupLists();
 	this->SetupOther();
+}
+
+void Frame::InitConfig()
+{
+	m_pConfig = wxConfigBase::Get();
+
+	// Restore the frame's size
+	m_pConfig->SetPath("Frame");
+
+	this->Move(m_pConfig->Read("x", 100),
+			   m_pConfig->Read("y", 100));
+
+	this->SetClientSize(m_pConfig->Read("w", 640),
+						m_pConfig->Read("h", 480));
 }
 
 // Window setup
