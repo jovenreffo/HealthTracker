@@ -88,7 +88,7 @@ private:
 	{
 		// trace back to main frame to find the entry list's text control, as it is a distant child window
 		wxWindow* pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
-		m_pJournalTxtCtrl = wxDynamicCast(pMainWin, wxTextCtrl); // cast the window to a wxTextCtrl so we have control over it
+		m_pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(pMainWin); // cast the window to a wxTextCtrl so we have control over it
 	}
 
 	// events
