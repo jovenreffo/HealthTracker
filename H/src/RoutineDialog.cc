@@ -32,6 +32,8 @@ void RoutineDialog::SetupSizing()
 void RoutineDialog::SetupControls()
 {
 	this->SetSizerAndFit(m_pTopSizer);
+	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+
 
 	// For each day
 	m_pDaySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));

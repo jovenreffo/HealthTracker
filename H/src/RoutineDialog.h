@@ -40,6 +40,7 @@ private:
 
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pDaySizer; // This sizer will be re-initialised and recycled to format all the days in the week.
+	wxFlexGridSizer* m_pDayFlexSizer;
 
 	wxTextCtrl* m_pTextCtrl;
 	wxString m_routineName;
