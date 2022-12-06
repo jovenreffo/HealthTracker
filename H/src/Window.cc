@@ -117,7 +117,7 @@ void Frame::SetupMenuBar()
 	m_pFileMenu->AppendSubMenu(m_pResetMenu, _T("&Reset..."));
 	m_pFileMenu->Append(wxID_RESET, _T("&Reset All\tCtrl+Shift+R"));
 	m_pFileMenu->AppendSeparator();
-	m_pFileMenu->Append(ID_PREFERENCES, _T("&Preferences..."));
+	m_pFileMenu->Append(ID_PREFERENCES, _T("&Preferences...\tCtrl+P"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit\tAlt+F4"));
 
