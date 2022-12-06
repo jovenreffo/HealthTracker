@@ -59,7 +59,6 @@ public:
 
 	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
 	const wxString& GetRoutineName() const { return m_routineName; }
-	void UpdateRoutineView();
 
 	// Setup
 	void Init();
