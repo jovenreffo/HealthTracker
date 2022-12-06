@@ -15,6 +15,10 @@ RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, RoutineLi
 	this->Init();
 }
 
+void RoutineDialog::UpdateRoutineView()
+{
+}
+
 void RoutineDialog::Init()
 {
 	this->CreateControls();

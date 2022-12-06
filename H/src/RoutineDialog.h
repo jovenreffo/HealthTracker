@@ -11,6 +11,7 @@
 #include "EntryList.h"
 #include "WPLists.h"
 #include "RoutineStruct/Routine.h"
+#include "RoutineView.h"
 
 #define RDLG_SIZE ( wxSize(250, 350) )
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
@@ -35,6 +36,8 @@ private:
 	wxChoice* m_pChoice[CL_SIZE];
 	std::vector<Routine> m_routineInfo;
 
+	RoutineView* m_pRoutineView;
+
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
@@ -56,6 +59,7 @@ public:
 
 	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
 	const wxString& GetRoutineName() const { return m_routineName; }
+	void UpdateRoutineView();
 
 	// Setup
 	void Init();
