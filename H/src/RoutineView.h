@@ -40,7 +40,7 @@ private:
 	wxButton* m_pCancel;
 
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pDaySizer;
+	wxFlexGridSizer* m_pDayFlexSizer;
 
 	wxTextCtrl* m_pTextCtrl;
 
