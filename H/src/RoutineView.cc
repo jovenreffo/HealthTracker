@@ -4,8 +4,8 @@ BEGIN_EVENT_TABLE(RoutineView, wxDialog)
 
 END_EVENT_TABLE()
 
-RoutineView::RoutineView(const std::vector<Routine>& routineInfo, const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style), m_routineInfo{ routineInfo }, m_content{ content }
+RoutineView::RoutineView(long selectionIndex, const std::vector<Routine>& routineInfo, const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_selectionIndex{ selectionIndex }, m_routineInfo{ routineInfo }, m_content{ content }
 {
 	this->Init();
 }

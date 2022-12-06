@@ -44,8 +44,11 @@ private:
 
 	wxTextCtrl* m_pTextCtrl;
 
+	long m_selectionIndex;
+
 public:
-	RoutineView(const std::vector<Routine>& routineInfo,
+	RoutineView(long selectionIndex,
+		const std::vector<Routine>& routineInfo,
 		const std::vector<EntryContent>& content,
 		wxWindow* parent,
 		wxWindowID id,
