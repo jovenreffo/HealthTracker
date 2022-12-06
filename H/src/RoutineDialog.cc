@@ -101,7 +101,6 @@ void RoutineDialog::HandleExit()
 	}
 
 	// get the value the user input to the text ctrl
-	m_routineName = m_pTextCtrl->GetValue();
 	m_pRoutineList->AddItem(m_routineName, r);
 }
 
@@ -109,10 +108,10 @@ void RoutineDialog::HandleExit()
 
 void RoutineDialog::OnOK(wxCommandEvent& WXUNUSED(event))
 {
-	this->HandleExit();
-
 	if (Validate() && TransferDataFromWindow())
 	{
+		this->HandleExit();
+
 		if (IsModal())
 			EndModal(wxID_OK);
 		else
