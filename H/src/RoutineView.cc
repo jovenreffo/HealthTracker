@@ -2,7 +2,6 @@
 
 BEGIN_EVENT_TABLE(RoutineView, wxDialog)
 
-
 END_EVENT_TABLE()
 
 RoutineView::RoutineView(const std::vector<Routine>& routineInfo, const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -68,8 +67,8 @@ void RoutineView::CreateControls()
 void RoutineView::SetupControls()
 {
 	// Initialise the choice array
-	for (auto i{ 0 }; i < m_routineInfo.size(); ++i)
-		m_choiceArray.Add(m_routineInfo[i].GetStringAt(i));
+	for (auto i{ 0 }; i < m_content.size(); ++i)
+		m_choiceArray.Add(m_content[i].GetName());
 	for (auto i{ 0 }; i < CL_SIZE; ++i)
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
