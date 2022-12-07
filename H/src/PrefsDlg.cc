@@ -39,6 +39,7 @@ private:
 	wxStaticText* m_pWhatFont;
 
 	wxFont m_selectedFont;
+	wxFont m_defaultFont;
 	wxString m_faceName;
 
 public:
@@ -77,6 +78,8 @@ public:
 		m_pSelectFont->Disable();
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
+
+		m_defaultFont = m_pCheckCustomFont->GetFont();
 
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
@@ -171,7 +174,7 @@ private:
 		{
 			m_pSelectFont->Enable(false);
 			// revert the font back to the original
-			m_pJournalTxtCtrl->SetFont(Fonts::GetDefaultFont(10));
+			m_pJournalTxtCtrl->SetFont(m_defaultFont);
 		}
 	}
 };
