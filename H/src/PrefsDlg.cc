@@ -86,11 +86,11 @@ public:
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 		
-		// init the figgy
+		// init the fig
 		wxConfigBase* pConfig = wxConfigBase::Get();
-		pConfig->SetPath(_("Preferences"));
+		pConfig->SetPath(_("/Preferences"));
 
-		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L));
+		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
 
 		this->Fit();
 		this->SetMinSize(wxSize(300, 350));
