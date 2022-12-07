@@ -48,6 +48,12 @@ public:
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
 
+		// =============== environment ===============
+		wxStaticText* pEnvText = new wxStaticText(this, wxID_STATIC, _T("Environment"));
+		pEnvText->SetFont(Fonts::GetBoldFont(10));
+		pTopSizer->Add(pEnvText, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
+
+
 		// =============== appearance ===============
 		wxStaticText* pAppearanceText = new wxStaticText(this, wxID_STATIC, _("Appearance"));
 		pAppearanceText->SetFont(Fonts::GetBoldFont(10));
