@@ -27,6 +27,7 @@ enum class Prefs
 {
 	ID_CHECK_FONT,
 	ID_SELECT_FONT,
+	ID_RESET_FONT
 };
 
 class GeneralPagePanel: public wxPanel
@@ -34,6 +35,7 @@ class GeneralPagePanel: public wxPanel
 private:
 	wxCheckBox* m_pCheckCustomFont;
 	wxButton* m_pSelectFont;
+	wxButton* m_pResetDefFont;
 	wxFontDialog* m_pFontDialog;
 	wxTextCtrl* m_pJournalTxtCtrl;
 	wxStaticText* m_pWhatFont;
@@ -76,6 +78,7 @@ public:
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
 		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pSelectFont->Disable();
+		m_pResetDefFont = new wxButton(this, (int)Prefs::ID_RESET_FONT, _("Use default font"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
 
@@ -84,6 +87,7 @@ public:
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pWhatFont, wxSizerFlags().CentreVertical().Expand().Border(wxLEFT, 5));
+
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
