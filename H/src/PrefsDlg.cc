@@ -103,6 +103,9 @@ public:
 	void LoadConfig()
 	{
 		wxConfigBase* pConfig = wxConfigBase::Get();
+		if (pConfig == nullptr)
+			return;
+
 		pConfig->SetPath(_("/Preferences"));
 
 		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
