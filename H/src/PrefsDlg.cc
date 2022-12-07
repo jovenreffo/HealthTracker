@@ -39,6 +39,7 @@ private:
 	wxStaticText* m_pWhatFont;
 
 	wxFont m_selectedFont;
+	wxString m_faceName;
 
 public:
 	GeneralPagePanel(wxWindow* parent)
@@ -74,7 +75,7 @@ public:
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
 		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pSelectFont->Disable();
-		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName() << _(" (default)"), wxDefaultPosition, wxDefaultSize);
+		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
 
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
@@ -86,12 +87,7 @@ public:
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 		
-		// init the fig
-		wxConfigBase* pConfig = wxConfigBase::Get();
-		pConfig->SetPath(_("/Preferences"));
-
-		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
-
+		this->LoadConfig();
 		this->Fit();
 		this->SetMinSize(wxSize(300, 350));
 	}
@@ -99,6 +95,16 @@ public:
 	~GeneralPagePanel()
 	{
 		this->SaveToConfig();
+	}
+
+	void LoadConfig()
+	{
+		wxConfigBase* pConfig = wxConfigBase::Get();
+		pConfig->SetPath(_("/Preferences"));
+
+		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
+		m_faceName = pConfig->Read("FaceName", "");
+		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
 	}
 
 	void SaveToConfig()
@@ -111,6 +117,7 @@ public:
 		}
 
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
+		pConfig->Write("/Preferences/FaceName", m_faceName);
 	}
 
 	virtual bool TransferDataToWindow() override
@@ -148,7 +155,8 @@ private:
 			if (m_selectedFont.IsOk())
 			{
 				m_pJournalTxtCtrl->SetFont(m_selectedFont);
-				m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_selectedFont.GetFaceName());
+				m_faceName = m_selectedFont.GetFaceName();
+				m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
 			}
 		}
 	}
@@ -158,7 +166,6 @@ private:
 		if (event.IsChecked())
 		{
 			m_pSelectFont->Enable(true);
-			this->DoFontSelect();
 		}
 		else
 		{
