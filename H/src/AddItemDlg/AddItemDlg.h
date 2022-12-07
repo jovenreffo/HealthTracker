@@ -12,8 +12,8 @@
 #include <wx/textctrl.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDITEMDLG_SIZE  ( wxSize(400, 260) )
-#define ADDITEMDLG_MAX	 ( wxSize(450, 280) )
+#define ADDITEMDLG_SIZE  ( wxSize(500, 325) )
+#define ADDITEMDLG_MAX	 ( wxSize(550, 375) )
 
 struct Total
 {
@@ -77,8 +77,8 @@ private:
 	wxSpinCtrl* m_pFiberCtrl;
 
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pItemSizer;
 	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pItemSizer;
 
 	wxString m_itemName;
 	Total m_total;

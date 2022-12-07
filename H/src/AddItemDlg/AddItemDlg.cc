@@ -54,40 +54,34 @@ void AddItemDlg::SetupControls()
 void AddItemDlg::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pItemSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Item name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 5));
-	m_pTopSizer->Add(m_pItemSizer);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Item name:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 5));
-	m_pItemSizer->Add(m_pCalories, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 25));
-	m_pTopSizer->Add(m_pItemSizer);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pCalories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Expand());
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")),
-		wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
+		wxSizerFlags().Left().Border(wxALL, 5));
 
-	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Carbohydrates:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pCarbCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 5));
-	m_pTopSizer->Add(m_pItemSizer);
+	m_pItemSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Carbohydrates:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pCarbCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Protein:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pProteinCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 44));
-	m_pTopSizer->Add(m_pItemSizer);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Protein:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pProteinCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Fiber:")), wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxALL, 5));
-	m_pItemSizer->Add(m_pFiberCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_LEFT).Border(wxLEFT, 56));
-	m_pTopSizer->Add(m_pItemSizer);
+	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Fiber:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pFiberCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Expand());
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer);
