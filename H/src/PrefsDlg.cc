@@ -44,6 +44,13 @@ public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent)
 	{
+		
+
+#ifdef _DEBUG
+		// Test to make sure that the config is actually getting the values
+		//wxLogMessage(_("%d"), pConfig->ReadLong("/Frame/x", 100));
+#endif	
+
 		this->SetupWindowPointers();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
@@ -78,9 +85,32 @@ public:
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
+		
+		// init the figgy
+		wxConfigBase* pConfig = wxConfigBase::Get();
+		pConfig->SetPath(_("Preferences"));
+
+		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L));
 
 		this->Fit();
 		this->SetMinSize(wxSize(300, 350));
+	}
+
+	~GeneralPagePanel()
+	{
+		this->SaveToConfig();
+	}
+
+	void SaveToConfig()
+	{
+		wxConfigBase* pConfig = wxConfigBase::Get();
+		if (pConfig == nullptr)
+		{
+			wxLogMessage(_T("Null config."));
+			return;
+		}
+
+		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 	}
 
 	virtual bool TransferDataToWindow() override
