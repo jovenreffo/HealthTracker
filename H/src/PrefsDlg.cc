@@ -48,13 +48,6 @@ public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent)
 	{
-		
-
-#ifdef _DEBUG
-		// Test to make sure that the config is actually getting the values
-		//wxLogMessage(_("%d"), pConfig->ReadLong("/Frame/x", 100));
-#endif	
-
 		this->SetupWindowPointers();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
@@ -66,6 +59,7 @@ public:
 
 
 		// =============== appearance ===============
+		// Initialization
 		wxStaticText* pAppearanceText = new wxStaticText(this, wxID_STATIC, _("Appearance"));
 		pAppearanceText->SetFont(Fonts::GetBoldFont(10));
 		pTopSizer->Add(pAppearanceText, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
@@ -84,6 +78,7 @@ public:
 
 		m_defaultFont = m_pCheckCustomFont->GetFont();
 
+		// Add items to the sizer
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pWhatFont, wxSizerFlags().CentreVertical().Expand().Border(wxLEFT, 5));
@@ -119,6 +114,13 @@ public:
 		m_faceName = pConfig->Read("FaceName", "");
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
 
+		// Load the font
+		m_selectedFont.SetPointSize(pConfig->Read("FontSize", 10L));
+		m_selectedFont.SetFamily(static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))));
+		m_selectedFont.SetStyle(static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))));
+		m_selectedFont.SetUnderlined(pConfig->Read("FontUnderline", 0L));
+		m_selectedFont.SetFaceName(m_faceName);
+		m_pJournalTxtCtrl->SetFont(m_selectedFont);
 	}
 
 	void SaveToConfig()
