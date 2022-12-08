@@ -115,12 +115,15 @@ public:
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
 
 		// Load the font
-		m_selectedFont.SetPointSize(pConfig->Read("FontSize", 10L));
-		m_selectedFont.SetFamily(static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))));
-		m_selectedFont.SetStyle(static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))));
-		m_selectedFont.SetUnderlined(pConfig->Read("FontUnderline", 0L));
-		m_selectedFont.SetFaceName(m_faceName);
-		m_pJournalTxtCtrl->SetFont(m_selectedFont);
+		if (m_pCheckCustomFont->IsChecked())
+		{
+			m_selectedFont.SetPointSize(pConfig->Read("FontSize", 10L));
+			m_selectedFont.SetFamily(static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))));
+			m_selectedFont.SetStyle(static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))));
+			m_selectedFont.SetUnderlined(pConfig->Read("FontUnderline", 0L));
+			m_selectedFont.SetFaceName(m_faceName);
+			m_pJournalTxtCtrl->SetFont(m_selectedFont);
+		}
 	}
 
 	void SaveToConfig()
