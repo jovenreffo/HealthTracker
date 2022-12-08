@@ -78,7 +78,7 @@ public:
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
 		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pSelectFont->Disable();
-		m_pResetDefFont = new wxButton(this, (int)Prefs::ID_RESET_FONT, _("Use default font"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+		m_pResetDefFont = new wxButton(this, (int)Prefs::ID_RESET_FONT, _("Reset"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
 
@@ -87,12 +87,15 @@ public:
 		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pWhatFont, wxSizerFlags().CentreVertical().Expand().Border(wxLEFT, 5));
-
+		pAppearanceSizer->InsertSpacer(3, 5);
+		pAppearanceSizer->Add(new wxStaticText(this, wxID_STATIC, _("Use default font:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pAppearanceSizer->Add(m_pResetDefFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
+		m_pResetDefFont->Bind(wxEVT_BUTTON, &GeneralPagePanel::OnResetFont, this);
 		
 		this->LoadConfig();
 		this->Fit();
@@ -145,6 +148,12 @@ private:
 	}
 
 	// events
+
+	void OnResetFont(wxCommandEvent& event)
+	{
+		m_pJournalTxtCtrl->SetFont(m_defaultFont);
+		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_defaultFont.GetFaceName());
+	}
 
 	void UpdateFontSelect(wxUpdateUIEvent& event)
 	{
