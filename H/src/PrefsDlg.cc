@@ -125,10 +125,7 @@ public:
 	{
 		wxConfigBase* pConfig = wxConfigBase::Get();
 		if (pConfig == nullptr)
-		{
-			wxLogMessage(_T("Null config."));
 			return;
-		}
 
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 		pConfig->Write("/Preferences/FaceName", m_faceName);
