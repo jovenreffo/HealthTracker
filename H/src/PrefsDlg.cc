@@ -118,6 +118,7 @@ public:
 		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
 		m_faceName = pConfig->Read("FaceName", "");
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
+
 	}
 
 	void SaveToConfig()
@@ -131,6 +132,15 @@ public:
 
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 		pConfig->Write("/Preferences/FaceName", m_faceName);
+		
+		// save font information
+		if (m_selectedFont.IsOk())
+		{
+			pConfig->Write("/Preferences/FontSize", static_cast<long>(m_selectedFont.GetPointSize()));
+			pConfig->Write("/Preferences/FontFamily", static_cast<long>(m_selectedFont.GetFamily()));
+			pConfig->Write("/Preferences/FontStyle", static_cast<long>(m_selectedFont.GetStyle()));
+			pConfig->Write("/Preferences/FontUnderline", m_selectedFont.GetUnderlined());
+		}
 	}
 
 	virtual bool TransferDataToWindow() override
@@ -153,6 +163,9 @@ private:
 	{
 		m_pJournalTxtCtrl->SetFont(m_defaultFont);
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_defaultFont.GetFaceName());
+
+		m_pCheckCustomFont->SetValue(0);
+		m_pSelectFont->Enable(false);
 	}
 
 	void UpdateFontSelect(wxUpdateUIEvent& event)
