@@ -163,6 +163,7 @@ private:
 
 	void OnResetFont(wxCommandEvent& event)
 	{
+		m_selectedFont = m_defaultFont;
 		m_pJournalTxtCtrl->SetFont(m_defaultFont);
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_defaultFont.GetFaceName());
 
@@ -200,6 +201,10 @@ private:
 		if (event.IsChecked())
 		{
 			m_pSelectFont->Enable(true);
+			if (m_selectedFont.IsOk())
+			{
+				m_pJournalTxtCtrl->SetFont(m_selectedFont);
+			}
 		}
 		else
 		{
