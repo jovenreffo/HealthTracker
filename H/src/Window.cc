@@ -70,13 +70,26 @@ void Frame::InitConfig()
 		return;
 
 	// Restore the frame's size
-	m_pConfig->SetPath("Frame");
+	m_pConfig->SetPath(_("Frame"));
 
 	this->Move(m_pConfig->Read("x", 100),
 			   m_pConfig->Read("y", 100));
 
 	this->SetClientSize(m_pConfig->Read("w", 640),
 						m_pConfig->Read("h", 480));
+
+	// Access the preferences variables to set the font accordingly
+	m_pConfig->SetPath(_("/Preferences"));
+	wxTextCtrl* ptc = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
+
+	ptc->SetFont(wxFont(
+		m_pConfig->Read("FontSize", 10L),
+		static_cast<wxFontFamily>(m_pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+		static_cast<wxFontStyle>(m_pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+		wxFONTWEIGHT_NORMAL,
+		m_pConfig->Read("FontUnderline", 0L),
+		m_pConfig->Read("FaceName", "")
+	));
 }
 
 // Window setup
