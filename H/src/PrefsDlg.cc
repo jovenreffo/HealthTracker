@@ -217,7 +217,8 @@ private:
 	void OnSpellCheck(wxCommandEvent& event)
 	{
 		// Enable spell checking on the journal (wxWidgets 3.1.6 required)
-		m_pJournalTxtCtrl->EnableProofCheck();
+		if (m_pJournalTxtCtrl != nullptr)
+			m_pJournalTxtCtrl->EnableProofCheck();
 	}
 };
 
