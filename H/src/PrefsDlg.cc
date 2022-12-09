@@ -27,13 +27,15 @@ enum class Prefs
 {
 	ID_CHECK_FONT,
 	ID_SELECT_FONT,
-	ID_RESET_FONT
+	ID_RESET_FONT,
+	ID_SPELL_CHECK
 };
 
 class GeneralPagePanel: public wxPanel
 {
 private:
 	wxCheckBox* m_pCheckCustomFont;
+	wxCheckBox* m_pEnableSpellCheck;
 	wxButton* m_pSelectFont;
 	wxButton* m_pResetDefFont;
 	wxFontDialog* m_pFontDialog;
@@ -46,14 +48,14 @@ private:
 
 public:
 	GeneralPagePanel(wxWindow* parent)
-		: wxPanel(parent)
+		: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, 0L, _("generalpagepanel"))
 	{
 		this->SetupWindowPointers();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
 
 		// =============== environment ===============
-		wxStaticText* pEnvText = new wxStaticText(this, wxID_STATIC, _T("Environment"));
+		wxStaticText* pEnvText = new wxStaticText(this, wxID_STATIC, _("Environment"));
 		pEnvText->SetFont(Fonts::GetBoldFont(10));
 		pTopSizer->Add(pEnvText, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
 
@@ -70,12 +72,13 @@ public:
 
 		m_pFontDialog = new wxFontDialog(this);
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
+		m_pEnableSpellCheck = new wxCheckBox(this, (int)Prefs::ID_SPELL_CHECK, _("Check spelling"));
 		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-		m_pSelectFont->Disable();
 		m_pResetDefFont = new wxButton(this, (int)Prefs::ID_RESET_FONT, _("Reset"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
+		// control configurations
+		m_pSelectFont->Disable();
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
-
 		m_defaultFont = m_pCheckCustomFont->GetFont();
 
 		// Add items to the sizer
@@ -85,12 +88,14 @@ public:
 		pAppearanceSizer->InsertSpacer(3, 5);
 		pAppearanceSizer->Add(new wxStaticText(this, wxID_STATIC, _("Use default font:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pAppearanceSizer->Add(m_pResetDefFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pAppearanceSizer->Add(m_pEnableSpellCheck, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 		m_pResetDefFont->Bind(wxEVT_BUTTON, &GeneralPagePanel::OnResetFont, this);
+		m_pEnableSpellCheck->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnSpellCheck, this);
 		
 		this->LoadConfig();
 		this->Fit();
@@ -212,6 +217,12 @@ private:
 			// revert the font back to the original
 			m_pJournalTxtCtrl->SetFont(m_defaultFont);
 		}
+	}
+
+	void OnSpellCheck(wxCommandEvent& event)
+	{
+		// Enable spell checking on the journal (wxWidgets 3.1.6 required)
+
 	}
 };
 
