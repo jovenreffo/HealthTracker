@@ -66,6 +66,8 @@ void Frame::Init()
 void Frame::InitConfig()
 {
 	m_pConfig = wxConfigBase::Get();
+	if (m_pConfig == nullptr)
+		return;
 
 	// Restore the frame's size
 	m_pConfig->SetPath("Frame");
