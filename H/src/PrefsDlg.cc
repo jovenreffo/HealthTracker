@@ -110,9 +110,11 @@ public:
 
 		pConfig->SetPath(_("/Preferences"));
 
-		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 1L) != 0);
+		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L) != 1);
 		m_faceName = pConfig->Read("FaceName", "");
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
+
+		m_pEnableSpellCheck->SetValue(pConfig->Read("Spellcheck", 0L) != 1);
 
 		// Load the font
 		if (m_pCheckCustomFont->IsChecked())
@@ -134,6 +136,7 @@ public:
 
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 		pConfig->Write("/Preferences/FaceName", m_faceName);
+		pConfig->Write("/Preferences/Spellcheck", m_pEnableSpellCheck->GetValue());
 		
 		// save font information
 		if (m_selectedFont.IsOk())
