@@ -39,7 +39,7 @@ void Journal::SetupControls()
 	m_pPrevEntryText = new wxStaticText(this, wxID_STATIC, _T("Previous Entries:"), wxDefaultPosition, wxDefaultSize);
 
 	// Control classes
-	m_pTextCtrl = new wxTextCtrl(this, ID_ENTRY_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE, wxDefaultValidator, _T("journalctrl"));
+	m_pTextCtrl = new wxTextCtrl(this, ID_ENTRY_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2, wxDefaultValidator, _T("journalctrl"));
 	m_pEntryList = new EntryList(m_pTextCtrl, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTextCtrl->DragAcceptFiles(true);
 
