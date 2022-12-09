@@ -55,20 +55,14 @@ public:
 		this->SetSizerAndFit(pTopSizer);
 
 		// =============== environment ===============
+		// Initialization
 		wxStaticText* pEnvText = new wxStaticText(this, wxID_STATIC, _("Environment"));
 		pEnvText->SetFont(Fonts::GetBoldFont(10));
 		pTopSizer->Add(pEnvText, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
 
-
-		// =============== appearance ===============
-		// Initialization
-		wxStaticText* pAppearanceText = new wxStaticText(this, wxID_STATIC, _("Appearance"));
-		pAppearanceText->SetFont(Fonts::GetBoldFont(10));
-		pTopSizer->Add(pAppearanceText, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
-
-		wxFlexGridSizer* pAppearanceSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-		pAppearanceSizer->AddGrowableCol(1);
-		pTopSizer->Add(pAppearanceSizer, wxSizerFlags().Expand());
+		wxFlexGridSizer* pEnvSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+		pEnvSizer->AddGrowableCol(1);
+		pTopSizer->Add(pEnvSizer, wxSizerFlags().Expand());
 
 		m_pFontDialog = new wxFontDialog(this);
 		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
@@ -82,13 +76,14 @@ public:
 		m_defaultFont = m_pCheckCustomFont->GetFont();
 
 		// Add items to the sizer
-		pAppearanceSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-		pAppearanceSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-		pAppearanceSizer->Add(m_pWhatFont, wxSizerFlags().CentreVertical().Expand().Border(wxLEFT, 5));
-		pAppearanceSizer->InsertSpacer(3, 5);
-		pAppearanceSizer->Add(new wxStaticText(this, wxID_STATIC, _("Use default font:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-		pAppearanceSizer->Add(m_pResetDefFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-		pAppearanceSizer->Add(m_pEnableSpellCheck, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->Add(m_pEnableSpellCheck, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->AddSpacer(5);
+		pEnvSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->Add(m_pSelectFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->Add(m_pWhatFont, wxSizerFlags().CentreVertical().Expand().Border(wxLEFT, 5));
+		pEnvSizer->AddSpacer(5);
+		pEnvSizer->Add(new wxStaticText(this, wxID_STATIC, _("Use default font:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->Add(m_pResetDefFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
@@ -222,7 +217,7 @@ private:
 	void OnSpellCheck(wxCommandEvent& event)
 	{
 		// Enable spell checking on the journal (wxWidgets 3.1.6 required)
-
+		m_pJournalTxtCtrl->EnableProofCheck();
 	}
 };
 
