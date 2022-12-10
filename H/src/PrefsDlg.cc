@@ -110,11 +110,11 @@ public:
 
 		pConfig->SetPath(_("/Preferences"));
 
-		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L) != 1);
+		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L));
 		m_faceName = pConfig->Read("FaceName", "");
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
 
-		m_pEnableSpellCheck->SetValue(pConfig->Read("Spellcheck", 0L) != 1);
+		m_pEnableSpellCheck->SetValue(pConfig->Read("Spellcheck", 0L));
 
 		// Load the font
 		if (m_pCheckCustomFont->IsChecked())
@@ -122,6 +122,7 @@ public:
 			m_selectedFont.SetPointSize(pConfig->Read("FontSize", 10L));
 			m_selectedFont.SetFamily(static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))));
 			m_selectedFont.SetStyle(static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))));
+			m_selectedFont.SetNumericWeight(pConfig->Read("FontWeight", static_cast<long>(wxFONTWEIGHT_NORMAL)));
 			m_selectedFont.SetUnderlined(pConfig->Read("FontUnderline", 0L));
 			m_selectedFont.SetFaceName(m_faceName);
 			m_pJournalTxtCtrl->SetFont(m_selectedFont);
@@ -144,6 +145,7 @@ public:
 			pConfig->Write("/Preferences/FontSize", static_cast<long>(m_selectedFont.GetPointSize()));
 			pConfig->Write("/Preferences/FontFamily", static_cast<long>(m_selectedFont.GetFamily()));
 			pConfig->Write("/Preferences/FontStyle", static_cast<long>(m_selectedFont.GetStyle()));
+			pConfig->Write("/Preferences/FontWeight", static_cast<long>(m_selectedFont.GetNumericWeight()));
 			pConfig->Write("/Preferences/FontUnderline", m_selectedFont.GetUnderlined());
 		}
 	}
@@ -167,6 +169,8 @@ private:
 	void OnResetFont(wxCommandEvent& event)
 	{
 		m_selectedFont = m_defaultFont;
+		m_faceName = m_defaultFont.GetFaceName();
+		this->SaveToConfig();
 		m_pJournalTxtCtrl->SetFont(m_defaultFont);
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_defaultFont.GetFaceName());
 
