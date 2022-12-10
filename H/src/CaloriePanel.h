@@ -44,6 +44,8 @@ public:
 	void SetupControls();
 	void SetupSizers();
 
+	void AddNewItem();
+
 	// Events
 	void OnNewItem(wxCommandEvent& event);
 };
