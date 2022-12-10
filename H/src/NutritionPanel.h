@@ -18,6 +18,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
+	NutritionBook* GetNutritionBook() const { return m_pNutrBook; }
+
 	// Setup
 	void Init();
 	void SetupNutritionBook();
