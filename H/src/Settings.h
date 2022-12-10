@@ -20,7 +20,8 @@ enum class SE
 	ID_RESET_WORKOUTS,
 	ID_RESET_ROUTINES,
 	ID_ADD_WORKOUT,
-	ID_ADD_ROUTINE
+	ID_ADD_ROUTINE,
+	ID_ADD_NUTR_ITEM
 };
 
 class Settings: public wxPanel
@@ -41,8 +42,14 @@ private:
 
 	wxButton* m_pAddWorkout;
 	wxButton* m_pAddRoutine;
+	wxButton* m_pAddNutrItem;
 
+	// Window pointers
 	ExercisePanel* m_pExercisePanel;
+	ExerciseBook* m_pExerciseBook;
+	NutritionPanel* m_pNutrPanel;
+	NutritionBook* m_pNutrBook;
+	CaloriePanel* m_pCaloriePanel;
 	WPNotebook* m_WPNotebook;
 	Journal* m_pJournal;
 	wxListbook* m_pListbook;
@@ -58,6 +65,7 @@ public:
 
 	// Panel/control setup
 	void Init();
+	void InitWindowPointers();
 	void SetupControls();
 	void SetupSizers();
 	
@@ -73,6 +81,7 @@ public:
 	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
+	void OnAddNutritionItem(wxCommandEvent& WXUNUSED(event));
 
 	bool ConfirmReset();
 };

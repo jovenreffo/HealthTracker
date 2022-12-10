@@ -7,21 +7,30 @@ BEGIN_EVENT_TABLE(Settings, wxPanel)
 	EVT_BUTTON(static_cast<int>(SE::ID_RESET_ROUTINES), Settings::OnResetRoutines)
 	EVT_BUTTON(static_cast<int>(SE::ID_ADD_WORKOUT), Settings::OnAddWorkout)
 	EVT_BUTTON(static_cast<int>(SE::ID_ADD_ROUTINE), Settings::OnAddRoutine)
+	EVT_BUTTON(static_cast<int>(SE::ID_ADD_NUTR_ITEM), Settings::OnAddNutritionItem)
 END_EVENT_TABLE()
 
 Settings::Settings(ExercisePanel* pExercisePanel, Journal* pJournal, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style), m_pExercisePanel{ pExercisePanel }, m_pJournal{ pJournal }
 {
 	this->Init();
-
-	m_WPNotebook = m_pExercisePanel->GetExerciseBook()->GetNotebook();
-	m_pListbook = dynamic_cast<wxListbook*>(m_pJournal->GetParent()); // wxDynamicCast otherwise
+	this->InitWindowPointers();
 }
 
 void Settings::Init()
 {
 	this->SetupSizers();
 	this->AddAllControls();
+}
+
+void Settings::InitWindowPointers()
+{
+	m_pExerciseBook = m_pExercisePanel->GetExerciseBook();
+	m_pNutrPanel = m_pExerciseBook->GetNutritionPanel();
+	m_pNutrBook = m_pNutrPanel->GetNutritionBook();
+	m_pCaloriePanel = m_pNutrBook->GetCaloriePanel();
+	m_WPNotebook = m_pExercisePanel->GetExerciseBook()->GetNotebook();
+	m_pListbook = dynamic_cast<wxListbook*>(m_pJournal->GetParent()); // wxDynamicCast otherwise
 }
 
 void Settings::SetupControls()
@@ -35,6 +44,7 @@ void Settings::SetupControls()
 	// Add item controls
 	m_pAddWorkout = new wxButton(m_pTopParent, static_cast<int>(SE::ID_ADD_WORKOUT), _T("Add Workout"));
 	m_pAddRoutine = new wxButton(m_pTopParent, static_cast<int>(SE::ID_ADD_ROUTINE), _T("Add Routine"));
+	m_pAddNutrItem = new wxButton(m_pTopParent, static_cast<int>(SE::ID_ADD_NUTR_ITEM), _T("Add Nutrition Item"));
 }
 
 void Settings::SetupSizers()
@@ -78,6 +88,7 @@ void Settings::AddItemsGroup()
 
 	pAddItemsSizer->Add(m_pAddRoutine, wxSizerFlags().Border(wxALL, 5));
 	pAddItemsSizer->Add(m_pAddWorkout, wxSizerFlags().Border(wxALL, 5));
+	pAddItemsSizer->Add(m_pAddNutrItem, wxSizerFlags().Border(wxALL, 5));
 }
 
 // ====================================== Events ======================================
@@ -121,14 +132,23 @@ void Settings::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 
 void Settings::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
-	m_WPNotebook->CreateNewWorkout();
 	m_pListbook->SetSelection(1);
+	m_pExerciseBook->SetSelection(0);
+	m_WPNotebook->CreateNewWorkout();
 }
 
 void Settings::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
-	m_WPNotebook->CreateNewRoutine();
 	m_pListbook->SetSelection(1);
+	m_pExerciseBook->SetSelection(0);
+	m_WPNotebook->CreateNewRoutine();
+}
+
+void Settings::OnAddNutritionItem(wxCommandEvent& WXUNUSED(event))
+{
+	m_pListbook->SetSelection(1);
+	m_pExerciseBook->SetSelection(1);
+	m_pCaloriePanel->AddNewItem();
 }
 
 bool Settings::ConfirmReset()

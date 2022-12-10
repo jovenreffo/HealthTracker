@@ -46,9 +46,7 @@ void CaloriePanel::SetupSizers()
 	m_pBoxSizer->Add(m_pHorizontalSizer);
 }
 
-// Events
-
-void CaloriePanel::OnNewItem(wxCommandEvent& event)
+void CaloriePanel::AddNewItem()
 {
 	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Item"), wxDefaultPosition, wxDefaultSize);
 	m_pAddItemDlg->Show(true);
@@ -58,6 +56,13 @@ void CaloriePanel::OnNewItem(wxCommandEvent& event)
 		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(), m_pAddItemDlg);
 		m_pCalorieList->UpdateTotal();
 	}
+}
+
+// Events
+
+void CaloriePanel::OnNewItem(wxCommandEvent& event)
+{
+	this->AddNewItem();
 }
 
 // ======================== CalorieList class ========================

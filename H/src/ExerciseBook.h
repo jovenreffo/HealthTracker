@@ -29,6 +29,7 @@ public:
 		long style = EXERCISEBOOK_STYLE);
 
 	WPNotebook* GetNotebook() const { return m_pWPPanel; }
+	NutritionPanel* GetNutritionPanel() const { return m_pNutrPanel; }
 
 	// Book setup
 	void Init();
