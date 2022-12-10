@@ -27,6 +27,8 @@ public:
 
 	~NutritionBook();
 
+	CaloriePanel* GetCaloriePanel() const { return m_pCaloriePanel; }
+
 	// Setup
 	void Init();
 	void SetupImageList();
