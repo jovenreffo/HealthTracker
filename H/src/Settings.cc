@@ -134,6 +134,7 @@ void Settings::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pListbook->SetSelection(1);
 	m_pExerciseBook->SetSelection(0);
+	m_WPNotebook->SetSelection(0);
 	m_WPNotebook->CreateNewWorkout();
 }
 
@@ -141,6 +142,7 @@ void Settings::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
 	m_pListbook->SetSelection(1);
 	m_pExerciseBook->SetSelection(0);
+	m_WPNotebook->SetSelection(0);
 	m_WPNotebook->CreateNewRoutine();
 }
 
