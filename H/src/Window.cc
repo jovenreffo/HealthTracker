@@ -82,14 +82,18 @@ void Frame::InitConfig()
 	m_pConfig->SetPath(_("/Preferences"));
 	wxTextCtrl* ptc = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
 
-	ptc->SetFont(wxFont(
-		m_pConfig->Read("FontSize", 10L),
-		static_cast<wxFontFamily>(m_pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
-		static_cast<wxFontStyle>(m_pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
-		wxFONTWEIGHT_NORMAL,
-		m_pConfig->Read("FontUnderline", 0L),
-		m_pConfig->Read("FaceName", "")
-	));
+	// Make sure the user has checked the `use custom font` checkbox
+	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
+	{
+		ptc->SetFont(wxFont(
+			m_pConfig->Read("FontSize", 10L),
+			static_cast<wxFontFamily>(m_pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+			static_cast<wxFontStyle>(m_pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+			wxFONTWEIGHT_NORMAL,
+			m_pConfig->Read("FontUnderline", 0L),
+			m_pConfig->Read("FaceName", "")
+		));
+	}
 }
 
 // Window setup
