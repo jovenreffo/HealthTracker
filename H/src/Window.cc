@@ -80,12 +80,12 @@ void Frame::InitConfig()
 
 	// Access the preferences variables to set the font accordingly
 	m_pConfig->SetPath(_("/Preferences"));
-	wxTextCtrl* ptc = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
+	wxTextCtrl* pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
 
 	// Make sure the user has checked the `use custom font` checkbox
 	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
 	{
-		ptc->SetFont(wxFont(
+		pJournalTxtCtrl->SetFont(wxFont(
 			m_pConfig->Read("FontSize", 10L),
 			static_cast<wxFontFamily>(m_pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
 			static_cast<wxFontStyle>(m_pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
@@ -93,6 +93,12 @@ void Frame::InitConfig()
 			m_pConfig->Read("FontUnderline", 0L),
 			m_pConfig->Read("FaceName", "")
 		));
+	}
+
+	// Load spellcheck on startup
+	if (m_pConfig->Read("Spellcheck", 0L) == 1L)
+	{
+		pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
 	}
 }
 
