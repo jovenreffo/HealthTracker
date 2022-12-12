@@ -11,7 +11,7 @@ BEGIN_EVENT_TABLE(AddItemDlg, wxDialog)
 END_EVENT_TABLE()
 
 AddItemDlg::AddItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style)
+	: wxDialog(parent, id, title, pos, size, style, _T("additemdlg"))
 {
 	this->Init();
 }
