@@ -36,13 +36,10 @@ Frame::~Frame()
 		return;
 
 	// Save the window's position and size
-	int x, y, w, h;
-	GetClientSize(&w, &h);
-	GetPosition(&x, &y);
-	pConfig->Write("/Frame/x", static_cast<long>(x));
-	pConfig->Write("/Frame/y", static_cast<long>(y));
-	pConfig->Write("/Frame/w", static_cast<long>(w));
-	pConfig->Write("/Frame/h", static_cast<long>(h));
+	pConfig->Write("/Frame/x", static_cast<long>(GetPosition().x));
+	pConfig->Write("/Frame/y", static_cast<long>(GetPosition().y));
+	pConfig->Write("/Frame/w", static_cast<long>(GetClientSize().GetWidth()));
+	pConfig->Write("/Frame/h", static_cast<long>(GetClientSize().GetHeight()));
 }
 
 bool Frame::ConfirmReset()
