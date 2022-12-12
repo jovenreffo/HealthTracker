@@ -15,6 +15,7 @@
 #include "WorkoutWindow.h"
 #include "RoutineDialog.h"
 #include "PrefsDlg.h"
+#include "CaloriePanel.h"
 
 class App: public wxApp
 {
@@ -33,6 +34,7 @@ enum
 	ID_RESET_ROUTINES,
 	ID_ADD_WORKOUT,
 	ID_ADD_ROUTINE,
+	ID_ADD_NUTRITION_ITEM,
 	ID_PREFERENCES
 };
 
@@ -62,6 +64,7 @@ private:
 	EntryList* m_pEntryList;
 	WorkoutWindow* m_pWorkoutWindow;
 	RoutineDialog* m_pRoutineDialog;
+	CaloriePanel* m_pCaloriePanel;
 
 	wxConfigBase* m_pConfig;
 	
@@ -95,6 +98,7 @@ public:
 	// add events
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
+	void OnAddNutritonItem(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif

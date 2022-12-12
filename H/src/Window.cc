@@ -16,6 +16,7 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	// add events
 	EVT_MENU(ID_ADD_WORKOUT, Frame::OnAddWorkout)
 	EVT_MENU(ID_ADD_ROUTINE, Frame::OnAddRoutine)
+	EVT_MENU(ID_ADD_NUTRITION_ITEM, Frame::OnAddNutritonItem)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -136,6 +137,7 @@ void Frame::SetupMenuBar()
 	// Add menu to be used with the file menu
 	m_pAddMenu->Append(ID_ADD_WORKOUT, _T("&New Workout"));
 	m_pAddMenu->Append(ID_ADD_ROUTINE, _T("&New Routine"));
+	m_pAddMenu->Append(ID_ADD_NUTRITION_ITEM, _T("&Nutritional Item"));
 	// File menu
 	m_pFileMenu->AppendSubMenu(m_pAddMenu, _T("&Add..."));
 	m_pFileMenu->AppendSeparator();
@@ -182,6 +184,7 @@ void Frame::SetupOther()
 	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
 	m_pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList());
 	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
+	m_pCaloriePanel = dynamic_cast<CaloriePanel*>(FindWindow(_T("caloriepanel")));
 }
 
 // Events
@@ -238,12 +241,18 @@ void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 		m_pRoutineList->DeleteAllItems();
 }
 
-void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED)
+void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pWorkoutWindow->Show(true);
 }
 
-void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED)
+void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
 {
 	m_pRoutineDialog->Show(true);
+}
+
+void Frame::OnAddNutritonItem(wxCommandEvent& WXUNUSED(event))
+{
+	if (m_pCaloriePanel != nullptr)
+		m_pCaloriePanel->AddNewItem();
 }
