@@ -17,7 +17,7 @@ BEGIN_EVENT_TABLE(CalorieList, wxListView)
 END_EVENT_TABLE()
 
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style)
+	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
 	this->Init();
 }
