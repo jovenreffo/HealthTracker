@@ -48,7 +48,7 @@ void CaloriePanel::SetupSizers()
 
 void CaloriePanel::AddNewItem()
 {
-	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Item"), wxDefaultPosition, wxDefaultSize);
+	m_pAddItemDlg = new AddItemDlg(this, wxID_ANY, _T("Add Nutritional Item"), wxDefaultPosition, wxDefaultSize);
 	m_pAddItemDlg->Show(true);
 
 	if (m_pAddItemDlg->ShowModal() == wxID_OK)
