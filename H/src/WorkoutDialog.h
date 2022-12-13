@@ -6,9 +6,10 @@
 #include <wx/imaglist.h>
 #include <wx/bitmap.h>
 #include <wx/bmpbuttn.h>
+#include <wx/sizer.h>
 
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define WD_SIZE	 ( wxSize(300, 250) )
+#define WD_SIZE	 ( wxSize(525, 425) )
 
 class WorkoutDialog: public wxDialog
 {
@@ -17,7 +18,6 @@ private:
 
 private:
 	// Visuals
-	wxImageList* m_pImageList;
 	wxBitmap m_cutBmp;
 	wxBitmap m_copyBmp;
 	wxBitmap m_pasteBmp;
@@ -34,7 +34,10 @@ private:
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
-	// 
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pTextActionSizer;
+	wxBoxSizer* m_pButtonSizer;
 
 public:
 	WorkoutDialog(wxWindow* parent,
@@ -47,11 +50,13 @@ public:
 	// Window setup
 	void Init();
 	void SetupWindowSizing();
-	void SetupImageList();
+	void SetupImages();
 	void SetupControls();
 	void SetupSizers();
 
 	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 #endif
