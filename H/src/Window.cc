@@ -67,11 +67,12 @@ void Frame::InitConfig()
 	if (m_pConfig == nullptr)
 		return;
 
+	// Restore the frame's size and position
 	m_pConfig->SetPath(_("Frame"));
 
-	// Restore the frame's size and position
 	this->Move(m_pConfig->Read("x", 100),
 			   m_pConfig->Read("y", 100));
+
 	this->SetClientSize(m_pConfig->Read("w", 640),
 						m_pConfig->Read("h", 480));
 
