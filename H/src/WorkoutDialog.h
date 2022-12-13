@@ -8,8 +8,8 @@
 #include <wx/bmpbuttn.h>
 #include <wx/sizer.h>
 
-#define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define WD_SIZE	 ( wxSize(525, 425) )
+#define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
+#define WD_SIZE	 ( wxSize(525, 450) )
 
 class WorkoutDialog: public wxDialog
 {
@@ -38,6 +38,9 @@ private:
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTextActionSizer;
 	wxBoxSizer* m_pButtonSizer;
+
+	// Validation
+	wxString m_workoutContent;
 
 public:
 	WorkoutDialog(wxWindow* parent,
