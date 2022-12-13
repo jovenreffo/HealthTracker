@@ -33,8 +33,8 @@ void WPNotebook::SetupControls()
 	m_pWorkoutList = new WorkoutList(m_pWorkoutPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pRoutineList = new RoutineList(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
-	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, (int)WP::ID_NEW_WORKOUT, _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
-	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, (int)WP::ID_NEW_ROUTINE, _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
+	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, static_cast<int>(WP::ID_NEW_WORKOUT), _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, static_cast<int>(WP::ID_NEW_ROUTINE), _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
 }
 
 void WPNotebook::SetupPanels()
@@ -97,8 +97,10 @@ void WPNotebook::CreateNewRoutine()
 
 void WPNotebook::CreateNewWorkout()
 {
-	m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW), m_pWorkoutList);
-	m_pWorkoutWindow->Show(true);
+	//m_pWorkoutWindow = new WorkoutWindow(this, static_cast<int>(WP::ID_WORKOUT_WINDOW), m_pWorkoutList);
+	//m_pWorkoutWindow->Show(true);
+	m_pWorkoutDialog = new WorkoutDialog(this, static_cast<int>(WP::ID_WORKOUT_DIALOG), _T("Create New Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pWorkoutDialog->Show(true);
 }
 
 // Events
