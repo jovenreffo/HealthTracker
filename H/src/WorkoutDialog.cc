@@ -6,11 +6,12 @@
 
 // Event table
 BEGIN_EVENT_TABLE(WorkoutDialog, wxDialog)
-
+	EVT_BUTTON(wxID_OK, WorkoutDialog::OnOK)
+	EVT_BUTTON(wxID_CANCEL, WorkoutDialog::OnCancel)
 END_EVENT_TABLE()
 
-WorkoutDialog::WorkoutDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style)
+WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_pWorkoutList{ pWorkoutList }
 {
 	this->Init();
 }
@@ -21,6 +22,7 @@ void WorkoutDialog::Init()
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupWindowSizing();
+	this->BindEvents();
 }
 
 void WorkoutDialog::SetupWindowSizing()
@@ -89,14 +91,65 @@ void WorkoutDialog::SetupSizers()
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
+void WorkoutDialog::BindEvents()
+{
+	m_pCut->Bind(wxEVT_BUTTON, &WorkoutDialog::OnCut, this);
+	m_pCopy->Bind(wxEVT_BUTTON, &WorkoutDialog::OnCopy, this);
+	m_pPaste->Bind(wxEVT_BUTTON, &WorkoutDialog::OnPaste, this);
+	m_pUndo->Bind(wxEVT_BUTTON, &WorkoutDialog::OnUndo, this);
+	m_pRedo->Bind(wxEVT_BUTTON, &WorkoutDialog::OnRedo, this);
+}
+
 // ========================== Events ==========================
 
 void WorkoutDialog::OnOK(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+			this->SetReturnCode(wxID_OK);
+			this->Show(false);
+		}
+	}
 }
 
 void WorkoutDialog::OnCancel(wxCommandEvent& event)
 {
+	this->Destroy();
+}
 
+// text events
+// perform sanity checks on the text ctrl before performing any action
+
+void WorkoutDialog::OnCut(wxCommandEvent& event)
+{
+	if (m_pTextCtrl->CanCut())
+		m_pTextCtrl->Cut();
+}
+
+void WorkoutDialog::OnCopy(wxCommandEvent& event)
+{
+	if (m_pTextCtrl->CanCopy())
+		m_pTextCtrl->Copy();
+}
+
+void WorkoutDialog::OnPaste(wxCommandEvent& event)
+{
+	if (m_pTextCtrl->CanPaste())
+		m_pTextCtrl->Paste();
+}
+
+void WorkoutDialog::OnUndo(wxCommandEvent& event)
+{
+	if (m_pTextCtrl->CanUndo())
+		m_pTextCtrl->Undo();
+}
+
+void WorkoutDialog::OnRedo(wxCommandEvent& event)
+{
+	if (m_pTextCtrl->CanRedo())
+		m_pTextCtrl->Redo();
 }

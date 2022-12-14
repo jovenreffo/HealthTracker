@@ -7,6 +7,7 @@
 #include <wx/bitmap.h>
 #include <wx/bmpbuttn.h>
 #include <wx/sizer.h>
+#include "WPLists.h"
 
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define WD_SIZE	 ( wxSize(525, 450) )
@@ -39,13 +40,15 @@ private:
 	wxBoxSizer* m_pTextActionSizer;
 	wxBoxSizer* m_pButtonSizer;
 
-	// Validation
+	// Validation & other
 	wxString m_workoutContent;
+	WorkoutList* m_pWorkoutList;
 
 public:
-	WorkoutDialog(wxWindow* parent,
+	WorkoutDialog(WorkoutList* pWorkoutList,
+		wxWindow* parent,
 		wxWindowID id,
-		const wxString& title,
+		const wxString& title = _T("Create New Workout"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = WD_STYLE);
@@ -56,10 +59,17 @@ public:
 	void SetupImages();
 	void SetupControls();
 	void SetupSizers();
+	void BindEvents();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnCut(wxCommandEvent& event);
+	void OnCopy(wxCommandEvent& event);
+	void OnPaste(wxCommandEvent& event);
+	void OnUndo(wxCommandEvent& event);
+	void OnRedo(wxCommandEvent& event);
+
 };
 
 #endif
