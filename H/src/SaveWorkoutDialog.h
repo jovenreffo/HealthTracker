@@ -26,7 +26,7 @@ private:
 public:
 	SaveWorkoutDialog(wxWindow* parent,
 		wxWindowID id,
-		const wxString& title,
+		const wxString& title = _T("Save Workout"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = SWDIALOG_SIZE,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
