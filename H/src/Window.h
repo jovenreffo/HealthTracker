@@ -16,6 +16,7 @@
 #include "RoutineDialog.h"
 #include "PrefsDlg.h"
 #include "CaloriePanel.h"
+#include "WorkoutDialog.h"
 
 class App: public wxApp
 {
@@ -62,7 +63,7 @@ private:
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
 	EntryList* m_pEntryList;
-	WorkoutWindow* m_pWorkoutWindow;
+	WorkoutDialog* m_pWorkoutDialog;
 	RoutineDialog* m_pRoutineDialog;
 	CaloriePanel* m_pCaloriePanel;
 

@@ -177,7 +177,7 @@ void Frame::SetupOther()
 {
 	// Initialize these here but do not show them until their respective events have been triggered
 	m_pPrefsDlg = new PrefsDlg(_T("Preferences"));
-	m_pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList());
+	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, wxID_ANY);
 	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
 	m_pCaloriePanel = dynamic_cast<CaloriePanel*>(FindWindow(_T("caloriepanel")));
 }
@@ -238,7 +238,7 @@ void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
-	m_pWorkoutWindow->Show(true);
+	m_pWorkoutDialog->Show(true);
 }
 
 void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
