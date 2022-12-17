@@ -31,7 +31,10 @@ void CaloriePanel::Init()
 void CaloriePanel::SetupControls()
 {
 	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
-	m_pAddButton = new wxButton(this, static_cast<int>(CP::ID_NEW_ITEM), _T("Add Item"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+
+	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
+	m_pAddButton = new wxBitmapButton(this, static_cast<int>(CP::ID_NEW_ITEM), m_addBmp, wxDefaultPosition, wxDefaultSize);
+	m_pAddButton->SetToolTip(_T("Add a new nutritional item."));
 }
 
 void CaloriePanel::SetupSizers()

@@ -7,6 +7,7 @@
 #include <wx/imaglist.h>
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
+#include <wx/bmpbuttn.h>
 #include "AddItemDlg/AddItemDlg.h"
 
 enum class CP
@@ -25,12 +26,11 @@ private:
 private:
 	wxBoxSizer* m_pBoxSizer;
 	CalorieList* m_pCalorieList;
-	wxButton* m_pAddButton;
+	wxBitmapButton* m_pAddButton;
+	wxBitmap m_addBmp;
 
 	AddItemDlg* m_pAddItemDlg;
 
-	wxImageList* m_pImageList;
-	wxBitmap m_calorieBmp;
 
 public:
 	CaloriePanel(wxWindow* parent,
