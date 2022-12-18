@@ -16,6 +16,21 @@ WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	this->Init();
 }
 
+__forceinline void WorkoutDialog::AddToWorkoutList()
+{
+	m_pWorkoutList->AddItem(m_pSaveWorkoutDlg->GetWorkoutName(), m_pTextCtrl->GetValue());
+}
+
+void WorkoutDialog::SaveToWorkoutList()
+{
+	m_pSaveWorkoutDlg = new SaveWorkoutDialog(this, wxID_ANY);
+
+	if (m_pSaveWorkoutDlg->ShowModal() == wxID_OK)
+	{
+		this->AddToWorkoutList();
+	}
+}
+
 void WorkoutDialog::Init()
 {
 	this->SetupImages();
@@ -106,13 +121,10 @@ void WorkoutDialog::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
-		if (IsModal())
-			EndModal(wxID_OK);
-		else
-		{
-			this->SetReturnCode(wxID_OK);
-			this->Show(false);
-		}
+		this->SaveToWorkoutList();
+
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
 	}
 }
 

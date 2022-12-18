@@ -8,6 +8,7 @@
 #include <wx/bmpbuttn.h>
 #include <wx/sizer.h>
 #include "WPLists.h"
+#include "SaveWorkoutDialog.h"
 
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define WD_SIZE	 ( wxSize(525, 450) )
@@ -43,6 +44,7 @@ private:
 	// Validation & other
 	wxString m_workoutContent;
 	WorkoutList* m_pWorkoutList;
+	SaveWorkoutDialog* m_pSaveWorkoutDlg;
 
 public:
 	WorkoutDialog(WorkoutList* pWorkoutList,
@@ -52,6 +54,10 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = WD_STYLE);
+
+	// List actions
+	__forceinline void AddToWorkoutList();
+	void SaveToWorkoutList();
 
 	// Window setup
 	void Init();
