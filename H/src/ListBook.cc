@@ -41,6 +41,6 @@ void Listbook::SetupTabs()
 	// Add tabs to the list
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
 	this->AddPage(m_pExercisePanel, _T("Activity"), false, 1);
-	this->AddPage(m_pCalendar, _T("Calendar"), false, 2);
+	this->AddPage(m_pCalendar, _T("Planning"), false, 2);
 	this->AddPage(m_pSettings, _T("Settings"), false, 3);
 }
