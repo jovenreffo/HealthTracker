@@ -18,7 +18,7 @@ WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 
 __forceinline void WorkoutDialog::AddToWorkoutList()
 {
-	m_pWorkoutList->AddItem(m_pSaveWorkoutDlg->GetWorkoutName(), m_pTextCtrl->GetValue());
+	m_pWorkoutList->AddItem(m_pSaveWorkoutDlg->GetWorkoutName(), m_workoutContent);
 }
 
 void WorkoutDialog::SaveToWorkoutList()
