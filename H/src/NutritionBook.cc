@@ -19,6 +19,7 @@ void NutritionBook::Init()
 {
 	this->SetupImageList();
 	this->SetupCaloriePanel();
+	this->SetupMealPlan();
 	this->SetupPages();
 }
 
@@ -29,17 +30,28 @@ void NutritionBook::SetupImageList()
 	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calorie.png"), wxBITMAP_TYPE_PNG);
 	m_calorieBmp.ResetAlpha();
 
+	m_mealBmp = wxBitmap(path_data::dataDir + _T("\\Images\\meal_plan.png"), wxBITMAP_TYPE_PNG);
+	m_mealBmp.ResetAlpha();
+
 	m_pImageList->Add(m_calorieBmp);
+	m_pImageList->Add(m_mealBmp);
 	this->AssignImageList(m_pImageList);
 }
 
 void NutritionBook::SetupCaloriePanel()
 {
-	m_pCaloriePanel = new CaloriePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
+	m_pCaloriePanel = new CaloriePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pCaloriePanel->Show(true);
+}
+
+void NutritionBook::SetupMealPlan()
+{
+	m_pMealPlan = new MealPlan(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pMealPlan->Show(true);
 }
 
 void NutritionBook::SetupPages()
 {
 	this->AddPage(m_pCaloriePanel, _T("Nutrient Tracker"), true, 0);
+	this->AddPage(m_pMealPlan, _T("Meal Planner"), false, 1);
 }

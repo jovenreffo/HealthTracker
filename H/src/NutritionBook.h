@@ -6,6 +6,7 @@
 #include <wx/bitmap.h>
 #include <wx/panel.h>
 #include "CaloriePanel.h"
+#include "MealPlan.h"
 
 class NutritionBook: public wxNotebook
 {
@@ -15,8 +16,10 @@ private:
 private:
 	wxImageList* m_pImageList;
 	wxBitmap m_calorieBmp;
+	wxBitmap m_mealBmp;
 
 	CaloriePanel* m_pCaloriePanel;
+	MealPlan* m_pMealPlan;
 
 public:
 	NutritionBook(wxWindow* parent,
@@ -33,6 +36,7 @@ public:
 	void Init();
 	void SetupImageList();
 	void SetupCaloriePanel();
+	void SetupMealPlan();
 	void SetupPages();
 };
 
