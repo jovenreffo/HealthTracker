@@ -24,6 +24,8 @@ void MealPlan::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSplitter();
+	this->SetupPanels();
 }
 
 void MealPlan::SetupControls()
@@ -58,14 +60,19 @@ void MealPlan::SetupSizers()
 	m_pTopSizer->Add(m_pListSizer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
-void MealPlan::SetupPanels()
-{
-
-}
-
 void MealPlan::SetupSplitter()
 {
+	m_pSplitter = new wxSplitterWindow(this, static_cast<int>(MP::ID_PANEL_SPLITTER), wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
+	m_pSplitter->SetSashGravity(0.5);
+	m_pSplitter->SetMinimumPaneSize(100);
+}
 
+void MealPlan::SetupPanels()
+{
+	m_pPlansPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pFeaturedPanel = new wxPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	// Sizers
 }
 
 // ================== MealList ==================

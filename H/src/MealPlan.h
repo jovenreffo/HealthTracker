@@ -12,7 +12,8 @@ enum class MP
 {
 	ID_ADD_PLAN,
 	ID_MEAL_LIST,
-	ID_FEATURED_LIST
+	ID_FEATURED_LIST,
+	ID_PANEL_SPLITTER
 };
 
 class MealList;
@@ -50,8 +51,8 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
-	void SetupPanels();
 	void SetupSplitter();
+	void SetupPanels();
 
 	// Events
 
