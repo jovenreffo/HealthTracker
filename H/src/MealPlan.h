@@ -50,6 +50,8 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupPanels();
+	void SetupSplitter();
 
 	// Events
 

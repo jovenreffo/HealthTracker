@@ -58,6 +58,16 @@ void MealPlan::SetupSizers()
 	m_pTopSizer->Add(m_pListSizer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
+void MealPlan::SetupPanels()
+{
+
+}
+
+void MealPlan::SetupSplitter()
+{
+
+}
+
 // ================== MealList ==================
 
 MealList::MealList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
