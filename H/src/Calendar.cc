@@ -80,7 +80,7 @@ void TodoPanel::SetupControls()
 {
 
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
-	m_pAddButton = new wxButton(this, static_cast<int>(Plan::ID_ADD_TODO), _T("Add Task"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pAddButton = new wxButton(this, static_cast<int>(TD::ID_ADD_TODO), _T("Add Task"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	m_pAddButton->SetBitmap(m_addBmp);
 }
 

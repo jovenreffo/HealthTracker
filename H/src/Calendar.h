@@ -12,7 +12,7 @@
 #include <wx/button.h>
 #include <wx/splitter.h>
 
-enum class Plan
+enum class TD
 {
 	ID_ADD_TODO
 };
