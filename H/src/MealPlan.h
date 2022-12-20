@@ -7,6 +7,7 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/splitter.h>
+#include "MealPlanWindow.h"
 
 enum class MP
 {
@@ -30,6 +31,8 @@ private:
 	wxButton* m_pChangeFeatured; wxBitmap m_changeBmp;
 	MealList* m_pMealList;
 	wxListView* m_pFeaturedList;
+
+	MealPlanWindow* m_pMealPlanWin;
 	
 	// Panels
 	wxPanel* m_pPlansPanel;
@@ -54,7 +57,7 @@ public:
 	void SetupPanels();
 
 	// Events
-
+	void OnAddMealPlan(wxCommandEvent& event);
 };
 
 class MealList : public wxListView

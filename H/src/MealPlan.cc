@@ -3,8 +3,7 @@
 
 // MealPlan panel event table
 BEGIN_EVENT_TABLE(MealPlan, wxSplitterWindow)
-
-
+	EVT_BUTTON(static_cast<int>(MP::ID_ADD_PLAN), MealPlan::OnAddMealPlan)
 END_EVENT_TABLE()
 
 // MealList evt table
@@ -75,6 +74,14 @@ void MealPlan::SetupSizers()
 	m_pPlansSizer->Add(m_pMealList, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
 	m_pFeaturedSizer->Add(m_pChangeFeatured, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pFeaturedSizer->Add(m_pFeaturedList, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
+}
+
+// events
+
+void MealPlan::OnAddMealPlan(wxCommandEvent& event)
+{
+	m_pMealPlanWin = new MealPlanWindow(this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
+	m_pMealPlanWin->Show(true);
 }
 
 // ================== MealList ==================
