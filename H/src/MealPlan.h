@@ -13,7 +13,8 @@ enum class MP
 	ID_ADD_PLAN,
 	ID_MEAL_LIST,
 	ID_FEATURED_LIST,
-	ID_PANEL_SPLITTER
+	ID_PANEL_SPLITTER,
+	ID_CHANGE_FEATURED_LIST
 };
 
 class MealList;
@@ -26,6 +27,7 @@ private:
 private:
 	// Controls
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
+	wxButton* m_pChangeFeatured; wxBitmap m_changeBmp;
 	MealList* m_pMealList;
 	wxListView* m_pFeaturedList;
 	
