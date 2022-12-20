@@ -14,7 +14,7 @@ public:
 		const wxString& title = _T("Meal Planner"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
-		long style = 0L);
+		long style = wxDEFAULT_FRAME_STYLE);
 	~MealPlanWindow();
 };
 
