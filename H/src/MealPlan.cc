@@ -42,15 +42,19 @@ void MealPlan::SetupPanels()
 	// Split the windows and set up properties
 	this->SplitVertically(m_pPlansPanel, m_pFeaturedPanel);
 	this->SetSashGravity(0.5);
-	this->SetMinimumPaneSize(100);
+	this->SetMinimumPaneSize(200);
 }
 
 void MealPlan::SetupControls()
 {
-	// Button
+	// Buttons
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
 	m_pAddMeal = new wxButton(m_pPlansPanel, static_cast<int>(MP::ID_ADD_PLAN), _T("Add Meal"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	m_pAddMeal->SetBitmap(m_addBmp);
+
+	m_changeBmp = wxBitmap(path_data::dataDir + _T("\\Images\\change.png"), wxBITMAP_TYPE_PNG);
+	m_pChangeFeatured = new wxButton(m_pFeaturedPanel, static_cast<int>(MP::ID_CHANGE_FEATURED_LIST), _T("Change Featured Plan"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pChangeFeatured->SetBitmap(m_changeBmp);
 
 	// Lists
 	m_pMealList = new MealList(m_pPlansPanel, static_cast<int>(MP::ID_MEAL_LIST), wxDefaultPosition, wxDefaultSize);
@@ -59,13 +63,18 @@ void MealPlan::SetupControls()
 
 void MealPlan::SetupSizers()
 {
-	wxBoxSizer* pPlansSizer = new wxBoxSizer(wxVERTICAL);
-	wxBoxSizer* pFeaturedSizer = new wxBoxSizer(wxVERTICAL);
-	m_pPlansPanel->SetSizerAndFit(pPlansSizer);
-	m_pFeaturedPanel->SetSizerAndFit(pFeaturedSizer);
+	// Initialization
+	m_pPlansSizer = new wxStaticBoxSizer(wxVERTICAL, m_pPlansPanel, _T("Meal Plans"));
+	m_pFeaturedSizer = new wxStaticBoxSizer(wxVERTICAL, m_pFeaturedPanel, _T("Featured Plan"));
+
+	m_pPlansPanel->SetSizerAndFit(m_pPlansSizer);
+	m_pFeaturedPanel->SetSizerAndFit(m_pFeaturedSizer);
 
 	// Add controls
-
+	m_pPlansSizer->Add(m_pAddMeal, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pPlansSizer->Add(m_pMealList, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
+	m_pFeaturedSizer->Add(m_pChangeFeatured, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pFeaturedSizer->Add(m_pFeaturedList, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
 }
 
 // ================== MealList ==================
