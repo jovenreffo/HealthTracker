@@ -18,7 +18,7 @@ enum class MP
 
 class MealList;
 
-class MealPlan : public wxPanel
+class MealPlan : public wxSplitterWindow
 {
 private:
 	DECLARE_EVENT_TABLE()
@@ -30,28 +30,25 @@ private:
 	wxListView* m_pFeaturedList;
 	
 	// Panels
-	wxSplitterWindow* m_pSplitter;
 	wxPanel* m_pPlansPanel;
 	wxPanel* m_pFeaturedPanel;
 
 	// sizers
-	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pListSizer;
-	wxStaticBoxSizer* m_pPlansList;
-	wxStaticBoxSizer* m_pFeaturedPlan;
+	wxStaticBoxSizer* m_pPlansSizer;
+	wxStaticBoxSizer* m_pFeaturedSizer;
 
 public:
 	MealPlan(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
-		long style = 0L);
+		long style = wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
 
 	// Panel setup
 	void Init();
+	void SetupSplitter();
 	void SetupControls();
 	void SetupSizers();
-	void SetupSplitter();
 	void SetupPanels();
 
 	// Events
