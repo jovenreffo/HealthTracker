@@ -50,6 +50,10 @@
     <ClCompile Include="src\NutritionBook.cc" />
     <ClCompile Include="src\CaloriePanel.cc" />
     <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
+    <ClCompile Include="src\PrefsDlg.cc" />
+    <ClCompile Include="src\WorkoutDialog.cc" />
+    <ClCompile Include="src\MealPlan.cc" />
+    <ClCompile Include="src\MealPlanWindow.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -130,5 +134,33 @@
     <ClInclude Include="src\Font\Font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PrefsDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RoutineStruct\Routine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WorkoutDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MealPlan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MealPlanWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\xpm\copy.xpm" />
+    <None Include="src\xpm\cut.xpm" />
+    <None Include="src\xpm\heart.xpm" />
+    <None Include="src\xpm\open.xpm" />
+    <None Include="src\xpm\paste.xpm" />
+    <None Include="src\xpm\redo.xpm" />
+    <None Include="src\xpm\save.xpm" />
+    <None Include="src\xpm\saveas.xpm" />
+    <None Include="src\xpm\undo.xpm" />
+    <None Include="src\xpm\zoomin.xpm" />
+    <None Include="src\xpm\zoomout.xpm" />
   </ItemGroup>
 </Project>

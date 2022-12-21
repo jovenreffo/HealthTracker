@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\MealPlanWindow.cc" />
     <ClCompile Include="src\AboutDialog\AboutDialog.cc" />
     <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
     <ClCompile Include="src\Calendar.cc" />
@@ -143,14 +144,17 @@
     <ClCompile Include="src\Journal.cc" />
     <ClCompile Include="src\ListBook.cc" />
     <ClCompile Include="src\Main.cc" />
+    <ClCompile Include="src\MealPlan.cc" />
     <ClCompile Include="src\NutritionBook.cc" />
     <ClCompile Include="src\NutritionPanel.cc" />
+    <ClCompile Include="src\PrefsDlg.cc" />
     <ClCompile Include="src\RoutineDialog.cc" />
     <ClCompile Include="src\RoutineView.cc" />
     <ClCompile Include="src\SaveWorkoutDialog.cc" />
     <ClCompile Include="src\Settings.cc" />
     <ClCompile Include="src\TaskbarIcon.cc" />
     <ClCompile Include="src\Window.cc" />
+    <ClCompile Include="src\WorkoutDialog.cc" />
     <ClCompile Include="src\WorkoutWindow.cc" />
     <ClCompile Include="src\WPLists.cc" />
     <ClCompile Include="src\WPNotebook.cc" />
@@ -169,19 +173,37 @@
     <ClInclude Include="src\Font\Font.hpp" />
     <ClInclude Include="src\Journal.h" />
     <ClInclude Include="src\ListBook.h" />
+    <ClInclude Include="src\MealPlan.h" />
+    <ClInclude Include="src\MealPlanWindow.h" />
     <ClInclude Include="src\NutritionBook.h" />
     <ClInclude Include="src\NutritionPanel.h" />
+    <ClInclude Include="src\PrefsDlg.h" />
     <ClInclude Include="src\RoutineDialog.h" />
+    <ClInclude Include="src\RoutineStruct\Routine.h" />
     <ClInclude Include="src\RoutineView.h" />
     <ClInclude Include="src\SaveWorkoutDialog.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\StandardPath.hpp" />
     <ClInclude Include="src\TaskbarIcon.h" />
     <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\WorkoutDialog.h" />
     <ClInclude Include="src\WorkoutWindow.h" />
     <ClInclude Include="src\WPLists.h" />
     <ClInclude Include="src\WPNotebook.h" />
     <ClInclude Include="src\xpm\xpm_include.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\xpm\copy.xpm" />
+    <None Include="src\xpm\cut.xpm" />
+    <None Include="src\xpm\heart.xpm" />
+    <None Include="src\xpm\open.xpm" />
+    <None Include="src\xpm\paste.xpm" />
+    <None Include="src\xpm\redo.xpm" />
+    <None Include="src\xpm\save.xpm" />
+    <None Include="src\xpm\saveas.xpm" />
+    <None Include="src\xpm\undo.xpm" />
+    <None Include="src\xpm\zoomin.xpm" />
+    <None Include="src\xpm\zoomout.xpm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
