@@ -17,6 +17,7 @@
 #include "PrefsDlg.h"
 #include "CaloriePanel.h"
 #include "WorkoutDialog.h"
+#include "MealPlanWindow.h"
 
 class App: public wxApp
 {
@@ -36,6 +37,7 @@ enum
 	ID_ADD_WORKOUT,
 	ID_ADD_ROUTINE,
 	ID_ADD_NUTRITION_ITEM,
+	ID_ADD_MEALPLAN,
 	ID_PREFERENCES
 };
 
@@ -66,6 +68,7 @@ private:
 	WorkoutDialog* m_pWorkoutDialog;
 	RoutineDialog* m_pRoutineDialog;
 	CaloriePanel* m_pCaloriePanel;
+	MealPlanWindow* m_pMealPlanWindow;
 
 	wxConfigBase* m_pConfig;
 	
@@ -100,6 +103,7 @@ public:
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 	void OnAddNutritonItem(wxCommandEvent& WXUNUSED(event));
+	void OnAddMealPlan(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif
