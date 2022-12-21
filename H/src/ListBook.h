@@ -15,7 +15,7 @@ private:
 	// Tabs
 	Journal* m_pJournal;
 	Calendar* m_pCalendar;
-	ExercisePanel* m_pExercisePanel;
+	ExerciseBook* m_pExerciseBook;
 	Settings* m_pSettings;
 
 	wxImageList* m_pImageList;
@@ -31,7 +31,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 
-	ExercisePanel* GetExercisePanel() const { return m_pExercisePanel; }
+	ExerciseBook* GetExerciseBook() const { return m_pExerciseBook; }
 	Journal* GetJournal() const { return m_pJournal; }
 
 	// Setup

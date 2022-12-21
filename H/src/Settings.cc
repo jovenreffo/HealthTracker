@@ -10,8 +10,8 @@ BEGIN_EVENT_TABLE(Settings, wxPanel)
 	EVT_BUTTON(static_cast<int>(SE::ID_ADD_NUTR_ITEM), Settings::OnAddNutritionItem)
 END_EVENT_TABLE()
 
-Settings::Settings(ExercisePanel* pExercisePanel, Journal* pJournal, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style), m_pExercisePanel{ pExercisePanel }, m_pJournal{ pJournal }
+Settings::Settings(ExerciseBook* pExerciseBook, Journal* pJournal, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style), m_pExerciseBook{ pExerciseBook }, m_pJournal { pJournal }
 {
 	this->Init();
 	this->InitWindowPointers();
@@ -25,11 +25,9 @@ void Settings::Init()
 
 void Settings::InitWindowPointers()
 {
-	m_pExerciseBook = m_pExercisePanel->GetExerciseBook();
-	m_pNutrPanel = m_pExerciseBook->GetNutritionPanel();
-	m_pNutrBook = m_pNutrPanel->GetNutritionBook();
+	m_pNutrBook = m_pExerciseBook->GetNutritionBook();
 	m_pCaloriePanel = m_pNutrBook->GetCaloriePanel();
-	m_WPNotebook = m_pExercisePanel->GetExerciseBook()->GetNotebook();
+	m_WPNotebook = m_pExerciseBook->GetNotebook();
 	m_pListbook = dynamic_cast<wxListbook*>(m_pJournal->GetParent()); // wxDynamicCast otherwise
 }
 

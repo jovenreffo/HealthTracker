@@ -55,7 +55,7 @@ private:
 	wxListbook* m_pListbook;
 
 public:
-	Settings(ExercisePanel* pExercisePanel,
+	Settings(ExerciseBook* pExerciseBook,
 		Journal* pJournal,
 		wxWindow* parent,
 		wxWindowID id,
