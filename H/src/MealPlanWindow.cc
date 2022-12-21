@@ -2,7 +2,7 @@
 #include "StandardPath.hpp"
 
 MealPlanWindow::MealPlanWindow(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxFrame(parent, id, title, pos, size, style)
+	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin"))
 {
 	this->Init();
 
