@@ -6,14 +6,15 @@
 #include <wx/imaglist.h>
 #include <wx/icon.h>
 #include <wx/listctrl.h>
+#include <wx/sizer.h>
 #include <wx/dialog.h>
 #include <wx/button.h>
 
-#define MPW_SIZE	 ( wxSize(440, 280) )
+#define MPW_SIZE ( wxSize(440, 280) )
 #define MPW_MAX_SIZE ( wxSize() )
 
-#define AMD_STYLE	 ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define AMD_SIZE	 ( wxSize() )
+#define AMD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+#define AMD_SIZE ( wxSize() )
 #define AMD_MAX_SIZE ( wxSize() )
 
 enum MPW
@@ -26,17 +27,19 @@ class AddMealDialog;
 class MealPlanWindow : public wxFrame
 {
 private:
-	DECLARE_EVENT_TABLE()
-
-private:
 	// General window vars
 	wxIcon m_mealIcon;
+	wxPanel* m_pTopPanel;
 
 	// Controls
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxImageList* m_pImageList;
 	wxListView* m_pDayList;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pMainSizer;
 
 public:
 	MealPlanWindow(wxWindow* parent = nullptr,
@@ -52,6 +55,7 @@ public:
 	void SetupWindowIcon();
 	void SetupSizing();
 	void SetupControls();
+	void SetupSizers();
 
 	// Events
 	void OnAddMeal(wxCommandEvent& event);
@@ -59,9 +63,6 @@ public:
 
 class AddMealDialog : public wxDialog
 {
-private:
-	DECLARE_EVENT_TABLE()
-
 public:
 	AddMealDialog(wxWindow* parent,
 		wxWindowID id,
