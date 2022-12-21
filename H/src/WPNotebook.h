@@ -35,6 +35,7 @@ private:
 	wxImageList* m_pImageList;
 	wxBitmap m_checkBmp;
 	wxBitmap m_randomBmp;
+	wxBitmap m_addBmp;
 
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
