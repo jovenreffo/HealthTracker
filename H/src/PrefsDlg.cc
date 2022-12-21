@@ -65,10 +65,10 @@ public:
 		pTopSizer->Add(pEnvSizer, wxSizerFlags().Expand());
 
 		m_pFontDialog = new wxFontDialog(this);
-		m_pCheckCustomFont = new wxCheckBox(this, (int)Prefs::ID_CHECK_FONT, _("Use custom font in text fields:"));
-		m_pEnableSpellCheck = new wxCheckBox(this, (int)Prefs::ID_SPELL_CHECK, _("Check spelling"));
-		m_pSelectFont = new wxButton(this, (int)Prefs::ID_SELECT_FONT, _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-		m_pResetDefFont = new wxButton(this, (int)Prefs::ID_RESET_FONT, _("Reset"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+		m_pCheckCustomFont = new wxCheckBox(this, static_cast<int>(Prefs::ID_CHECK_FONT), _("Use custom font in text fields:"));
+		m_pEnableSpellCheck = new wxCheckBox(this, static_cast<int>(Prefs::ID_SPELL_CHECK), _("Check spelling"));
+		m_pSelectFont = new wxButton(this, static_cast<int>(Prefs::ID_SELECT_FONT), _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+		m_pResetDefFont = new wxButton(this, static_cast<int>(Prefs::ID_RESET_FONT), _("Reset"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
 		// control configurations
 		m_pSelectFont->Disable();
