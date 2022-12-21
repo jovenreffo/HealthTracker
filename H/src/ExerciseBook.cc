@@ -31,11 +31,11 @@ void ExerciseBook::SetupBitmaps()
 void ExerciseBook::SetupPanels()
 {
 	m_pWPPanel = new WPNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pNutrPanel = new NutritionPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pNutrBook = new NutritionBook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_TOP);
 }
 
 void ExerciseBook::SetupPages()
 {
 	this->AddPage(m_pWPPanel, _T("Workout Plan"), true, 0);
-	this->AddPage(m_pNutrPanel, _T("Nutrition"), false, 1);
+	this->AddPage(m_pNutrBook, _T("Nutrition"), false, 1);
 }

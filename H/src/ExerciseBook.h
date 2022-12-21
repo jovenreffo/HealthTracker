@@ -14,7 +14,7 @@ class ExerciseBook: public wxNotebook
 private:
 	// Main panels
 	WPNotebook* m_pWPPanel;
-	NutritionPanel* m_pNutrPanel;
+	NutritionBook* m_pNutrBook;
 
 	// Icons
 	wxImageList* m_pImgList;
@@ -29,7 +29,7 @@ public:
 		long style = EXERCISEBOOK_STYLE);
 
 	WPNotebook* GetNotebook() const { return m_pWPPanel; }
-	NutritionPanel* GetNutritionPanel() const { return m_pNutrPanel; }
+	NutritionBook* GetNutritionBook() const { return m_pNutrBook; }
 
 	// Book setup
 	void Init();

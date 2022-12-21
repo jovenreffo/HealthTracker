@@ -35,12 +35,12 @@ void Listbook::SetupTabs()
 
 	m_pJournal = new Journal(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pCalendar = new Calendar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pExercisePanel = new ExercisePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pSettings = new Settings(m_pExercisePanel, m_pJournal, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pExerciseBook = new ExerciseBook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pSettings = new Settings(m_pExerciseBook, m_pJournal, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	// Add tabs to the list
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
-	this->AddPage(m_pExercisePanel, _T("Activity"), false, 1);
+	this->AddPage(m_pExerciseBook, _T("Activity"), false, 1);
 	this->AddPage(m_pCalendar, _T("Planning"), false, 2);
 	this->AddPage(m_pSettings, _T("Settings"), false, 3);
 }
