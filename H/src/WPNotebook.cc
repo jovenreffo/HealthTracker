@@ -61,7 +61,7 @@ void WPNotebook::SetupSplitter()
 {
 	m_pSplitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
 	m_pSplitter->SetSashGravity(0.5);
-	m_pSplitter->SetMinimumPaneSize(100);
+	m_pSplitter->SetMinimumPaneSize(150);
 }
 
 void WPNotebook::ArrangeElements()
