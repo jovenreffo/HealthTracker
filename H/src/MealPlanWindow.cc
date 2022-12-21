@@ -2,7 +2,7 @@
 #include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(MealPlanWindow, wxFrame)
-	EVT_BUTTON(static_cast<int>(MPW::ID_ADD_MEAL), MealPlanWindow::OnAddMeal)
+EVT_BUTTON(static_cast<int>(MPW::ID_ADD_MEAL), MealPlanWindow::OnAddMeal)
 END_EVENT_TABLE()
 
 MealPlanWindow::MealPlanWindow(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
