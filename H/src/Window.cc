@@ -168,8 +168,8 @@ void Frame::SetupListbook()
 
 void Frame::SetupLists()
 {
-	m_pWorkoutList = m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetWorkoutList();
-	m_pRoutineList = m_pListbook->GetExercisePanel()->GetExerciseBook()->GetNotebook()->GetRoutineList();
+	m_pWorkoutList = m_pListbook->GetExerciseBook()->GetNotebook()->GetWorkoutList();
+	m_pRoutineList = m_pListbook->GetExerciseBook()->GetNotebook()->GetRoutineList();
 	m_pEntryList = m_pListbook->GetJournal()->GetEntryList();
 }
 
