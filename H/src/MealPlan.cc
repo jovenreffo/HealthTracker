@@ -48,7 +48,7 @@ void MealPlan::SetupControls()
 {
 	// Buttons
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
-	m_pAddMeal = new wxButton(m_pPlansPanel, static_cast<int>(MP::ID_ADD_PLAN), _T("Add Meal"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pAddMeal = new wxButton(m_pPlansPanel, static_cast<int>(MP::ID_ADD_PLAN), _T("Add Meal Plan"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	m_pAddMeal->SetBitmap(m_addBmp);
 
 	m_changeBmp = wxBitmap(path_data::dataDir + _T("\\Images\\change.png"), wxBITMAP_TYPE_PNG);
