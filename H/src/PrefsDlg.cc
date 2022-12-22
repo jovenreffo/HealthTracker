@@ -11,6 +11,7 @@
 #include "Font/Font.hpp"
 #include "Journal.h"
 #include "WorkoutDialog.h"
+#include "Window.h"
 
 namespace lang
 {
@@ -168,11 +169,12 @@ private:
 			m_pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(pMainWin); // cast the window to a wxTextCtrl so we have control over it
 		}
 
-		// find the workout text ctrl
-		wxDialog* pWorkoutDlg = dynamic_cast<wxDialog*>(this->GetParent()->GetParent()->GetParent()->FindWindow(_T("workoutdialog")));
-		if (pWorkoutDlg)
+		// access the main frame
+		// gain control over the workout dialog's pointer
+		Frame* pFrame = dynamic_cast<Frame*>(this->GetParent()->GetParent()->GetParent());
+		if (pFrame != nullptr)
 		{
-
+			m_pWorkoutTxtCtrl = pFrame->GetWorkoutDialog()->GetTextCtrl();
 		}
 	}
 
@@ -239,13 +241,19 @@ private:
 		{
 			// Enable spell checking on the journal (wxWidgets 3.1.6 required)
 			if (m_pJournalTxtCtrl != nullptr)
+			{
 				m_pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
+				//m_pWorkoutTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
+			}
 		}
 		else
 		{
 			// Disable spell checking
 			if (m_pJournalTxtCtrl != nullptr)
+			{
 				m_pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Disable());
+				//m_pWorkoutTxtCtrl->EnableProofCheck(wxTextProofOptions::Disable());
+			}
 		}
 	}
 };

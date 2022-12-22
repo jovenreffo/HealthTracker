@@ -74,3 +74,19 @@ AddMealDialog::~AddMealDialog()
 {
 
 }
+
+void AddMealDialog::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void AddMealDialog::SetupControls()
+{
+
+}
+
+void AddMealDialog::SetupSizers()
+{
+
+}

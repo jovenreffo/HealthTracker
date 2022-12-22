@@ -6,6 +6,7 @@
 #include <wx/imaglist.h>
 #include <wx/icon.h>
 #include <wx/listctrl.h>
+#include <wx/textctrl.h>
 #include <wx/sizer.h>
 #include <wx/dialog.h>
 #include <wx/button.h>
@@ -63,6 +64,12 @@ public:
 
 class AddMealDialog : public wxDialog
 {
+private:
+	wxTextCtrl* m_pMealNameTxt;
+	wxTextCtrl* m_pMealDescTxt;
+	wxString m_mealName;
+	wxString m_mealDesc;
+
 public:
 	AddMealDialog(wxWindow* parent,
 		wxWindowID id,
@@ -73,6 +80,9 @@ public:
 	~AddMealDialog();
 
 	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 
 	// Events
 };

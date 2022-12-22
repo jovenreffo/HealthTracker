@@ -241,6 +241,7 @@ void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
+	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, wxID_ANY);
 	m_pWorkoutDialog->Show(true);
 }
 
