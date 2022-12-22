@@ -77,6 +77,9 @@ public:
 
 	bool ConfirmReset();
 
+	// Getters
+	WorkoutDialog* GetWorkoutDialog() const { return m_pWorkoutDialog; }
+
 	// Window setup
 	void Init();
 	void InitConfig();
