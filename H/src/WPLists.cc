@@ -1,7 +1,7 @@
 #include <wx/msgdlg.h>
 #include "WPLists.h"
-#include "WorkoutWindow.h"
 #include "StandardPath.hpp"
+#include "WorkoutDialog.h" // A circular dependency will occur if this is put in WPLists.h
 
 // event table for WorkoutList
 BEGIN_EVENT_TABLE(WorkoutList, wxListView)
@@ -76,7 +76,7 @@ void WorkoutList::ResetList()
 
 void WorkoutList::OpenWorkout()
 {
-	WorkoutWindow* pWorkoutWindow = new WorkoutWindow(this, wxID_ANY, this);
+	WorkoutDialog* pWorkoutDlg = new WorkoutDialog(this, this, wxID_ANY);
 
 	// search the content array to see if an item exists with the currently selected name
 	try
@@ -84,7 +84,7 @@ void WorkoutList::OpenWorkout()
 		for (auto i{ 0 }; i < m_content.size(); ++i)
 		{
 			if (m_currentItemName == m_content[i].GetName())
-				pWorkoutWindow->OpenWorkout(m_content[i].GetContent());
+				pWorkoutDlg->OpenWorkout(m_content[i].GetContent());
 		}
 	}
 	catch (std::exception& e)

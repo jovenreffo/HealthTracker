@@ -12,7 +12,6 @@
 #include "AboutDialog/AboutDialog.h"
 #include "TaskbarIcon.h"
 #include "xpm/xpm_include.h"
-#include "WorkoutWindow.h"
 #include "RoutineDialog.h"
 #include "PrefsDlg.h"
 #include "CaloriePanel.h"

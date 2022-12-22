@@ -11,7 +11,6 @@
 #include <wx/sizer.h>
 #include <wx/notebook.h>
 
-#include "WorkoutWindow.h"
 #include "WPLists.h"
 #include "DynamicPlan.h"
 #include "RoutineDialog.h"
