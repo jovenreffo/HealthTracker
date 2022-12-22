@@ -60,6 +60,9 @@ public:
 	void SaveToWorkoutList();
 	void OpenWorkout(const wxString& content);
 
+	// Getters
+	wxTextCtrl* GetTextCtrl() const { return m_pTextCtrl; }
+
 	// Window setup
 	void Init();
 	void SetupWindowSizing();
