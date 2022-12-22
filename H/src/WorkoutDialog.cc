@@ -31,6 +31,12 @@ void WorkoutDialog::SaveToWorkoutList()
 	}
 }
 
+void WorkoutDialog::OpenWorkout(const wxString& content)
+{
+	this->Show(true);
+	m_pTextCtrl->SetValue(content);
+}
+
 void WorkoutDialog::Init()
 {
 	this->SetupImages();

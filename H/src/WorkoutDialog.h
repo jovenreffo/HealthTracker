@@ -58,6 +58,7 @@ public:
 	// List actions
 	__forceinline void AddToWorkoutList();
 	void SaveToWorkoutList();
+	void OpenWorkout(const wxString& content);
 
 	// Window setup
 	void Init();
