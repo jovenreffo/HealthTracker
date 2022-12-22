@@ -10,6 +10,7 @@
 #include "PrefsDlg.h"
 #include "Font/Font.hpp"
 #include "Journal.h"
+#include "WorkoutDialog.h"
 
 namespace lang
 {
@@ -40,6 +41,7 @@ private:
 	wxButton* m_pResetDefFont;
 	wxFontDialog* m_pFontDialog;
 	wxTextCtrl* m_pJournalTxtCtrl;
+	wxTextCtrl* m_pWorkoutTxtCtrl;
 	wxStaticText* m_pWhatFont;
 
 	wxFont m_selectedFont;
@@ -161,7 +163,17 @@ private:
 	{
 		// trace back to main frame to find the entry list's text control, as it is a distant child window
 		wxWindow* pMainWin = this->GetParent()->GetParent()->GetParent()->FindWindow(_T("journalctrl"));
-		m_pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(pMainWin); // cast the window to a wxTextCtrl so we have control over it
+		if (pMainWin)
+		{
+			m_pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(pMainWin); // cast the window to a wxTextCtrl so we have control over it
+		}
+
+		// find the workout text ctrl
+		wxDialog* pWorkoutDlg = dynamic_cast<wxDialog*>(this->GetParent()->GetParent()->GetParent()->FindWindow(_T("workoutdialog")));
+		if (pWorkoutDlg)
+		{
+
+		}
 	}
 
 	// events
