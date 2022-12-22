@@ -11,7 +11,7 @@ BEGIN_EVENT_TABLE(WorkoutDialog, wxDialog)
 END_EVENT_TABLE()
 
 WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style), m_pWorkoutList{ pWorkoutList }
+	: wxDialog(parent, id, title, pos, size, style, _T("workoutdialog")), m_pWorkoutList{pWorkoutList}
 {
 	this->Init();
 }
@@ -78,7 +78,7 @@ void WorkoutDialog::SetupImages()
 
 void WorkoutDialog::SetupControls()
 {
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE, wxTextValidator(0, &m_workoutContent));
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2, wxTextValidator(0, &m_workoutContent), _T("workouttxtctrl"));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
