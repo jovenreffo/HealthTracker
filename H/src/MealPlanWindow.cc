@@ -48,6 +48,7 @@ void MealPlanWindow::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pMainSizer = new wxBoxSizer(wxVERTICAL);
+	m_pDaySizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 	m_pTopPanel->SetSizerAndFit(m_pMainSizer);
 
@@ -55,11 +56,17 @@ void MealPlanWindow::SetupSizers()
 	m_pMainSizer->Add(m_pAddMeal, wxSizerFlags().Left().Border(wxALL, 5));
 }
 
+void MealPlanWindow::SetupLists()
+{
+
+}
+
 // events
 
 void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 {
-
+	m_pAddMealDlg = new AddMealDialog(this, wxID_ANY);
+	m_pAddMealDlg->Show(true);
 }
 
 // ========================== AddMealDialog ==========================
