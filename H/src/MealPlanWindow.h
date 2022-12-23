@@ -11,6 +11,8 @@
 #include <wx/dialog.h>
 #include <wx/button.h>
 
+#include <array>
+
 #define MPW_SIZE ( wxSize(440, 280) )
 #define MPW_MAX_SIZE ( wxSize() )
 
@@ -36,11 +38,12 @@ private:
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxImageList* m_pImageList;
-	wxListView* m_pDayList;
+	std::array<wxListView, 7> m_pDayList; // have an individial list for each day of the week.
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pMainSizer;
+	wxBoxSizer* m_pDaySizer;
 
 public:
 	MealPlanWindow(wxWindow* parent = nullptr,
@@ -57,6 +60,7 @@ public:
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
+	void SetupLists();
 
 	// Events
 	void OnAddMeal(wxCommandEvent& event);
@@ -65,10 +69,15 @@ public:
 class AddMealDialog : public wxDialog
 {
 private:
+	// Text
 	wxTextCtrl* m_pMealNameTxt;
 	wxTextCtrl* m_pMealDescTxt;
 	wxString m_mealName;
 	wxString m_mealDesc;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxFlexGridSizer* m_pFlexSizer;
 
 public:
 	AddMealDialog(wxWindow* parent,
