@@ -18,7 +18,7 @@ SaveWorkoutDialog::SaveWorkoutDialog(wxWindow* parent, wxWindowID id, const wxSt
 
 void SaveWorkoutDialog::Init()
 {
-	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_ALPHA, &m_textValue));
+	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_textValue));
 	m_pNameText = new wxStaticText(this, wxID_STATIC, _T("Workout name:"));
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
