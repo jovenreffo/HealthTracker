@@ -40,10 +40,6 @@ private:
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxImageList* m_pImageList;
-
-	// Controls for day-of-week
-	wxChoice* m_pDayChoice;
-	wxArrayString m_choiceArr;
 	std::vector<MealDayList> m_pDayList; // have an individual list for each day of the week.
 
 	// Sizers
@@ -80,6 +76,10 @@ private:
 	wxTextCtrl* m_pMealDescTxt;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+
+	// Controls for day-of-week
+	wxChoice* m_pDayChoice;
+	wxArrayString m_choiceArr;
 
 	// Validators
 	wxString m_mealName;
