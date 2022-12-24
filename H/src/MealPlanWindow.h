@@ -88,6 +88,7 @@ private:
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxFlexGridSizer* m_pFlexSizer;
+	wxBoxSizer* m_pButtonSizer;
 
 public:
 	AddMealDialog(wxWindow* parent,

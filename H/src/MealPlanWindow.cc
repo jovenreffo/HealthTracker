@@ -100,24 +100,34 @@ void AddMealDialog::SetupSizing()
 void AddMealDialog::SetupControls()
 {
 	m_pMealNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_mealName));
-	//m_pMealDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE, wxTextValidator(0, &m_mealDesc));
+	m_pMealDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE, wxTextValidator(0, &m_mealDesc));
 
-	//m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-	//m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 }
 
 void AddMealDialog::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 	
 	// Add controls to the flex sizer
 	m_pFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Meal Name:")), wxSizerFlags().CentreVertical().Border(wxALL, 5));
 	m_pFlexSizer->Add(m_pMealNameTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
+	m_pFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Meal Description:")), wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pFlexSizer->Add(m_pMealDescTxt, wxSizerFlags().CentreVertical().Proportion(1).Expand().Border(wxALL, 5));
+
+	// Button sizer
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+
 	// Arrange the elements
 	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
 // ========================== MealDayList ==========================
