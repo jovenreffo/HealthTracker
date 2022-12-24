@@ -84,6 +84,7 @@ private:
 	// Validators
 	wxString m_mealName;
 	wxString m_mealDesc;
+	int m_choiceValue;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -99,6 +100,11 @@ public:
 		long style = AMD_STYLE);
 	~AddMealDialog();
 
+	// Getters for validators
+	const wxString& GetMealName() const { return m_mealName; }
+	const wxString& GetMealDesc() const { return m_mealDesc; }
+	const int GetChoiceValue() const { return m_choiceValue; }
+
 	// Setup
 	void Init();
 	void SetupSizing();
@@ -106,6 +112,8 @@ public:
 	void SetupSizers();
 
 	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 // MealDayList class will be used only in the AddMealDialog, and not outside.

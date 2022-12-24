@@ -1,3 +1,4 @@
+#include <wx/valgen.h>
 #include <wx/valtext.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
@@ -99,11 +100,23 @@ void AddMealDialog::SetupSizing()
 
 void AddMealDialog::SetupControls()
 {
+	// Text fields
 	m_pMealNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_mealName));
 	m_pMealDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE, wxTextValidator(0, &m_mealDesc));
 
+	// Buttons
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+
+	// Day-of-week selection
+	m_choiceArr.Add(_T("Sunday"));
+	m_choiceArr.Add(_T("Monday"));
+	m_choiceArr.Add(_T("Tuesday"));
+	m_choiceArr.Add(_T("Wednesday"));
+	m_choiceArr.Add(_T("Thursday"));
+	m_choiceArr.Add(_T("Friday"));
+	m_choiceArr.Add(_T("Saturday"));
+	m_pDayChoice = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArr, 0, wxGenericValidator(&m_choiceValue));
 }
 
 void AddMealDialog::SetupSizers()
@@ -128,6 +141,14 @@ void AddMealDialog::SetupSizers()
 	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticLine(this), wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
+}
+
+void AddMealDialog::OnOK(wxCommandEvent& event)
+{
+}
+
+void AddMealDialog::OnCancel(wxCommandEvent& event)
+{
 }
 
 // ========================== MealDayList ==========================
