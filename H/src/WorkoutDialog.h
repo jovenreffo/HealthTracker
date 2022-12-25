@@ -60,8 +60,9 @@ public:
 	void SaveToWorkoutList();
 	void OpenWorkout(const wxString& content);
 
-	// Getters
+	// Get/set
 	wxTextCtrl* GetTextCtrl() const { return m_pTextCtrl; }
+	void SetTextFont(const wxFont& font) { m_pTextCtrl->SetFont(font); }
 
 	// Window setup
 	void Init();

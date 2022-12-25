@@ -127,6 +127,7 @@ void AddMealDialog::SetupControls()
 	m_choiceArr.Add(_T("Friday"));
 	m_choiceArr.Add(_T("Saturday"));
 	m_pDayChoice = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArr, 0, wxGenericValidator(&m_choiceValue));
+
 }
 
 void AddMealDialog::SetupSizers()
