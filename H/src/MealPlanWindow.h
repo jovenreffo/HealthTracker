@@ -18,8 +18,8 @@
 #define MPW_MAX_SIZE ( wxSize() )
 
 #define AMD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define AMD_SIZE ( wxSize() )
-#define AMD_MAX_SIZE ( wxSize() )
+#define AMD_SIZE ( wxSize(340, 250) )
+#define AMD_MAX_SIZE ( wxSize(390, 285) )
 
 enum MPW
 {

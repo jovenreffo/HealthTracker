@@ -100,7 +100,9 @@ void AddMealDialog::Init()
 
 void AddMealDialog::SetupSizing()
 {
-
+	this->SetInitialSize(AMD_SIZE);
+	this->SetMinSize(AMD_SIZE);
+	this->SetMaxSize(AMD_MAX_SIZE);
 }
 
 void AddMealDialog::SetupControls()
