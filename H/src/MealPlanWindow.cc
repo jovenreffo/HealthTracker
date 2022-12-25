@@ -79,11 +79,16 @@ AddMealDialog::AddMealDialog(wxWindow* parent, wxWindowID id, const wxString& ti
 	: wxDialog(parent, id, title, pos, size, style)
 {
 	this->Init();
+
+	// Connect events
+	m_pOk->Bind(wxEVT_BUTTON, &AddMealDialog::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddMealDialog::OnCancel, this);
 }
 
 AddMealDialog::~AddMealDialog()
 {
-
+	m_pOk->Unbind(wxEVT_BUTTON, &AddMealDialog::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddMealDialog::OnCancel, this);
 }
 
 void AddMealDialog::Init()
@@ -133,6 +138,9 @@ void AddMealDialog::SetupSizers()
 	m_pFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Meal Description:")), wxSizerFlags().CentreVertical().Border(wxALL, 5));
 	m_pFlexSizer->Add(m_pMealDescTxt, wxSizerFlags().CentreVertical().Proportion(1).Expand().Border(wxALL, 5));
 
+	m_pFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Day of Week:")), wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pFlexSizer->Add(m_pDayChoice, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+
 	// Button sizer
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().CentreVertical().Border(wxALL, 5));
@@ -145,10 +153,24 @@ void AddMealDialog::SetupSizers()
 
 void AddMealDialog::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+#ifdef _DEBUG
+			wxLogMessage(_T("%s\n%s\n%s"), m_mealName, m_mealDesc, m_pDayChoice->GetStringSelection());
+#endif
+			SetReturnCode(wxID_OK);
+			Show(false);
+		}
+	}
 }
 
 void AddMealDialog::OnCancel(wxCommandEvent& event)
 {
+	this->Destroy();
 }
 
 // ========================== MealDayList ==========================
