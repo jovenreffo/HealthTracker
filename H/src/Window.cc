@@ -79,7 +79,7 @@ void Frame::InitConfig()
 
 	// Access the preferences variables to set the font accordingly
 	m_pConfig->SetPath(_("/Preferences"));
-	wxTextCtrl* pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
+	pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
 
 	// Make sure the user has checked the `use custom font` checkbox
 	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
@@ -243,6 +243,11 @@ void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, wxID_ANY);
 	m_pWorkoutDialog->Show(true);
+
+	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
+	{
+		m_pWorkoutDialog->SetTextFont(pJournalTxtCtrl->GetFont());
+	}
 }
 
 void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
