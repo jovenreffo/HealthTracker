@@ -40,7 +40,7 @@ private:
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxImageList* m_pImageList;
-	std::vector<MealDayList> m_pDayList; // have an individual list for each day of the week.
+	std::vector<MealDayList> m_pDayList; // Have an individual list for each day of the week.
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -114,9 +114,10 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnUpdateOK(wxUpdateUIEvent& event);
 };
 
-// MealDayList class will be used only in the AddMealDialog, and not outside.
+// MealDayList class will be used only in the MealPlanWindow, and not outside.
 // Separate class for featured list
 // MealList class is for displaying the names of the plans created
 

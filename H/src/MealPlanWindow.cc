@@ -82,12 +82,14 @@ AddMealDialog::AddMealDialog(wxWindow* parent, wxWindowID id, const wxString& ti
 
 	// Connect events
 	m_pOk->Bind(wxEVT_BUTTON, &AddMealDialog::OnOK, this);
+	m_pOk->Bind(wxEVT_UPDATE_UI, &AddMealDialog::OnUpdateOK, this);
 	m_pCancel->Bind(wxEVT_BUTTON, &AddMealDialog::OnCancel, this);
 }
 
 AddMealDialog::~AddMealDialog()
 {
 	m_pOk->Unbind(wxEVT_BUTTON, &AddMealDialog::OnOK, this);
+	m_pOk->Unbind(wxEVT_UPDATE_UI, &AddMealDialog::OnUpdateOK, this);
 	m_pCancel->Unbind(wxEVT_BUTTON, &AddMealDialog::OnCancel, this);
 }
 
@@ -114,6 +116,7 @@ void AddMealDialog::SetupControls()
 	// Buttons
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pOk->Enable(false); // At first, we want the OK button disabled. It will get re-enable dwhen the user has entered a day of the week and entered a meal name
 
 	// Day-of-week selection
 	m_choiceArr.Add(_T("Sunday"));
@@ -173,6 +176,14 @@ void AddMealDialog::OnOK(wxCommandEvent& event)
 void AddMealDialog::OnCancel(wxCommandEvent& event)
 {
 	this->Destroy();
+}
+
+void AddMealDialog::OnUpdateOK(wxUpdateUIEvent& event)
+{
+	if (!m_pMealNameTxt->IsEmpty() && m_pDayChoice->GetSelection() != -1)
+		event.Enable(true);
+	else
+		event.Enable(false);
 }
 
 // ========================== MealDayList ==========================
