@@ -1,6 +1,7 @@
 #include <wx/log.h>
 #include <wx/filedlg.h>
 #include <wx/string.h>
+#include <wx/config.h>
 #include <wx/datetime.h>
 #include "Journal.h"
 
@@ -13,6 +14,7 @@ Journal::Journal(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 	: wxPanel(parent, id, pos, size, style)
 {
 	this->Init();
+	this->LoadConfig();
 }
 
 wxString Journal::GetDate()
@@ -26,6 +28,32 @@ void Journal::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+}
+
+void Journal::LoadConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath("/Preferences");
+
+	// Check if the spellcheck option is active from the preferences panel and enable it on the local text ctrl
+	if (pConfig->Read("Spellcheck", 0L) == 1L)
+		m_pTextCtrl->EnableProofCheck(wxTextProofOptions::Default());
+
+	// Check if the user has selected a custom font
+	if (pConfig->Read("CheckFont", 0L) == 1L)
+	{
+		m_pTextCtrl->SetFont(wxFont(
+			pConfig->Read("FontSize", 10L),
+			static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+			static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+			wxFONTWEIGHT_NORMAL,
+			pConfig->Read("FontUnderline", 0L),
+			pConfig->Read("FaceName", "")
+		));
+	}
 }
 
 void Journal::SetupControls()
