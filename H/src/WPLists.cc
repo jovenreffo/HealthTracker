@@ -47,10 +47,10 @@ void WorkoutList::SetupImageList()
 
 void WorkoutList::SetupColumn()
 {
-	wxListItem routineCol;
-	routineCol.SetText(_T("Workouts"));
-	routineCol.SetImage(-1); 
-	this->InsertColumn(0, routineCol);
+	wxListItem workoutCol;
+	workoutCol.SetText(_T("Workouts"));
+	workoutCol.SetImage(-1);
+	this->InsertColumn(0, workoutCol);
 	this->SetColumnWidth(0, 200);
 }
 
