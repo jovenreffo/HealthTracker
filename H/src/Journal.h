@@ -54,6 +54,7 @@ public:
 
 	// Panel setup
 	void Init();
+	void LoadConfig();
 	void SetupControls();
 	void SetupSizers();
 
