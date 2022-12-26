@@ -82,6 +82,7 @@ void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 {
 	m_pMealPlanWin = new MealPlanWindow(this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
 	m_pMealPlanWin->Show(true);
+	m_pMealPlanWin->Centre();
 }
 
 // ================== MealList ==================
