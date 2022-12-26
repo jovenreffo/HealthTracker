@@ -42,7 +42,6 @@ private:
 	wxButton* m_pResetDefFont;
 	wxFontDialog* m_pFontDialog;
 	wxTextCtrl* m_pJournalTxtCtrl;
-	wxTextCtrl* m_pWorkoutTxtCtrl;
 	wxStaticText* m_pWhatFont;
 
 	wxFont m_selectedFont;
@@ -168,14 +167,6 @@ private:
 		{
 			m_pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(pMainWin); // cast the window to a wxTextCtrl so we have control over it
 		}
-
-		// access the main frame
-		// gain control over the workout dialog's pointer
-		Frame* pFrame = dynamic_cast<Frame*>(this->GetParent()->GetParent()->GetParent());
-		if (pFrame != nullptr)
-		{
-			m_pWorkoutTxtCtrl = pFrame->GetWorkoutDialog()->GetTextCtrl();
-		}
 	}
 
 	// events
@@ -243,7 +234,6 @@ private:
 			if (m_pJournalTxtCtrl != nullptr)
 			{
 				m_pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
-				//m_pWorkoutTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
 			}
 		}
 		else
@@ -252,7 +242,6 @@ private:
 			if (m_pJournalTxtCtrl != nullptr)
 			{
 				m_pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Disable());
-				//m_pWorkoutTxtCtrl->EnableProofCheck(wxTextProofOptions::Disable());
 			}
 		}
 	}
