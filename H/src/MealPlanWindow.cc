@@ -9,6 +9,7 @@ MealPlanWindow::MealPlanWindow(wxWindow* parent, wxWindowID id, const wxString& 
 	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin"))
 {
 	this->Init();
+	this->Centre();
 
 	// Bind events
 	m_pAddMeal->Bind(wxEVT_BUTTON, &MealPlanWindow::OnAddMeal, this);
