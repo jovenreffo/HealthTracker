@@ -1,6 +1,7 @@
 #include <wx/valtext.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
+#include <wx/config.h>	
 #include "WorkoutDialog.h"
 #include "StandardPath.hpp"
 
@@ -14,6 +15,7 @@ WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	: wxDialog(parent, id, title, pos, size, style, _T("workoutdialog")), m_pWorkoutList{pWorkoutList}
 {
 	this->Init();
+	this->LoadConfig();
 }
 
 __forceinline void WorkoutDialog::AddToWorkoutList()
@@ -44,6 +46,33 @@ void WorkoutDialog::Init()
 	this->SetupSizers();
 	this->SetupWindowSizing();
 	this->BindEvents();
+}
+
+void WorkoutDialog::LoadConfig()
+{
+	// Load the values of the config
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath("/Preferences");
+
+	// Check if the spellcheck option is active from the preferences panel and enable it on the local text ctrl
+	if (pConfig->Read("Spellcheck", 0L) == 1L)
+		m_pTextCtrl->EnableProofCheck(wxTextProofOptions::Default());
+
+	// Check if the user has selected a custom font
+	if (pConfig->Read("CheckFont", 0L) == 1L)
+	{
+		m_pTextCtrl->SetFont(wxFont(
+			pConfig->Read("FontSize", 10L),
+			static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+			static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+			wxFONTWEIGHT_NORMAL,
+			pConfig->Read("FontUnderline", 0L),
+			pConfig->Read("FaceName", "")
+		));
+	}
 }
 
 void WorkoutDialog::SetupWindowSizing()

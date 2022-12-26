@@ -66,6 +66,7 @@ public:
 
 	// Window setup
 	void Init();
+	void LoadConfig();
 	void SetupWindowSizing();
 	void SetupImages();
 	void SetupControls();
