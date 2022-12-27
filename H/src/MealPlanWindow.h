@@ -2,6 +2,7 @@
 #define _MEALPLANWINDOW_H_
 
 #include <wx/frame.h>
+#include <wx/menu.h>
 #include <wx/bitmap.h>
 #include <wx/imaglist.h>
 #include <wx/icon.h>
@@ -14,7 +15,7 @@
 
 #include <vector>
 
-#define MPW_SIZE ( wxSize(440, 280) )
+#define MPW_SIZE ( wxSize(640, 280) )
 #define MPW_MAX_SIZE ( wxSize() )
 
 #define AMD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
@@ -23,7 +24,8 @@
 
 enum MPW
 {
-	ID_ADD_MEAL
+	ID_ADD_MEAL,
+	ID_SAVE_PLAN
 };
 
 class AddMealDialog;
@@ -39,11 +41,12 @@ private:
 	// Controls
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
-	wxImageList* m_pImageList;
-	std::vector<MealDayList> m_pDayList; // Have an individual list for each day of the week.
+	wxButton* m_pSavePlan; wxBitmap m_saveBmp;
+	std::vector<MealDayList*> m_pDayList; // Have an individual list for each day of the week.
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
 	wxBoxSizer* m_pMainSizer;
 	wxBoxSizer* m_pDaySizer;
 
@@ -126,6 +129,12 @@ class MealDayList : public wxListView
 private:
 	wxString m_listTitle;
 
+	wxImageList* m_pImageList;
+	wxBitmap m_mealBmp;
+
+	wxMenu* m_pMenu;
+	wxMenu* m_pColMenu;
+
 public:
 	MealDayList(const wxString& list_title,
 		wxWindow* parent,
@@ -133,8 +142,22 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+	~MealDayList();
 
+	// Setup
+	void Init();
+	void SetupColumn();
+	void SetupMenu();
+	void SetupImageList();
 
+	void ResetList();
+
+	// Events
+	void OnRightClickItem(wxListEvent& event);
+	void OnRightClickColumn(wxListEvent& event);
+	void OnDeleteItem(wxCommandEvent& event);
+	void OnEditItem(wxCommandEvent& event);
+	void OnResetList(wxCommandEvent& event);
 };
 
 #endif
