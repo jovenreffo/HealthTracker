@@ -69,34 +69,13 @@ void Frame::InitConfig()
 		return;
 
 	// Restore the frame's size and position
-	m_pConfig->SetPath(_("Frame"));
+	m_pConfig->SetPath(_("/Frame"));
 
 	this->Move(m_pConfig->Read("x", 100),
 			   m_pConfig->Read("y", 100));
 
 	this->SetClientSize(m_pConfig->Read("w", 640),
 						m_pConfig->Read("h", 480));
-
-	// Access the preferences variables to set the font accordingly
-	m_pConfig->SetPath(_("/Preferences"));
-	pJournalTxtCtrl = dynamic_cast<wxTextCtrl*>(FindWindow("journalctrl"));
-
-	// Make sure the user has checked the `use custom font` checkbox
-	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
-	{
-		pJournalTxtCtrl->SetFont(wxFont(
-			m_pConfig->Read("FontSize", 10L),
-			static_cast<wxFontFamily>(m_pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
-			static_cast<wxFontStyle>(m_pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
-			wxFONTWEIGHT_NORMAL,
-			m_pConfig->Read("FontUnderline", 0L),
-			m_pConfig->Read("FaceName", "")
-		));
-	}
-
-	// Load spellcheck on startup
-	if (m_pConfig->Read("Spellcheck", 0L) == 1L)
-		pJournalTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
 }
 
 // Window setup
@@ -182,7 +161,6 @@ void Frame::SetupOther()
 	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, wxID_ANY);
 	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, wxID_ANY, _T("New Routine"));
 	m_pCaloriePanel = dynamic_cast<CaloriePanel*>(FindWindow(_T("caloriepanel")));
-	m_pMealPlanWindow = new MealPlanWindow(this);
 }
 
 // Events
@@ -243,11 +221,6 @@ void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, wxID_ANY);
 	m_pWorkoutDialog->Show(true);
-
-	if (m_pConfig->Read(_("CheckFont"), 0L) == 1L)
-	{
-		m_pWorkoutDialog->SetTextFont(pJournalTxtCtrl->GetFont());
-	}
 }
 
 void Frame::OnAddRoutine(wxCommandEvent& WXUNUSED(event))
@@ -263,5 +236,6 @@ void Frame::OnAddNutritonItem(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnAddMealPlan(wxCommandEvent& WXUNUSED(event))
 {
+	m_pMealPlanWindow = new MealPlanWindow(this);
 	m_pMealPlanWindow->Show(true);
 }

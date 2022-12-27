@@ -70,7 +70,7 @@ private:
 	MealPlanWindow* m_pMealPlanWindow;
 
 	wxConfigBase* m_pConfig;
-	wxTextCtrl* pJournalTxtCtrl;
+	wxTextCtrl* m_pJournalTxtCtrl;
 	
 public:
 	Frame();
