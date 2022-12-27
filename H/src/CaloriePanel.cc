@@ -78,6 +78,10 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 
 void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 {
+	/*
+	* When the user adds a new item, we want to insert it at index 1.
+	* Doing this because the 0 index is the total, and that should be 'pinned' at the top of the list.
+	*/
 	this->InsertItem(1, item);
 	this->SetItem(1, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
 	this->SetItem(1, 2, std::to_string(pAddItemDlg->GetCarbContent()));
@@ -87,16 +91,18 @@ void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 
 void CalorieList::UpdateTotal()
 {
+	// To get an accurate calculation, clear what is currently begin held in the total
 	m_total.ResetTotal();
-	// begin at 1 so we don't include the total
+	// Start the calculation at index 1, because the total should not be included
 	for (auto i{ 1 }; i < this->GetItemCount(); ++i)
 	{
+		// At the current list index, get the string value of whatever is in the column (1, 2, 3, 4) and convert it to an int.
 		m_total.m_calTotal += wxAtoi(this->GetItemText(i, 1));
 		m_total.m_carbTotal += wxAtoi(this->GetItemText(i, 2));
 		m_total.m_proteinTotal += wxAtoi(this->GetItemText(i, 3));
 		m_total.m_fiberTotal += wxAtoi(this->GetItemText(i, 4));
 	}
-	// set the total
+	// Set the total by converting ints back into strings
 	this->SetItem(0, 1, std::to_string(m_total.m_calTotal));
 	this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
 	this->SetItem(0, 3, std::to_string(m_total.m_proteinTotal));
@@ -122,7 +128,7 @@ void CalorieList::SetupColumns()
 {
 	this->AppendColumn(_T("Food/Items"));
 	this->AppendColumn(_T("Calories"));
-	this->AppendColumn(_T("Carbohydrates (g)"), wxLIST_FORMAT_LEFT, 115);
+	this->AppendColumn(_T("Carbohydrates (g)"), wxLIST_FORMAT_LEFT, 115); // longer label, set custom column width
 	this->AppendColumn(_T("Protein (g)"));
 	this->AppendColumn(_T("Fibre (g)"));
 }
@@ -140,6 +146,7 @@ void CalorieList::SetupImageList()
 
 void CalorieList::SetupTotalItem()
 {
+	// Insert the total at index 0, and any items after it come at index 1
 	this->InsertItem(0, _T("Total"));
 	this->SetItem(0, 1, _T("0"));
 	this->SetItem(0, 2, _T("0"));
@@ -162,7 +169,7 @@ void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
 	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
-	// test if the selected item index is greater than 0 because we don't want to delete the total
+	// Test if the selected item index is greater than 0 because we don't want to delete the total
 	if (selected > 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
 		this->DeleteItem(selected);
