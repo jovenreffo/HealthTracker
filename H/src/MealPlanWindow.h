@@ -28,6 +28,7 @@ enum MPW
 	ID_SAVE_PLAN
 };
 
+class SaveMealPlanDialog;
 class AddMealDialog;
 class MealDayList;
 
@@ -39,6 +40,7 @@ private:
 	wxPanel* m_pTopPanel;
 
 	// Controls
+	SaveMealPlanDialog* m_pSavePlanDlg;
 	AddMealDialog* m_pAddMealDlg;
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxButton* m_pSavePlan; wxBitmap m_saveBmp;
@@ -69,6 +71,21 @@ public:
 
 	// Events
 	void OnAddMeal(wxCommandEvent& event);
+};
+
+class SaveMealPlanDialog : public wxDialog
+{
+private:
+	// Controls
+	wxTextCtrl* m_pPlanNameTxt;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Validator
+	wxString m_planName;
+
+public:
+	~SaveMealPlanDialog();
 };
 
 class AddMealDialog : public wxDialog
