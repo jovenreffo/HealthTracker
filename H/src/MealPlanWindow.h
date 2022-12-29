@@ -18,7 +18,7 @@
 #define MPW_SIZE ( wxSize(640, 280) )
 #define MPW_MAX_SIZE ( wxSize() )
 
-#define AMD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+#define DLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define AMD_SIZE ( wxSize(340, 250) )
 #define AMD_MAX_SIZE ( wxSize(390, 285) )
 
@@ -85,7 +85,22 @@ private:
 	wxString m_planName;
 
 public:
+	SaveMealPlanDialog(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Save Meal Plan"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = DLG_STYLE);
 	~SaveMealPlanDialog();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 class AddMealDialog : public wxDialog
@@ -117,7 +132,7 @@ public:
 		const wxString& title = _T("Add Meal"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = AMD_SIZE,
-		long style = AMD_STYLE);
+		long style = DLG_STYLE);
 	~AddMealDialog();
 
 	// Getters for validators
@@ -161,6 +176,8 @@ public:
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 	~MealDayList();
 
+	const wxString& GetListTitle() const { return m_listTitle; }
+
 	// Setup
 	void Init();
 	void SetupColumn();
@@ -173,7 +190,7 @@ public:
 	void OnRightClickItem(wxListEvent& event);
 	void OnRightClickColumn(wxListEvent& event);
 	void OnDeleteItem(wxCommandEvent& event);
-	void OnEditItem(wxCommandEvent& event);
+	void OnViewItem(wxCommandEvent& event);
 	void OnResetList(wxCommandEvent& event);
 };
 

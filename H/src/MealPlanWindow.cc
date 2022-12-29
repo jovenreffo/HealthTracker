@@ -96,6 +96,16 @@ void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 {
 	m_pAddMealDlg = new AddMealDialog(this, wxID_ANY);
 	m_pAddMealDlg->Show(true);
+
+	if (m_pAddMealDlg->ShowModal() == wxID_OK)
+	{
+		// Add the item to the corresponding list
+		// Loop through the lists to check which day of the week the user chose
+		for (auto i{ 0 }; i < m_pDayList.size(); ++i)
+		{
+
+		}
+	}
 }
 
 // ========================== SaveMealPlanDialog ==========================
