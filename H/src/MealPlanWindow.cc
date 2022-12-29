@@ -103,10 +103,15 @@ void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 		// Loop through the lists to check which day of the week the user chose
 		for (auto i{ 0 }; i < m_pDayList.size(); ++i)
 		{
+			if (m_pDayList[i]->GetListTitle() == m_pAddMealDlg->GetChoiceStr())
+				m_pDayList[i]->AddItem(m_pAddMealDlg->GetMealName());
 
+			// Push back the item onto the information array
 		}
 	}
 }
+
+
 
 // ========================== SaveMealPlanDialog ==========================
 
@@ -264,7 +269,6 @@ MealDayList::MealDayList(const wxString& list_title, wxWindow* parent, wxWindowI
 	: wxListView{ parent, id, pos, size, style }, m_listTitle{ list_title }
 {
 	this->Init();
-	this->InsertItem(0, _T("Test Item"), 0);
 
 	// Bind events
 	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealDayList::OnRightClickItem, this);
@@ -327,6 +331,11 @@ void MealDayList::SetupImageList()
 void MealDayList::ResetList()
 {
 	this->DeleteAllItems();
+}
+
+void MealDayList::AddItem(const wxString& name)
+{
+	this->InsertItem(0, name, 0);
 }
 
 void MealDayList::OnRightClickItem(wxListEvent& event)
