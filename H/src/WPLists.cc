@@ -119,7 +119,7 @@ void WorkoutList::OnOpen(wxCommandEvent& event)
 void WorkoutList::OnDelete(wxCommandEvent& event)
 {
 	// make sure the user wants to delete the selected item
-	if(wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 		this->DeleteItem(GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED));
 }
 
