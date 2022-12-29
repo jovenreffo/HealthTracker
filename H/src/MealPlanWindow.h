@@ -71,6 +71,7 @@ public:
 
 	// Events
 	void OnAddMeal(wxCommandEvent& event);
+	void OnSaveMeal(wxCommandEvent& event);
 };
 
 class SaveMealPlanDialog : public wxDialog
@@ -136,8 +137,10 @@ public:
 	~AddMealDialog();
 
 	// Getters for validators
+	wxChoice* GetChoiceCtrl() { return m_pDayChoice; }
 	const wxString& GetMealName() const { return m_mealName; }
 	const wxString& GetMealDesc() const { return m_mealDesc; }
+	wxString GetChoiceStr() const { return m_pDayChoice->GetStringSelection(); }
 	const int GetChoiceValue() const { return m_choiceValue; }
 
 	// Setup
@@ -185,6 +188,7 @@ public:
 	void SetupImageList();
 
 	void ResetList();
+	void AddItem(const wxString& name);
 
 	// Events
 	void OnRightClickItem(wxListEvent& event);
