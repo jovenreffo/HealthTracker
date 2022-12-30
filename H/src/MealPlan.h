@@ -8,6 +8,7 @@
 #include <wx/sizer.h>
 #include <wx/splitter.h>
 #include "MealPlanWindow.h"
+#include "MealList/MealList.h"
 
 enum class MP
 {
@@ -17,8 +18,6 @@ enum class MP
 	ID_PANEL_SPLITTER,
 	ID_CHANGE_FEATURED_LIST
 };
-
-class MealList;
 
 class MealPlan : public wxSplitterWindow
 {
@@ -58,19 +57,6 @@ public:
 
 	// Events
 	void OnAddMealPlan(wxCommandEvent& event);
-};
-
-class MealList : public wxListView
-{
-private:
-	DECLARE_EVENT_TABLE()
-
-public:
-	MealList(wxWindow* parent,
-		wxWindowID id,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 };
 
 #endif

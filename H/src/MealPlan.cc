@@ -80,13 +80,6 @@ void MealPlan::SetupSizers()
 
 void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 {
-	m_pMealPlanWin = new MealPlanWindow(this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
+	m_pMealPlanWin = new MealPlanWindow(m_pMealList, this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
 	m_pMealPlanWin->Show(true);
-}
-
-// ================== MealList ==================
-
-MealList::MealList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style)
-{
 }
