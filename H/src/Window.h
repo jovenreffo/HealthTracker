@@ -106,7 +106,6 @@ public:
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 	void OnAddNutritonItem(wxCommandEvent& WXUNUSED(event));
-	void OnAddMealPlan(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif

@@ -17,7 +17,6 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(ID_ADD_WORKOUT, Frame::OnAddWorkout)
 	EVT_MENU(ID_ADD_ROUTINE, Frame::OnAddRoutine)
 	EVT_MENU(ID_ADD_NUTRITION_ITEM, Frame::OnAddNutritonItem)
-	EVT_MENU(ID_ADD_MEALPLAN, Frame::OnAddMealPlan)
 END_EVENT_TABLE()
 
 Frame::Frame()
@@ -113,7 +112,6 @@ void Frame::SetupMenuBar()
 	m_pAddMenu->Append(ID_ADD_WORKOUT, _T("&New Workout"));
 	m_pAddMenu->Append(ID_ADD_ROUTINE, _T("&New Routine"));
 	m_pAddMenu->Append(ID_ADD_NUTRITION_ITEM, _T("&Nutritional Item"));
-	m_pAddMenu->Append(ID_ADD_MEALPLAN, _T("&Meal Plan"));
 	// File menu
 	m_pFileMenu->AppendSubMenu(m_pAddMenu, _T("&Add..."));
 	m_pFileMenu->AppendSeparator();
@@ -232,10 +230,4 @@ void Frame::OnAddNutritonItem(wxCommandEvent& WXUNUSED(event))
 {
 	if (m_pCaloriePanel != nullptr)
 		m_pCaloriePanel->AddNewItem();
-}
-
-void Frame::OnAddMealPlan(wxCommandEvent& WXUNUSED(event))
-{
-	m_pMealPlanWindow = new MealPlanWindow(this);
-	m_pMealPlanWindow->Show(true);
 }
