@@ -14,13 +14,18 @@
 #include <wx/button.h>
 
 #include <vector>
+#include "MealList/MealList.h"
 
 #define MPW_SIZE ( wxSize(640, 280) )
-#define MPW_MAX_SIZE ( wxSize() )
+#define MPW_MAX_SIZE ( wxSize(1050, 500) )
 
 #define DLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+
 #define AMD_SIZE ( wxSize(340, 250) )
 #define AMD_MAX_SIZE ( wxSize(390, 285) )
+
+#define SMPD_SIZE ( wxSize() )
+#define SMPD_MAX_SIZE ( wxSize() )
 
 enum MPW
 {
@@ -38,6 +43,7 @@ private:
 	// General window vars
 	wxIcon m_mealIcon;
 	wxPanel* m_pTopPanel;
+	MealList* m_pMealList;
 
 	// Controls
 	SaveMealPlanDialog* m_pSavePlanDlg;
@@ -53,7 +59,8 @@ private:
 	wxBoxSizer* m_pDaySizer;
 
 public:
-	MealPlanWindow(wxWindow* parent = nullptr,
+	MealPlanWindow(MealList* pMealList,
+		wxWindow* parent = nullptr,
 		wxWindowID id = -1,
 		const wxString& title = _T("Meal Planner"),
 		const wxPoint& pos = wxDefaultPosition,
@@ -71,7 +78,7 @@ public:
 
 	// Events
 	void OnAddMeal(wxCommandEvent& event);
-	void OnSaveMeal(wxCommandEvent& event);
+	void OnSavePlan(wxCommandEvent& event);
 };
 
 class SaveMealPlanDialog : public wxDialog

@@ -6,20 +6,22 @@
 #include "MealPlanWindow.h"
 #include "StandardPath.hpp"
 
-MealPlanWindow::MealPlanWindow(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin"))
+MealPlanWindow::MealPlanWindow(MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin")), m_pMealList{ pMealList }
 {
 	this->Init();
 	this->Centre();
 
 	// Bind events
 	m_pAddMeal->Bind(wxEVT_BUTTON, &MealPlanWindow::OnAddMeal, this);
+	m_pSavePlan->Bind(wxEVT_BUTTON, &MealPlanWindow::OnSavePlan, this);
 }
 
 MealPlanWindow::~MealPlanWindow()
 {
 	// Unbind evnets
 	m_pAddMeal->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnAddMeal, this);
+	m_pSavePlan->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnSavePlan, this);
 }
 
 void MealPlanWindow::Init()
@@ -42,6 +44,7 @@ void MealPlanWindow::SetupSizing()
 {
 	this->SetMinSize(MPW_SIZE);
 	this->SetInitialSize(MPW_SIZE);
+	this->SetMaxSize(MPW_MAX_SIZE);
 }
 
 void MealPlanWindow::SetupControls()
@@ -111,7 +114,11 @@ void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 	}
 }
 
-
+void MealPlanWindow::OnSavePlan(wxCommandEvent& event)
+{
+	m_pSavePlanDlg = new SaveMealPlanDialog(this, static_cast<int>(MPW::ID_SAVE_PLAN));
+	m_pSavePlanDlg->Show(true);
+}
 
 // ========================== SaveMealPlanDialog ==========================
 
