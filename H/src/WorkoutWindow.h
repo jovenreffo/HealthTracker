@@ -51,6 +51,8 @@ public:
 		long style = WD_STYLE);
 	~WorkoutWindow();
 
+	void HandleExit();
+
 	// List actions
 	__forceinline void AddToWorkoutList();
 	void SaveToWorkoutList();
