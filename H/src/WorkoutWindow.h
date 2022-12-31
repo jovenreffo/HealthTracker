@@ -1,7 +1,8 @@
-#ifndef _WORKOUTDIALOG_H_
-#define _WORKOUTDIALOG_H_
+#ifndef _WORKOUTWINDOW_H_
+#define _WORKOUTWINDOW_H_
 
-#include <wx/dialog.h>
+#include <wx/frame.h>
+#include <wx/toolbar.h>
 #include <wx/textctrl.h>
 #include <wx/imaglist.h>
 #include <wx/bitmap.h>
@@ -13,11 +14,8 @@
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define WD_SIZE	 ( wxSize(525, 450) )
 
-class WorkoutDialog: public wxDialog
+class WorkoutWindow: public wxFrame
 {
-private:
-	DECLARE_EVENT_TABLE()
-
 private:
 	// Visuals
 	wxBitmap m_cutBmp;
@@ -25,20 +23,17 @@ private:
 	wxBitmap m_pasteBmp;
 	wxBitmap m_undoBmp;
 	wxBitmap m_redoBmp;
-	wxBitmapButton* m_pCut;
-	wxBitmapButton* m_pCopy;
-	wxBitmapButton* m_pPaste;
-	wxBitmapButton* m_pUndo;
-	wxBitmapButton* m_pRedo;
+	wxBitmap m_saveBmp;
+	wxBitmap m_exportBmp;
 
 	// Controls
+	wxToolBar* m_pToolBar;
 	wxTextCtrl* m_pTextCtrl;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pTextActionSizer;
 	wxBoxSizer* m_pButtonSizer;
 
 	// Validation & other
@@ -47,13 +42,14 @@ private:
 	SaveWorkoutDialog* m_pSaveWorkoutDlg;
 
 public:
-	WorkoutDialog(WorkoutList* pWorkoutList,
+	WorkoutWindow(WorkoutList* pWorkoutList,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title = _T("Create New Workout"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = WD_STYLE);
+	~WorkoutWindow();
 
 	// List actions
 	__forceinline void AddToWorkoutList();
@@ -67,11 +63,11 @@ public:
 	// Window setup
 	void Init();
 	void LoadConfig();
+	void SetupToolBar();
 	void SetupWindowSizing();
 	void SetupImages();
 	void SetupControls();
 	void SetupSizers();
-	void BindEvents();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
@@ -81,7 +77,8 @@ public:
 	void OnPaste(wxCommandEvent& event);
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
-
+	void OnSave(wxCommandEvent& event);
+	void OnExport(wxCommandEvent& event);
 };
 
 #endif

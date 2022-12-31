@@ -2,30 +2,48 @@
 #include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/config.h>	
-#include "WorkoutDialog.h"
+#include "WorkoutWindow.h"
 #include "StandardPath.hpp"
 
-// Event table
-BEGIN_EVENT_TABLE(WorkoutDialog, wxDialog)
-	EVT_BUTTON(wxID_OK, WorkoutDialog::OnOK)
-	EVT_BUTTON(wxID_CANCEL, WorkoutDialog::OnCancel)
-END_EVENT_TABLE()
-
-WorkoutDialog::WorkoutDialog(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style, _T("workoutdialog")), m_pWorkoutList{pWorkoutList}
+WorkoutWindow::WorkoutWindow(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxFrame(parent, id, title, pos, size, style, _T("WorkoutWindow")), m_pWorkoutList{pWorkoutList}
 {
 	this->Init();
 	this->LoadConfig();
+	this->SetBackgroundColour(m_pSaveWorkoutDlg->GetBackgroundColour());
+
+	// Bind events to the controls
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnCut, this, wxID_CUT);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnCopy, this, wxID_COPY);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
+
+	m_pOk->Bind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
 }
 
-__forceinline void WorkoutDialog::AddToWorkoutList()
+WorkoutWindow::~WorkoutWindow()
+{
+	// Unbind events from controls
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnCut, this, wxID_CUT);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnCopy, this, wxID_COPY);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
+
+	m_pOk->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
+}
+
+__forceinline void WorkoutWindow::AddToWorkoutList()
 {
 	m_pWorkoutList->AddItem(m_pSaveWorkoutDlg->GetWorkoutName(), m_workoutContent);
 }
 
-void WorkoutDialog::SaveToWorkoutList()
+void WorkoutWindow::SaveToWorkoutList()
 {
-	m_pSaveWorkoutDlg = new SaveWorkoutDialog(this, wxID_ANY);
+	m_pSaveWorkoutDlg->Show(true);
 
 	if (m_pSaveWorkoutDlg->ShowModal() == wxID_OK)
 	{
@@ -33,22 +51,24 @@ void WorkoutDialog::SaveToWorkoutList()
 	}
 }
 
-void WorkoutDialog::OpenWorkout(const wxString& content)
+void WorkoutWindow::OpenWorkout(const wxString& content)
 {
 	this->Show(true);
 	m_pTextCtrl->SetValue(content);
 }
 
-void WorkoutDialog::Init()
+void WorkoutWindow::Init()
 {
+	m_pSaveWorkoutDlg = new SaveWorkoutDialog(this, wxID_ANY);
+
 	this->SetupImages();
 	this->SetupControls();
+	this->SetupToolBar();
 	this->SetupSizers();
 	this->SetupWindowSizing();
-	this->BindEvents();
 }
 
-void WorkoutDialog::LoadConfig()
+void WorkoutWindow::LoadConfig()
 {
 	// Load the values of the config
 	wxConfigBase* pConfig = wxConfigBase::Get();
@@ -75,13 +95,31 @@ void WorkoutDialog::LoadConfig()
 	}
 }
 
-void WorkoutDialog::SetupWindowSizing()
+void WorkoutWindow::SetupToolBar()
+{
+	m_pToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_TEXT | wxTB_FLAT);
+
+	m_pToolBar->AddTool(wxID_CUT, _T("Cut"), m_cutBmp, _T("Cut selected text."));
+	m_pToolBar->AddTool(wxID_COPY, _T("Copy"), m_copyBmp, _T("Copy selected text."));
+	m_pToolBar->AddTool(wxID_PASTE, _T("Paste"), m_pasteBmp, _T("Paste text from the clipboard."));
+	m_pToolBar->AddSeparator();
+	m_pToolBar->AddTool(wxID_UNDO, _T("Undo"), m_undoBmp, _T("Undo last action."));
+	m_pToolBar->AddTool(wxID_REDO, _T("Redo"), m_redoBmp, _T("Redo last action."));
+	m_pToolBar->AddSeparator();
+	m_pToolBar->AddTool(wxID_SAVE, _T("Save"), m_saveBmp, _T("Save to workouts."));
+	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout."));
+
+	m_pToolBar->Realize();
+	this->SetToolBar(m_pToolBar);
+}
+
+void WorkoutWindow::SetupWindowSizing()
 {
 	this->SetMinSize(WD_SIZE);
 	this->SetInitialSize(WD_SIZE);
 }
 
-void WorkoutDialog::SetupImages()
+void WorkoutWindow::SetupImages()
 {
 	// Bitmaps
 	m_cutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\cut_small.png"), wxBITMAP_TYPE_PNG);
@@ -89,23 +127,11 @@ void WorkoutDialog::SetupImages()
 	m_pasteBmp = wxBitmap(path_data::dataDir + _T("\\Images\\paste_small.png"), wxBITMAP_TYPE_PNG);
 	m_undoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\undo_small.png"), wxBITMAP_TYPE_PNG);
 	m_redoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\redo_small.png"), wxBITMAP_TYPE_PNG);
-
-	// Bitmap buttons
-	m_pCut = new wxBitmapButton(this, wxID_CUT, m_cutBmp);
-	m_pCopy = new wxBitmapButton(this, wxID_COPY, m_copyBmp);
-	m_pPaste = new wxBitmapButton(this, wxID_PASTE, m_pasteBmp);
-	m_pUndo = new wxBitmapButton(this, wxID_UNDO, m_undoBmp);
-	m_pRedo = new wxBitmapButton(this, wxID_REDO, m_redoBmp);
-
-	// Set tool tips for the buttons
-	m_pCut->SetToolTip(_T("Cut selected text."));
-	m_pCopy->SetToolTip(_T("Copy selected text."));
-	m_pPaste->SetToolTip(_T("Paste text."));
-	m_pUndo->SetToolTip(_T("Undo last action."));
-	m_pRedo->SetToolTip(_T("Redo last action"));
+	m_saveBmp = wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG);
+	m_exportBmp = wxBitmap(path_data::dataDir + _T("\\Images\\export.png"), wxBITMAP_TYPE_PNG);
 }
 
-void WorkoutDialog::SetupControls()
+void WorkoutWindow::SetupControls()
 {
 	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2, wxTextValidator(0, &m_workoutContent), _T("workouttxtctrl"));
 
@@ -113,21 +139,13 @@ void WorkoutDialog::SetupControls()
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
-void WorkoutDialog::SetupSizers()
+void WorkoutWindow::SetupSizers()
 {
 	// Initialization
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pTextActionSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 
 	this->SetSizerAndFit(m_pTopSizer);
-
-	// Align the bitmap buttons
-	m_pTextActionSizer->Add(m_pCut, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pTextActionSizer->Add(m_pCopy, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pTextActionSizer->Add(m_pPaste, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pTextActionSizer->Add(m_pUndo, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pTextActionSizer->Add(m_pRedo, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 
 	// Exit button sizer
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
@@ -136,34 +154,22 @@ void WorkoutDialog::SetupSizers()
 	// Add controls and elements to the top sizer
 	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Below, begin creating your workout:")), wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pTextActionSizer, wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
-void WorkoutDialog::BindEvents()
-{
-	m_pCut->Bind(wxEVT_BUTTON, &WorkoutDialog::OnCut, this);
-	m_pCopy->Bind(wxEVT_BUTTON, &WorkoutDialog::OnCopy, this);
-	m_pPaste->Bind(wxEVT_BUTTON, &WorkoutDialog::OnPaste, this);
-	m_pUndo->Bind(wxEVT_BUTTON, &WorkoutDialog::OnUndo, this);
-	m_pRedo->Bind(wxEVT_BUTTON, &WorkoutDialog::OnRedo, this);
-}
-
 // ========================== Events ==========================
 
-void WorkoutDialog::OnOK(wxCommandEvent& event)
+void WorkoutWindow::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
 		this->SaveToWorkoutList();
-
-		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
 }
 
-void WorkoutDialog::OnCancel(wxCommandEvent& event)
+void WorkoutWindow::OnCancel(wxCommandEvent& event)
 {
 	this->Destroy();
 }
@@ -171,32 +177,42 @@ void WorkoutDialog::OnCancel(wxCommandEvent& event)
 // text events
 // perform sanity checks on the text ctrl before performing any action
 
-void WorkoutDialog::OnCut(wxCommandEvent& event)
+void WorkoutWindow::OnCut(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanCut())
 		m_pTextCtrl->Cut();
 }
 
-void WorkoutDialog::OnCopy(wxCommandEvent& event)
+void WorkoutWindow::OnCopy(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanCopy())
 		m_pTextCtrl->Copy();
 }
 
-void WorkoutDialog::OnPaste(wxCommandEvent& event)
+void WorkoutWindow::OnPaste(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanPaste())
 		m_pTextCtrl->Paste();
 }
 
-void WorkoutDialog::OnUndo(wxCommandEvent& event)
+void WorkoutWindow::OnUndo(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanUndo())
 		m_pTextCtrl->Undo();
 }
 
-void WorkoutDialog::OnRedo(wxCommandEvent& event)
+void WorkoutWindow::OnRedo(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanRedo())
 		m_pTextCtrl->Redo();
+}
+
+void WorkoutWindow::OnSave(wxCommandEvent& event)
+{
+
+}
+
+void WorkoutWindow::OnExport(wxCommandEvent& event)
+{
+
 }
