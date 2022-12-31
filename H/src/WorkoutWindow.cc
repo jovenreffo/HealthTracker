@@ -18,6 +18,8 @@ WorkoutWindow::WorkoutWindow(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
 
 	m_pOk->Bind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
@@ -31,9 +33,21 @@ WorkoutWindow::~WorkoutWindow()
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
 
 	m_pOk->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
+}
+
+void WorkoutWindow::HandleExit()
+{
+	// Ensure data transfer completes successfully
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SaveToWorkoutList();
+		this->Show(false);
+	}
 }
 
 __forceinline void WorkoutWindow::AddToWorkoutList()
@@ -97,7 +111,11 @@ void WorkoutWindow::LoadConfig()
 
 void WorkoutWindow::SetupToolBar()
 {
+#ifdef __WXMSW__
 	m_pToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_TEXT | wxTB_FLAT);
+#else
+	m_pToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_TEXT);
+#endif
 
 	m_pToolBar->AddTool(wxID_CUT, _T("Cut"), m_cutBmp, _T("Cut selected text."));
 	m_pToolBar->AddTool(wxID_COPY, _T("Copy"), m_copyBmp, _T("Copy selected text."));
@@ -107,7 +125,7 @@ void WorkoutWindow::SetupToolBar()
 	m_pToolBar->AddTool(wxID_REDO, _T("Redo"), m_redoBmp, _T("Redo last action."));
 	m_pToolBar->AddSeparator();
 	m_pToolBar->AddTool(wxID_SAVE, _T("Save"), m_saveBmp, _T("Save to workouts."));
-	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout."));
+	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout as a text file."));
 
 	m_pToolBar->Realize();
 	this->SetToolBar(m_pToolBar);
@@ -162,11 +180,7 @@ void WorkoutWindow::SetupSizers()
 
 void WorkoutWindow::OnOK(wxCommandEvent& event)
 {
-	if (Validate() && TransferDataFromWindow())
-	{
-		this->SaveToWorkoutList();
-		this->Show(false);
-	}
+	this->HandleExit();
 }
 
 void WorkoutWindow::OnCancel(wxCommandEvent& event)
@@ -209,7 +223,7 @@ void WorkoutWindow::OnRedo(wxCommandEvent& event)
 
 void WorkoutWindow::OnSave(wxCommandEvent& event)
 {
-
+	this->HandleExit();
 }
 
 void WorkoutWindow::OnExport(wxCommandEvent& event)
