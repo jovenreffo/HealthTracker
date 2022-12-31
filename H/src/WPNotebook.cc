@@ -100,7 +100,7 @@ void WPNotebook::CreateNewRoutine()
 
 void WPNotebook::CreateNewWorkout()
 {
-	m_pWorkoutDialog = new WorkoutDialog(m_pWorkoutList, this, static_cast<int>(WP::ID_WORKOUT_DIALOG), _T("Create New Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pWorkoutDialog = new WorkoutWindow(m_pWorkoutList, this, static_cast<int>(WP::ID_WORKOUT_DIALOG), _T("Create New Workout"), wxDefaultPosition, wxDefaultSize);
 	m_pWorkoutDialog->Show(true);
 }
 

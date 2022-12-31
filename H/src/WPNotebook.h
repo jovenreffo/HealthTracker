@@ -14,7 +14,7 @@
 #include "WPLists.h"
 #include "DynamicPlan.h"
 #include "RoutineDialog.h"
-#include "WorkoutDialog.h"
+#include "WorkoutWindow.h"
 
 enum class WP
 {
@@ -38,7 +38,7 @@ private:
 
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
-	WorkoutDialog* m_pWorkoutDialog;
+	WorkoutWindow* m_pWorkoutDialog;
 	RoutineDialog* m_pRoutineDialog;
 
 	// Controls for planned workouts tab

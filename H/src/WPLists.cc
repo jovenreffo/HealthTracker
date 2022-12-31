@@ -1,7 +1,7 @@
 #include <wx/msgdlg.h>
 #include "WPLists.h"
 #include "StandardPath.hpp"
-#include "WorkoutDialog.h" // A circular dependency will occur if this is put in WPLists.h
+#include "WorkoutWindow.h" // A circular dependency will occur if this is put in WPLists.h
 
 // event table for WorkoutList
 BEGIN_EVENT_TABLE(WorkoutList, wxListView)
@@ -76,7 +76,7 @@ void WorkoutList::ResetList()
 
 void WorkoutList::OpenWorkout()
 {
-	WorkoutDialog* pWorkoutDlg = new WorkoutDialog(this, this, wxID_ANY);
+	WorkoutWindow* pWorkoutDlg = new WorkoutWindow(this, this, wxID_ANY);
 
 	// search the content array to see if an item exists with the currently selected name
 	try

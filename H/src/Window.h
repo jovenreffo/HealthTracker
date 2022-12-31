@@ -15,7 +15,7 @@
 #include "RoutineDialog.h"
 #include "PrefsDlg.h"
 #include "CaloriePanel.h"
-#include "WorkoutDialog.h"
+#include "WorkoutWindow.h"
 #include "MealPlanWindow.h"
 
 class App: public wxApp
@@ -64,7 +64,7 @@ private:
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;
 	EntryList* m_pEntryList;
-	WorkoutDialog* m_pWorkoutDialog;
+	WorkoutWindow* m_pWorkoutDialog;
 	RoutineDialog* m_pRoutineDialog;
 	CaloriePanel* m_pCaloriePanel;
 	MealPlanWindow* m_pMealPlanWindow;
@@ -79,7 +79,7 @@ public:
 	bool ConfirmReset();
 
 	// Getters
-	WorkoutDialog* GetWorkoutDialog() const { return m_pWorkoutDialog; }
+	WorkoutWindow* GetWorkoutDialog() const { return m_pWorkoutDialog; }
 
 	// Window setup
 	void Init();

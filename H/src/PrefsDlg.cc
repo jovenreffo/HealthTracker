@@ -10,7 +10,7 @@
 #include "PrefsDlg.h"
 #include "Font/Font.hpp"
 #include "Journal.h"
-#include "WorkoutDialog.h"
+#include "WorkoutWindow.h"
 #include "Window.h"
 
 namespace lang
