@@ -247,5 +247,12 @@ void WorkoutWindow::OnExport(wxCommandEvent& event)
 
 void WorkoutWindow::OnImport(wxCommandEvent& event)
 {
+	wxFileDialog* pOpenDialog = new wxFileDialog(this, _T("Open Text File"), wxEmptyString, wxEmptyString, _T("Text files (*.txt)|*.txt"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
+	if (pOpenDialog->ShowModal() == wxID_OK)
+	{
+		m_pTextCtrl->LoadFile(pOpenDialog->GetPath());
+	}
+
+	pOpenDialog->Destroy();
 }
