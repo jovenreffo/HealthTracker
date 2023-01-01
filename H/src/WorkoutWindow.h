@@ -13,6 +13,7 @@
 
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define WD_SIZE	 ( wxSize(525, 450) )
+#define WD_SIZE_MAX ( wxSize(650, 525) )
 
 class WorkoutWindow: public wxFrame
 {
@@ -25,6 +26,7 @@ private:
 	wxBitmap m_redoBmp;
 	wxBitmap m_saveBmp;
 	wxBitmap m_exportBmp;
+	wxBitmap m_importBmp;
 
 	// Controls
 	wxToolBar* m_pToolBar;
@@ -81,6 +83,7 @@ public:
 	void OnRedo(wxCommandEvent& event);
 	void OnSave(wxCommandEvent& event);
 	void OnExport(wxCommandEvent& event);
+	void OnImport(wxCommandEvent& event);
 };
 
 #endif

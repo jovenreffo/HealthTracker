@@ -1,6 +1,7 @@
 #include <wx/valtext.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
+#include <wx/filedlg.h>
 #include <wx/config.h>	
 #include "WorkoutWindow.h"
 #include "StandardPath.hpp"
@@ -20,6 +21,7 @@ WorkoutWindow::WorkoutWindow(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnImport, this, wxID_OPEN);
 
 	m_pOk->Bind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
@@ -35,6 +37,7 @@ WorkoutWindow::~WorkoutWindow()
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnImport, this, wxID_OPEN);
 
 	m_pOk->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
@@ -111,7 +114,7 @@ void WorkoutWindow::LoadConfig()
 
 void WorkoutWindow::SetupToolBar()
 {
-#ifdef __WXMSW__
+#ifdef __WXMSW__ // Only add the wxTB_FLAT style if the user has windows
 	m_pToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_TEXT | wxTB_FLAT);
 #else
 	m_pToolBar = new wxToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_TEXT);
@@ -126,6 +129,7 @@ void WorkoutWindow::SetupToolBar()
 	m_pToolBar->AddSeparator();
 	m_pToolBar->AddTool(wxID_SAVE, _T("Save"), m_saveBmp, _T("Save to workouts."));
 	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout as a text file."));
+	m_pToolBar->AddTool(wxID_OPEN, _T("Import"), m_importBmp, _T("Import a text file."));
 
 	m_pToolBar->Realize();
 	this->SetToolBar(m_pToolBar);
@@ -135,6 +139,7 @@ void WorkoutWindow::SetupWindowSizing()
 {
 	this->SetMinSize(WD_SIZE);
 	this->SetInitialSize(WD_SIZE);
+	this->SetMaxSize(WD_SIZE_MAX);
 }
 
 void WorkoutWindow::SetupImages()
@@ -147,11 +152,13 @@ void WorkoutWindow::SetupImages()
 	m_redoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\redo_small.png"), wxBITMAP_TYPE_PNG);
 	m_saveBmp = wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG);
 	m_exportBmp = wxBitmap(path_data::dataDir + _T("\\Images\\export.png"), wxBITMAP_TYPE_PNG);
+	m_importBmp = wxBitmap(path_data::dataDir + _T("\\Images\\import.png"), wxBITMAP_TYPE_PNG);
 }
 
 void WorkoutWindow::SetupControls()
 {
 	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2, wxTextValidator(0, &m_workoutContent), _T("workouttxtctrl"));
+	m_pTextCtrl->DragAcceptFiles(true);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -227,6 +234,18 @@ void WorkoutWindow::OnSave(wxCommandEvent& event)
 }
 
 void WorkoutWindow::OnExport(wxCommandEvent& event)
+{
+	wxFileDialog* pSaveFileDialog = new wxFileDialog(this, _T("Save Workout"), wxEmptyString, wxEmptyString, _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+	if (pSaveFileDialog->ShowModal() == wxID_OK)
+	{
+		m_pTextCtrl->SaveFile(pSaveFileDialog->GetPath());
+	}
+
+	pSaveFileDialog->Destroy();
+}
+
+void WorkoutWindow::OnImport(wxCommandEvent& event)
 {
 
 }
