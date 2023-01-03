@@ -21,16 +21,15 @@ class CalorieList;
 class CaloriePanel: public wxPanel
 {
 private:
-	DECLARE_EVENT_TABLE()
-
-private:
 	wxBoxSizer* m_pBoxSizer;
 	CalorieList* m_pCalorieList;
-	wxBitmapButton* m_pAddButton;
-	wxBitmap m_addBmp;
 
 	AddItemDlg* m_pAddItemDlg;
 
+	wxBitmapButton* m_pAddButton;
+	wxBitmapButton* m_pSaveButton;
+	wxBitmap m_addBmp;
+	wxBitmap m_saveBmp;
 
 public:
 	CaloriePanel(wxWindow* parent,
@@ -38,6 +37,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+	~CaloriePanel();
 
 	// Setup
 	void Init();
@@ -48,6 +48,7 @@ public:
 
 	// Events
 	void OnNewItem(wxCommandEvent& event);
+	void OnSaveInformation(wxCommandEvent& event);
 };
 
 class CalorieList: public wxListView
@@ -71,6 +72,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 
+	Total GetTotal() const { return m_total; }
 	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
 	void UpdateTotal();
 
