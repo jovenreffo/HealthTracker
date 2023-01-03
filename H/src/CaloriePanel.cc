@@ -1,13 +1,11 @@
 #include <wx/msgdlg.h>
+#include <wx/textfile.h>
+#include <wx/file.h>
+#include <wx/filedlg.h>
 #include <wx/string.h>
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
-
-// CaloriePanel event table
-BEGIN_EVENT_TABLE(CaloriePanel, wxPanel)
-	EVT_BUTTON(static_cast<int>(CP::ID_NEW_ITEM), CaloriePanel::OnNewItem)
-END_EVENT_TABLE()
 
 // CalorieList event table
 BEGIN_EVENT_TABLE(CalorieList, wxListView)
@@ -20,6 +18,17 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
 	this->Init();
+
+	// Bind events
+	m_pAddButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
+	m_pSaveButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
+}
+
+CaloriePanel::~CaloriePanel()
+{
+	// Unbind events
+	m_pAddButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
+	m_pSaveButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
 }
 
 void CaloriePanel::Init()
@@ -33,8 +42,13 @@ void CaloriePanel::SetupControls()
 	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
+	m_saveBmp = wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG);
+
 	m_pAddButton = new wxBitmapButton(this, static_cast<int>(CP::ID_NEW_ITEM), m_addBmp, wxDefaultPosition, wxDefaultSize);
 	m_pAddButton->SetToolTip(_T("Add a new nutritional item."));
+
+	m_pSaveButton = new wxBitmapButton(this, wxID_SAVE, m_saveBmp, wxDefaultPosition, wxDefaultSize);
+	m_pSaveButton->SetToolTip(_T("Save current information."));
 }
 
 void CaloriePanel::SetupSizers()
@@ -43,10 +57,11 @@ void CaloriePanel::SetupSizers()
 	this->SetSizerAndFit(m_pBoxSizer);
 
 	wxBoxSizer* m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pHorizontalSizer->Add(m_pAddButton, wxSizerFlags().Proportion(0).Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pAddButton, wxSizerFlags().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pSaveButton, wxSizerFlags().Border(wxALL, 5));
 
 	m_pBoxSizer->Add(m_pCalorieList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pBoxSizer->Add(m_pHorizontalSizer);
+	m_pBoxSizer->Add(m_pHorizontalSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
 void CaloriePanel::AddNewItem()
@@ -66,6 +81,43 @@ void CaloriePanel::AddNewItem()
 void CaloriePanel::OnNewItem(wxCommandEvent& event)
 {
 	this->AddNewItem();
+}
+
+void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
+{
+	wxString fileName, filePath;
+	wxFile textFile;
+	Total total = m_pCalorieList->GetTotal();
+
+	// Create a text file to write to by opening a file dialog
+	wxFileDialog* pOpenDialog = new wxFileDialog(this, _T("Save Nutrition Log"), wxEmptyString, _T("Nutrition.txt"), _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (pOpenDialog->ShowModal() == wxID_OK)
+	{
+		fileName = pOpenDialog->GetFilename();
+		filePath = pOpenDialog->GetPath();
+		textFile.Create(filePath);
+	}
+	else return;
+
+	// After the file has been created, check to see if it exists
+	if (!textFile.Exists(filePath))
+	{
+		wxLogError(_T("Failed to create text file: %s"), fileName);
+		return;
+	}
+	
+	// Write the nutritional contents to the text file
+	if (textFile.Open(filePath, wxFile::write))
+	{
+		textFile.Write(wxString("Total calories: ") << total.m_calTotal << '\n');
+		textFile.Write(wxString("Total carbohydrates: ") << total.m_carbTotal << '\n');
+		textFile.Write(wxString("Total protein: ") << total.m_proteinTotal << '\n');
+		textFile.Write(wxString("Total fibre: ") << total.m_fiberTotal << '\n');
+		textFile.Write(wxString("This nutrition sheet was generated ") << __DATE__ << " at [" << __TIME__ << "]\n");
+	}
+
+	textFile.Close();
+	pOpenDialog->Destroy();
 }
 
 // ======================== CalorieList class ========================
