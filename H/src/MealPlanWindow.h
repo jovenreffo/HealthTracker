@@ -12,6 +12,7 @@
 #include <wx/choice.h>
 #include <wx/dialog.h>
 #include <wx/button.h>
+#include <wx/checkbox.h>
 
 #include <vector>
 #include "MealList/MealList.h"
@@ -24,8 +25,8 @@
 #define AMD_SIZE ( wxSize(340, 250) )
 #define AMD_MAX_SIZE ( wxSize(390, 285) )
 
-#define SMPD_SIZE ( wxSize() )
-#define SMPD_MAX_SIZE ( wxSize() )
+#define SMPD_SIZE ( wxSize(280, 180) )
+#define SMPD_MAX_SIZE ( wxSize(320, 200) )
 
 enum MPW
 {
@@ -86,11 +87,17 @@ class SaveMealPlanDialog : public wxDialog
 private:
 	// Controls
 	wxTextCtrl* m_pPlanNameTxt;
+	wxCheckBox* m_pSetFeatured;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pHorizontalSizer;
+
 	// Validator
 	wxString m_planName;
+	bool m_bSetFeatured;
 
 public:
 	SaveMealPlanDialog(wxWindow* parent,
@@ -103,6 +110,7 @@ public:
 
 	// Setup
 	void Init();
+	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
 

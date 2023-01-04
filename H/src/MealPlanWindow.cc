@@ -126,34 +126,82 @@ SaveMealPlanDialog::SaveMealPlanDialog(wxWindow* parent, wxWindowID id, const wx
 	: wxDialog(parent, id, title, pos, size, style)
 {
 	this->Init();
+
+	// Event binding
+	m_pOk->Bind(wxEVT_BUTTON, &SaveMealPlanDialog::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &SaveMealPlanDialog::OnCancel, this);
 }
 
 SaveMealPlanDialog::~SaveMealPlanDialog()
 {
+	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &SaveMealPlanDialog::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &SaveMealPlanDialog::OnCancel, this);
 }
 
 void SaveMealPlanDialog::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void SaveMealPlanDialog::SetupSizing()
+{
+	this->SetMinSize(SMPD_SIZE);
+	this->SetInitialSize(SMPD_SIZE);
+	this->SetMaxSize(SMPD_MAX_SIZE);
 }
 
 void SaveMealPlanDialog::SetupControls()
 {
+	m_pPlanNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_planName));
+	m_pSetFeatured = new wxCheckBox(this, wxID_ANY, _T("Set as featured plan"), wxDefaultPosition, wxDefaultSize, 0, wxGenericValidator(&m_bSetFeatured));
 
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pCancel = new wxButton(this, wxID_OK, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
 }
 
 void SaveMealPlanDialog::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
 
+	// Align the plan name text control
+	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Plan name:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pPlanNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().Expand().Left().Border(wxALL, 5));
+
+	// Add the checkbox
+	m_pTopSizer->Add(m_pSetFeatured, wxSizerFlags().Left().Border(wxALL, 5));
+
+	// Re-initialize the sizer to hold the buttons
+	m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pHorizontalSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5)); // separator
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().Expand().Left().Border(wxALL, 5));
 }
 
 void SaveMealPlanDialog::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+			this->SetReturnCode(wxID_OK);
+			this->Show(false);
+		}
+	}
 }
 
 void SaveMealPlanDialog::OnCancel(wxCommandEvent& event)
 {
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 // ========================== AddMealDialog ==========================
@@ -259,7 +307,8 @@ void AddMealDialog::OnOK(wxCommandEvent& event)
 
 void AddMealDialog::OnCancel(wxCommandEvent& event)
 {
-	this->Destroy();
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 void AddMealDialog::OnUpdateOK(wxUpdateUIEvent& event)
