@@ -4,6 +4,7 @@
 #include <wx/translation.h>
 #include <wx/app.h>
 #include <wx/fontdlg.h>
+#include <wx/valgen.h>
 #include <wx/stattext.h>
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
@@ -30,7 +31,8 @@ enum class Prefs
 	ID_CHECK_FONT,
 	ID_SELECT_FONT,
 	ID_RESET_FONT,
-	ID_SPELL_CHECK
+	ID_SPELL_CHECK,
+	ID_INCLUDE_DT // include date and time in the generation of nutrition sheet
 };
 
 class GeneralPagePanel: public wxPanel
@@ -177,7 +179,7 @@ private:
 		m_faceName = m_defaultFont.GetFaceName();
 		this->SaveToConfig();
 		m_pJournalTxtCtrl->SetFont(m_defaultFont);
-		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_defaultFont.GetFaceName());
+		m_pWhatFont->SetLabel(wxString(_("Current font: Segoe UI")));
 
 		m_pCheckCustomFont->SetValue(0);
 		m_pSelectFont->Enable(false);
@@ -262,6 +264,10 @@ public:
 
 class AdvancedPagePanel: public wxPanel
 {
+private:
+	wxCheckBox* m_pIncludeDT;
+	bool m_bIncludeDT;
+
 public:
 	AdvancedPagePanel(wxWindow* parent)
 		: wxPanel(parent)
@@ -274,6 +280,10 @@ public:
 
 		wxStaticText* pResetConfigTxt = new wxStaticText(this, wxID_STATIC, _("Reset program configuration:"));
 		wxButton* pResetConfigBtn = new wxButton(this, wxID_ANY, _("Reset"));
+
+		m_pIncludeDT = new wxCheckBox(this, static_cast<int>(Prefs::ID_INCLUDE_DT), _T("Include date and time in nutrition sheet"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bIncludeDT));
+
+		// Event binding
 		pResetConfigBtn->Bind(wxEVT_BUTTON, &AdvancedPagePanel::OnResetConfig, this);
 
 		wxFlexGridSizer* pAdvancedSizer = new wxFlexGridSizer(2, wxSize(5, 1));
@@ -282,8 +292,18 @@ public:
 		pTopSizer->Add(pAdvancedSizer, wxSizerFlags().Expand());
 		pAdvancedSizer->Add(pResetConfigTxt, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 		pAdvancedSizer->Add(pResetConfigBtn, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+		pTopSizer->Add(m_pIncludeDT, wxSizerFlags().Left().Border(wxALL, 5));
+
+		this->LoadConfig();
+		this->Fit();
 	}
 
+	~AdvancedPagePanel()
+	{
+		this->SaveToConfig();
+	}
+
+private:
 	void OnResetConfig(wxCommandEvent& event)
 	{
 		wxConfigBase* pConfig = wxConfigBase::Get();
@@ -304,6 +324,33 @@ public:
 		{
 			wxLogError(_("Failed to delete program configuration."));
 		}
+	}
+
+	void LoadConfig()
+	{
+		wxConfigBase* pConfig = wxConfigBase::Get();
+		if (pConfig == nullptr)
+			return;
+
+		pConfig->SetPath(_("/Preferences"));
+
+		m_pIncludeDT->SetValue(pConfig->Read("IncludeDT", 0L));
+	}
+
+	void SaveToConfig()
+	{
+		wxConfigBase* pConfig = wxConfigBase::Get();
+		if (pConfig == nullptr)
+			return;
+
+		pConfig->SetPath(_("/Preferences"));
+
+		pConfig->Write("IncludeDT", m_pIncludeDT->GetValue());
+	}
+
+	virtual bool TransferDataToWindow() override
+	{
+		return true;
 	}
 };
 
