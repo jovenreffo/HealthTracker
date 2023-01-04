@@ -1,5 +1,6 @@
 #include <wx/msgdlg.h>
 #include <wx/textfile.h>
+#include <wx/config.h>
 #include <wx/file.h>
 #include <wx/filedlg.h>
 #include <wx/string.h>
@@ -113,7 +114,12 @@ void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
 		textFile.Write(wxString("Total carbohydrates: ") << total.m_carbTotal << '\n');
 		textFile.Write(wxString("Total protein: ") << total.m_proteinTotal << '\n');
 		textFile.Write(wxString("Total fibre: ") << total.m_fiberTotal << '\n');
-		textFile.Write(wxString("This nutrition sheet was generated ") << __DATE__ << " at [" << __TIME__ << "]\n");
+
+		// Include other information about the generated text file
+		if (wxConfigBase::Get()->Read("/Preferences/IncludeDT", 0L))
+		{
+			textFile.Write(wxString("This nutrition sheet was generated ") << __DATE__ << " at [" << __TIME__ << "]\n");
+		}
 	}
 
 	textFile.Close();
