@@ -8,9 +8,6 @@
 class MealList : public wxListView
 {
 private:
-	DECLARE_EVENT_TABLE()
-
-private:
 	wxImageList* m_pImageList;
 	wxBitmap m_mealBmp;
 
@@ -25,7 +22,7 @@ public:
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 	~MealList();
 
-	void AddItem();
+	void AddItem(const wxString& name);
 
 	// Setup
 	void Init();
@@ -36,7 +33,7 @@ public:
 	// Events
 	void OnItemRightClick(wxListEvent& event);
 	void OnColumnRightClick(wxListEvent& event);
+	void OnDeleteItem(wxCommandEvent& event);
 };
-
 
 #endif

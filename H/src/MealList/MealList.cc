@@ -1,4 +1,5 @@
 #include <wx/stdpaths.h>
+#include <wx/msgdlg.h>
 #include "MealList.h"
 
 MealList::MealList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -7,15 +8,22 @@ MealList::MealList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	this->Init();
 
 	// Bind events
-	m_pMenu->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
-	m_pColMenu->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
+	this->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	m_pMenu->Bind(wxEVT_MENU, &MealList::OnDeleteItem, this, wxID_DELETE);
 }
 
 MealList::~MealList()
 {
 	// Unbind events
-	m_pMenu->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
-	m_pColMenu->Unbind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
+	this->Unbind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	m_pMenu->Unbind(wxEVT_MENU, &MealList::OnDeleteItem, this, wxID_DELETE);
+}
+
+void MealList::AddItem(const wxString& name)
+{
+	this->InsertItem(0, name, 0);
 }
 
 void MealList::Init()
@@ -32,6 +40,7 @@ void MealList::SetupImageList()
 	m_mealBmp = wxBitmap(wxStandardPaths::Get().GetDataDir() + _T("\\Images\\meal_plan_small.png"), wxBITMAP_TYPE_PNG);
 	m_mealBmp.ResetAlpha();
 
+	m_pImageList->Add(m_mealBmp);
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
 
@@ -58,10 +67,16 @@ void MealList::SetupMenu()
 
 void MealList::OnItemRightClick(wxListEvent& event)
 {
-
+	this->PopupMenu(m_pMenu);
 }
 
 void MealList::OnColumnRightClick(wxListEvent& event)
 {
 
+}
+
+void MealList::OnDeleteItem(wxCommandEvent& event)
+{
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->DeleteItem(GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED));
 }
