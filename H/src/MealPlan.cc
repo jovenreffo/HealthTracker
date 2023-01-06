@@ -6,11 +6,6 @@ BEGIN_EVENT_TABLE(MealPlan, wxSplitterWindow)
 	EVT_BUTTON(static_cast<int>(MP::ID_ADD_PLAN), MealPlan::OnAddMealPlan)
 END_EVENT_TABLE()
 
-// MealList evt table
-BEGIN_EVENT_TABLE(MealList, wxListView)
-
-END_EVENT_TABLE()
-
 // ================== MealPlan ==================
 
 MealPlan::MealPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
