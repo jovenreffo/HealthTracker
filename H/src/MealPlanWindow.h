@@ -108,6 +108,9 @@ public:
 		long style = DLG_STYLE);
 	~SaveMealPlanDialog();
 
+	const wxString& GetPlanName() const { return m_planName; }
+	bool GetFeaturedState() const { return m_bSetFeatured; }
+
 	// Setup
 	void Init();
 	void SetupSizing();

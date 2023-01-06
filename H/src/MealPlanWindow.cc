@@ -118,6 +118,11 @@ void MealPlanWindow::OnSavePlan(wxCommandEvent& event)
 {
 	m_pSavePlanDlg = new SaveMealPlanDialog(this, static_cast<int>(MPW::ID_SAVE_PLAN));
 	m_pSavePlanDlg->Show(true);
+
+	if (m_pSavePlanDlg->ShowModal() == wxID_OK)
+	{
+		m_pMealList->AddItem(m_pSavePlanDlg->GetPlanName());
+	}
 }
 
 // ========================== SaveMealPlanDialog ==========================
@@ -328,7 +333,7 @@ MealDayList::MealDayList(const wxString& list_title, wxWindow* parent, wxWindowI
 
 	// Bind events
 	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealDayList::OnRightClickItem, this);
-	this->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &MealDayList::OnRightClickColumn, this);//
+	this->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &MealDayList::OnRightClickColumn, this);
 	m_pMenu->Bind(wxEVT_MENU, &MealDayList::OnDeleteItem, this, wxID_DELETE);
 	m_pMenu->Bind(wxEVT_MENU, &MealDayList::OnViewItem, this, wxID_VIEW_DETAILS);
 	m_pColMenu->Bind(wxEVT_MENU, &MealDayList::OnResetList, this, wxID_RESET);
