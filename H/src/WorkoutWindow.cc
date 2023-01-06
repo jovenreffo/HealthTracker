@@ -131,6 +131,7 @@ void WorkoutWindow::SetupToolBar()
 	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout as a text file."));
 	m_pToolBar->AddTool(wxID_OPEN, _T("Import"), m_importBmp, _T("Import a text file."));
 
+	m_pToolBar->SetToolPacking(15);
 	m_pToolBar->Realize();
 	this->SetToolBar(m_pToolBar);
 }
@@ -252,6 +253,7 @@ void WorkoutWindow::OnImport(wxCommandEvent& event)
 	if (pOpenDialog->ShowModal() == wxID_OK)
 	{
 		m_pTextCtrl->LoadFile(pOpenDialog->GetPath());
+		this->SetTitle(wxString("Create New Workout - ") << pOpenDialog->GetFilename());
 	}
 
 	pOpenDialog->Destroy();
