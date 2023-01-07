@@ -6,6 +6,8 @@
 #include <wx/stattext.h>
 #include <wx/listctrl.h>
 #include <wx/button.h>
+
+#include "aui_includes/aui_includes.h"
 #include "EntryList.h"
 #include "EntryDialog.h"
 #include "EntryPair.h"
@@ -42,12 +44,18 @@ private:
 	wxButton* m_pSaveButton;
 	wxButton* m_pExportButton;
 
+	// AUI
+	wxAuiManager m_auiMgr;
+	wxPanel* m_pTextPanel; // this panel will contain the date, textctrl, and buttons
+	wxPanel* m_pEntryPanel; // contains the entry list and m_pPrevEntryText
+
 public:
 	Journal(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+	~Journal();
 
 	wxString GetDate();
 	EntryList* GetEntryList() const { return m_pEntryList; }
@@ -57,6 +65,7 @@ public:
 	void LoadConfig();
 	void SetupControls();
 	void SetupSizers();
+	void SetupAUI();
 
 	// Events
 	void OnSaveToEntries(wxCommandEvent& event);
