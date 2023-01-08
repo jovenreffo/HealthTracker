@@ -1,5 +1,5 @@
-#ifndef _ENTRYLIST_H_
-#define _ENTRYLIST_H_
+#ifndef ENTRYLIST_H
+#define ENTRYLIST_H
 
 #include <wx/listctrl.h>
 #include <wx/imaglist.h>
@@ -64,6 +64,7 @@ public:
 	void SetupList();
 
 	void ResetList();
+	void HandleDeleteItem();
 
 	// Events
 	void OnRightClick(wxListEvent& event);
@@ -71,6 +72,7 @@ public:
 	void OnItemSelected(wxListEvent& event);
 	void OnOpenEntry(wxCommandEvent& event);
 	void OnRemoveEntry(wxCommandEvent& event);
+	void OnKey(wxKeyEvent& event);
 };
 
 #endif

@@ -144,7 +144,6 @@ void Journal::SetupAUI()
 
 	// update the aui and commit changes
 	m_auiMgr.Update();
-	m_pTextCtrl->WriteText(m_auiMgr.SavePerspective());
 }
 
 // Events

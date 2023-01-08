@@ -8,6 +8,7 @@ BEGIN_EVENT_TABLE(EntryList, wxListView)
 	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, EntryList::OnDoubleClick)
 	EVT_MENU(wxID_DELETE, EntryList::OnRemoveEntry)
 	EVT_MENU(wxID_OPEN, EntryList::OnOpenEntry)
+	EVT_KEY_DOWN(EntryList::OnKey)
 END_EVENT_TABLE()
 
 EntryList::EntryList(wxTextCtrl* pTextCtrl, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -71,6 +72,12 @@ void EntryList::ResetList()
 	this->DeleteAllItems();
 }
 
+void EntryList::HandleDeleteItem()
+{
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
+		this->DeleteItem(m_selectionIndex);
+}
+
 // Events
 
 void EntryList::OnRightClick(wxListEvent& event)
@@ -96,6 +103,19 @@ void EntryList::OnOpenEntry(wxCommandEvent& event)
 
 void EntryList::OnRemoveEntry(wxCommandEvent& event)
 {
-	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
-		this->DeleteItem(m_selectionIndex);
+	this->HandleDeleteItem();
+}
+
+void EntryList::OnKey(wxKeyEvent& event)
+{
+	switch (event.GetUnicodeKey())
+	{
+	case WXK_DELETE:
+		this->HandleDeleteItem();
+		break;
+	default:
+		break;
+	}
+
+	event.Skip();
 }
