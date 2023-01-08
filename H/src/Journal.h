@@ -1,5 +1,5 @@
-#ifndef _JOURNAL_H_
-#define _JOURNAL_H_
+#ifndef JOURNAL_H
+#define JOURNAL_H
 
 #include <wx/panel.h>
 #include <wx/sizer.h>
