@@ -121,7 +121,7 @@ void Journal::SetupAUI()
 
 	// add the panels to the AUI controller
 	m_auiMgr.AddPane(m_pTextPanel, wxAuiPaneInfo().Centre().Resizable(true).MinSize(wxSize(200, -1)).CloseButton(false).CaptionVisible(false));
-	m_auiMgr.AddPane(m_pEntryPanel, wxAuiPaneInfo().Bottom().Resizable(true).MinSize(wxSize(200, 200)).CloseButton(false).CaptionVisible(false).Gripper(true).GripperTop(true));
+	m_auiMgr.AddPane(m_pEntryPanel, wxAuiPaneInfo().Bottom().Resizable(true).MinSize(wxSize(200, 200)).CloseButton(false));
 
 	// update the aui and commit changes
 	m_auiMgr.Update();
