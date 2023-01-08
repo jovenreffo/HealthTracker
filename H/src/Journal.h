@@ -46,7 +46,7 @@ private:
 
 	// AUI
 	wxAuiManager m_auiMgr;
-	wxString m_perspective;
+	wxString m_perspective; wxString m_defPerspective;
 	wxPanel* m_pTextPanel; // this panel will contain the date, textctrl, and buttons
 	wxPanel* m_pEntryPanel; // contains the entry list and m_pPrevEntryText
 
@@ -62,13 +62,12 @@ public:
 	EntryList* GetEntryList() const { return m_pEntryList; }
 
 	// Panel setup
-	void Init();
 	void LoadConfig();
+	void UpdateConfig();
+	void Init();
 	void SetupControls();
 	void SetupSizers();
 	void SetupAUI();
-
-	void UpdateConfig();
 
 	// Events
 	void OnSaveToEntries(wxCommandEvent& event);

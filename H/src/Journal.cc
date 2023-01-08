@@ -19,6 +19,7 @@ Journal::Journal(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 
 Journal::~Journal()
 {
+	this->UpdateConfig();
 	m_auiMgr.UnInit();
 }
 
@@ -42,7 +43,7 @@ void Journal::LoadConfig()
 	if (pConfig == nullptr)
 		return;
 
-	pConfig->SetPath("/Preferences");
+	pConfig->SetPath(_T("/Preferences/"));
 
 	// Check if the spellcheck option is active from the preferences panel and enable it on the local text ctrl
 	if (pConfig->Read("Spellcheck", 0L) == 1L)
@@ -60,6 +61,24 @@ void Journal::LoadConfig()
 			pConfig->Read("FaceName", "")
 		));
 	}
+
+	// Load the window perspective
+	pConfig->SetPath(_T("/Journal/"));
+	m_defPerspective = _T("layout2|name=TextPane;caption=;state=1020;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=0;minw=200;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=EntryPane;caption=;state=2044;dir=3;layer=0;row=0;pos=0;prop=100000;bestw=200;besth=200;minw=200;minh=200;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(5,0,0)=202|dock_size(3,0,0)=219|");
+	m_auiMgr.LoadPerspective(pConfig->Read(_T("Perspective"), m_defPerspective), true);
+}
+
+void Journal::UpdateConfig()
+{
+	// Update the program config using SavePerspective
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/Journal/"));
+
+	m_perspective = m_auiMgr.SavePerspective();
+	pConfig->Write(_T("Perspective"), m_perspective);
 }
 
 void Journal::SetupControls()
@@ -120,11 +139,12 @@ void Journal::SetupAUI()
 	m_auiMgr.SetManagedWindow(this);
 
 	// add the panels to the AUI controller
-	m_auiMgr.AddPane(m_pTextPanel, wxAuiPaneInfo().Centre().Resizable(true).MinSize(wxSize(200, -1)).CloseButton(false).CaptionVisible(false));
-	m_auiMgr.AddPane(m_pEntryPanel, wxAuiPaneInfo().Bottom().Resizable(true).MinSize(wxSize(200, 200)).CloseButton(false));
+	m_auiMgr.AddPane(m_pTextPanel, wxAuiPaneInfo().Centre().Resizable(true).MinSize(wxSize(200, -1)).CloseButton(false).CaptionVisible(false).Name(_T("TextPane")));
+	m_auiMgr.AddPane(m_pEntryPanel, wxAuiPaneInfo().Bottom().Resizable(true).MinSize(wxSize(200, 200)).CloseButton(false).Name(_T("EntryPane")));
 
 	// update the aui and commit changes
 	m_auiMgr.Update();
+	m_pTextCtrl->WriteText(m_auiMgr.SavePerspective());
 }
 
 // Events
