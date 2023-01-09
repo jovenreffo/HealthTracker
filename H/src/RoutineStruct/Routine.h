@@ -8,9 +8,7 @@
 
 struct Routine
 {
-	std::pair<int, wxString> m_pairs[CL_SIZE];
-
-	const wxString& GetStringAt(int index) const { return m_pairs[index].second; }
+	
 };
 
 #endif

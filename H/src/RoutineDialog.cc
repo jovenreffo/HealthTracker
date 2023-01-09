@@ -92,16 +92,7 @@ void RoutineDialog::CreateControls()
 
 void RoutineDialog::HandleExit()
 {
-	Routine r;
-	for (auto i{ 0 }; i < CL_SIZE; ++i)
-	{
-		// store the selected workout at index i in the current routine
-		r.m_pairs[i] = { i, m_pChoice[i]->GetStringSelection() };
-		m_routineInfo.push_back(r);
-	}
-
-	// get the value the user input to the text ctrl
-	m_pRoutineList->AddItem(m_routineName, r);
+	
 }
 
 // events

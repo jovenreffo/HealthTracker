@@ -36,8 +36,6 @@ private:
 	wxChoice* m_pChoice[CL_SIZE];
 	std::vector<Routine> m_routineInfo;
 
-	RoutineView* m_pRoutineView;
-
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 

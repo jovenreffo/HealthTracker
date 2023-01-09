@@ -64,7 +64,7 @@ private:
 	std::vector<EntryContent> m_content;
 
 	std::vector<Routine> m_routineInfo;
-	RoutineView* m_pRoutineView;
+
 	
 	wxImageList* m_pImageList;
 	wxBitmap m_routineBmp;
