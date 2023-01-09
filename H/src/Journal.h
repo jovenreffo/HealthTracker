@@ -61,6 +61,8 @@ public:
 	wxString GetDate();
 	EntryList* GetEntryList() const { return m_pEntryList; }
 
+	void ResetPerspective();
+
 	// Panel setup
 	void LoadConfig();
 	void UpdateConfig();

@@ -30,6 +30,15 @@ wxString Journal::GetDate()
 	return dt.FormatDate();
 }
 
+void Journal::ResetPerspective()
+{
+	if (m_defPerspective == wxEmptyString)
+		return;
+
+	// Update the AUI
+	m_auiMgr.LoadPerspective(m_defPerspective, true);
+}
+
 void Journal::Init()
 {
 	this->SetupControls();
