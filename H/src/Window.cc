@@ -13,6 +13,7 @@ BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
 	EVT_MENU(ID_RESET_WORKOUTS, Frame::OnResetWorkouts)
 	EVT_MENU(ID_RESET_ROUTINES, Frame::OnResetRoutines)
+	EVT_MENU(ID_RESET_LAYOUT, Frame::OnResetWindowLayout)
 	// add events
 	EVT_MENU(ID_ADD_WORKOUT, Frame::OnAddWorkout)
 	EVT_MENU(ID_ADD_ROUTINE, Frame::OnAddRoutine)
@@ -124,6 +125,7 @@ void Frame::SetupMenuBar()
 
 	// View menu
 	m_pViewMenu->Append(ID_ENABLE_FULLSCREEN, _T("&Toggle Fullscreen\tF11"));
+	m_pViewMenu->Append(ID_RESET_LAYOUT, _T("&Reset Window Layout\tCtrl+W+R"));
 
 	// Help menu
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
@@ -213,6 +215,12 @@ void Frame::OnResetRoutines(wxCommandEvent& WXUNUSED(event))
 {
 	if (ConfirmReset())
 		m_pRoutineList->DeleteAllItems();
+}
+
+void Frame::OnResetWindowLayout(wxCommandEvent& WXUNUSED(event))
+{
+	Journal* pJournal = m_pListbook->GetJournal();
+	pJournal->ResetPerspective();
 }
 
 void Frame::OnAddWorkout(wxCommandEvent& WXUNUSED(event))

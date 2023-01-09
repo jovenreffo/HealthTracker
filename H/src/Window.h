@@ -38,7 +38,8 @@ enum
 	ID_ADD_ROUTINE,
 	ID_ADD_NUTRITION_ITEM,
 	ID_ADD_MEALPLAN,
-	ID_PREFERENCES
+	ID_PREFERENCES,
+	ID_RESET_LAYOUT
 };
 
 class Frame: public wxFrame
@@ -71,7 +72,6 @@ private:
 	MealPlanWindow* m_pMealPlanWindow;
 
 	wxConfigBase* m_pConfig;
-	wxTextCtrl* m_pJournalTxtCtrl;
 	
 public:
 	Frame();
@@ -103,6 +103,7 @@ public:
 	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
 	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
 	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
+	void OnResetWindowLayout(wxCommandEvent& WXUNUSED(event));
 	// add events
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
