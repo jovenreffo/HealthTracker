@@ -5,7 +5,21 @@
 #include <wx/button.h>
 #include "aui_includes/aui_includes.h"
 
-// Define a class that inherits from wxPanel, is a certain-sized, rectangle, and holds exercise information for tracking on the fly
+#define LEP_SIZE (wxSize(125, 250))
+
+class LoadedExercisePanel : public wxPanel
+{
+private:
+	wxString m_exerciseName;
+
+public:
+	LoadedExercisePanel(const wxString& exerciseName,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = LEP_SIZE,
+		long style = 0L);
+};
 
 class DynamicPlan : public wxPanel
 {
