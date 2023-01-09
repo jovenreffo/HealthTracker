@@ -1,14 +1,16 @@
-#ifndef _DYNAMICPLAN_H_
-#define _DYNAMICPLAN_H_
+#ifndef DYNAMICPLAN_H
+#define DYNAMICPLAN_H
 
 #include <wx/panel.h>
+#include <wx/button.h>
+#include "aui_includes/aui_includes.h"
+
+// Define a class that inherits from wxPanel, is a certain-sized, rectangle, and holds exercise information for tracking on the fly
 
 class DynamicPlan : public wxPanel
 {
 private:
-	DECLARE_EVENT_TABLE()
-
-private:
+	wxAuiManager m_auiMgr;
 
 public:
 	DynamicPlan(wxWindow* parent,
