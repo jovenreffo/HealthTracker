@@ -59,4 +59,14 @@ public:
 	void OnAddMealPlan(wxCommandEvent& event);
 };
 
+class FeaturedList : public wxListView
+{
+public:
+	FeaturedList(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+};
+
 #endif
