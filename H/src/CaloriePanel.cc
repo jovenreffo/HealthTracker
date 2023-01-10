@@ -132,6 +132,13 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 	: wxListView(parent, id, pos, size, style), m_pCaloriePanel{ pCaloriePanel }
 {
 	this->Init();
+
+	this->Bind(wxEVT_KEY_DOWN, &CalorieList::OnKey, this);
+}
+
+CalorieList::~CalorieList()
+{
+	this->Unbind(wxEVT_KEY_DOWN, &CalorieList::OnKey, this);
 }
 
 void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
@@ -165,6 +172,18 @@ void CalorieList::UpdateTotal()
 	this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
 	this->SetItem(0, 3, std::to_string(m_total.m_proteinTotal));
 	this->SetItem(0, 4, std::to_string(m_total.m_fiberTotal));
+}
+
+void CalorieList::HandleDeleteItem()
+{
+	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+	// Test if the selected item index is greater than 0 because we don't want to delete the total
+	if (selected > 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	{
+		this->DeleteItem(selected);
+		this->UpdateTotal();
+	}
 }
 
 void CalorieList::Init()
@@ -225,12 +244,20 @@ void CalorieList::OnDoubleClick(wxListEvent& event)
 
 void CalorieList::OnDeleteItem(wxCommandEvent& event)
 {
-	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	this->HandleDeleteItem();
+}
 
-	// Test if the selected item index is greater than 0 because we don't want to delete the total
-	if (selected > 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+void CalorieList::OnKey(wxKeyEvent& event)
+{
+	switch (event.GetUnicodeKey())
 	{
-		this->DeleteItem(selected);
-		this->UpdateTotal();
+	case WXK_DELETE:
+		this->HandleDeleteItem();
+		break;
+
+	default:
+		break;
 	}
+
+	event.Skip();
 }

@@ -71,10 +71,12 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+	~CalorieList();
 
 	Total GetTotal() const { return m_total; }
 	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
 	void UpdateTotal();
+	void HandleDeleteItem();
 
 	// Setup
 	void Init();
@@ -87,6 +89,7 @@ public:
 	void OnRightClick(wxListEvent& event);
 	void OnDoubleClick(wxListEvent& event);
 	void OnDeleteItem(wxCommandEvent& event);
+	void OnKey(wxKeyEvent& event);
 };
 
 #endif
