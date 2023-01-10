@@ -9,6 +9,7 @@ LoadedExercisePanel::LoadedExercisePanel(const wxString& exerciseName, wxWindow*
 // DynamicPlan
 
 DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel{ parent, id, pos, size, style }
+	: wxScrolled<wxPanel>(parent, id, pos, size, style, _T("DynamicPlanWin"))
 {
+	this->SetScrollRate(10, 10);
 }

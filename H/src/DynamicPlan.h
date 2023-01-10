@@ -3,6 +3,7 @@
 
 #include <wx/panel.h>
 #include <wx/button.h>
+#include <wx/scrolwin.h>
 #include "aui_includes/aui_includes.h"
 
 #define LEP_SIZE (wxSize(125, 250))
@@ -21,7 +22,7 @@ public:
 		long style = 0L);
 };
 
-class DynamicPlan : public wxPanel
+class DynamicPlan : public wxScrolled<wxPanel>
 {
 private:
 	wxAuiManager m_auiMgr;
@@ -31,7 +32,7 @@ public:
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
-		long style = 0L);
+		long style = wxVSCROLL | wxALWAYS_SHOW_SB);
 };
 
 #endif
