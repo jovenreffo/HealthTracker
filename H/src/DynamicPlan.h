@@ -4,7 +4,6 @@
 #include <wx/panel.h>
 #include <wx/button.h>
 #include <wx/sizer.h>
-#include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 #include <wx/button.h>
 #include <wx/bitmap.h>
@@ -12,6 +11,15 @@
 #include "aui_includes/aui_includes.h"
 
 #define LEP_SIZE (wxSize(125, 250))
+
+enum class CEP
+{
+	ID_REPS_SPINCTRL,
+	ID_ADD_REPS,
+	ID_REP_COUNTER
+};
+
+class CounterList;
 
 class CustomExercisePanel : public wxPanel
 {
@@ -26,7 +34,10 @@ private:
 	// Controls
 	wxSpinCtrl* m_pSpinCtrl;
 	wxButton* m_pAddButton;
-	wxListCtrl* m_pCounterList;
+	CounterList* m_pCounterList;
+
+	// Validator
+	int m_repCount;
 
 public:
 	CustomExercisePanel(const wxString& exerciseName,
@@ -43,12 +54,15 @@ public:
 	void SetupSizers();
 
 	// Events
+	void OnAddReps(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 class DynamicPlan : public wxScrolled<wxPanel>
 {
 private:
 	wxAuiManager m_auiMgr;
+	CustomExercisePanel* m_pCustomExercisePanel;
 
 public:
 	DynamicPlan(wxWindow* parent,
@@ -56,6 +70,12 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxVSCROLL | wxALWAYS_SHOW_SB);
+
+	// Setup
+	void Init();
+
+	// Events
+
 };
 
 #endif
