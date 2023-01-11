@@ -1,4 +1,5 @@
 #include <wx/valgen.h>
+#include <wx/stattext.h>
 #include <wx/listctrl.h>
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
@@ -42,7 +43,6 @@ CustomExercisePanel::CustomExercisePanel(const wxString& exerciseName, wxWindow*
 	: wxPanel(parent, id, pos, size, style), m_exerciseName{ exerciseName }
 {
 	this->Init();
-	//this->SetBackgroundColour(*wxRED);
 
 	// Event binding
 	m_pAddButton->Bind(wxEVT_BUTTON, &CustomExercisePanel::OnAddReps, this);
@@ -76,6 +76,7 @@ void CustomExercisePanel::SetupControls()
 
 void CustomExercisePanel::SetupSizers()
 {
+	m_pControlSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pTopSizer = new wxStaticBoxSizer(wxVERTICAL, this, m_exerciseName);
 	m_pTopParent = m_pTopSizer->GetStaticBox();
 	this->SetSizerAndFit(m_pTopSizer);
@@ -84,7 +85,13 @@ void CustomExercisePanel::SetupSizers()
 	this->SetupControls();
 
 	// Arrange the controls on the sizers
+	m_pTopSizer->Add(m_pCounterList, wxSizerFlags().Proportion(1).Expand().Left().Border(wxALL, 5));
 
+	// Control sizer
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Reps:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pSpinCtrl, wxSizerFlags().Left().Border(wxALL, 5).Proportion(1));
+	m_pControlSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().Left().Border(wxALL, 5));
 }
 
 // events
