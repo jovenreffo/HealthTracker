@@ -6,6 +6,7 @@
 #include <wx/sizer.h>
 #include <wx/spinctrl.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/bitmap.h>
 #include <wx/scrolwin.h>
 #include "aui_includes/aui_includes.h"
@@ -27,13 +28,13 @@ private:
 	wxString m_exerciseName;
 
 	// Sizers
-	wxBoxSizer* m_pControlSizer;
+	wxFlexGridSizer* m_pControlSizer;
 	wxStaticBoxSizer* m_pTopSizer;
 	wxStaticBox* m_pTopParent;
 
 	// Controls
 	wxSpinCtrl* m_pSpinCtrl;
-	wxButton* m_pAddButton;
+	wxBitmapButton* m_pAddButton;
 	CounterList* m_pCounterList;
 
 	// Validator
