@@ -73,7 +73,6 @@ void CaloriePanel::AddNewItem()
 	if (m_pAddItemDlg->ShowModal() == wxID_OK)
 	{
 		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(), m_pAddItemDlg);
-		m_pCalorieList->UpdateTotal();
 	}
 }
 
@@ -152,6 +151,8 @@ void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
 	this->SetItem(1, 2, std::to_string(pAddItemDlg->GetCarbContent()));
 	this->SetItem(1, 3, std::to_string(pAddItemDlg->GetProteinContent()));
 	this->SetItem(1, 4, std::to_string(pAddItemDlg->GetFiberContent()));
+
+	this->UpdateTotal();
 }
 
 void CalorieList::UpdateTotal()
