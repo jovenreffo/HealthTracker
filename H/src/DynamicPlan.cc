@@ -1,4 +1,5 @@
 #include <wx/valgen.h>
+#include <wx/msgdlg.h>
 #include <wx/stattext.h>
 #include <wx/listctrl.h>
 #include "DynamicPlan.h"
@@ -6,6 +7,9 @@
 
 class CounterList : public wxListView
 {
+private:
+	long m_total;
+
 public:
 	CounterList(wxWindow* parent,
 		wxWindowID id,
@@ -19,7 +23,7 @@ public:
 
 	void Init()
 	{
-		this->InsertColumn(0, _T("Repetitions"));
+		this->InsertColumn(0, _T("Repetitions"), 0, 100);
 		this->SetupTotalItem();
 	}
 
@@ -35,8 +39,31 @@ public:
 		* In order to have the total "pinned" at the top, items will be inserted at index 1 in the list.
 		* The rep spin ctrl also has an int validator, so it must be converted to a string.
 		*/
+		//if (!count)
+		//	wxMessageBox
+
 		this->InsertItem(1, std::to_string(count));
+		this->UpdateTotal();
 	}
+
+	void UpdateTotal()
+	{
+		/*
+		* Also similar to the CalorieList class, begin index 1 in calculating the total, because we do not want to include the total itself.
+		* Here, also start by resetting the current contents of the total.
+		* Lastly, call SetItem(index, col, str) at index 0 col 0 to update the total
+		*/
+		m_total = 0L;
+
+		for (auto i{ 1 }; i < this->GetItemCount(); ++i)
+		{
+			m_total += wxAtoi(this->GetItemText(i, 0));
+		}
+
+		this->SetItem(0, 0, wxString(_T("Total: ")) << std::to_string(m_total));
+	}
+
+	long GetTotal() const { return m_total; }
 };
 
 CustomExercisePanel::CustomExercisePanel(const wxString& exerciseName, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -67,8 +94,8 @@ void CustomExercisePanel::SetupControls()
 		wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS | wxTE_PROCESS_ENTER, 0, 1000, 0, _T("RepetitionSpinCtrl"));
 	m_pSpinCtrl->SetValidator(wxGenericValidator(&m_repCount));
 
-	m_pAddButton = new wxButton(this, static_cast<int>(CEP::ID_ADD_REPS), _T("Add Reps"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-	m_pAddButton->SetBitmap(wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG));
+	m_pAddButton = new wxBitmapButton(this, static_cast<int>(CEP::ID_ADD_REPS), wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG),
+		wxDefaultPosition, wxDefaultSize);
 
 	m_pCounterList = new CounterList(this, static_cast<int>(CEP::ID_REP_COUNTER), wxDefaultPosition, wxDefaultSize);
 	m_pCounterList->Show(true);
@@ -76,7 +103,7 @@ void CustomExercisePanel::SetupControls()
 
 void CustomExercisePanel::SetupSizers()
 {
-	m_pControlSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pControlSizer = new wxFlexGridSizer(3, wxSize(5, 1));
 	m_pTopSizer = new wxStaticBoxSizer(wxVERTICAL, this, m_exerciseName);
 	m_pTopParent = m_pTopSizer->GetStaticBox();
 	this->SetSizerAndFit(m_pTopSizer);
@@ -101,6 +128,7 @@ void CustomExercisePanel::OnAddReps(wxCommandEvent& event)
 #ifdef _DEBUG
 	wxLogMessage(_T("Add button pressed."));
 #endif
+	m_pCounterList->AddReps(m_pSpinCtrl->GetValue());
 }
 
 void CustomExercisePanel::OnEnter(wxCommandEvent& event)
