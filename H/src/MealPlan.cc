@@ -52,7 +52,7 @@ void MealPlan::SetupControls()
 
 	// Lists
 	m_pMealList = new MealList(m_pPlansPanel, static_cast<int>(MP::ID_MEAL_LIST), wxDefaultPosition, wxDefaultSize);
-	m_pFeaturedList = new wxListView(m_pFeaturedPanel, static_cast<int>(MP::ID_FEATURED_LIST), wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
+	m_pFeaturedList = new FeaturedList(m_pFeaturedPanel, static_cast<int>(MP::ID_FEATURED_LIST), wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 }
 
 void MealPlan::SetupSizers()
@@ -77,4 +77,37 @@ void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 {
 	m_pMealPlanWin = new MealPlanWindow(m_pMealList, this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
 	m_pMealPlanWin->Show(true);
+}
+
+// ================== FeaturedList ==================
+
+FeaturedList::FeaturedList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style)
+{
+	this->Init();
+}
+
+void FeaturedList::Init()
+{
+	this->SetupColumns();
+}
+
+void FeaturedList::SetupColumns()
+{
+	// Append days of week to a string array
+	m_daysOfWeek.Add(_T("Sunday"));
+	m_daysOfWeek.Add(_T("Monday"));
+	m_daysOfWeek.Add(_T("Tuesday"));
+	m_daysOfWeek.Add(_T("Wednesday"));
+	m_daysOfWeek.Add(_T("Thursday"));
+	m_daysOfWeek.Add(_T("Friday")); 
+	m_daysOfWeek.Add(_T("Saturday"));
+
+	// Loop through the strings add columns
+	for (auto i{ 0 }; i < m_daysOfWeek.size(); ++i)
+	{
+		this->AppendColumn(m_daysOfWeek[i]);
+	}
+
+	this->FitInside();
 }

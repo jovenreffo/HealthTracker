@@ -19,6 +19,8 @@ enum class MP
 	ID_CHANGE_FEATURED_LIST
 };
 
+class FeaturedList;
+
 class MealPlan : public wxSplitterWindow
 {
 private:
@@ -29,7 +31,7 @@ private:
 	wxButton* m_pAddMeal; wxBitmap m_addBmp;
 	wxButton* m_pChangeFeatured; wxBitmap m_changeBmp;
 	MealList* m_pMealList;
-	wxListView* m_pFeaturedList;
+	FeaturedList* m_pFeaturedList;
 
 	MealPlanWindow* m_pMealPlanWin;
 	
@@ -61,12 +63,21 @@ public:
 
 class FeaturedList : public wxListView
 {
+private:
+	wxArrayString m_daysOfWeek;
+
 public:
 	FeaturedList(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+
+	// Setup
+	void Init();
+	void SetupColumns();
+
+	// Events
 };
 
 #endif
