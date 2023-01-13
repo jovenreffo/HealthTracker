@@ -185,9 +185,9 @@ DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	m_pCustomExercisePanel = new CustomExercisePanel(_T("Pullups"), this, wxID_ANY);
 	m_pCustomExercisePanel->Show(true);
 
-	wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
-	this->SetSizerAndFit(pTopSizer);
-	pTopSizer->Add(m_pCustomExercisePanel, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
+	wxBoxSizer* psizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(psizer);
+	psizer->Add(m_pCustomExercisePanel, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
 #endif
 }
 
