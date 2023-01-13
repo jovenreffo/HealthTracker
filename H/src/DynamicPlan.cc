@@ -9,6 +9,7 @@ class CounterList : public wxListView
 {
 private:
 	long m_total;
+	wxMenu* m_pMenu;
 
 public:
 	CounterList(wxWindow* parent,
@@ -19,12 +20,30 @@ public:
 		: wxListView(parent, id, pos, size, style)
 	{
 		this->Init();
+		
+		// Bind events
+		this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CounterList::OnRightClick, this);
+		m_pMenu->Bind(wxEVT_MENU, &CounterList::OnDeleteItem, this, wxID_DELETE);
+	}
+
+	~CounterList()
+	{
+		// Unbind events
+		this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CounterList::OnRightClick, this);
+		m_pMenu->Bind(wxEVT_MENU, &CounterList::OnDeleteItem, this, wxID_DELETE);
 	}
 
 	void Init()
 	{
 		this->InsertColumn(0, _T("Repetitions"), 0, 100);
+		this->SetupMenu();
 		this->SetupTotalItem();
+	}
+
+	void SetupMenu()
+	{
+		m_pMenu = new wxMenu();
+		m_pMenu->Append(wxID_DELETE, _T("Delete"));
 	}
 
 	void SetupTotalItem()
@@ -39,8 +58,11 @@ public:
 		* In order to have the total "pinned" at the top, items will be inserted at index 1 in the list.
 		* The rep spin ctrl also has an int validator, so it must be converted to a string.
 		*/
-		//if (!count)
-		//	wxMessageBox
+		if (!count)
+		{
+			wxMessageBox(_T("Please enter a value."), _T("Invalid Value"), wxOK | wxICON_EXCLAMATION);
+			return;
+		}
 
 		this->InsertItem(1, std::to_string(count));
 		this->UpdateTotal();
@@ -64,6 +86,24 @@ public:
 	}
 
 	long GetTotal() const { return m_total; }
+
+	// events
+	void OnRightClick(wxListEvent& event)
+	{
+		this->PopupMenu(m_pMenu);
+	}
+
+	void OnDeleteItem(wxCommandEvent& event)
+	{
+		int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+		// Here, a confirmation box is not necessary as there will most likely be many items in the list
+		if (selected > 0)
+		{
+			this->DeleteItem(selected);
+			this->UpdateTotal();
+		}
+	}
 };
 
 CustomExercisePanel::CustomExercisePanel(const wxString& exerciseName, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -125,17 +165,12 @@ void CustomExercisePanel::SetupSizers()
 
 void CustomExercisePanel::OnAddReps(wxCommandEvent& event)
 {
-#ifdef _DEBUG
-	wxLogMessage(_T("Add button pressed."));
-#endif
 	m_pCounterList->AddReps(m_pSpinCtrl->GetValue());
 }
 
 void CustomExercisePanel::OnEnter(wxCommandEvent& event)
 {
-#ifdef _DEBUG
-	wxLogMessage(_T("Enter pressed."));
-#endif
+	m_pCounterList->AddReps(m_pSpinCtrl->GetValue());
 }
 
 // DynamicPlan
