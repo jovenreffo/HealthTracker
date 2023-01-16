@@ -126,6 +126,11 @@ ChangeFeaturedDialog::ChangeFeaturedDialog(MealList* pMealList, wxWindow* parent
 	this->Init();
 }
 
+ChangeFeaturedDialog::~ChangeFeaturedDialog()
+{
+	// Unbind events
+}
+
 void ChangeFeaturedDialog::Init()
 {
 	this->SetupControls();
@@ -134,10 +139,37 @@ void ChangeFeaturedDialog::Init()
 
 void ChangeFeaturedDialog::SetupControls()
 {
+	// Add all the item names to a wxArrayString
+	for (auto i{ 0 }; i < m_pMealList->GetItemCount(); ++i)
+	{
+		m_mealStrings.Add(m_pMealList->GetItemText(i));
+	}
 
+	m_pMealChoice = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_mealStrings);
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);	
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+
+	// Bind events
 }
 
 void ChangeFeaturedDialog::SetupSizers()
 {
 
+}
+
+void ChangeFeaturedDialog::OnOK(wxCommandEvent& event)
+{
+
+}
+
+void ChangeFeaturedDialog::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
+}
+
+void ChangeFeaturedDialog::OnClose(wxCloseEvent& event)
+{
+	this->Destroy();
 }
