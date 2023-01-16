@@ -50,7 +50,7 @@ void MealList::SetupColumn()
 	col.SetText(_T("Meal Plans"));
 	col.SetImage(-1);
 	this->InsertColumn(0, col);
-	this->SetColumnWidth(0, 200);
+	this->SetColumnWidth(0, 130);
 }
 
 void MealList::SetupMenu()
