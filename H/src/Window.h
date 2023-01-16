@@ -26,7 +26,7 @@ public:
 	virtual int OnExit() override;
 };
 
-#define WINDOW_SIZE (wxSize(640, 480))
+#define WINDOW_SIZE (wxSize(895, 520))
 
 enum
 {
@@ -39,7 +39,8 @@ enum
 	ID_ADD_NUTRITION_ITEM,
 	ID_ADD_MEALPLAN,
 	ID_PREFERENCES,
-	ID_RESET_LAYOUT
+	ID_RESET_LAYOUT,
+	ID_WINSIZE
 };
 
 class Frame: public wxFrame
@@ -56,7 +57,9 @@ private:
 	wxMenu* m_pHelpMenu;
 	wxMenu* m_pResetMenu; // submenu
 	wxMenu* m_pAddMenu; // submenu
-
+#ifdef _DEBUG
+	wxMenu* m_pDebugMenu;
+#endif
 	Listbook* m_pListbook;
 	AboutDialog* m_pAboutDialog;
 	wxIcon m_heartIcon;
@@ -108,6 +111,8 @@ public:
 	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
 	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
 	void OnAddNutritonItem(wxCommandEvent& WXUNUSED(event));
+	// debug events
+	void OnGetWindowSize(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif

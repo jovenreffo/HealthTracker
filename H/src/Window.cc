@@ -130,9 +130,22 @@ void Frame::SetupMenuBar()
 	// Help menu
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
 
+
+
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
 	m_pMenuBar->Append(m_pHelpMenu, _T("&Help"));
+
+#ifdef _DEBUG
+	// Tools for debugging and development
+	m_pDebugMenu = new wxMenu();
+
+	m_pDebugMenu->Append(ID_WINSIZE, _T("&Get Window Size"));
+	m_pDebugMenu->Bind(wxEVT_MENU, &Frame::OnGetWindowSize, this, ID_WINSIZE);
+
+	m_pMenuBar->Append(m_pDebugMenu, _T("&Debug"));
+#endif
+
 	this->SetMenuBar(m_pMenuBar);
 }
 
@@ -238,4 +251,9 @@ void Frame::OnAddNutritonItem(wxCommandEvent& WXUNUSED(event))
 {
 	if (m_pCaloriePanel != nullptr)
 		m_pCaloriePanel->AddNewItem();
+}
+
+void Frame::OnGetWindowSize(wxCommandEvent& WXUNUSED(event))
+{
+	wxLogMessage(_T("Width: %d\nHeight: %d"), this->GetSize().GetWidth(), this->GetSize().GetHeight());
 }
