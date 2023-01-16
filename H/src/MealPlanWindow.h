@@ -16,6 +16,7 @@
 
 #include <vector>
 #include "MealList/MealList.h"
+#include "MealPlanInfo/MealPlanInfo.hpp"
 
 #define MPW_SIZE ( wxSize(640, 280) )
 #define MPW_MAX_SIZE ( wxSize(1050, 500) )
@@ -45,6 +46,7 @@ private:
 	wxIcon m_mealIcon;
 	wxPanel* m_pTopPanel;
 	MealList* m_pMealList;
+	wxArrayString m_daysOfWeek;
 
 	// Controls
 	SaveMealPlanDialog* m_pSavePlanDlg;
@@ -120,6 +122,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnClose(wxCloseEvent& event);
 };
 
 class AddMealDialog : public wxDialog

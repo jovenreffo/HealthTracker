@@ -84,13 +84,18 @@ void MealPlanWindow::SetupSizers()
 
 void MealPlanWindow::SetupLists()
 {
-	m_pDayList.push_back(new MealDayList(_T("Sunday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Monday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Tuesday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Wednesday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Thursday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Friday"), m_pTopPanel, wxID_ANY));
-	m_pDayList.push_back(new MealDayList(_T("Saturday"), m_pTopPanel, wxID_ANY));
+	m_daysOfWeek.Add(_T("Sunday"));
+	m_daysOfWeek.Add(_T("Monday"));
+	m_daysOfWeek.Add(_T("Tuesday"));
+	m_daysOfWeek.Add(_T("Wednesday"));
+	m_daysOfWeek.Add(_T("Thursday"));
+	m_daysOfWeek.Add(_T("Friday"));
+	m_daysOfWeek.Add(_T("Saturday"));
+
+	for (auto i{ 0 }; i < m_daysOfWeek.size(); ++i)
+	{
+		m_pDayList.push_back(new MealDayList(m_daysOfWeek[i], m_pTopPanel, wxID_ANY));
+	}
 }
 
 // events
@@ -135,6 +140,7 @@ SaveMealPlanDialog::SaveMealPlanDialog(wxWindow* parent, wxWindowID id, const wx
 	// Event binding
 	m_pOk->Bind(wxEVT_BUTTON, &SaveMealPlanDialog::OnOK, this);
 	m_pCancel->Bind(wxEVT_BUTTON, &SaveMealPlanDialog::OnCancel, this);
+	this->Bind(wxEVT_CLOSE_WINDOW, &SaveMealPlanDialog::OnClose, this);
 }
 
 SaveMealPlanDialog::~SaveMealPlanDialog()
@@ -142,6 +148,7 @@ SaveMealPlanDialog::~SaveMealPlanDialog()
 	// Unbind events
 	m_pOk->Unbind(wxEVT_BUTTON, &SaveMealPlanDialog::OnOK, this);
 	m_pCancel->Unbind(wxEVT_BUTTON, &SaveMealPlanDialog::OnCancel, this);
+	this->Unbind(wxEVT_CLOSE_WINDOW, &SaveMealPlanDialog::OnClose, this);
 }
 
 void SaveMealPlanDialog::Init()
@@ -206,6 +213,12 @@ void SaveMealPlanDialog::OnOK(wxCommandEvent& event)
 void SaveMealPlanDialog::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
+}
+
+void SaveMealPlanDialog::OnClose(wxCloseEvent& event)
+{
+	this->SetReturnCode(wxID_CLOSE);
 	this->Show(false);
 }
 
