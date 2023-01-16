@@ -4,6 +4,7 @@
 // MealPlan panel event table
 BEGIN_EVENT_TABLE(MealPlan, wxSplitterWindow)
 	EVT_BUTTON(static_cast<int>(MP::ID_ADD_PLAN), MealPlan::OnAddMealPlan)
+	EVT_BUTTON(static_cast<int>(MP::ID_CHANGE_FEATURED_LIST), MealPlan::OnChangeFeaturedPlan)
 END_EVENT_TABLE()
 
 // ================== MealPlan ==================
@@ -76,6 +77,12 @@ void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 {
 	m_pMealPlanWin = new MealPlanWindow(m_pMealList, this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
 	m_pMealPlanWin->Show(true);
+}
+
+void MealPlan::OnChangeFeaturedPlan(wxCommandEvent& event)
+{
+	m_pChangeFeaturedPlanDlg = new ChangeFeaturedDialog(m_pMealList, this, wxID_ANY, _T("Change Featured Meal Plan"));
+	m_pChangeFeaturedPlanDlg->Show(true);
 }
 
 // ================== FeaturedList ==================
