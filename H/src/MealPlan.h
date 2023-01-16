@@ -20,6 +20,7 @@ enum class MP
 };
 
 class FeaturedList;
+class ChangeFeaturedDialog;
 
 class MealPlan : public wxSplitterWindow
 {
@@ -32,6 +33,7 @@ private:
 	wxButton* m_pChangeFeatured; wxBitmap m_changeBmp;
 	MealList* m_pMealList;
 	FeaturedList* m_pFeaturedList;
+	ChangeFeaturedDialog* m_pChangeFeaturedPlanDlg;
 
 	MealPlanWindow* m_pMealPlanWin;
 	
@@ -59,6 +61,7 @@ public:
 
 	// Events
 	void OnAddMealPlan(wxCommandEvent& event);
+	void OnChangeFeaturedPlan(wxCommandEvent& event);
 };
 
 class FeaturedList : public wxListView
@@ -76,6 +79,37 @@ public:
 	// Setup
 	void Init();
 	void SetupColumns();
+
+	// Events
+};
+
+class ChangeFeaturedDialog : public wxDialog
+{
+private:
+
+	// Controls
+	wxChoice* m_pMealChoice;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Validator
+	int m_mealChoice;
+
+	MealList* m_pMealList;
+
+public:
+	ChangeFeaturedDialog(MealList* pMealList,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = DLG_STYLE);
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 
 	// Events
 };
