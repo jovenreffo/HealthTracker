@@ -16,16 +16,17 @@ MealPlan::MealPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 
 void MealPlan::Init()
 {
-	this->SetupSplitter();
 	this->SetupPanels();
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSplitter();
 }
 
 void MealPlan::SetupSplitter()
 {
-	this->SetSashGravity(0.5);
-	this->SetMinimumPaneSize(100);
+	this->SetSashGravity(0.3);
+	this->SetMinimumPaneSize(150);
+	this->SetSashPosition(130);
 }
 
 void MealPlan::SetupPanels()
@@ -35,8 +36,6 @@ void MealPlan::SetupPanels()
 	
 	// Split the windows and set up properties
 	this->SplitVertically(m_pPlansPanel, m_pFeaturedPanel);
-	this->SetSashGravity(0.5);
-	this->SetMinimumPaneSize(200);
 }
 
 void MealPlan::SetupControls()
@@ -110,4 +109,28 @@ void FeaturedList::SetupColumns()
 	}
 
 	this->FitInside();
+}
+
+// ================== ChangeFeaturedDialog ==================
+
+ChangeFeaturedDialog::ChangeFeaturedDialog(MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_pMealList{ pMealList }
+{
+	this->Init();
+}
+
+void ChangeFeaturedDialog::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void ChangeFeaturedDialog::SetupControls()
+{
+
+}
+
+void ChangeFeaturedDialog::SetupSizers()
+{
+
 }
