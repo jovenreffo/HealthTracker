@@ -86,16 +86,20 @@ public:
 class ChangeFeaturedDialog : public wxDialog
 {
 private:
-
 	// Controls
 	wxChoice* m_pMealChoice;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pHorizontalSizer;
+
 	// Validator
 	int m_mealChoice;
 
 	MealList* m_pMealList;
+	wxArrayString m_mealStrings;
 
 public:
 	ChangeFeaturedDialog(MealList* pMealList,
@@ -105,6 +109,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = DLG_STYLE);
+	~ChangeFeaturedDialog();
 
 	// Setup
 	void Init();
@@ -112,6 +117,9 @@ public:
 	void SetupSizers();
 
 	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+	void OnClose(wxCloseEvent& event);
 };
 
 #endif
