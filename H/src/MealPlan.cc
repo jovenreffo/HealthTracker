@@ -1,3 +1,4 @@
+#include <wx/statline.h>
 #include "MealPlan.h"
 #include "StandardPath.hpp"
 
@@ -114,8 +115,6 @@ void FeaturedList::SetupColumns()
 	{
 		this->AppendColumn(m_daysOfWeek[i]);
 	}
-
-	this->FitInside();
 }
 
 // ================== ChangeFeaturedDialog ==================
@@ -138,6 +137,7 @@ void ChangeFeaturedDialog::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void ChangeFeaturedDialog::SetupControls()
@@ -161,12 +161,39 @@ void ChangeFeaturedDialog::SetupControls()
 
 void ChangeFeaturedDialog::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1)); // Re-init this sizer for main controls & buttons
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Featured plan:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pMealChoice, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal());
+
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+
+	// Buttons
+	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pHorizontalSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal());
 }
+
+void ChangeFeaturedDialog::SetupSizing()
+{
+	this->SetMinSize(CFD_SIZE);
+	this->SetInitialSize(CFD_SIZE);
+	this->SetMaxSize(CFD_MAX_SIZE);
+}
+
+// events
 
 void ChangeFeaturedDialog::OnOK(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void ChangeFeaturedDialog::OnCancel(wxCommandEvent& event)
