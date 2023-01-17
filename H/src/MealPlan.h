@@ -83,6 +83,9 @@ public:
 	// Events
 };
 
+#define CFD_SIZE (wxSize(250, 150))
+#define CFD_MAX_SIZE (wxSize(325, 185))
+
 class ChangeFeaturedDialog : public wxDialog
 {
 private:
@@ -93,7 +96,7 @@ private:
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pHorizontalSizer;
+	wxFlexGridSizer* m_pHorizontalSizer;
 
 	// Validator
 	int m_mealChoice;
@@ -107,7 +110,7 @@ public:
 		wxWindowID id,
 		const wxString& title,
 		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
+		const wxSize& size = CFD_SIZE,
 		long style = DLG_STYLE);
 	~ChangeFeaturedDialog();
 
@@ -115,6 +118,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupSizing();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
