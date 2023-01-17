@@ -129,6 +129,9 @@ ChangeFeaturedDialog::ChangeFeaturedDialog(MealList* pMealList, wxWindow* parent
 ChangeFeaturedDialog::~ChangeFeaturedDialog()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &ChangeFeaturedDialog::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &ChangeFeaturedDialog::OnCancel, this, wxID_CANCEL);
+	this->Unbind(wxEVT_CLOSE_WINDOW, &ChangeFeaturedDialog::OnClose, this, wxID_CLOSE);
 }
 
 void ChangeFeaturedDialog::Init()
@@ -151,6 +154,9 @@ void ChangeFeaturedDialog::SetupControls()
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 
 	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &ChangeFeaturedDialog::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &ChangeFeaturedDialog::OnCancel, this, wxID_CANCEL);
+	this->Bind(wxEVT_CLOSE_WINDOW, &ChangeFeaturedDialog::OnClose, this, wxID_CLOSE);
 }
 
 void ChangeFeaturedDialog::SetupSizers()
