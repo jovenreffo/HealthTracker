@@ -112,9 +112,19 @@ void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 		for (auto i{ 0 }; i < m_pDayList.size(); ++i)
 		{
 			if (m_pDayList[i]->GetListTitle() == m_pAddMealDlg->GetChoiceStr())
+			{
 				m_pDayList[i]->AddItem(m_pAddMealDlg->GetMealName());
+				
+				// Push back the item onto the information array
+				switch (m_pAddMealDlg->GetChoiceValue())
+				{
+					// TODO: add cases
+					// case 0 for sunday, 1 for monday, etc. optimize later
 
-			// Push back the item onto the information array
+				default:
+					break;
+				}
+			}
 		}
 	}
 }
