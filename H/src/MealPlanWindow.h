@@ -47,6 +47,7 @@ private:
 	wxPanel* m_pTopPanel;
 	MealList* m_pMealList;
 	wxArrayString m_daysOfWeek;
+	MealPlanInfo m_mealPlanInfo;
 
 	// Controls
 	SaveMealPlanDialog* m_pSavePlanDlg;
