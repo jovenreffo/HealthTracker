@@ -22,6 +22,11 @@ struct MealInfo
 * Several vectors will be instantiated, one for each day of the week. Because vectors allow for dynamic resizing, they are an obious choice.
 */
 
+/* Notes
+* We have nested vectors, as MealPlanInfo has been instantiated as std::vector<MealPlanInfo> in MealPlanWindow.
+* It is stored as a vec in MPW because the items will then be saved to a list, and each meal plan needs to be accessed. 
+*/
+
 class MealPlanInfo
 {
 private:
