@@ -29,7 +29,7 @@ struct MealInfo
 
 class MealPlanInfo
 {
-private:
+public:
 	std::vector<MealInfo> m_sunday;
 	std::vector<MealInfo> m_monday;
 	std::vector<MealInfo> m_tuesday;
