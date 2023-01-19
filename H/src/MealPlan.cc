@@ -76,14 +76,22 @@ void MealPlan::SetupSizers()
 
 void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 {
-	m_pMealPlanWin = new MealPlanWindow(m_pMealList, this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
+	m_pMealPlanWin = new MealPlanWindow(m_mealPlanInfoVec, m_pMealList, this, wxID_ANY, _T("Meal Planner"), wxDefaultPosition, wxDefaultSize);
 	m_pMealPlanWin->Show(true);
+
+	// Catch when the window is being destroyed to handle information
+	m_pMealPlanWin->Bind(wxEVT_DESTROY, wxWindowDestroyEventHandler(MealPlan::OnCloseMealPlanWindow), this);
 }
 
 void MealPlan::OnChangeFeaturedPlan(wxCommandEvent& event)
 {
 	m_pChangeFeaturedPlanDlg = new ChangeFeaturedDialog(m_pMealList, this, wxID_ANY, _T("Change Featured Meal Plan"));
 	m_pChangeFeaturedPlanDlg->Show(true);
+}
+
+void MealPlan::OnCloseMealPlanWindow(wxWindowDestroyEvent& event)
+{
+	
 }
 
 // ================== FeaturedList ==================

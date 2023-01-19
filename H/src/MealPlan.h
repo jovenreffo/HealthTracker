@@ -7,6 +7,9 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/splitter.h>
+
+#include <vector>
+
 #include "MealPlanWindow.h"
 #include "MealList/MealList.h"
 
@@ -36,6 +39,7 @@ private:
 	ChangeFeaturedDialog* m_pChangeFeaturedPlanDlg;
 
 	MealPlanWindow* m_pMealPlanWin;
+	std::vector<MealPlanInfo> m_mealPlanInfoVec;
 	
 	// Panels
 	wxPanel* m_pPlansPanel;
@@ -62,6 +66,7 @@ public:
 	// Events
 	void OnAddMealPlan(wxCommandEvent& event);
 	void OnChangeFeaturedPlan(wxCommandEvent& event);
+	void OnCloseMealPlanWindow(wxWindowDestroyEvent& event);
 };
 
 class FeaturedList : public wxListView
