@@ -13,7 +13,7 @@ void Listbook::SetupBitmaps()
 	m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
 	m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise.png"), wxBITMAP_TYPE_PNG);
 	m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
-	m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\settings.png"), wxBITMAP_TYPE_PNG);
+	m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc.png"), wxBITMAP_TYPE_PNG);
 
 	m_journalBmp.ResetAlpha();
 	m_calendarBmp.ResetAlpha();
@@ -42,5 +42,5 @@ void Listbook::SetupTabs()
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
 	this->AddPage(m_pExerciseBook, _T("Activity"), false, 1);
 	this->AddPage(m_pCalendar, _T("Planning"), false, 2);
-	this->AddPage(m_pSettings, _T("Settings"), false, 3);
+	this->AddPage(m_pSettings, _T("Miscellaneous"), false, 3);
 }
