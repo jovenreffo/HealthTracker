@@ -6,7 +6,7 @@
 #include "MealPlanWindow.h"
 #include "StandardPath.hpp"
 
-MealPlanWindow::MealPlanWindow(MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+MealPlanWindow::MealPlanWindow(const std::vector<MealPlanInfo>& mealPlanInfoVec, MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin")), m_pMealList{ pMealList }
 {
 	this->Init();
@@ -19,6 +19,8 @@ MealPlanWindow::MealPlanWindow(MealList* pMealList, wxWindow* parent, wxWindowID
 
 MealPlanWindow::~MealPlanWindow()
 {
+	m_mealPlanInfoVec.push_back(this->GetMealPlanInfo());
+
 	// Unbind evnets
 	m_pAddMeal->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnAddMeal, this);
 	m_pSavePlan->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnSavePlan, this);
@@ -118,9 +120,28 @@ void MealPlanWindow::OnAddMeal(wxCommandEvent& event)
 				// Push back the item onto the information array
 				switch (m_pAddMealDlg->GetChoiceValue())
 				{
-					// TODO: add cases
 					// case 0 for sunday, 1 for monday, etc. optimize later
-
+				case 0:
+					m_mealPlanInfo.m_sunday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 1:
+					m_mealPlanInfo.m_monday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 2:
+					m_mealPlanInfo.m_tuesday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 3:
+					m_mealPlanInfo.m_wednesday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 4:
+					m_mealPlanInfo.m_thursday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 5:
+					m_mealPlanInfo.m_friday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
+				case 6:
+					m_mealPlanInfo.m_saturday.push_back({ m_pAddMealDlg->GetMealName(), m_pAddMealDlg->GetMealDesc(), m_pAddMealDlg->GetChoiceStr(), m_pAddMealDlg->GetChoiceValue() });
+					break;
 				default:
 					break;
 				}
