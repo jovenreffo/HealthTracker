@@ -47,7 +47,9 @@ private:
 	wxPanel* m_pTopPanel;
 	MealList* m_pMealList;
 	wxArrayString m_daysOfWeek;
+
 	MealPlanInfo m_mealPlanInfo;
+	std::vector<MealPlanInfo> m_mealPlanInfoVec; // for interfacing with MealPlan files. A circular dependency will be made if MealPlan.h is included
 
 	// Controls
 	SaveMealPlanDialog* m_pSavePlanDlg;
@@ -63,7 +65,8 @@ private:
 	wxBoxSizer* m_pDaySizer;
 
 public:
-	MealPlanWindow(MealList* pMealList,
+	MealPlanWindow(const std::vector<MealPlanInfo>& mealPlanInfoVec,
+		MealList* pMealList,
 		wxWindow* parent = nullptr,
 		wxWindowID id = -1,
 		const wxString& title = _T("Meal Planner"),
@@ -71,6 +74,8 @@ public:
 		const wxSize& size = MPW_SIZE,
 		long style = wxDEFAULT_FRAME_STYLE);
 	~MealPlanWindow();
+
+	const MealPlanInfo GetMealPlanInfo() const { return m_mealPlanInfo; }
 
 	// Setup
 	void Init();
