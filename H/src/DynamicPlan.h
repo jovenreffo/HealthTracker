@@ -59,11 +59,27 @@ public:
 	void OnEnter(wxCommandEvent& event);
 };
 
+class AddExerciseDialog : public wxDialog
+{
+private:
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+public:
+	AddExerciseDialog(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Add Exercise"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+};
+
 class DynamicPlan : public wxScrolled<wxPanel>
 {
 private:
 	wxAuiManager m_auiMgr;
 	CustomExercisePanel* m_pCustomExercisePanel;
+	wxBitmapButton* m_pAddExercise;
 
 public:
 	DynamicPlan(wxWindow* parent,
