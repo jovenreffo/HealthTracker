@@ -66,7 +66,7 @@ public:
 	// Events
 	void OnAddMealPlan(wxCommandEvent& event);
 	void OnChangeFeaturedPlan(wxCommandEvent& event);
-	void OnCloseMealPlanWindow(wxWindowDestroyEvent& event);
+	void OnCloseMealPlanWindow(wxCloseEvent& event);
 };
 
 class FeaturedList : public wxListView

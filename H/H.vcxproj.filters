@@ -43,7 +43,6 @@
     <ClCompile Include="src\SaveWorkoutDialog.cc" />
     <ClCompile Include="src\Settings.cc" />
     <ClCompile Include="src\TaskbarIcon.cc" />
-    <ClCompile Include="src\WorkoutWindow.cc" />
     <ClCompile Include="src\WPLists.cc" />
     <ClCompile Include="src\WPNotebook.cc" />
     <ClCompile Include="src\RoutineView.cc" />
@@ -51,9 +50,10 @@
     <ClCompile Include="src\CaloriePanel.cc" />
     <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
     <ClCompile Include="src\PrefsDlg.cc" />
-    <ClCompile Include="src\WorkoutDialog.cc" />
+    <ClCompile Include="src\WorkoutWindow.cc" />
     <ClCompile Include="src\MealPlan.cc" />
     <ClCompile Include="src\MealPlanWindow.cc" />
+    <ClCompile Include="src\MealList\MealList.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -110,9 +110,6 @@
     <ClInclude Include="src\TaskbarIcon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\WorkoutWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\WPLists.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -140,13 +137,22 @@
     <ClInclude Include="src\RoutineStruct\Routine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\WorkoutDialog.h">
+    <ClInclude Include="src\WorkoutWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MealPlan.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MealPlanWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MealList\MealList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\aui_includes\aui_includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MealPlanInfo\MealPlanInfo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

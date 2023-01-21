@@ -10,6 +10,7 @@ MealList::MealList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	// Bind events
 	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
 	this->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	m_pMenu->Bind(wxEVT_MENU, &MealList::OnViewItem, this, wxID_OPEN);
 	m_pMenu->Bind(wxEVT_MENU, &MealList::OnDeleteItem, this, wxID_DELETE);
 }
 
@@ -18,6 +19,7 @@ MealList::~MealList()
 	// Unbind events
 	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &MealList::OnItemRightClick, this);
 	this->Unbind(wxEVT_LIST_COL_RIGHT_CLICK, &MealList::OnColumnRightClick, this);
+	m_pMenu->Unbind(wxEVT_MENU, &MealList::OnViewItem, this, wxID_OPEN);
 	m_pMenu->Unbind(wxEVT_MENU, &MealList::OnDeleteItem, this, wxID_DELETE);
 }
 
@@ -58,6 +60,7 @@ void MealList::SetupMenu()
 	// Menu for right-clicking items
 	m_pMenu = new wxMenu();
 
+	m_pMenu->Append(wxID_OPEN, _T("&Open Plan"));
 	m_pMenu->AppendSeparator();
 	m_pMenu->Append(wxID_DELETE, _T("&Delete"));
 
@@ -71,6 +74,11 @@ void MealList::OnItemRightClick(wxListEvent& event)
 }
 
 void MealList::OnColumnRightClick(wxListEvent& event)
+{
+
+}
+
+void MealList::OnViewItem(wxCommandEvent& event)
 {
 
 }

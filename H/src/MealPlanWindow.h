@@ -65,7 +65,7 @@ private:
 	wxBoxSizer* m_pDaySizer;
 
 public:
-	MealPlanWindow(const std::vector<MealPlanInfo>& mealPlanInfoVec,
+	MealPlanWindow(std::vector<MealPlanInfo>& mealPlanInfoVec,
 		MealList* pMealList,
 		wxWindow* parent = nullptr,
 		wxWindowID id = -1,
@@ -76,6 +76,7 @@ public:
 	~MealPlanWindow();
 
 	const MealPlanInfo GetMealPlanInfo() const { return m_mealPlanInfo; }
+	const std::vector<MealPlanInfo>& GetMealPlanInfoVec() const { return m_mealPlanInfoVec; }
 
 	// Setup
 	void Init();

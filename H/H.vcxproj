@@ -76,14 +76,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;WXUSINGDLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\lib\vc_dll\mswud;C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.2.1\lib\vc_dll\mswud;C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\joven\OneDrive\Desktop\SDKs\wxWidgets-3.2.0\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wxbase32ud.lib;wxmsw32ud_core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.2.1\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wxbase32ud.lib;wxmsw32ud_core.lib;wxmsw32ud_aui.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\MealList\MealList.cc" />
     <ClCompile Include="src\MealPlanWindow.cc" />
     <ClCompile Include="src\AboutDialog\AboutDialog.cc" />
     <ClCompile Include="src\AddItemDlg\AddItemDlg.cc" />
@@ -154,7 +155,6 @@
     <ClCompile Include="src\Settings.cc" />
     <ClCompile Include="src\TaskbarIcon.cc" />
     <ClCompile Include="src\Window.cc" />
-    <ClCompile Include="src\WorkoutDialog.cc" />
     <ClCompile Include="src\WorkoutWindow.cc" />
     <ClCompile Include="src\WPLists.cc" />
     <ClCompile Include="src\WPNotebook.cc" />
@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClInclude Include="src\AboutDialog\AboutDialog.h" />
     <ClInclude Include="src\AddItemDlg\AddItemDlg.h" />
+    <ClInclude Include="src\aui_includes\aui_includes.h" />
     <ClInclude Include="src\Calendar.h" />
     <ClInclude Include="src\CaloriePanel.h" />
     <ClInclude Include="src\DynamicPlan.h" />
@@ -173,7 +174,9 @@
     <ClInclude Include="src\Font\Font.hpp" />
     <ClInclude Include="src\Journal.h" />
     <ClInclude Include="src\ListBook.h" />
+    <ClInclude Include="src\MealList\MealList.h" />
     <ClInclude Include="src\MealPlan.h" />
+    <ClInclude Include="src\MealPlanInfo\MealPlanInfo.hpp" />
     <ClInclude Include="src\MealPlanWindow.h" />
     <ClInclude Include="src\NutritionBook.h" />
     <ClInclude Include="src\NutritionPanel.h" />
@@ -186,7 +189,6 @@
     <ClInclude Include="src\StandardPath.hpp" />
     <ClInclude Include="src\TaskbarIcon.h" />
     <ClInclude Include="src\Window.h" />
-    <ClInclude Include="src\WorkoutDialog.h" />
     <ClInclude Include="src\WorkoutWindow.h" />
     <ClInclude Include="src\WPLists.h" />
     <ClInclude Include="src\WPNotebook.h" />

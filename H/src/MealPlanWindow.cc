@@ -6,8 +6,8 @@
 #include "MealPlanWindow.h"
 #include "StandardPath.hpp"
 
-MealPlanWindow::MealPlanWindow(const std::vector<MealPlanInfo>& mealPlanInfoVec, MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin")), m_pMealList{ pMealList }
+MealPlanWindow::MealPlanWindow(std::vector<MealPlanInfo>& mealPlanInfoVec, MealList* pMealList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxFrame(parent, id, title, pos, size, style, _T("mealplanwin")), m_pMealList{ pMealList }, m_mealPlanInfoVec{ mealPlanInfoVec }
 {
 	this->Init();
 	this->Centre();
@@ -19,8 +19,6 @@ MealPlanWindow::MealPlanWindow(const std::vector<MealPlanInfo>& mealPlanInfoVec,
 
 MealPlanWindow::~MealPlanWindow()
 {
-	m_mealPlanInfoVec.push_back(this->GetMealPlanInfo());
-
 	// Unbind evnets
 	m_pAddMeal->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnAddMeal, this);
 	m_pSavePlan->Unbind(wxEVT_BUTTON, &MealPlanWindow::OnSavePlan, this);
@@ -158,6 +156,9 @@ void MealPlanWindow::OnSavePlan(wxCommandEvent& event)
 	if (m_pSavePlanDlg->ShowModal() == wxID_OK)
 	{
 		m_pMealList->AddItem(m_pSavePlanDlg->GetPlanName());
+
+		// Push back whatever item
+		m_mealPlanInfoVec.push_back(this->GetMealPlanInfo());
 	}
 }
 

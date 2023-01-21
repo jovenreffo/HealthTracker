@@ -33,6 +33,7 @@ public:
 	// Events
 	void OnItemRightClick(wxListEvent& event);
 	void OnColumnRightClick(wxListEvent& event);
+	void OnViewItem(wxCommandEvent& event);
 	void OnDeleteItem(wxCommandEvent& event);
 };
 

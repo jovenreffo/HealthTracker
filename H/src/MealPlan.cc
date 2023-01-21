@@ -80,7 +80,7 @@ void MealPlan::OnAddMealPlan(wxCommandEvent& event)
 	m_pMealPlanWin->Show(true);
 
 	// Catch when the window is being destroyed to handle information
-	m_pMealPlanWin->Bind(wxEVT_DESTROY, wxWindowDestroyEventHandler(MealPlan::OnCloseMealPlanWindow), this);
+	m_pMealPlanWin->Bind(wxEVT_CLOSE_WINDOW, &MealPlan::OnCloseMealPlanWindow, this);
 }
 
 void MealPlan::OnChangeFeaturedPlan(wxCommandEvent& event)
@@ -89,11 +89,12 @@ void MealPlan::OnChangeFeaturedPlan(wxCommandEvent& event)
 	m_pChangeFeaturedPlanDlg->Show(true);
 }
 
-void MealPlan::OnCloseMealPlanWindow(wxWindowDestroyEvent& event)
+void MealPlan::OnCloseMealPlanWindow(wxCloseEvent& event)
 {
-//	m_mealPlanInfoVec = m_pMealPlanWin->GetMealPlanInfoVec();
-	if (m_mealPlanInfoVec.empty())
-		wxLogMessage("Empty");
+	// Get the contents of the meal plan
+	m_mealPlanInfoVec = m_pMealPlanWin->GetMealPlanInfoVec();
+
+	m_pMealPlanWin->Destroy();
 }
 
 // ================== FeaturedList ==================
