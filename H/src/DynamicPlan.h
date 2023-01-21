@@ -62,6 +62,7 @@ public:
 class AddExerciseDialog : public wxDialog
 {
 private:
+	wxTextCtrl* m_pExerciseNameTxt;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
@@ -72,6 +73,16 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+	void OnClose(wxCloseEvent& event);
 };
 
 class DynamicPlan : public wxScrolled<wxPanel>
