@@ -91,7 +91,9 @@ void MealPlan::OnChangeFeaturedPlan(wxCommandEvent& event)
 
 void MealPlan::OnCloseMealPlanWindow(wxWindowDestroyEvent& event)
 {
-	
+//	m_mealPlanInfoVec = m_pMealPlanWin->GetMealPlanInfoVec();
+	if (m_mealPlanInfoVec.empty())
+		wxLogMessage("Empty");
 }
 
 // ================== FeaturedList ==================
