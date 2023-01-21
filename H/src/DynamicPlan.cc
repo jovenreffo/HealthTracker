@@ -173,6 +173,47 @@ void CustomExercisePanel::OnEnter(wxCommandEvent& event)
 	m_pCounterList->AddReps(m_pSpinCtrl->GetValue());
 }
 
+// AddExerciseDialog
+
+AddExerciseDialog::AddExerciseDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+	this->Init();
+}
+
+void AddExerciseDialog::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void AddExerciseDialog::SetupControls()
+{
+
+}
+
+void AddExerciseDialog::SetupSizers()
+{
+
+}
+
+// events
+
+void AddExerciseDialog::OnOK(wxCommandEvent& event)
+{
+
+}
+
+void AddExerciseDialog::OnCancel(wxCommandEvent& event)
+{
+
+}
+
+void AddExerciseDialog::OnClose(wxCloseEvent& event)
+{
+
+}
+
 // DynamicPlan
 
 DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -185,9 +226,19 @@ DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	m_pCustomExercisePanel = new CustomExercisePanel(_T("Pullups"), this, wxID_ANY);
 	m_pCustomExercisePanel->Show(true);
 
-	wxBoxSizer* psizer = new wxBoxSizer(wxHORIZONTAL);
+	//CustomExercisePanel* p2 = new CustomExercisePanel(_T("Pushups"), this, wxID_ANY);
+	//p2->Show(true);
+	//
+	//CustomExercisePanel* p3 = new CustomExercisePanel(_T("Dips"), this, wxID_ANY);
+	//p3->Show(true);
+
+	wxBoxSizer* psizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(psizer);
 	psizer->Add(m_pCustomExercisePanel, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
+	//psizer->Add(p2, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
+	//psizer->Add(p3, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
+	//this->ScrollLayout();
+
 #endif
 }
 
