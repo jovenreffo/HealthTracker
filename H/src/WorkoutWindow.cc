@@ -2,6 +2,7 @@
 #include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/filedlg.h>
+#include <wx/font.h>
 #include <wx/config.h>	
 #include "WorkoutWindow.h"
 #include "StandardPath.hpp"
@@ -17,6 +18,8 @@ WorkoutWindow::WorkoutWindow(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnCut, this, wxID_CUT);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnCopy, this, wxID_COPY);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnZoomIn, this, wxID_ZOOM_IN);
+	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnZoomOut, this, wxID_ZOOM_OUT);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
@@ -33,6 +36,8 @@ WorkoutWindow::~WorkoutWindow()
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnCut, this, wxID_CUT);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnCopy, this, wxID_COPY);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnPaste, this, wxID_PASTE);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnZoomIn, this, wxID_ZOOM_IN);
+	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnZoomOut, this, wxID_ZOOM_OUT);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnUndo, this, wxID_UNDO);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnRedo, this, wxID_REDO);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnSave, this, wxID_SAVE);
@@ -124,6 +129,9 @@ void WorkoutWindow::SetupToolBar()
 	m_pToolBar->AddTool(wxID_COPY, _T("Copy"), m_copyBmp, _T("Copy selected text."));
 	m_pToolBar->AddTool(wxID_PASTE, _T("Paste"), m_pasteBmp, _T("Paste text from the clipboard."));
 	m_pToolBar->AddSeparator();
+	m_pToolBar->AddTool(wxID_ZOOM_IN, _T("Zoom In"), m_zoomInBmp, _T("Zoom in on text."));
+	m_pToolBar->AddTool(wxID_ZOOM_OUT, _T("Zoom Out"), m_zoomOutBmp, _T("Zoom out from text."));
+	m_pToolBar->AddSeparator();
 	m_pToolBar->AddTool(wxID_UNDO, _T("Undo"), m_undoBmp, _T("Undo last action."));
 	m_pToolBar->AddTool(wxID_REDO, _T("Redo"), m_redoBmp, _T("Redo last action."));
 	m_pToolBar->AddSeparator();
@@ -131,7 +139,7 @@ void WorkoutWindow::SetupToolBar()
 	m_pToolBar->AddTool(wxID_SAVEAS, _T("Export"), m_exportBmp, _T("Export workout as a text file."));
 	m_pToolBar->AddTool(wxID_OPEN, _T("Import"), m_importBmp, _T("Import a text file."));
 
-	m_pToolBar->SetToolPacking(15);
+	//m_pToolBar->SetToolPacking(15);
 	m_pToolBar->Realize();
 	this->SetToolBar(m_pToolBar);
 }
@@ -140,7 +148,6 @@ void WorkoutWindow::SetupWindowSizing()
 {
 	this->SetMinSize(WD_SIZE);
 	this->SetInitialSize(WD_SIZE);
-	this->SetMaxSize(WD_SIZE_MAX);
 }
 
 void WorkoutWindow::SetupImages()
@@ -149,6 +156,8 @@ void WorkoutWindow::SetupImages()
 	m_cutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\cut_small.png"), wxBITMAP_TYPE_PNG);
 	m_copyBmp = wxBitmap(path_data::dataDir + _T("\\Images\\copy_small.png"), wxBITMAP_TYPE_PNG);
 	m_pasteBmp = wxBitmap(path_data::dataDir + _T("\\Images\\paste_small.png"), wxBITMAP_TYPE_PNG);
+	m_zoomInBmp = wxBitmap(path_data::dataDir + _T("\\Images\\zoomin.png"), wxBITMAP_TYPE_PNG);
+	m_zoomOutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\zoomout.png"), wxBITMAP_TYPE_PNG);
 	m_undoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\undo_small.png"), wxBITMAP_TYPE_PNG);
 	m_redoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\redo_small.png"), wxBITMAP_TYPE_PNG);
 	m_saveBmp = wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG);
@@ -215,6 +224,20 @@ void WorkoutWindow::OnPaste(wxCommandEvent& event)
 {
 	if (m_pTextCtrl->CanPaste())
 		m_pTextCtrl->Paste();
+}
+
+void WorkoutWindow::OnZoomIn(wxCommandEvent& event)
+{
+	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
+	++m_nFontSize;
+	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
+}
+
+void WorkoutWindow::OnZoomOut(wxCommandEvent& event)
+{
+	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
+	--m_nFontSize;
+	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
 }
 
 void WorkoutWindow::OnUndo(wxCommandEvent& event)
