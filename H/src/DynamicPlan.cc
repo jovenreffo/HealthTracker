@@ -2,6 +2,7 @@
 #include <wx/msgdlg.h>
 #include <wx/stattext.h>
 #include <wx/listctrl.h>
+
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
 
@@ -221,28 +222,43 @@ DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 {
 	this->SetScrollRate(10, 10);
 	this->Init();
+}
 
-#ifdef _DEBUG
-	m_pCustomExercisePanel = new CustomExercisePanel(_T("Pullups"), this, wxID_ANY);
-	m_pCustomExercisePanel->Show(true);
-
-	//CustomExercisePanel* p2 = new CustomExercisePanel(_T("Pushups"), this, wxID_ANY);
-	//p2->Show(true);
-	//
-	//CustomExercisePanel* p3 = new CustomExercisePanel(_T("Dips"), this, wxID_ANY);
-	//p3->Show(true);
-
-	wxBoxSizer* psizer = new wxBoxSizer(wxVERTICAL);
-	this->SetSizerAndFit(psizer);
-	psizer->Add(m_pCustomExercisePanel, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
-	//psizer->Add(p2, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
-	//psizer->Add(p3, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 10));
-	//this->ScrollLayout();
-
-#endif
+DynamicPlan::~DynamicPlan()
+{
+	// Unbind events
 }
 
 void DynamicPlan::Init()
 {
+
+}
+
+void DynamicPlan::SetupControls()
+{
+	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
+	m_spreadsheetBmp = wxBitmap(path_data::dataDir + _T("\\Images\\spreadsheet.png"), wxBITMAP_TYPE_PNG);
+	m_addBmp.ResetAlpha();
+	m_spreadsheetBmp.ResetAlpha();
+
+	m_pAddExercise = new wxBitmapButton(this, wxID_ANY, m_addBmp, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pOpenSpreadSheet = new wxBitmapButton(this, wxID_ANY, m_spreadsheetBmp, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+}
+
+void DynamicPlan::SetupSizers()
+{
+
+}
+
+void DynamicPlan::SetupAUI()
+{
+
+}
+
+// events
+
+void DynamicPlan::OnAddExercise(wxCommandEvent& event)
+{
+
 
 }
