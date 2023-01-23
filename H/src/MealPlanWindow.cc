@@ -157,7 +157,7 @@ void MealPlanWindow::OnSavePlan(wxCommandEvent& event)
 	{
 		m_pMealList->AddItem(m_pSavePlanDlg->GetPlanName());
 
-		// Push back whatever item
+		// Push back the meal plan into the vector
 		m_mealPlanInfoVec.push_back(this->GetMealPlanInfo());
 	}
 }
