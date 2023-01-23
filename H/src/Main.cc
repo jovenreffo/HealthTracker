@@ -8,7 +8,7 @@ bool App::OnInit()
 	Frame* frame = new Frame();
 	frame->Show(true);
 	
-	this->SetVendorName(_T("wxWidgets"));
+	this->SetVendorName(_T("Health++"));
 	this->SetAppName(_T("Health++"));
 
 	// Handle config setup
