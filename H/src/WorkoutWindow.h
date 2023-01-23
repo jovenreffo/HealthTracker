@@ -12,8 +12,7 @@
 #include "SaveWorkoutDialog.h"
 
 #define WD_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
-#define WD_SIZE	 ( wxSize(525, 450) )
-#define WD_SIZE_MAX ( wxSize(650, 525) )
+#define WD_SIZE	 ( wxSize(675, 450) )
 
 class WorkoutWindow: public wxFrame
 {
@@ -22,6 +21,8 @@ private:
 	wxBitmap m_cutBmp;
 	wxBitmap m_copyBmp;
 	wxBitmap m_pasteBmp;
+	wxBitmap m_zoomInBmp;
+	wxBitmap m_zoomOutBmp;
 	wxBitmap m_undoBmp;
 	wxBitmap m_redoBmp;
 	wxBitmap m_saveBmp;
@@ -42,6 +43,7 @@ private:
 	wxString m_workoutContent;
 	WorkoutList* m_pWorkoutList;
 	SaveWorkoutDialog* m_pSaveWorkoutDlg;
+	int m_nFontSize;
 
 public:
 	WorkoutWindow(WorkoutList* pWorkoutList,
@@ -79,6 +81,8 @@ public:
 	void OnCut(wxCommandEvent& event);
 	void OnCopy(wxCommandEvent& event);
 	void OnPaste(wxCommandEvent& event);
+	void OnZoomIn(wxCommandEvent& event);
+	void OnZoomOut(wxCommandEvent& event);
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
 	void OnSave(wxCommandEvent& event);
