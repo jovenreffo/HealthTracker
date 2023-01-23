@@ -88,9 +88,15 @@ public:
 class DynamicPlan : public wxScrolled<wxPanel>
 {
 private:
+	// Controls
+	wxBitmapButton* m_pAddExercise; wxBitmap m_addBmp;
+	wxBitmapButton* m_pOpenSpreadSheet; wxBitmap m_spreadsheetBmp;
+	AddExerciseDialog* m_pAddExerciseDialog;
+
+	// AUI
 	wxAuiManager m_auiMgr;
-	CustomExercisePanel* m_pCustomExercisePanel;
-	wxBitmapButton* m_pAddExercise;
+	wxString m_perspective;
+	wxString m_defPerspective;
 
 public:
 	DynamicPlan(wxWindow* parent,
@@ -98,12 +104,16 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxVSCROLL | wxALWAYS_SHOW_SB);
+	~DynamicPlan();
 
 	// Setup
 	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupAUI();
 
 	// Events
-
+	void OnAddExercise(wxCommandEvent& event);
 };
 
 #endif
