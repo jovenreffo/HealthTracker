@@ -89,9 +89,13 @@ class DynamicPlan : public wxScrolled<wxPanel>
 {
 private:
 	// Controls
-	wxBitmapButton* m_pAddExercise; wxBitmap m_addBmp;
-	wxBitmapButton* m_pOpenSpreadSheet; wxBitmap m_spreadsheetBmp;
+	wxButton* m_pAddExercise; wxBitmap m_addBmp;
+	wxButton* m_pOpenSpreadSheet; wxBitmap m_spreadsheetBmp;
 	AddExerciseDialog* m_pAddExerciseDialog;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pTopButtonSizer;
 
 	// AUI
 	wxAuiManager m_auiMgr;
@@ -114,6 +118,7 @@ public:
 
 	// Events
 	void OnAddExercise(wxCommandEvent& event);
+	void OnOpenSpreadsheet(wxCommandEvent& event);
 };
 
 #endif
