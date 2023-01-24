@@ -26,6 +26,7 @@ WorkoutWindow::WorkoutWindow(WorkoutList* pWorkoutList, wxWindow* parent, wxWind
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
 	m_pToolBar->Bind(wxEVT_TOOL, &WorkoutWindow::OnImport, this, wxID_OPEN);
 
+	m_pTextCtrl->Bind(wxEVT_MOUSEWHEEL, &WorkoutWindow::OnMouse, this);
 	m_pOk->Bind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
 }
@@ -44,6 +45,7 @@ WorkoutWindow::~WorkoutWindow()
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnExport, this, wxID_SAVEAS);
 	m_pToolBar->Unbind(wxEVT_TOOL, &WorkoutWindow::OnImport, this, wxID_OPEN);
 
+	m_pTextCtrl->Unbind(wxEVT_MOUSEWHEEL, &WorkoutWindow::OnMouse, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &WorkoutWindow::OnCancel, this, wxID_CANCEL);
 }
@@ -171,7 +173,7 @@ void WorkoutWindow::SetupControls()
 	m_pTextCtrl->DragAcceptFiles(true);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
-	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Exit"), wxDefaultPosition, wxDefaultSize);
 }
 
 void WorkoutWindow::SetupSizers()
@@ -193,7 +195,30 @@ void WorkoutWindow::SetupSizers()
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
+void WorkoutWindow::ZoomIn()
+{
+	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
+	++m_nFontSize;
+	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
+}
+
+void WorkoutWindow::ZoomOut()
+{
+	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
+	--m_nFontSize;
+	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
+}
+
 // ========================== Events ==========================
+
+void WorkoutWindow::OnMouse(wxMouseEvent& event)
+{
+	if (event.ControlDown() && event.GetWheelRotation() > 0)
+		this->ZoomIn();
+
+	if (event.ControlDown() && event.GetWheelRotation() < 0)
+		this->ZoomOut();
+}
 
 void WorkoutWindow::OnOK(wxCommandEvent& event)
 {
@@ -228,16 +253,12 @@ void WorkoutWindow::OnPaste(wxCommandEvent& event)
 
 void WorkoutWindow::OnZoomIn(wxCommandEvent& event)
 {
-	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
-	++m_nFontSize;
-	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
+	this->ZoomIn();
 }
 
 void WorkoutWindow::OnZoomOut(wxCommandEvent& event)
 {
-	m_nFontSize = m_pTextCtrl->GetFont().GetPointSize();
-	--m_nFontSize;
-	m_pTextCtrl->SetFont(wxFont(m_nFontSize, m_pTextCtrl->GetFont().GetFamily(), m_pTextCtrl->GetFont().GetStyle(), m_pTextCtrl->GetFont().GetWeight(), false));
+	this->ZoomOut();
 }
 
 void WorkoutWindow::OnUndo(wxCommandEvent& event)
