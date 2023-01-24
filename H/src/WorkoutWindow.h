@@ -75,7 +75,11 @@ public:
 	void SetupControls();
 	void SetupSizers();
 
+	void ZoomIn();
+	void ZoomOut();
+
 	// Events
+	void OnMouse(wxMouseEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	void OnCut(wxCommandEvent& event);
