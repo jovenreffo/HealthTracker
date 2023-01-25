@@ -11,7 +11,10 @@
 #include <wx/scrolwin.h>
 #include "aui_includes/aui_includes.h"
 
-#define LEP_SIZE (wxSize(125, 250))
+#define CEP_SIZE (wxSize(125, 250))
+
+#define AED_SIZE (wxSize(280, 160))
+#define AED_SIZE_MAX (wxSize(340, 180))
 
 enum class CEP
 {
@@ -45,7 +48,7 @@ public:
 		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = LEP_SIZE,
+		const wxSize& size = CEP_SIZE,
 		long style = 0L);
 	~CustomExercisePanel();
 
@@ -62,9 +65,17 @@ public:
 class AddExerciseDialog : public wxDialog
 {
 private:
+	// Controls
 	wxTextCtrl* m_pExerciseNameTxt;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxFlexGridSizer* m_pHorizontalSizer;
+
+	// Validator
+	wxString m_exerciseName;
 
 public:
 	AddExerciseDialog(wxWindow* parent,
@@ -76,6 +87,7 @@ public:
 
 	// Setup
 	void Init();
+	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
 
