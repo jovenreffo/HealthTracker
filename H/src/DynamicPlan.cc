@@ -2,6 +2,7 @@
 #include <wx/valtext.h>
 #include <wx/msgdlg.h>
 #include <wx/stattext.h>
+#include <wx/statline.h>
 #include <wx/listctrl.h>
 
 #include "DynamicPlan.h"
@@ -187,6 +188,14 @@ void AddExerciseDialog::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void AddExerciseDialog::SetupSizing()
+{
+	this->SetInitialSize(AED_SIZE);
+	this->SetMinSize(AED_SIZE);
+	this->SetMaxSize(AED_SIZE_MAX);
 }
 
 void AddExerciseDialog::SetupControls()
@@ -199,7 +208,21 @@ void AddExerciseDialog::SetupControls()
 
 void AddExerciseDialog::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Exercise name:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pExerciseNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+
+	// Re-init for buttons
+	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pHorizontalSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pCancel, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 // events
@@ -277,7 +300,13 @@ void DynamicPlan::SetupAUI()
 
 void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 {
+	m_pAddExerciseDialog = new AddExerciseDialog(this, wxID_ANY);
+	m_pAddExerciseDialog->Show(true);
 
+	if (m_pAddExerciseDialog->ShowModal() == wxID_OK)
+	{
+		//
+	}
 }
 
 void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
