@@ -1,4 +1,5 @@
 #include <wx/valgen.h>
+#include <wx/valtext.h>
 #include <wx/msgdlg.h>
 #include <wx/stattext.h>
 #include <wx/listctrl.h>
@@ -190,7 +191,10 @@ void AddExerciseDialog::Init()
 
 void AddExerciseDialog::SetupControls()
 {
+	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
 
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void AddExerciseDialog::SetupSizers()
@@ -222,32 +226,46 @@ DynamicPlan::DynamicPlan(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 {
 	this->SetScrollRate(10, 10);
 	this->Init();
+
+	// Bind events
+	m_pAddExercise->Bind(wxEVT_BUTTON, &DynamicPlan::OnAddExercise, this);
+	m_pOpenSpreadSheet->Bind(wxEVT_BUTTON, &DynamicPlan::OnOpenSpreadsheet, this);
 }
 
 DynamicPlan::~DynamicPlan()
 {
 	// Unbind events
+	m_pAddExercise->Unbind(wxEVT_BUTTON, &DynamicPlan::OnAddExercise, this);
+	m_pOpenSpreadSheet->Unbind(wxEVT_BUTTON, &DynamicPlan::OnOpenSpreadsheet, this);
 }
 
 void DynamicPlan::Init()
 {
-
+	this->SetupControls();
+	this->SetupSizers();
 }
 
 void DynamicPlan::SetupControls()
 {
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
 	m_spreadsheetBmp = wxBitmap(path_data::dataDir + _T("\\Images\\spreadsheet.png"), wxBITMAP_TYPE_PNG);
-	m_addBmp.ResetAlpha();
-	m_spreadsheetBmp.ResetAlpha();
 
-	m_pAddExercise = new wxBitmapButton(this, wxID_ANY, m_addBmp, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-	m_pOpenSpreadSheet = new wxBitmapButton(this, wxID_ANY, m_spreadsheetBmp, wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pAddExercise = new wxButton(this, wxID_ANY, _T("Add Exercise"), wxDefaultPosition, wxDefaultSize);
+	m_pOpenSpreadSheet = new wxButton(this, wxID_ANY, _T("Open Spreadsheet"), wxDefaultPosition, wxDefaultSize);
+	m_pAddExercise->SetBitmap(m_addBmp);
+	m_pOpenSpreadSheet->SetBitmap(m_spreadsheetBmp);
 }
 
 void DynamicPlan::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTopButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pTopButtonSizer->Add(m_pAddExercise, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopButtonSizer->Add(m_pOpenSpreadSheet, wxSizerFlags().Left().Border(wxALL, 5));
+
+	m_pTopSizer->Add(m_pTopButtonSizer);
 }
 
 void DynamicPlan::SetupAUI()
@@ -260,5 +278,9 @@ void DynamicPlan::SetupAUI()
 void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 {
 
+}
+
+void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
+{
 
 }
