@@ -29,7 +29,7 @@ public:
 	// events
 	void OnRightClick(wxTaskBarIconEvent& WXUNUSED(event));
 	void OnDoubleClick(wxTaskBarIconEvent& WXUNUSED(event));
-	void OnRestore(wxCommandEvent& WXUNUSED(event));
+	void OnAbout(wxCommandEvent& WXUNUSED(event));
 	void OnMaximize(wxCommandEvent& WXUNUSED(event));
 	void OnExit(wxCommandEvent& WXUNUSED(event));
 };
