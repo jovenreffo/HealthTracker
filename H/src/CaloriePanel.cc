@@ -42,8 +42,12 @@ void CaloriePanel::SetupControls()
 {
 	m_pCalorieList = new CalorieList(this, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT | wxLC_SINGLE_SEL);
 
+	m_searchBmp = wxBitmap(path_data::dataDir + _T("\\Images\\search.png"), wxBITMAP_TYPE_PNG);
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
 	m_saveBmp = wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG);
+
+	m_pSearchButton = new wxBitmapButton(this, static_cast<int>(CP::ID_SEARCH), m_searchBmp, wxDefaultPosition, wxDefaultSize);
+	m_pSearchButton->SetToolTip(_T("Search a nutritional item in the catalog."));
 
 	m_pAddButton = new wxBitmapButton(this, static_cast<int>(CP::ID_NEW_ITEM), m_addBmp, wxDefaultPosition, wxDefaultSize);
 	m_pAddButton->SetToolTip(_T("Add a new nutritional item."));
@@ -58,6 +62,7 @@ void CaloriePanel::SetupSizers()
 	this->SetSizerAndFit(m_pBoxSizer);
 
 	wxBoxSizer* m_pHorizontalSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pHorizontalSizer->Add(m_pSearchButton, wxSizerFlags().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pAddButton, wxSizerFlags().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pSaveButton, wxSizerFlags().Border(wxALL, 5));
 
