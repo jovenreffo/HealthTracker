@@ -5,7 +5,7 @@
 BEGIN_EVENT_TABLE(TaskbarIcon, wxTaskBarIcon)
 	EVT_TASKBAR_LEFT_DCLICK(TaskbarIcon::OnDoubleClick)
 	EVT_TASKBAR_CLICK(TaskbarIcon::OnRightClick)
-	EVT_MENU((int)TBI::ID_TBI_RESTORE, TaskbarIcon::OnRestore)
+	EVT_MENU(wxID_ABOUT, TaskbarIcon::OnAbout)
 	EVT_MENU((int)TBI::ID_TBI_EXIT, TaskbarIcon::OnExit)
 	EVT_MENU((int)TBI::ID_TBI_FULLSCREEN, TaskbarIcon::OnMaximize)
 END_EVENT_TABLE()
@@ -20,6 +20,7 @@ void TaskbarIcon::SetupPopupMenu()
 {
 	m_pMenu = new wxMenu();
 
+	m_pMenu->Append(wxID_ABOUT, _T("&About"));
 	m_pMenu->Append((int)TBI::ID_TBI_FULLSCREEN, _T("Maximize"));
 	m_pMenu->AppendSeparator();
 	m_pMenu->Append((int)TBI::ID_TBI_EXIT, _T("&Exit"));
@@ -35,7 +36,7 @@ void TaskbarIcon::OnDoubleClick(wxTaskBarIconEvent& WXUNUSED(event))
 
 }
 
-void TaskbarIcon::OnRestore(wxCommandEvent& WXUNUSED(event))
+void TaskbarIcon::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 
 }
