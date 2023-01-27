@@ -38,7 +38,8 @@ void TaskbarIcon::OnDoubleClick(wxTaskBarIconEvent& WXUNUSED(event))
 
 void TaskbarIcon::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-
+	m_pAboutDialog = new AboutDialog(m_pParent, wxID_ANY);
+	m_pAboutDialog->Show(true);
 }
 
 void TaskbarIcon::OnMaximize(wxCommandEvent& WXUNUSED)

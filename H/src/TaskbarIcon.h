@@ -5,6 +5,8 @@
 #include <wx/frame.h>
 #include <wx/menu.h>
 
+#include "AboutDialog/AboutDialog.h"
+
 enum class TBI
 {
 	ID_TBI_RESTORE,
@@ -20,6 +22,7 @@ private:
 private:
 	wxMenu* m_pMenu;
 	wxFrame* m_pParent;
+	AboutDialog* m_pAboutDialog;
 
 public:
 	TaskbarIcon(wxFrame* parent);
