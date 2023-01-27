@@ -191,7 +191,8 @@ void Frame::OnFullScreen(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-	m_pAboutDialog = new AboutDialog();
+	m_pAboutDialog = new AboutDialog(this, wxID_ANY);
+	m_pAboutDialog->Show(true);
 }
 
 void Frame::OnPreferences(wxCommandEvent& event)
