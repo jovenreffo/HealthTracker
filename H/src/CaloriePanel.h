@@ -8,7 +8,9 @@
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
 #include <wx/bmpbuttn.h>
+
 #include "AddItemDlg/AddItemDlg.h"
+#include "NutritionCatalogHTML/NutritionCatalog.h"
 
 enum class CP
 {
@@ -26,6 +28,7 @@ private:
 	CalorieList* m_pCalorieList;
 
 	AddItemDlg* m_pAddItemDlg;
+	NutritionCatalog* m_pNutritionCatalog;
 
 	wxBitmapButton* m_pSearchButton;
 	wxBitmapButton* m_pAddButton;
@@ -50,6 +53,7 @@ public:
 	void AddNewItem();
 
 	// Events
+	void OnSearch(wxCommandEvent& event);
 	void OnNewItem(wxCommandEvent& event);
 	void OnSaveInformation(wxCommandEvent& event);
 };
