@@ -21,6 +21,7 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Init();
 
 	// Bind events
+	m_pSearchButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, static_cast<int>(CP::ID_SEARCH));
 	m_pAddButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
 	m_pSaveButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
 }
@@ -28,6 +29,7 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 CaloriePanel::~CaloriePanel()
 {
 	// Unbind events
+	m_pSearchButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, static_cast<int>(CP::ID_SEARCH));
 	m_pAddButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
 	m_pSaveButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
 }
@@ -82,6 +84,12 @@ void CaloriePanel::AddNewItem()
 }
 
 // Events
+
+void CaloriePanel::OnSearch(wxCommandEvent& event)
+{
+	m_pNutritionCatalog = new NutritionCatalog(this, wxID_ANY, _T("Nutrition Catalog"), wxDefaultPosition, wxDefaultSize);
+	m_pNutritionCatalog->Show(true);
+}
 
 void CaloriePanel::OnNewItem(wxCommandEvent& event)
 {
