@@ -24,6 +24,7 @@ enum class CEP
 };
 
 class CounterList;
+class ExerciseNotebook; // Inherits from wxAuiNotebook, dockable & movable tabs will be nice for the user
 
 class CustomExercisePanel : public wxPanel
 {
@@ -110,6 +111,7 @@ private:
 	wxBoxSizer* m_pTopButtonSizer;
 
 	// AUI
+	ExerciseNotebook* m_pExerciseNotebook;
 	wxAuiManager m_auiMgr;
 	wxString m_perspective;
 	wxString m_defPerspective;
@@ -131,6 +133,19 @@ public:
 	// Events
 	void OnAddExercise(wxCommandEvent& event);
 	void OnOpenSpreadsheet(wxCommandEvent& event);
+};
+
+class ExerciseNotebook : public wxAuiNotebook
+{
+private:
+	
+
+public:
+	ExerciseNotebook(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxAUI_NB_DEFAULT_STYLE);
 };
 
 #endif
