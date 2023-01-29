@@ -270,6 +270,7 @@ void DynamicPlan::Init()
 
 void DynamicPlan::SetupControls()
 {
+	// Top-level buttons
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
 	m_spreadsheetBmp = wxBitmap(path_data::dataDir + _T("\\Images\\spreadsheet.png"), wxBITMAP_TYPE_PNG);
 
@@ -277,6 +278,9 @@ void DynamicPlan::SetupControls()
 	m_pOpenSpreadSheet = new wxButton(this, wxID_ANY, _T("Open Spreadsheet"), wxDefaultPosition, wxDefaultSize);
 	m_pAddExercise->SetBitmap(m_addBmp);
 	m_pOpenSpreadSheet->SetBitmap(m_spreadsheetBmp);
+
+	// ExerciseNotebook
+	m_pExerciseNotebook = new ExerciseNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 }
 
 void DynamicPlan::SetupSizers()
@@ -289,11 +293,7 @@ void DynamicPlan::SetupSizers()
 	m_pTopButtonSizer->Add(m_pOpenSpreadSheet, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pTopSizer->Add(m_pTopButtonSizer);
-}
-
-void DynamicPlan::SetupAUI()
-{
-
+	m_pTopSizer->Add(m_pExerciseNotebook, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
 // events
@@ -312,4 +312,21 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
 {
 
+}
+
+// ExerciseNotebook
+
+ExerciseNotebook::ExerciseNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxAuiNotebook(parent, id, pos, size, style)
+{
+	// Connect events
+	this->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &ExerciseNotebook::OnCloseTab, this);
+}
+
+// events for ExerciseNotebook
+
+void ExerciseNotebook::OnCloseTab(wxAuiNotebookEvent& event)
+{
+	if (wxMessageBox(_T("Are you sure you want to close this tab and lose all of its data?"), _T("Confirm"), wxYES_NO) == wxNO)
+		event.Veto();
 }
