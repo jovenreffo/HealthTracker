@@ -128,7 +128,6 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
-	void SetupAUI();
 
 	// Events
 	void OnAddExercise(wxCommandEvent& event);
@@ -146,6 +145,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxAUI_NB_DEFAULT_STYLE);
+
+	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title);
+
+	// Events
+	void OnCloseTab(wxAuiNotebookEvent& event);
 };
 
 #endif

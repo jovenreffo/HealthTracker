@@ -323,6 +323,11 @@ ExerciseNotebook::ExerciseNotebook(wxWindow* parent, wxWindowID id, const wxPoin
 	this->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &ExerciseNotebook::OnCloseTab, this);
 }
 
+void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
+{
+
+}
+
 // events for ExerciseNotebook
 
 void ExerciseNotebook::OnCloseTab(wxAuiNotebookEvent& event)
