@@ -83,7 +83,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Joven Reffo\Desktop\SDKs\wxWidgets-3.2.1\lib\vc_dll;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wxbase32ud.lib;wxmsw32ud_core.lib;wxmsw32ud_aui.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>wxbase32ud.lib;wxmsw32ud_core.lib;wxmsw32ud_aui.lib;wxmsw32ud_html.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -147,6 +147,7 @@
     <ClCompile Include="src\Main.cc" />
     <ClCompile Include="src\MealPlan.cc" />
     <ClCompile Include="src\NutritionBook.cc" />
+    <ClCompile Include="src\NutritionCatalogHTML\NutritionCatalog.cc" />
     <ClCompile Include="src\NutritionPanel.cc" />
     <ClCompile Include="src\PrefsDlg.cc" />
     <ClCompile Include="src\RoutineDialog.cc" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\MealPlanInfo\MealPlanInfo.hpp" />
     <ClInclude Include="src\MealPlanWindow.h" />
     <ClInclude Include="src\NutritionBook.h" />
+    <ClInclude Include="src\NutritionCatalogHTML\NutritionCatalog.h" />
     <ClInclude Include="src\NutritionPanel.h" />
     <ClInclude Include="src\PrefsDlg.h" />
     <ClInclude Include="src\RoutineDialog.h" />
@@ -195,6 +197,7 @@
     <ClInclude Include="src\xpm\xpm_include.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\AboutDialog\about.html" />
     <None Include="src\xpm\copy.xpm" />
     <None Include="src\xpm\cut.xpm" />
     <None Include="src\xpm\heart.xpm" />

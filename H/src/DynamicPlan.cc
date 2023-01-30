@@ -109,8 +109,8 @@ public:
 	}
 };
 
-CustomExercisePanel::CustomExercisePanel(const wxString& exerciseName, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style), m_exerciseName{ exerciseName }
+CustomExercisePanel::CustomExercisePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style)
 {
 	this->Init();
 
@@ -229,15 +229,26 @@ void AddExerciseDialog::SetupSizers()
 
 void AddExerciseDialog::OnOK(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void AddExerciseDialog::OnCancel(wxCommandEvent& event)
 {
-
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 void AddExerciseDialog::OnClose(wxCloseEvent& event)
+{
+	this->SetReturnCode(wxID_CLOSE);
+	this->Show(false);
+}
+
+void AddExerciseDialog::OnEnter(wxCommandEvent& event)
 {
 
 }
@@ -305,7 +316,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 
 	if (m_pAddExerciseDialog->ShowModal() == wxID_OK)
 	{
-		//
+		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
 	}
 }
 
@@ -325,7 +336,7 @@ ExerciseNotebook::ExerciseNotebook(wxWindow* parent, wxWindowID id, const wxPoin
 
 void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
 {
-
+	this->AddPage(pExercisePanel, title, true, -1);
 }
 
 // events for ExerciseNotebook

@@ -54,6 +54,7 @@
     <ClCompile Include="src\MealPlan.cc" />
     <ClCompile Include="src\MealPlanWindow.cc" />
     <ClCompile Include="src\MealList\MealList.cc" />
+    <ClCompile Include="src\NutritionCatalogHTML\NutritionCatalog.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Window.h">
@@ -155,6 +156,9 @@
     <ClInclude Include="src\MealPlanInfo\MealPlanInfo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\NutritionCatalogHTML\NutritionCatalog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\xpm\copy.xpm" />
@@ -168,5 +172,6 @@
     <None Include="src\xpm\undo.xpm" />
     <None Include="src\xpm\zoomin.xpm" />
     <None Include="src\xpm\zoomout.xpm" />
+    <None Include="src\AboutDialog\about.html" />
   </ItemGroup>
 </Project>
