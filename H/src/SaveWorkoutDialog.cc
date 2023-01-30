@@ -67,5 +67,4 @@ void SaveWorkoutDialog::OnEnter(wxCommandEvent& event)
 
 	this->SetReturnCode(wxID_OK);
 	this->Show(false);
-	//event.Skip();
 }
