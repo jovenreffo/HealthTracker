@@ -201,6 +201,7 @@ void AddExerciseDialog::SetupSizing()
 void AddExerciseDialog::SetupControls()
 {
 	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
+	m_pExerciseNameTxt->Bind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -250,7 +251,11 @@ void AddExerciseDialog::OnClose(wxCloseEvent& event)
 
 void AddExerciseDialog::OnEnter(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 // DynamicPlan
