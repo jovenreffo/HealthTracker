@@ -45,8 +45,7 @@ private:
 	int m_repCount;
 
 public:
-	CustomExercisePanel(const wxString& exerciseName,
-		wxWindow* parent,
+	CustomExercisePanel(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = CEP_SIZE,
@@ -86,6 +85,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
+	const wxString& GetExerciseName() const { return m_exerciseName; }
+
 	// Setup
 	void Init();
 	void SetupSizing();
@@ -96,6 +97,7 @@ public:
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	void OnClose(wxCloseEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 class DynamicPlan : public wxScrolled<wxPanel>
