@@ -65,12 +65,14 @@ private:
 
 	std::vector<Routine> m_routineInfo;
 
-	
+	RoutineView* m_pRoutineView;
+
 	wxImageList* m_pImageList;
 	wxBitmap m_routineBmp;
 
 	wxString m_currentItemName;
 	long m_selectionIndex;
+	long m_insertionIndex{ 0 };
 
 public:
 	RoutineList(wxWindow* parent,
