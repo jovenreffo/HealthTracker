@@ -33,7 +33,7 @@ private:
 
 	RoutineList* m_pRoutineList;
 	wxArrayString m_choiceArray;
-	wxChoice* m_pChoice[CL_SIZE];
+	wxChoice* m_pChoice[ROUTINE_LIST_SIZE];
 	std::vector<Routine> m_routineInfo;
 
 	wxButton* m_pOk;
