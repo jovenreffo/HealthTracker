@@ -4,11 +4,11 @@
 #include <utility>
 #include <wx/wx.h>
 
-#define CL_SIZE ( 7 )
+#define ROUTINE_LIST_SIZE ( 7 )
 
 struct Routine
 {
-	
+	wxString m_daysOfWeek[ROUTINE_LIST_SIZE];
 };
 
 #endif
