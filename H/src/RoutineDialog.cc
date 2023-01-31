@@ -74,7 +74,7 @@ void RoutineDialog::CreateControls()
 	// Initialise the choice array
 	for (auto i{ 0 }; i < m_content.size(); ++i)
 		m_choiceArray.Add(m_content[i].GetName());
-	for (auto i{ 0 }; i < CL_SIZE; ++i)
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
 	// Buttons
@@ -92,7 +92,15 @@ void RoutineDialog::CreateControls()
 
 void RoutineDialog::HandleExit()
 {
-	
+	Routine r;
+
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		r.m_daysOfWeek[i] = m_pChoice[i]->GetStringSelection();
+	}
+	wxLogMessage(_T("%s\n%s\n%s"), r.m_daysOfWeek[0], r.m_daysOfWeek[1], r.m_daysOfWeek[2]);
+
+	m_pRoutineList->AddItem(m_routineName, r);
 }
 
 // events

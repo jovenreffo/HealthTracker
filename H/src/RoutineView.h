@@ -29,12 +29,13 @@ private:
 private:
 	std::vector<EntryContent> m_content;
 	std::vector<Routine> m_routineInfo;
+	Routine m_routine;
 
 	wxBitmap m_viewBmp;
 	wxBitmapButton* m_pViewButton;
 
 	wxArrayString m_choiceArray;
-	wxChoice* m_pChoice[CL_SIZE];
+	wxChoice* m_pChoice[ROUTINE_LIST_SIZE];
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
@@ -48,7 +49,7 @@ private:
 
 public:
 	RoutineView(long selectionIndex,
-		const std::vector<Routine>& routineInfo,
+		const Routine& routineInfo,
 		const std::vector<EntryContent>& content,
 		wxWindow* parent,
 		wxWindowID id,
@@ -62,6 +63,7 @@ public:
 	void SetupSizing();
 	void SetupControls();
 	void CreateControls();
+	void SetupSelections();
 
 	// Events
 	void OnOK(wxCommandEvent& event);

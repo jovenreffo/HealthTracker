@@ -170,7 +170,8 @@ void RoutineList::SetupMenu()
 void RoutineList::AddItem(const wxString& name, const Routine& routine)
 {
 	m_routineInfo.push_back(routine);
-	this->InsertItem(0, name);
+	this->InsertItem(m_insertionIndex, name);
+	++m_insertionIndex;
 }
 
 void RoutineList::ResetList()
@@ -180,7 +181,16 @@ void RoutineList::ResetList()
 
 void RoutineList::OpenRoutine()
 {
+	if (!m_content.empty())
+	{
+		m_pRoutineView = new RoutineView(m_selectionIndex, m_routineInfo[m_selectionIndex], m_content, this, wxID_ANY, wxString(_T("View Routine - ")) << m_currentItemName, wxDefaultPosition);
+		m_pRoutineView->Show(true);
 
+		if (m_pRoutineView->ShowModal() == wxID_OK)
+		{
+
+		}
+	}
 }
 
 void RoutineList::OnRightClick(wxListEvent& event)
