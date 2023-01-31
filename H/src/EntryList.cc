@@ -3,11 +3,13 @@
 #include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(EntryList, wxListView)
+	EVT_LIST_COL_RIGHT_CLICK(wxID_ANY, EntryList::OnRightClickTitle)
 	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, EntryList::OnRightClick)
 	EVT_LIST_ITEM_SELECTED(wxID_ANY, EntryList::OnItemSelected)
 	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, EntryList::OnDoubleClick)
 	EVT_MENU(wxID_DELETE, EntryList::OnRemoveEntry)
 	EVT_MENU(wxID_OPEN, EntryList::OnOpenEntry)
+	EVT_MENU(wxID_CLEAR, EntryList::OnClearEntryList)
 	EVT_KEY_DOWN(EntryList::OnKey)
 END_EVENT_TABLE()
 
@@ -41,11 +43,17 @@ void EntryList::Init()
 
 void EntryList::SetupPopUpMenu()
 {
-	m_pPopUpMenu = new wxMenu;
+	// For right-clicking items
+	m_pPopUpMenu = new wxMenu();
 
 	m_pPopUpMenu->Append(wxID_OPEN, _T("Open Entry\tCtrl+O"));
 	m_pPopUpMenu->AppendSeparator();
 	m_pPopUpMenu->Append(wxID_DELETE, _T("&Delete"));
+
+	// for right-clicking columns
+	m_pPopUpMenuCol = new wxMenu();
+
+	m_pPopUpMenuCol->Append(wxID_CLEAR, _T("Clear Entry List"));
 }
 
 void EntryList::SetupBitmaps()
@@ -80,6 +88,11 @@ void EntryList::HandleDeleteItem()
 
 // Events
 
+void EntryList::OnRightClickTitle(wxListEvent& event)
+{
+	this->PopupMenu(m_pPopUpMenuCol);
+}
+
 void EntryList::OnRightClick(wxListEvent& event)
 {
 	this->PopupMenu(m_pPopUpMenu);
@@ -104,6 +117,12 @@ void EntryList::OnOpenEntry(wxCommandEvent& event)
 void EntryList::OnRemoveEntry(wxCommandEvent& event)
 {
 	this->HandleDeleteItem();
+}
+
+void EntryList::OnClearEntryList(wxCommandEvent& event)
+{
+	if (wxMessageBox(_T("Are you sure you want to delete all of your entries?"), _T("Confirm"), wxYES_NO) == wxYES)
+		this->DeleteAllItems();
 }
 
 void EntryList::OnKey(wxKeyEvent& event)

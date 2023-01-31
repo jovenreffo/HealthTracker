@@ -35,6 +35,7 @@ private:
 
 private:
 	wxMenu* m_pPopUpMenu;
+	wxMenu* m_pPopUpMenuCol;
 	wxTextCtrl* m_pTextCtrl;
 
 	wxImageList* m_pImageList;
@@ -67,11 +68,13 @@ public:
 	void HandleDeleteItem();
 
 	// Events
+	void OnRightClickTitle(wxListEvent& event);
 	void OnRightClick(wxListEvent& event);
 	void OnDoubleClick(wxListEvent& event);
 	void OnItemSelected(wxListEvent& event);
 	void OnOpenEntry(wxCommandEvent& event);
 	void OnRemoveEntry(wxCommandEvent& event);
+	void OnClearEntryList(wxCommandEvent& event);
 	void OnKey(wxKeyEvent& event);
 };
 
