@@ -80,12 +80,14 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+	~FeaturedList();
 
 	// Setup
 	void Init();
 	void SetupColumns();
 
 	// Events
+	void OnDragColumns(wxListEvent& event);
 };
 
 #define CFD_SIZE (wxSize(250, 150))

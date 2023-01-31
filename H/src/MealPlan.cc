@@ -105,6 +105,10 @@ FeaturedList::FeaturedList(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Init();
 }
 
+FeaturedList::~FeaturedList()
+{
+}
+
 void FeaturedList::Init()
 {
 	this->SetupColumns();
@@ -126,6 +130,12 @@ void FeaturedList::SetupColumns()
 	{
 		this->AppendColumn(m_daysOfWeek[i]);
 	}
+}
+
+void FeaturedList::OnDragColumns(wxListEvent& event)
+{
+	// It doesn't make sense for these columns to be moved
+	event.Veto();
 }
 
 // ================== ChangeFeaturedDialog ==================
