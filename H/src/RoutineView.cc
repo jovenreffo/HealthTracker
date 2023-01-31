@@ -4,8 +4,8 @@ BEGIN_EVENT_TABLE(RoutineView, wxDialog)
 
 END_EVENT_TABLE()
 
-RoutineView::RoutineView(long selectionIndex, const std::vector<Routine>& routineInfo, const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style), m_selectionIndex{ selectionIndex }, m_routineInfo{ routineInfo }, m_content{ content }
+RoutineView::RoutineView(long selectionIndex, const Routine& routine, const std::vector<EntryContent>& content, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_selectionIndex{ selectionIndex }, m_content{ content }, m_routine{ routine }
 {
 	this->Init();
 }
@@ -15,6 +15,7 @@ void RoutineView::Init()
 	this->SetupControls();
 	this->CreateControls();
 	this->SetupSizing();
+	this->SetupSelections();
 }
 
 void RoutineView::SetupSizing()
@@ -69,7 +70,7 @@ void RoutineView::SetupControls()
 	// Initialise the choice array
 	for (auto i{ 0 }; i < m_content.size(); ++i)
 		m_choiceArray.Add(m_content[i].GetName());
-	for (auto i{ 0 }; i < CL_SIZE; ++i)
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
 	// Buttons
@@ -83,6 +84,16 @@ void RoutineView::SetupControls()
 	// Textctrl
 	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &RoutineView::OnEnter, this);
+}
+
+void RoutineView::SetupSelections()
+{
+	// loop through the choice array
+	// set the corresponding controls to the correct string values
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		m_pChoice[i]->SetStringSelection(m_routine.m_daysOfWeek[i]);
+	}
 }
 
 void RoutineView::OnOK(wxCommandEvent& event)
