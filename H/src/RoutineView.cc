@@ -28,33 +28,33 @@ void RoutineView::SetupSizing()
 void RoutineView::CreateControls()
 {
 	this->SetSizerAndFit(m_pTopSizer);
-	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().Expand());
+	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 
 	// For each day
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[0], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[0], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	// Re-init the sizer
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[1], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[1], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Tuesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[2], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[2], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Wednesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[3], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[3], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Thursday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[4], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[4], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Friday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[5], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[5], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Saturday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[6], wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pChoice[6], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
 	// Separate the choices and buttons
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
@@ -62,7 +62,7 @@ void RoutineView::CreateControls()
 	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 	m_pDayFlexSizer->Add(m_pOk, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE).Border(wxALL, 5));
 	m_pDayFlexSizer->Add(m_pCancel, wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE).Border(wxALL, 5));
-	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().Expand());
+	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 }
 
 void RoutineView::SetupControls()
