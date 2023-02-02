@@ -9,6 +9,8 @@
 #include <wx/bmpbuttn.h>
 #include <wx/bitmap.h>
 #include <wx/scrolwin.h>
+#include <wx/html/htmlwin.h>
+#include <wx/wxhtml.h>
 #include "aui_includes/aui_includes.h"
 
 #define CEP_SIZE (wxSize(125, 250))
@@ -25,6 +27,7 @@ enum class CEP
 
 class CounterList;
 class ExerciseNotebook; // Inherits from wxAuiNotebook, dockable & movable tabs will be nice for the user
+class HtmlPanelCover;
 
 class CustomExercisePanel : public wxPanel
 {
@@ -108,6 +111,9 @@ private:
 	wxButton* m_pOpenSpreadSheet; wxBitmap m_spreadsheetBmp;
 	AddExerciseDialog* m_pAddExerciseDialog;
 
+	HtmlPanelCover* m_pHtmlPanelCover;
+	bool m_bShowCover{ true };
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTopButtonSizer;
@@ -152,6 +158,16 @@ public:
 
 	// Events
 	void OnCloseTab(wxAuiNotebookEvent& event);
+};
+
+class HtmlPanelCover: public wxPanel
+{
+public:
+	HtmlPanelCover(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = 0L);
 };
 
 #endif
