@@ -295,8 +295,12 @@ void DynamicPlan::SetupControls()
 	m_pAddExercise->SetBitmap(m_addBmp);
 	m_pOpenSpreadSheet->SetBitmap(m_spreadsheetBmp);
 
+	m_pHtmlPanelCover = new HtmlPanelCover(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pHtmlPanelCover->Show(true);
+
 	// ExerciseNotebook
 	m_pExerciseNotebook = new ExerciseNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pExerciseNotebook->Show(false);
 }
 
 void DynamicPlan::SetupSizers()
@@ -309,6 +313,7 @@ void DynamicPlan::SetupSizers()
 	m_pTopButtonSizer->Add(m_pOpenSpreadSheet, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pTopSizer->Add(m_pTopButtonSizer);
+	m_pTopSizer->Add(m_pHtmlPanelCover, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pExerciseNotebook, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
@@ -321,7 +326,19 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 
 	if (m_pAddExerciseDialog->ShowModal() == wxID_OK)
 	{
+		// The cover should only be shown at the start of the program, when the user has not added any exercises to the notbook
+		// If the cover is shown, set m_bShowCover to false, hide the cover, and show the notebook. Finally, refresh the panel.
+		if (m_bShowCover) 
+		{
+			m_bShowCover = false;
+			m_pHtmlPanelCover->Show(false);
+			m_pExerciseNotebook->Show(true);
+
+		}
+
 		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
+		this->SetSize(wxSize(this->GetSize().GetWidth() + 1, this->GetSize().GetHeight() + 1));
+		this->SetSize(wxSize(this->GetSize().GetWidth() - 1, this->GetSize().GetHeight() - 1));
 	}
 }
 
@@ -350,4 +367,22 @@ void ExerciseNotebook::OnCloseTab(wxAuiNotebookEvent& event)
 {
 	if (wxMessageBox(_T("Are you sure you want to close this tab and lose all of its data?"), _T("Confirm"), wxYES_NO) == wxNO)
 		event.Veto();
+}
+
+// HtmlPanelCover
+
+HtmlPanelCover::HtmlPanelCover(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style)
+{
+	wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
+
+	wxHtmlWindow* pHtmlWin = new wxHtmlWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_DEFAULT_STYLE);
+	pHtmlWin->SetBorders(0);
+	pHtmlWin->LoadPage(path_data::dataDir + _T("\\H\\src\\HTML\\dynamic_plan_cover.html"));
+	pHtmlWin->SetInitialSize(wxSize(pHtmlWin->GetInternalRepresentation()->GetWidth(), pHtmlWin->GetInternalRepresentation()->GetHeight()));
+
+	pTopSizer->Add(pHtmlWin, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+
+	this->SetSizer(pTopSizer);
+	pTopSizer->Fit(this);
 }
