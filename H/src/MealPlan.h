@@ -85,6 +85,7 @@ public:
 	// Setup
 	void Init();
 	void SetupColumns();
+	void SetupFeaturedItems(const std::vector<MealPlanInfo>& mealPlanInfoVec);
 
 	// Events
 	void OnDragColumns(wxListEvent& event);
