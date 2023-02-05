@@ -160,6 +160,7 @@ public:
 
 	// Events
 	void OnCloseTab(wxAuiNotebookEvent& event);
+	void OnRightClickTab(wxAuiNotebookEvent& event);
 };
 
 class HtmlPanelCover: public wxPanel
