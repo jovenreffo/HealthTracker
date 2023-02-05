@@ -359,8 +359,32 @@ void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
 ExerciseNotebook::ExerciseNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxAuiNotebook(parent, id, pos, size, style)
 {
+	this->Init();
+
 	// Connect events
 	this->Bind(wxEVT_AUINOTEBOOK_PAGE_CLOSE, &ExerciseNotebook::OnCloseTab, this);
+	this->Bind(wxEVT_AUINOTEBOOK_TAB_RIGHT_DOWN, &ExerciseNotebook::OnRightClickTab, this);
+	
+	// bind close event to the pop-up menu as well
+	m_pTabMenu->Bind(wxEVT_MENU, &ExerciseNotebook::OnCloseTabMenu, this, wxID_CLOSE);
+}
+
+ExerciseNotebook::~ExerciseNotebook()
+{
+	this->Unbind(wxEVT_AUINOTEBOOK_PAGE_CLOSED, &ExerciseNotebook::OnCloseTab, this);
+	this->Unbind(wxEVT_AUINOTEBOOK_TAB_RIGHT_DOWN, &ExerciseNotebook::OnRightClickTab, this);
+}
+
+void ExerciseNotebook::Init()
+{
+	this->SetupMenu();
+}
+
+void ExerciseNotebook::SetupMenu()
+{
+	m_pTabMenu = new wxMenu();
+
+	m_pTabMenu->Append(wxID_CLOSE, _T("Close Tab"));
 }
 
 void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
@@ -370,10 +394,29 @@ void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, cons
 
 // events for ExerciseNotebook
 
+void ExerciseNotebook::OnCloseTabMenu(wxCommandEvent& event)
+{
+	if (wxMessageBox(_T("Are you sure you want to close this tab and lose all of its data?"), _T("Confirm"), wxYES_NO) == wxYES)
+	{
+		if (m_selectionIndex != -1)
+			this->DeletePage(m_selectionIndex);
+	}
+}
+
 void ExerciseNotebook::OnCloseTab(wxAuiNotebookEvent& event)
 {
 	if (wxMessageBox(_T("Are you sure you want to close this tab and lose all of its data?"), _T("Confirm"), wxYES_NO) == wxNO)
 		event.Veto();
+}
+
+void ExerciseNotebook::OnRightClickTab(wxAuiNotebookEvent& event)
+{
+	this->PopupMenu(m_pTabMenu);
+}
+
+void ExerciseNotebook::OnPageChange(wxAuiNotebookEvent& event)
+{
+	m_selectionIndex = this->GetSelection();
 }
 
 // HtmlPanelCover
