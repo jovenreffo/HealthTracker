@@ -147,7 +147,8 @@ public:
 class ExerciseNotebook : public wxAuiNotebook
 {
 private:
-	
+	wxMenu* m_pTabMenu;
+	long m_selectionIndex;
 
 public:
 	ExerciseNotebook(wxWindow* parent,
@@ -155,12 +156,18 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxAUI_NB_DEFAULT_STYLE);
+	~ExerciseNotebook();
+
+	void Init();
+	void SetupMenu();
 
 	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title);
 
 	// Events
+	void OnCloseTabMenu(wxCommandEvent& event);
 	void OnCloseTab(wxAuiNotebookEvent& event);
 	void OnRightClickTab(wxAuiNotebookEvent& event);
+	void OnPageChange(wxAuiNotebookEvent& event);
 };
 
 class HtmlPanelCover: public wxPanel
