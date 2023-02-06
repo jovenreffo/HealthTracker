@@ -132,6 +132,11 @@ void FeaturedList::SetupColumns()
 	}
 }
 
+void FeaturedList::SetupFeaturedItems(const std::vector<MealPlanInfo>& mealPlanInfoVec)
+{
+
+}
+
 void FeaturedList::OnDragColumns(wxListEvent& event)
 {
 	// It doesn't make sense for these columns to be moved
