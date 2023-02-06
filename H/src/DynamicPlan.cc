@@ -4,6 +4,7 @@
 #include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/listctrl.h>
+#include <wx/filedlg.h>
 
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
@@ -205,6 +206,11 @@ void AddExerciseDialog::SetupControls()
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+	m_pSearchImg = new wxButton(this, wxID_ANY, _T("Search"), wxDefaultPosition, wxDefaultSize);
+	m_pSearchImg->SetToolTip(_T("Set a custom image for this exercise. 16x16 for best results."));
+
+	// bind
+	m_pSearchImg->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
 }
 
 void AddExerciseDialog::SetupSizers()
@@ -215,6 +221,8 @@ void AddExerciseDialog::SetupSizers()
 
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Exercise name:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pExerciseNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Custom icon:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pSearchImg, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
@@ -255,6 +263,39 @@ void AddExerciseDialog::OnEnter(wxCommandEvent& event)
 	{
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
+	}
+}
+
+void AddExerciseDialog::OnSearch(wxCommandEvent& event)
+{
+	wxFileDialog* pOpenDialog = new wxFileDialog(this, _T("Open Image File"), wxEmptyString, wxEmptyString, _T("PNG files (*.png)|*.png|ICO files (*.ico)|*.ico|BMP files (*.bmp)|*.bmp"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+	if (pOpenDialog->ShowModal() == wxID_OK)
+	{
+		wxString path = pOpenDialog->GetPath();
+
+		// The filter index tells us which file type the user chose.
+		switch (pOpenDialog->GetFilterIndex())
+		{
+		case 0: // png
+			m_image = wxBitmap(path, wxBITMAP_TYPE_PNG);
+			break;
+		case 1: // ico
+			m_image = wxBitmap(path, wxBITMAP_TYPE_ICO);
+			break;
+		case 2: // bmp
+			m_image = wxBitmap(path, wxBITMAP_TYPE_BMP);
+			break;
+		default:
+			wxLogError(_T("Unrecognized file type. Please try again."));
+			break;
+		}
+	}
+
+	if (m_image.IsOk())
+	{
+		// Append the file name to the sizer
+		
 	}
 }
 
@@ -321,7 +362,7 @@ void DynamicPlan::CustomRefresh()
 {
 	// CustomRefresh:
 	// Simply increase the size and then decrement by 1 to return to original state.
-	// If this breaks, resort to wxUpdateUIEvent
+	// If this breaks in the future, resort to wxUpdateUIEvent
 	this->SetSize(wxSize(this->GetSize().GetWidth() + 1, this->GetSize().GetHeight() + 1));
 	this->SetSize(wxSize(this->GetSize().GetWidth() - 1, this->GetSize().GetHeight() - 1));
 }
@@ -387,9 +428,22 @@ void ExerciseNotebook::SetupMenu()
 	m_pTabMenu->Append(wxID_CLOSE, _T("Close Tab"));
 }
 
+void ExerciseNotebook::SetupImageList()
+{
+	// prepare the image list for use
+	m_pImageList = new wxImageList(16, 16);
+
+	this->AssignImageList(m_pImageList);
+}
+
 void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
 {
 	this->AddPage(pExercisePanel, title, true, -1);
+}
+
+void ExerciseNotebook::AddImageToList(const wxBitmap& bmp)
+{
+	m_pImageList->Add(bmp);
 }
 
 // events for ExerciseNotebook
