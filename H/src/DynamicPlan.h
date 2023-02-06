@@ -8,6 +8,7 @@
 #include <wx/button.h>
 #include <wx/bmpbuttn.h>
 #include <wx/bitmap.h>
+#include <wx/imaglist.h>
 #include <wx/scrolwin.h>
 #include <wx/html/htmlwin.h>
 #include <wx/wxhtml.h>
@@ -15,8 +16,8 @@
 
 #define CEP_SIZE (wxSize(125, 250))
 
-#define AED_SIZE (wxSize(280, 160))
-#define AED_SIZE_MAX (wxSize(340, 180))
+#define AED_SIZE (wxSize(280, 180))
+#define AED_SIZE_MAX (wxSize(340, 200))
 
 enum class CEP
 {
@@ -72,10 +73,13 @@ private:
 	wxTextCtrl* m_pExerciseNameTxt;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+	wxButton* m_pSearchImg;
+	wxBitmap m_image;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxFlexGridSizer* m_pHorizontalSizer;
+	wxFlexGridSizer* m_pButtonSizer;
 
 	// Validator
 	wxString m_exerciseName;
@@ -101,6 +105,7 @@ public:
 	void OnCancel(wxCommandEvent& event);
 	void OnClose(wxCloseEvent& event);
 	void OnEnter(wxCommandEvent& event);
+	void OnSearch(wxCommandEvent& event);
 };
 
 class DynamicPlan : public wxScrolled<wxPanel>
@@ -147,6 +152,7 @@ public:
 class ExerciseNotebook : public wxAuiNotebook
 {
 private:
+	wxImageList* m_pImageList;
 	wxMenu* m_pTabMenu;
 	long m_selectionIndex;
 
@@ -160,8 +166,10 @@ public:
 
 	void Init();
 	void SetupMenu();
+	void SetupImageList();
 
 	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title);
+	void AddImageToList(const wxBitmap& bmp);
 
 	// Events
 	void OnCloseTabMenu(wxCommandEvent& event);
