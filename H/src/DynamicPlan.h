@@ -10,13 +10,14 @@
 #include <wx/bitmap.h>
 #include <wx/imaglist.h>
 #include <wx/scrolwin.h>
+#include <wx/stattext.h>
 #include <wx/html/htmlwin.h>
 #include <wx/wxhtml.h>
 #include "aui_includes/aui_includes.h"
 
 #define CEP_SIZE (wxSize(125, 250))
 
-#define AED_SIZE (wxSize(280, 180))
+#define AED_SIZE (wxSize(280, 210))
 #define AED_SIZE_MAX (wxSize(340, 200))
 
 enum class CEP
@@ -76,6 +77,8 @@ private:
 	wxButton* m_pSearchImg;
 	wxBitmap m_image;
 
+	wxStaticText* m_pImageLabel;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxFlexGridSizer* m_pHorizontalSizer;
@@ -93,6 +96,8 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
 	const wxString& GetExerciseName() const { return m_exerciseName; }
+
+	void CustomRefresh();
 
 	// Setup
 	void Init();
