@@ -1,10 +1,10 @@
 #include <wx/valgen.h>
 #include <wx/valtext.h>
 #include <wx/msgdlg.h>
-#include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/listctrl.h>
 #include <wx/filedlg.h>
+#include <wx/string.h>
 
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
@@ -192,11 +192,17 @@ void AddExerciseDialog::Init()
 	this->SetupSizing();
 }
 
+void AddExerciseDialog::CustomRefresh()
+{
+	this->SetSize(wxSize(this->GetSize().GetWidth() + 1, this->GetSize().GetHeight() + 1));
+	this->SetSize(wxSize(this->GetSize().GetWidth() - 1, this->GetSize().GetHeight() - 1));
+}
+
 void AddExerciseDialog::SetupSizing()
 {
 	this->SetInitialSize(AED_SIZE);
 	this->SetMinSize(AED_SIZE);
-	this->SetMaxSize(AED_SIZE_MAX);
+	//this->SetMaxSize(AED_SIZE_MAX);
 }
 
 void AddExerciseDialog::SetupControls()
@@ -209,6 +215,8 @@ void AddExerciseDialog::SetupControls()
 	m_pSearchImg = new wxButton(this, wxID_ANY, _T("Search"), wxDefaultPosition, wxDefaultSize);
 	m_pSearchImg->SetToolTip(_T("Set a custom image for this exercise. 16x16 for best results."));
 
+	m_pImageLabel = new wxStaticText(this, wxID_ANY, _T("Image: No selection."), wxDefaultPosition, wxDefaultSize);
+
 	// bind
 	m_pSearchImg->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
 }
@@ -217,21 +225,25 @@ void AddExerciseDialog::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pButtonSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 	this->SetSizerAndFit(m_pTopSizer);
 
+	// Main controls
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Exercise name:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pExerciseNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Custom icon:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pSearchImg, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pImageLabel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->AddSpacer(0);
 	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 
+	// separator
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 
-	// Re-init for buttons
-	m_pHorizontalSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-	m_pHorizontalSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pHorizontalSizer->Add(m_pCancel, wxSizerFlags().CentreVertical().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pHorizontalSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+	// Button sizer
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 // events
@@ -294,8 +306,9 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 
 	if (m_image.IsOk())
 	{
-		// Append the file name to the sizer
-		
+		// Update the file name and display it on the dialog
+		m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
+		m_pImageLabel->Show(true);
 	}
 }
 
