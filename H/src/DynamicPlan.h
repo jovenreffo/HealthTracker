@@ -84,6 +84,10 @@ private:
 	wxFlexGridSizer* m_pHorizontalSizer;
 	wxFlexGridSizer* m_pButtonSizer;
 
+	// Members for initializing outside of the class
+	wxString m_imagePath;
+	wxBitmapType m_bitmapType;
+
 	// Validator
 	wxString m_exerciseName;
 
@@ -95,6 +99,8 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
+	const wxBitmapType GetBitmapType() const { return m_bitmapType; }
+	const wxString& GetImagePath() const { return m_imagePath; }
 	const wxString& GetExerciseName() const { return m_exerciseName; }
 	const wxBitmap& GetImage() const
 	{
