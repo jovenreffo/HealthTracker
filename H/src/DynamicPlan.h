@@ -96,6 +96,13 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
 	const wxString& GetExerciseName() const { return m_exerciseName; }
+	const wxBitmap& GetImage() const
+	{
+		if (m_image.IsOk())
+			return m_image;
+		else
+			return wxNullBitmap;
+	}
 
 	void CustomRefresh();
 
