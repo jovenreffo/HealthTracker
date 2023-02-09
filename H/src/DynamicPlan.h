@@ -99,6 +99,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
+	// Getters
 	const wxBitmapType GetBitmapType() const { return m_bitmapType; }
 	const wxString& GetImagePath() const { return m_imagePath; }
 	const wxString& GetExerciseName() const { return m_exerciseName; }
