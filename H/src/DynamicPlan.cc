@@ -407,7 +407,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 			this->CustomRefresh();
 		}
 
-		m_pExerciseNotebook->AddImageToList(wxBitmap(m_pAddExerciseDialog->GetImagePath(), m_pAddExerciseDialog->GetBitmapType()));
+		m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
 		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
 	}
 }
