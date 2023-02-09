@@ -282,21 +282,26 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 {
 	wxFileDialog* pOpenDialog = new wxFileDialog(this, _T("Open Image File"), wxEmptyString, wxEmptyString, _T("PNG files (*.png)|*.png|ICO files (*.ico)|*.ico|BMP files (*.bmp)|*.bmp"), wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
+	wxInitAllImageHandlers();
+
 	if (pOpenDialog->ShowModal() == wxID_OK)
 	{
-		wxString path = pOpenDialog->GetPath();
+		m_imagePath = pOpenDialog->GetPath();
 
 		// The filter index tells us which file type the user chose.
 		switch (pOpenDialog->GetFilterIndex())
 		{
 		case 0: // png
-			m_image = wxBitmap(path, wxBITMAP_TYPE_PNG);
+			m_image = wxBitmap(m_imagePath, wxBITMAP_TYPE_PNG);
+			m_bitmapType = wxBITMAP_TYPE_PNG;
 			break;
 		case 1: // ico
-			m_image = wxBitmap(path, wxBITMAP_TYPE_ICO);
+			m_image = wxBitmap(m_imagePath, wxBITMAP_TYPE_ICO);
+			m_bitmapType = wxBITMAP_TYPE_ICO;
 			break;
 		case 2: // bmp
-			m_image = wxBitmap(path, wxBITMAP_TYPE_BMP);
+			m_image = wxBitmap(m_imagePath, wxBITMAP_TYPE_BMP);
+			m_bitmapType = wxBITMAP_TYPE_BMP;
 			break;
 		default:
 			wxLogError(_T("Unrecognized file type. Please try again."));
@@ -304,12 +309,15 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 		}
 	}
 
-	if (m_image.IsOk())
+	// check to make sure the image is ok and the file path is not empty before issuing an error
+	if (!m_image.IsOk() && !m_imagePath.empty())
 	{
-		// Update the file name and display it on the dialog
-		m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
-		m_pImageLabel->Show(true);
+		wxLogError(_T("Failed to load image: %s"), m_imagePath);
 	}
+
+	// Update the file name and display it on the dialog
+	m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
+	m_pImageLabel->Show(true);
 }
 
 // DynamicPlan
@@ -399,6 +407,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 			this->CustomRefresh();
 		}
 
+		m_pExerciseNotebook->AddImageToList(wxBitmap(m_pAddExerciseDialog->GetImagePath(), m_pAddExerciseDialog->GetBitmapType()));
 		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
 	}
 }
@@ -432,6 +441,7 @@ ExerciseNotebook::~ExerciseNotebook()
 void ExerciseNotebook::Init()
 {
 	this->SetupMenu();
+	this->SetupImageList();
 }
 
 void ExerciseNotebook::SetupMenu()
@@ -456,7 +466,8 @@ void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, cons
 
 void ExerciseNotebook::AddImageToList(const wxBitmap& bmp)
 {
-	m_pImageList->Add(bmp);
+	if (bmp.IsOk() && m_pImageList != nullptr)
+		m_pImageList->Add(bmp);
 }
 
 // events for ExerciseNotebook
