@@ -173,7 +173,9 @@ class ExerciseNotebook : public wxAuiNotebook
 private:
 	wxImageList* m_pImageList;
 	wxMenu* m_pTabMenu;
+
 	long m_selectionIndex;
+	long m_currentImageIndex;
 
 public:
 	ExerciseNotebook(wxWindow* parent,
