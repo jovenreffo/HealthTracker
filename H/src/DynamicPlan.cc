@@ -407,6 +407,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 			this->CustomRefresh();
 		}
 
+		// Add an image to the notebook's image list and create a new exercise page
 		m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
 		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
 	}
@@ -461,13 +462,16 @@ void ExerciseNotebook::SetupImageList()
 
 void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
 {
-	this->AddPage(pExercisePanel, title, true, -1);
+	this->AddPage(pExercisePanel, title, true, m_currentImageIndex);
 }
 
 void ExerciseNotebook::AddImageToList(const wxBitmap& bmp)
 {
 	if (bmp.IsOk() && m_pImageList != nullptr)
+	{
 		m_pImageList->Add(bmp);
+		++m_currentImageIndex;
+	}
 }
 
 // events for ExerciseNotebook
