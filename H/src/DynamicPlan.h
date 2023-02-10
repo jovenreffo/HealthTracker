@@ -175,7 +175,7 @@ private:
 	wxMenu* m_pTabMenu;
 
 	long m_selectionIndex;
-	long m_currentImageIndex;
+	int m_currentImageIndex{ -1 };
 
 public:
 	ExerciseNotebook(wxWindow* parent,
