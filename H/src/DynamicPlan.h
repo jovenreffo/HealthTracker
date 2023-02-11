@@ -189,7 +189,7 @@ public:
 	void SetupMenu();
 	void SetupImageList();
 
-	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title);
+	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title, bool bUseImage);
 	void AddImageToList(const wxBitmap& bmp);
 
 	// Events
