@@ -34,8 +34,8 @@ void WPNotebook::SetupControls()
 	m_pRoutineList = new RoutineList(m_pRoutinePanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
-	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, static_cast<int>(WP::ID_NEW_WORKOUT), _T("Add Workout"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
-	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, static_cast<int>(WP::ID_NEW_ROUTINE), _T("Add Routine"), wxDefaultPosition, wxDefaultSize, wxNO_BORDER);
+	m_pAddWorkoutButton = new wxButton(m_pWorkoutPanel, static_cast<int>(WP::ID_NEW_WORKOUT), _T("Add Workout"), wxDefaultPosition, wxDefaultSize);
+	m_pAddRoutineButton = new wxButton(m_pRoutinePanel, static_cast<int>(WP::ID_NEW_ROUTINE), _T("Add Routine"), wxDefaultPosition, wxDefaultSize);
 	m_pAddWorkoutButton->SetBitmap(m_addBmp);
 	m_pAddRoutineButton->SetBitmap(m_addBmp);
 }
