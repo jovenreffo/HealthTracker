@@ -90,6 +90,7 @@ private:
 
 	// Validator
 	wxString m_exerciseName;
+	bool m_bUseImage;
 
 public:
 	AddExerciseDialog(wxWindow* parent,
@@ -100,6 +101,7 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 
 	// Getters
+	const bool UseImage() const { return m_bUseImage; }
 	const wxBitmapType GetBitmapType() const { return m_bitmapType; }
 	const wxString& GetImagePath() const { return m_imagePath; }
 	const wxString& GetExerciseName() const { return m_exerciseName; }
