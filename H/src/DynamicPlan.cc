@@ -231,7 +231,7 @@ void AddExerciseDialog::SetupSizers()
 	// Main controls
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Exercise name:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pExerciseNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Custom icon:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Custom icon (16x16):")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pSearchImg, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pImageLabel, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->AddSpacer(0);
