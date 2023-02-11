@@ -307,6 +307,8 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 			wxLogError(_T("Unrecognized file type. Please try again."));
 			break;
 		}
+
+		m_bUseImage = true;
 	}
 
 	// check to make sure the image is ok and the file path is not empty before issuing an error
@@ -408,8 +410,9 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 		}
 
 		// Add an image to the notebook's image list and create a new exercise page
+		
 		m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
-		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName());
+		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName(), m_pAddExerciseDialog->UseImage());
 	}
 }
 
@@ -460,9 +463,13 @@ void ExerciseNotebook::SetupImageList()
 	this->AssignImageList(m_pImageList);
 }
 
-void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title)
-{
-	this->AddPage(pExercisePanel, title, true, m_currentImageIndex);
+void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title, bool bUseImage)
+{	
+	// If the user has selected an image to be used, initialize a new page with the image index
+	if (bUseImage)
+		this->AddPage(pExercisePanel, title, true, m_currentImageIndex);
+	else // Otherwise leave it blank
+		this->AddPage(pExercisePanel, title, true, -1);
 }
 
 void ExerciseNotebook::AddImageToList(const wxBitmap& bmp)
