@@ -90,7 +90,7 @@ private:
 
 	// Validator
 	wxString m_exerciseName;
-	bool m_bUseImage;
+	bool m_bUseImage{ false };
 
 public:
 	AddExerciseDialog(wxWindow* parent,
