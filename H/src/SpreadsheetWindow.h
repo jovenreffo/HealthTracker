@@ -17,6 +17,18 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = SSW_SIZE,
 		long style = SSW_STYLE);
+
+	// Window setup
+	bool Create(wxWindow* parent,
+		wxWindowID id = -1,
+		const wxString& title = _T("Spreadsheet"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = SSW_SIZE,
+		long style = SSW_STYLE);
+
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 };
 
 #endif
