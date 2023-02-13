@@ -8,7 +8,7 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	long style)
 	: wxFrame(parent, id, title, pos, size, style)
 {
-
+	this->Init();
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -19,11 +19,19 @@ bool SpreadsheetWindow::Create(wxWindow* parent,
 	long style)
 {
 	wxFrame::Create(parent, id, title, pos, size, style);
+	this->Init();
 
 	return true;
 }
 
 void SpreadsheetWindow::Init()
+{
+	this->SetupSizing();
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void SpreadsheetWindow::SetupSizing()
 {
 
 }
