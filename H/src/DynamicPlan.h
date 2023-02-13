@@ -13,7 +13,9 @@
 #include <wx/stattext.h>
 #include <wx/html/htmlwin.h>
 #include <wx/wxhtml.h>
+
 #include "aui_includes/aui_includes.h"
+#include "SpreadsheetWindow.h"
 
 #define CEP_SIZE (wxSize(125, 250))
 
@@ -136,6 +138,7 @@ private:
 	wxButton* m_pAddExercise; wxBitmap m_addBmp;
 	wxButton* m_pOpenSpreadSheet; wxBitmap m_spreadsheetBmp;
 	AddExerciseDialog* m_pAddExerciseDialog;
+	SpreadsheetWindow* m_pSpreadsheetWindow;
 
 	HtmlPanelCover* m_pHtmlPanelCover;
 	bool m_bShowCover{ true };
