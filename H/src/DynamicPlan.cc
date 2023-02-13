@@ -418,7 +418,8 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 
 void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
 {
-
+	m_pSpreadsheetWindow = new SpreadsheetWindow(this, wxID_ANY, _T("Spreadsheet - Not saved"), wxDefaultPosition);
+	m_pSpreadsheetWindow->Show(true);
 }
 
 // ExerciseNotebook
