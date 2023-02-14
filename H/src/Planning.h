@@ -11,6 +11,7 @@
 #include <wx/textctrl.h>
 #include <wx/button.h>
 #include <wx/splitter.h>
+#include <wx/htmllbox.h>
 
 enum class TD
 {
@@ -88,6 +89,13 @@ public:
 
 	// Events
 	void OnTextEnter(wxCommandEvent& event);
+};
+
+// For the to-do list items, customization will be needed.
+// In this class deriving from wxHtmlListbox, there will be a spot for the objective name and description.
+class TodoItem : public wxHtmlListBox
+{
+
 };
 
 #endif
