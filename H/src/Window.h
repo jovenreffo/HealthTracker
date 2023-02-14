@@ -6,7 +6,7 @@
 
 #include "ListBook.h"
 #include "Journal.h"
-#include "Calendar.h"
+#include "Planning.h"
 #include "Settings.h"
 #include "ExercisePanel.h"
 #include "ExerciseBook.h"
