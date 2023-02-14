@@ -5,7 +5,7 @@
 #include <wx/bitmap.h>
 
 #include "Journal.h"
-#include "Calendar.h"
+#include "Planning.h"
 #include "ExercisePanel.h"
 #include "Settings.h"
 
