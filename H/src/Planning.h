@@ -85,8 +85,6 @@ public:
 	void SetupControls();
 	void SetupSizers();
 
-	// Splitter setup
-
 	// Events
 	void OnTextEnter(wxCommandEvent& event);
 };
@@ -95,7 +93,27 @@ public:
 // In this class deriving from wxHtmlListbox, there will be a spot for the objective name and description.
 class TodoItem : public wxHtmlListBox
 {
+public:
+	TodoItem() = default;
+	TodoItem(wxWindow* parent,
+		wxWindowID id = wxID_ANY,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = 0L,
+		const wxString& name = wxHtmlListBoxNameStr);
 
+	// Setup
+	void Create(wxWindow* parent,
+		wxWindowID id = wxID_ANY,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = 0L,
+		const wxString& name = wxHtmlListBoxNameStr);
+
+	void Init();
+
+
+	wxDECLARE_NO_COPY_CLASS(TodoItem);
 };
 
 #endif
