@@ -97,6 +97,7 @@ void Frame::SetupProgramIcon()
 
 void Frame::SetupMenuBar()
 {
+#ifdef wxUSE_MENUS
 	m_pMenuBar = new wxMenuBar();
 	m_pFileMenu = new wxMenu();
 	m_pEditMenu = new wxMenu();
@@ -144,7 +145,9 @@ void Frame::SetupMenuBar()
 	m_pDebugMenu->Bind(wxEVT_MENU, &Frame::OnGetWindowSize, this, ID_WINSIZE);
 
 	m_pMenuBar->Append(m_pDebugMenu, _T("&Debug"));
-#endif
+#endif //_DEBUG
+
+#endif // wxUSE_MENUS
 
 	this->SetMenuBar(m_pMenuBar);
 }
