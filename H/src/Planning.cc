@@ -73,11 +73,24 @@ void TodoPanel::SetupSizers()
 
 }
 
-// Splitter setup
-
-
 // Events
 void TodoPanel::OnTextEnter(wxCommandEvent& event)
+{
+
+}
+
+// =========================================== TodoItem ===========================================
+
+TodoItem::TodoItem(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+{
+	this->Create(parent, id, pos, size, style, name);
+}
+
+void TodoItem::Create(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+{
+}
+
+void TodoItem::Init()
 {
 
 }
