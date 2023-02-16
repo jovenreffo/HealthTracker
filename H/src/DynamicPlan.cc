@@ -14,6 +14,7 @@ class CounterList : public wxListView
 private:
 	long m_total;
 	wxMenu* m_pMenu;
+	wxMenu* m_pMenuCol;
 
 public:
 	CounterList(wxWindow* parent,
@@ -27,40 +28,43 @@ public:
 		
 		// Bind events
 		this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CounterList::OnRightClick, this);
+		this->Bind(wxEVT_LIST_COL_RIGHT_CLICK, &CounterList::OnRightClickColumn, this);
+		this->Bind(wxEVT_KEY_DOWN, &CounterList::OnKey, this);
 		m_pMenu->Bind(wxEVT_MENU, &CounterList::OnDeleteItem, this, wxID_DELETE);
+		m_pMenuCol->Bind(wxEVT_MENU, &CounterList::OnClearList, this, wxID_CLEAR);
 	}
 
 	~CounterList()
 	{
 		// Unbind events
 		this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CounterList::OnRightClick, this);
-		m_pMenu->Bind(wxEVT_MENU, &CounterList::OnDeleteItem, this, wxID_DELETE);
+		this->Unbind(wxEVT_LIST_COL_RIGHT_CLICK, &CounterList::OnRightClickColumn, this);
+		this->Unbind(wxEVT_KEY_DOWN, &CounterList::OnKey, this);
+		m_pMenu->Unbind(wxEVT_MENU, &CounterList::OnDeleteItem, this, wxID_DELETE);
+		m_pMenuCol->Unbind(wxEVT_MENU, &CounterList::OnClearList, this, wxID_CLEAR);
 	}
 
 	void Init()
 	{
 		this->InsertColumn(0, _T("Repetitions"), 0, 100);
 		this->SetupMenu();
-		this->SetupTotalItem();
 	}
 
 	void SetupMenu()
 	{
+		// Menu on right click item
 		m_pMenu = new wxMenu();
-		m_pMenu->Append(wxID_DELETE, _T("Delete"));
-	}
+		m_pMenu->Append(wxID_DELETE, _T("&Delete"));
 
-	void SetupTotalItem()
-	{
-		this->InsertItem(0, _T("Total"));
+		// Right-clicking columns
+		m_pMenuCol = new wxMenu();
+		m_pMenuCol->Append(wxID_CLEAR, _T("&Clear"));
 	}
 
 	void AddReps(int count)
 	{
 		/*
-		* Similar to CalorieList, a total item has been created at index 0.
-		* In order to have the total "pinned" at the top, items will be inserted at index 1 in the list.
-		* The rep spin ctrl also has an int validator, so it must be converted to a string.
+		* The rep spin ctrl has an int validator, so it must be converted to a string.
 		*/
 		if (!count)
 		{
@@ -75,18 +79,27 @@ public:
 	void UpdateTotal()
 	{
 		/*
-		* Also similar to the CalorieList class, begin index 1 in calculating the total, because we do not want to include the total itself.
-		* Here, also start by resetting the current contents of the total.
+		* Start by resetting the current contents of the total.
 		* Lastly, call SetItem(index, col, str) at index 0 col 0 to update the total
 		*/
 		m_total = 0L;
 
-		for (auto i{ 1 }; i < this->GetItemCount(); ++i)
+		for (auto i{ 0 }; i < this->GetItemCount(); ++i)
 		{
 			m_total += wxAtoi(this->GetItemText(i, 0));
 		}
 
-		this->SetItem(0, 0, wxString(_T("Total: ")) << std::to_string(m_total));
+		wxListItem item;
+		item.SetText(wxString(_T("Repetitions: ")) << m_total);
+		this->SetColumn(0, item);
+	}
+
+	void HandleDeleteItem()
+	{
+		int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+		this->DeleteItem(selected);
+		this->UpdateTotal();
 	}
 
 	long GetTotal() const { return m_total; }
@@ -97,16 +110,32 @@ public:
 		this->PopupMenu(m_pMenu);
 	}
 
+	void OnRightClickColumn(wxListEvent& event)
+	{
+		this->PopupMenu(m_pMenuCol);
+	}
+
 	void OnDeleteItem(wxCommandEvent& event)
 	{
-		int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+		this->HandleDeleteItem();
+	}
 
-		// Here, a confirmation box is not necessary as there will most likely be many items in the list
-		if (selected > 0)
+	void OnClearList(wxCommandEvent& event)
+	{
+		this->DeleteAllItems();
+		this->UpdateTotal();
+	}
+
+	void OnKey(wxKeyEvent& event)
+	{
+		switch (event.GetUnicodeKey())
 		{
-			this->DeleteItem(selected);
-			this->UpdateTotal();
+		case WXK_DELETE:
+			this->HandleDeleteItem();
+			break;
 		}
+
+		event.Skip();
 	}
 };
 
@@ -418,7 +447,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 
 void DynamicPlan::OnOpenSpreadsheet(wxCommandEvent& event)
 {
-	m_pSpreadsheetWindow = new SpreadsheetWindow(this, wxID_ANY, _T("Spreadsheet - Not saved"), wxDefaultPosition);
+	m_pSpreadsheetWindow = new SpreadsheetWindow(this, wxID_ANY, _T("Spreadsheet"), wxDefaultPosition);
 	m_pSpreadsheetWindow->Show(true);
 }
 
