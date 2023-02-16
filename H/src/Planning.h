@@ -63,8 +63,6 @@ public:
 class TodoPanel: public wxPanel
 {
 private:
-
-private:
 	// Controls
 	wxButton* m_pAddButton; wxBitmap m_addBmp;
 	wxString m_objectiveStr;
