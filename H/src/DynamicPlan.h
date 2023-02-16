@@ -46,6 +46,7 @@ private:
 	// Controls
 	wxSpinCtrl* m_pSpinCtrl;
 	wxBitmapButton* m_pAddButton;
+	wxBitmapButton* m_pSaveButton;
 	CounterList* m_pCounterList;
 
 	// Validator
@@ -67,6 +68,7 @@ public:
 	// Events
 	void OnAddReps(wxCommandEvent& event);
 	void OnEnter(wxCommandEvent& event);
+	void OnSave(wxCommandEvent& event);
 };
 
 class AddExerciseDialog : public wxDialog
