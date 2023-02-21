@@ -167,8 +167,10 @@ void CustomExercisePanel::SetupControls()
 		wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS | wxTE_PROCESS_ENTER, 0, 1000, 0, _T("RepetitionSpinCtrl"));
 	m_pSpinCtrl->SetValidator(wxGenericValidator(&m_repCount));
 
-	m_pAddButton = new wxBitmapButton(this, static_cast<int>(CEP::ID_ADD_REPS), wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG),
+	m_pAddButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG),
 		wxDefaultPosition, wxDefaultSize);
+
+	m_pSaveButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 
 	m_pCounterList = new CounterList(this, static_cast<int>(CEP::ID_REP_COUNTER), wxDefaultPosition, wxDefaultSize);
 	m_pCounterList->Show(true);
@@ -204,6 +206,11 @@ void CustomExercisePanel::OnAddReps(wxCommandEvent& event)
 void CustomExercisePanel::OnEnter(wxCommandEvent& event)
 {
 	m_pCounterList->AddReps(m_pSpinCtrl->GetValue());
+}
+
+void CustomExercisePanel::OnSave(wxCommandEvent& event)
+{
+
 }
 
 // AddExerciseDialog
