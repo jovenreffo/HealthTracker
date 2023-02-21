@@ -103,11 +103,11 @@ void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
 	Total total = m_pCalorieList->GetTotal();
 
 	// Create a text file to write to by opening a file dialog
-	wxFileDialog* pOpenDialog = new wxFileDialog(this, _T("Save Nutrition Log"), wxEmptyString, _T("Nutrition.txt"), _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
-	if (pOpenDialog->ShowModal() == wxID_OK)
+	wxFileDialog* pSaveDialog = new wxFileDialog(this, _T("Save Nutrition Log"), wxEmptyString, _T("Nutrition.txt"), _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+	if (pSaveDialog->ShowModal() == wxID_OK)
 	{
-		fileName = pOpenDialog->GetFilename();
-		filePath = pOpenDialog->GetPath();
+		fileName = pSaveDialog->GetFilename();
+		filePath = pSaveDialog->GetPath();
 		textFile.Create(filePath);
 	}
 	else return;
@@ -135,7 +135,7 @@ void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
 	}
 
 	textFile.Close();
-	pOpenDialog->Destroy();
+	pSaveDialog->Destroy();
 }
 
 // ======================== CalorieList class ========================
