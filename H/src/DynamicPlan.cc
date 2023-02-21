@@ -4,6 +4,7 @@
 #include <wx/statline.h>
 #include <wx/listctrl.h>
 #include <wx/filedlg.h>
+#include <wx/file.h>
 #include <wx/string.h>
 
 #include "DynamicPlan.h"
@@ -146,6 +147,7 @@ CustomExercisePanel::CustomExercisePanel(wxWindow* parent, wxWindowID id, const 
 
 	// Event binding
 	m_pAddButton->Bind(wxEVT_BUTTON, &CustomExercisePanel::OnAddReps, this);
+	m_pSaveButton->Bind(wxEVT_BUTTON, &CustomExercisePanel::OnSave, this);
 	m_pSpinCtrl->Bind(wxEVT_TEXT_ENTER, &CustomExercisePanel::OnEnter, this);
 }
 
@@ -153,6 +155,7 @@ CustomExercisePanel::~CustomExercisePanel()
 {
 	// Unbind events
 	m_pAddButton->Unbind(wxEVT_BUTTON, &CustomExercisePanel::OnAddReps, this);
+	m_pSaveButton->Unbind(wxEVT_BUTTON, &CustomExercisePanel::OnSave, this);
 	m_pSpinCtrl->Unbind(wxEVT_TEXT_ENTER, &CustomExercisePanel::OnEnter, this);
 }
 
@@ -178,7 +181,7 @@ void CustomExercisePanel::SetupControls()
 
 void CustomExercisePanel::SetupSizers()
 {
-	m_pControlSizer = new wxFlexGridSizer(3, wxSize(5, 1));
+	m_pControlSizer = new wxFlexGridSizer(4, wxSize(5, 1));
 	m_pTopSizer = new wxStaticBoxSizer(wxVERTICAL, this, m_exerciseName);
 	m_pTopParent = m_pTopSizer->GetStaticBox();
 	this->SetSizerAndFit(m_pTopSizer);
@@ -193,6 +196,7 @@ void CustomExercisePanel::SetupSizers()
 	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Reps:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pControlSizer->Add(m_pSpinCtrl, wxSizerFlags().Left().Border(wxALL, 5).Proportion(1));
 	m_pControlSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pSaveButton, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().Left().Border(wxALL, 5));
 }
 
@@ -210,7 +214,35 @@ void CustomExercisePanel::OnEnter(wxCommandEvent& event)
 
 void CustomExercisePanel::OnSave(wxCommandEvent& event)
 {
+	// TODO: change the default file name
+	wxFileDialog* pSaveDialog = new wxFileDialog(this, _T("Save Exercise Information"), wxEmptyString, wxEmptyString, _T("Text files (*.txt)|*.txt"),
+		wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
+	wxString fileName, filePath;
+	wxFile textFile;
+
+	if (pSaveDialog->ShowModal() == wxID_OK)
+	{
+		fileName = pSaveDialog->GetFilename();
+		filePath = pSaveDialog->GetPath();
+		textFile.Create(filePath);
+	}
+	else return;
+
+	if (!textFile.Exists(filePath))
+	{
+		wxLogError(_T("Failed to create text file: %s"), fileName);
+		return;
+	}
+
+	if (textFile.Open(filePath, wxFile::write))
+	{
+		textFile.Write(wxString(_T("Repetitions: ")) << m_pSpinCtrl->GetValue());
+	}
+
+	// clean up
+	textFile.Close();
+	pSaveDialog->Destroy();
 }
 
 // AddExerciseDialog
