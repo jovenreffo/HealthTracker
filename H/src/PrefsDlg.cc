@@ -268,6 +268,9 @@ private:
 	wxCheckBox* m_pIncludeDT;
 	bool m_bIncludeDT;
 
+	wxCheckBox* m_pIncludeDTReps;
+	bool m_bIncludeDTReps;
+
 public:
 	AdvancedPagePanel(wxWindow* parent)
 		: wxPanel(parent)
@@ -282,6 +285,7 @@ public:
 		wxButton* pResetConfigBtn = new wxButton(this, wxID_ANY, _("Reset"));
 
 		m_pIncludeDT = new wxCheckBox(this, static_cast<int>(Prefs::ID_INCLUDE_DT), _T("Include date and time in nutrition sheet"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bIncludeDT));
+		m_pIncludeDTReps = new wxCheckBox(this, wxID_ANY, _T("Include date and time in exercise sheet"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bIncludeDTReps));
 
 		// Event binding
 		pResetConfigBtn->Bind(wxEVT_BUTTON, &AdvancedPagePanel::OnResetConfig, this);
@@ -293,6 +297,7 @@ public:
 		pAdvancedSizer->Add(pResetConfigTxt, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 		pAdvancedSizer->Add(pResetConfigBtn, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 		pTopSizer->Add(m_pIncludeDT, wxSizerFlags().Left().Border(wxALL, 5));
+		pTopSizer->Add(m_pIncludeDTReps, wxSizerFlags().Left().Border(wxALL, 5));
 
 		this->LoadConfig();
 		this->Fit();
@@ -335,6 +340,7 @@ private:
 		pConfig->SetPath(_("/Preferences"));
 
 		m_pIncludeDT->SetValue(pConfig->Read("IncludeDT", 0L));
+		m_pIncludeDTReps->SetValue(pConfig->Read("IncludeDTReps", 0L));
 	}
 
 	void SaveToConfig()
@@ -346,6 +352,7 @@ private:
 		pConfig->SetPath(_("/Preferences"));
 
 		pConfig->Write("IncludeDT", m_pIncludeDT->GetValue());
+		pConfig->Write("IncludeDTReps", m_pIncludeDTReps->GetValue());
 	}
 
 	virtual bool TransferDataToWindow() override
