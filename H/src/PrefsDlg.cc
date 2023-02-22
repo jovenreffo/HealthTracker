@@ -268,6 +268,7 @@ private:
 	wxCheckBox* m_pIncludeDT;
 	bool m_bIncludeDT;
 
+	// for the ExercisePanel's save event in DynamicPlan
 	wxCheckBox* m_pIncludeDTReps;
 	bool m_bIncludeDTReps;
 
