@@ -66,7 +66,7 @@ void AddItemDlg::SetupSizers()
 
 	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pCalories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Expand());
+	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")),
@@ -81,10 +81,10 @@ void AddItemDlg::SetupSizers()
 
 	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Fiber:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pFiberCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Expand());
+	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pButtonSizer);
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
 void AddItemDlg::HandleExit()
