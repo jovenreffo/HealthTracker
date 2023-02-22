@@ -12,7 +12,7 @@
 #include <wx/textctrl.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDITEMDLG_SIZE  ( wxSize(500, 325) )
+#define ADDITEMDLG_SIZE  ( wxSize(430, 345) )
 #define ADDITEMDLG_MAX	 ( wxSize(550, 375) )
 
 struct Total
