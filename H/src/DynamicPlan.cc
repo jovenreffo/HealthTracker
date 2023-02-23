@@ -6,6 +6,8 @@
 #include <wx/filedlg.h>
 #include <wx/file.h>
 #include <wx/string.h>
+#include <wx/config.h>
+#include <wx/datetime.h>
 
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
@@ -238,6 +240,14 @@ void CustomExercisePanel::OnSave(wxCommandEvent& event)
 	if (textFile.Open(filePath, wxFile::write))
 	{
 		textFile.Write(wxString(_T("Repetitions: ")) << m_pSpinCtrl->GetValue());
+
+		// the user has checked the option of including the date / time in the text file
+		if (wxConfigBase::Get()->Read("/Preferences/IncludeDTReps", 0L))
+		{
+			wxDateTime dt;
+			dt.SetToCurrent();
+			textFile.Write(wxString(_T("\nThis text file was generated: ")) << dt.FormatDate());
+		}
 	}
 
 	// clean up
