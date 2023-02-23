@@ -10,6 +10,7 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
+#include <wx/checkbox.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDITEMDLG_SIZE  ( wxSize(430, 345) )
@@ -67,6 +68,8 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	wxCheckBox* m_pEnableMacros;
+
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
@@ -86,6 +89,7 @@ private:
 	int m_carbContent;
 	int m_proteinContent;
 	int m_fiberContent;
+	bool m_bEnableMacros;
 
 public:
 	AddItemDlg(wxWindow* parent,
