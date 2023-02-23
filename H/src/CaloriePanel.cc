@@ -4,6 +4,8 @@
 #include <wx/file.h>
 #include <wx/filedlg.h>
 #include <wx/string.h>
+#include <wx/datetime.h>
+
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
@@ -130,7 +132,10 @@ void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
 		// Include other information about the generated text file
 		if (wxConfigBase::Get()->Read("/Preferences/IncludeDT", 0L))
 		{
-			textFile.Write(wxString("This nutrition sheet was generated ") << __DATE__ << " at [" << __TIME__ << "]\n");
+			wxDateTime dt;
+			dt.SetToCurrent();
+
+			textFile.Write(wxString("This nutrition sheet was generated: ") << dt.FormatDate());
 		}
 	}
 
