@@ -387,17 +387,17 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 		}
 
 		m_bUseImage = true;
-	}
 
-	// check to make sure the image is ok and the file path is not empty before issuing an error
-	if (!m_image.IsOk() && !m_imagePath.empty())
-	{
-		wxLogError(_T("Failed to load image: %s"), m_imagePath);
-	}
+		// check to make sure the image is ok and the file path is not empty before issuing an error
+		if (!m_image.IsOk() && !m_imagePath.empty())
+		{
+			wxLogError(_T("Failed to load image: %s"), m_imagePath);
+		}
 
-	// Update the file name and display it on the dialog
-	m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
-	m_pImageLabel->Show(true);
+		// Update the file name and display it on the dialog
+		m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
+		m_pImageLabel->Show(true);
+	}
 }
 
 // DynamicPlan
