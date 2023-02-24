@@ -98,7 +98,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = ADDITEMDLG_STYLE);
-
+	~AddItemDlg();
 
 	// Getters
 	const wxString& GetItemName() const { return m_itemName; }
@@ -117,6 +117,7 @@ public:
 
 	// Events
 	void OnUpdateOK(wxUpdateUIEvent& event);
+	void OnUpdateControls(wxUpdateUIEvent& event);
 	void OnEnter(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
