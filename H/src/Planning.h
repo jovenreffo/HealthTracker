@@ -60,7 +60,7 @@ public:
 		long style = 0L);
 };
 
-class TodoPanel: public wxPanel
+class TodoPanel: public wxScrolled<wxPanel>
 {
 private:
 	// Controls
@@ -88,8 +88,8 @@ public:
 };
 
 // For the to-do list items, customization will be needed.
-// In this class deriving from wxHtmlListbox, there will be a spot for the objective name and description.
-class TodoItem : public wxHtmlListBox
+// In this class deriving from wxPanel, there will be a spot for the objective name and description, and a checkbox for completing the task
+class TodoItem : public wxPanel
 {
 public:
 	TodoItem() = default;
@@ -101,10 +101,6 @@ public:
 		const wxString& name = wxHtmlListBoxNameStr);
 
 	void Init();
-
-protected:
-	// this function must be overridden
-	virtual wxString OnGetItem(size_t n) const override;
 
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
