@@ -13,7 +13,7 @@
 #include <wx/checkbox.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDITEMDLG_SIZE  ( wxSize(430, 345) )
+#define ADDITEMDLG_SIZE  ( wxSize(365, 345) )
 #define ADDITEMDLG_MAX	 ( wxSize(550, 375) )
 
 struct Total
@@ -91,6 +91,20 @@ private:
 	int m_fiberContent;
 	bool m_bEnableMacros;
 
+	// Static text and line objects
+	// These are stored as member variables because they will need to be accessed for enabling / disabling
+	// based on the user's choice
+
+	wxStaticText* itemName;
+	wxStaticText* calories;
+	wxStaticText* other;
+	wxStaticText* carbohydrates;
+	wxStaticText* protein;
+	wxStaticText* fiber;
+
+	wxStaticLine* line1;
+	wxStaticLine* line2;
+
 public:
 	AddItemDlg(wxWindow* parent,
 		wxWindowID id,
@@ -98,7 +112,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = ADDITEMDLG_STYLE);
-
+	~AddItemDlg();
 
 	// Getters
 	const wxString& GetItemName() const { return m_itemName; }
@@ -114,9 +128,11 @@ public:
 	void SetupSizers();
 
 	void HandleExit();
+	void ShowControls(bool bShow);
 
 	// Events
 	void OnUpdateOK(wxUpdateUIEvent& event);
+	void OnUpdateControls(wxUpdateUIEvent& event);
 	void OnEnter(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
