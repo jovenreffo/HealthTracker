@@ -100,18 +100,15 @@ public:
 		long style = 0L,
 		const wxString& name = wxHtmlListBoxNameStr);
 
-	// Setup
-	void Create(wxWindow* parent,
-		wxWindowID id = wxID_ANY,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = 0L,
-		const wxString& name = wxHtmlListBoxNameStr);
-
 	void Init();
 
+protected:
+	// this function must be overridden
+	virtual wxString OnGetItem(size_t n) const override;
 
+public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
+	wxDECLARE_DYNAMIC_CLASS(TodoItem);
 };
 
 #endif
