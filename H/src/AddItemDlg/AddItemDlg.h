@@ -91,6 +91,20 @@ private:
 	int m_fiberContent;
 	bool m_bEnableMacros;
 
+	// Static text and line objects
+	// These are stored as member variables because they will need to be accessed for enabling / disabling
+	// based on the user's choice
+
+	wxStaticText* itemName;
+	wxStaticText* calories;
+	wxStaticText* other;
+	wxStaticText* carbohydrates;
+	wxStaticText* protein;
+	wxStaticText* fiber;
+
+	wxStaticLine* line1;
+	wxStaticLine* line2;
+
 public:
 	AddItemDlg(wxWindow* parent,
 		wxWindowID id,
@@ -114,6 +128,7 @@ public:
 	void SetupSizers();
 
 	void HandleExit();
+	void ShowControls(bool bShow);
 
 	// Events
 	void OnUpdateOK(wxUpdateUIEvent& event);
