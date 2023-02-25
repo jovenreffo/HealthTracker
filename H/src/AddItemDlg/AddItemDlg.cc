@@ -14,6 +14,15 @@ AddItemDlg::AddItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, c
 	: wxDialog(parent, id, title, pos, size, style, _T("additemdlg"))
 {
 	this->Init();
+
+	// bind events
+	m_pEnableMacros->Bind(wxEVT_UPDATE_UI, &AddItemDlg::OnUpdateControls, this);
+}
+
+AddItemDlg::~AddItemDlg()
+{
+	// unbind events
+	m_pEnableMacros->Unbind(wxEVT_UPDATE_UI, &AddItemDlg::OnUpdateControls, this);
 }
 
 void AddItemDlg::Init()
@@ -32,6 +41,8 @@ void AddItemDlg::SetupSizing()
 
 void AddItemDlg::SetupControls()
 {
+	m_pEnableMacros = new wxCheckBox(this, wxID_ANY, _T("Include other macros"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bEnableMacros));
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 	
@@ -43,12 +54,15 @@ void AddItemDlg::SetupControls()
 
 	m_pCarbCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_CARB_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
 	m_pCarbCtrl->SetValidator(wxGenericValidator(&m_carbContent));
+	m_pCarbCtrl->Show(false);
 
 	m_pProteinCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_PROTEIN_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
 	m_pProteinCtrl->SetValidator(wxGenericValidator(&m_proteinContent));
+	m_pProteinCtrl->Show(false);
 
 	m_pFiberCtrl = new wxSpinCtrl(this, static_cast<int>(AID::ID_FIBER_SPIN), _T("0"), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000);
 	m_pFiberCtrl->SetValidator(wxGenericValidator(&m_fiberContent));
+	m_pFiberCtrl->Show(false);
 }
 
 void AddItemDlg::SetupSizers()
@@ -58,32 +72,45 @@ void AddItemDlg::SetupSizers()
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
+	// initialize any static text/line objects
+	itemName = new wxStaticText(this, wxID_STATIC, _T("Item name:"));
+	calories = new wxStaticText(this, wxID_STATIC, _T("Calories:"));
+	other = new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")); other->Show(false);
+	carbohydrates = new wxStaticText(this, wxID_STATIC, _T("Carbohydrates:")); carbohydrates->Show(false);
+	protein = new wxStaticText(this, wxID_STATIC, _T("Protein:")); protein->Show(false);
+	fiber = new wxStaticText(this, wxID_STATIC, _T("Fiber:")); fiber->Show(false);
+
+	line1 = new wxStaticLine(this, wxID_STATIC); line1->Show(false);
+	line2 = new wxStaticLine(this, wxID_STATIC);
+
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Proportion(0).Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Item name:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(itemName, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(calories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pCalories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+
+	m_pItemSizer->Add(m_pEnableMacros, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pItemSizer->AddSpacer(5);
 	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
-	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(new wxStaticText(this, wxID_STATIC, _T("(Optional) Enter any other nutritional information about the item:")),
-		wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(line1, wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(other, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pItemSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Carbohydrates:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(carbohydrates, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pCarbCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Protein:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(protein, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pProteinCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
-	m_pItemSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Fiber:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(fiber, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pFiberCtrl, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pItemSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
-	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(line2, wxSizerFlags().Proportion(0).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
@@ -101,6 +128,32 @@ void AddItemDlg::HandleExit()
 	}
 }
 
+void AddItemDlg::ShowControls(bool bShow)
+{
+	if (bShow)
+	{
+		carbohydrates->Show(true);
+		m_pCarbCtrl->Show(true);
+
+		protein->Show(true);
+		m_pProteinCtrl->Show(true);
+
+		fiber->Show(true);
+		m_pFiberCtrl->Show(true);
+	}
+	else if (!bShow)
+	{
+		carbohydrates->Show(false);
+		m_pCarbCtrl->Show(false);
+
+		protein->Show(false);
+		m_pProteinCtrl->Show(false);
+
+		fiber->Show(false);
+		m_pFiberCtrl->Show(false);
+	}
+}
+
 // Events
 
 void AddItemDlg::OnUpdateOK(wxUpdateUIEvent& event)
@@ -109,6 +162,22 @@ void AddItemDlg::OnUpdateOK(wxUpdateUIEvent& event)
 		event.Enable(true);
 	else
 		event.Enable(false);
+}
+
+void AddItemDlg::OnUpdateControls(wxUpdateUIEvent& event)
+{
+	// The checkbox has been selected
+	if (m_pEnableMacros->GetValue())
+	{
+		// show all items
+		this->ShowControls(true);
+		this->Layout();
+	}
+	else if (!m_pEnableMacros->GetValue())
+	{
+		this->ShowControls(false);
+		this->Layout();
+	}
 }
 
 void AddItemDlg::OnEnter(wxCommandEvent& event)
