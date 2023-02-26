@@ -14,9 +14,9 @@
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
 
-#define ADDTODOITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDTODOITEMDLG_SIZE ( wxSize(365, 345) )
-#define ADDTODOITEMDLG_MAX_SiZE	( wxSize(550, 375) )
+#define ADDTASKDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+#define ADDTASKDLG_SIZE ( wxSize(365, 345) )
+#define ADDTASKDLG_MAX_SIZE	( wxSize(550, 375) )
 
 enum class TD
 {
@@ -65,16 +65,16 @@ public:
 		long style = 0L);
 };
 
-class AddTodoItemDlg : public wxDialog
+class AddTaskDlg : public wxDialog
 {
 public:
-	AddTodoItemDlg() = default;
-	AddTodoItemDlg(wxWindow* parent,
+	AddTaskDlg() = default;
+	AddTaskDlg(wxWindow* parent,
 		wxWindowID id = wxID_ANY,
-		const wxString& title = _T("Add Objective"),
+		const wxString& title = _T("Add Task"),
 		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = ADDTODOITEMDLG_SIZE,
-		long style = ADDTODOITEMDLG_STYLE);
+		const wxSize& size = ADDTASKDLG_SIZE,
+		long style = ADDTASKDLG_STYLE);
 
 	void Init();
 	void SetupControls();
@@ -88,6 +88,7 @@ private:
 	// Controls
 	wxButton* m_pAddButton; wxBitmap m_addBmp;
 	wxString m_objectiveStr;
+	AddTaskDlg* m_pAddTaskDlg;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -99,6 +100,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+	~TodoPanel();
 
 	// Other
 	const wxString& GetObjective() const { return m_objectiveStr; }
@@ -110,6 +112,7 @@ public:
 
 	// Events
 	void OnTextEnter(wxCommandEvent& event);
+	void OnAddTask(wxCommandEvent& event);
 };
 
 // For the to-do list items, customization will be needed.
