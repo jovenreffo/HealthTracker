@@ -1,4 +1,5 @@
 #include <wx/valtext.h>
+#include <wx/statline.h>
 #include "Planning.h"
 #include "StandardPath.hpp"
 
@@ -46,10 +47,39 @@ CalendarPanel::CalendarPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos
 {
 }
 
+// =========================================== AddTodoItemDlg ===========================================
+
+AddTodoItemDlg::AddTodoItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+}
+
+void AddTodoItemDlg::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void AddTodoItemDlg::SetupControls()
+{
+}
+
+void AddTodoItemDlg::SetupSizers()
+{
+}
+
+void AddTodoItemDlg::SetupSizing()
+{
+	this->SetMinSize(ADDTODOITEMDLG_SIZE);
+	this->SetMaxSize(ADDTODOITEMDLG_MAX_SiZE);
+	this->SetInitialSize(ADDTODOITEMDLG_SIZE);
+}
+
 // =========================================== TodoPanel ===========================================
 
 TodoPanel::TodoPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style, _T("todopanel"))
+	: wxScrolled<wxPanel>(parent, id, pos, size, style, _T("todopanel"))
 {
 	this->Init();
 }
@@ -70,7 +100,13 @@ void TodoPanel::SetupControls()
 
 void TodoPanel::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pTopSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+#ifdef wxUSE_STATLINE
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+#endif
 }
 
 // Events
@@ -81,16 +117,16 @@ void TodoPanel::OnTextEnter(wxCommandEvent& event)
 
 // =========================================== TodoItem ===========================================
 
-TodoItem::TodoItem(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-{
-	this->Create(parent, id, pos, size, style, name);
-}
+wxIMPLEMENT_DYNAMIC_CLASS(TodoItem, wxHtmlListBox);
 
-void TodoItem::Create(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+TodoItem::TodoItem(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+	: wxPanel(parent, id, pos, size, style)
 {
+	
 }
 
 void TodoItem::Init()
 {
 
 }
+
