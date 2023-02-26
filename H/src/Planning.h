@@ -5,6 +5,7 @@
 #include <wx/notebook.h>
 #include <wx/bitmap.h>
 #include <wx/imaglist.h>
+#include <wx/dialog.h>
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/sizer.h>
@@ -74,6 +75,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = ADDTODOITEMDLG_SIZE,
 		long style = ADDTODOITEMDLG_STYLE);
+
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
 };
 
 class TodoPanel: public wxScrolled<wxPanel>
