@@ -13,6 +13,10 @@
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
 
+#define ADDTODOITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
+#define ADDTODOITEMDLG_SIZE  ( wxSize(365, 345) )
+#define ADDTODOITEMDLG_MAX	 ( wxSize(550, 375) )
+
 enum class TD
 {
 	ID_ADD_TODO
@@ -58,6 +62,18 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+};
+
+class AddTodoItemDlg : public wxDialog
+{
+public:
+	AddTodoItemDlg() = default;
+	AddTodoItemDlg(wxWindow* parent,
+		wxWindowID id = wxID_ANY,
+		const wxString& title = _T("Add Objective"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = ADDTODOITEMDLG_SIZE,
+		long style = ADDTODOITEMDLG_STYLE);
 };
 
 class TodoPanel: public wxScrolled<wxPanel>
