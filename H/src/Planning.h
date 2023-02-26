@@ -15,8 +15,8 @@
 #include <wx/htmllbox.h>
 
 #define ADDTODOITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
-#define ADDTODOITEMDLG_SIZE  ( wxSize(365, 345) )
-#define ADDTODOITEMDLG_MAX	 ( wxSize(550, 375) )
+#define ADDTODOITEMDLG_SIZE ( wxSize(365, 345) )
+#define ADDTODOITEMDLG_MAX_SiZE	( wxSize(550, 375) )
 
 enum class TD
 {
