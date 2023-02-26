@@ -67,6 +67,9 @@ private:
 	wxButton* m_pAddButton; wxBitmap m_addBmp;
 	wxString m_objectiveStr;
 
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pObjectiveSizer;
 
 public:
 	TodoPanel(wxWindow* parent,
