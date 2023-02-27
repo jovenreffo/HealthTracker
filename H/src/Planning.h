@@ -79,6 +79,10 @@ private:
 	wxBoxSizer* m_pButtonSizer;
 	wxFlexGridSizer* m_pTextSizer;
 
+	// Validators
+	wxString m_taskName;
+	wxString m_taskDesc;
+
 public:
 	AddTaskDlg() = default;
 	AddTaskDlg(wxWindow* parent,
