@@ -67,6 +67,18 @@ public:
 
 class AddTaskDlg : public wxDialog
 {
+private:
+	// Controls
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+	wxTextCtrl* m_pTaskNameTxt;
+	wxTextCtrl* m_pTaskDescTxt;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pTextSizer;
+
 public:
 	AddTaskDlg() = default;
 	AddTaskDlg(wxWindow* parent,
@@ -75,7 +87,9 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = ADDTASKDLG_SIZE,
 		long style = ADDTASKDLG_STYLE);
+	~AddTaskDlg();
 
+	// Dialog setup
 	void Init();
 	void SetupControls();
 	void SetupSizers();
