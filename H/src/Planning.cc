@@ -1,5 +1,6 @@
 #include <wx/valtext.h>
 #include <wx/statline.h>
+#include <wx/valtext.h>
 #include "Planning.h"
 #include "StandardPath.hpp"
 
@@ -47,33 +48,46 @@ CalendarPanel::CalendarPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos
 {
 }
 
-// =========================================== AddTodoItemDlg ===========================================
+// =========================================== AddTaskDlg ===========================================
 
-AddTodoItemDlg::AddTodoItemDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+AddTaskDlg::AddTaskDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	this->Init();
+
+	// Bind events
 }
 
-void AddTodoItemDlg::Init()
+AddTaskDlg::~AddTaskDlg()
+{
+	// Unbind events
+}
+
+void AddTaskDlg::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupSizing();
 }
 
-void AddTodoItemDlg::SetupControls()
+void AddTaskDlg::SetupControls()
+{
+	m_pTaskNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(0, &m_taskName));
+	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(0, &m_taskDesc));
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+}
+
+void AddTaskDlg::SetupSizers()
 {
 }
 
-void AddTodoItemDlg::SetupSizers()
+void AddTaskDlg::SetupSizing()
 {
-}
-
-void AddTodoItemDlg::SetupSizing()
-{
-	this->SetMinSize(ADDTODOITEMDLG_SIZE);
-	this->SetMaxSize(ADDTODOITEMDLG_MAX_SiZE);
-	this->SetInitialSize(ADDTODOITEMDLG_SIZE);
+	this->SetInitialSize(ADDTASKDLG_SIZE);
+	this->SetMinSize(ADDTASKDLG_SIZE);
+	//this->SetMaxSize(ADDTASKDLG_MAX_SIZE);
 }
 
 // =========================================== TodoPanel ===========================================
@@ -82,6 +96,15 @@ TodoPanel::TodoPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const 
 	: wxScrolled<wxPanel>(parent, id, pos, size, style, _T("todopanel"))
 {
 	this->Init();
+
+	// Bind events
+	m_pAddButton->Bind(wxEVT_BUTTON, &TodoPanel::OnAddTask, this);
+}
+
+TodoPanel::~TodoPanel()
+{
+	// Unbind events
+	m_pAddButton->Unbind(wxEVT_BUTTON, &TodoPanel::OnAddTask, this);
 }
 
 // Panel setup
@@ -113,6 +136,12 @@ void TodoPanel::SetupSizers()
 void TodoPanel::OnTextEnter(wxCommandEvent& event)
 {
 
+}
+
+void TodoPanel::OnAddTask(wxCommandEvent& event)
+{
+	m_pAddTaskDlg = new AddTaskDlg(this);
+	m_pAddTaskDlg->Show(true);
 }
 
 // =========================================== TodoItem ===========================================
