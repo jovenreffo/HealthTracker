@@ -168,8 +168,6 @@ public:
 	void SetupControls();
 	void SetupSizers();
 
-	void CustomRefresh();
-
 	// Events
 	void OnAddExercise(wxCommandEvent& event);
 	void OnOpenSpreadsheet(wxCommandEvent& event);
