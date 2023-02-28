@@ -1,6 +1,7 @@
-#include <wx/valtext.h>
 #include <wx/statline.h>
+#include <wx/stattext.h>
 #include <wx/valtext.h>
+
 #include "Planning.h"
 #include "StandardPath.hpp"
 
@@ -72,8 +73,8 @@ void AddTaskDlg::Init()
 
 void AddTaskDlg::SetupControls()
 {
-	m_pTaskNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(0, &m_taskName));
-	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, wxTextValidator(0, &m_taskDesc));
+	m_pTaskNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskName));
+	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskDesc));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -81,6 +82,24 @@ void AddTaskDlg::SetupControls()
 
 void AddTaskDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pTextSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
+
+	// Main text controls
+	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task title:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(m_pTaskNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task description:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(m_pTaskDescTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pTextSizer, wxSizerFlags().Left().Border(wxALL, 5));
+
+	m_pTopSizer->Add(new wxStaticLine(this), wxSizerFlags().Expand().Border(wxALL, 5));
+
+	// Buttons
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Left().Border(wxALL, 5));
 }
 
 void AddTaskDlg::SetupSizing()
@@ -88,6 +107,23 @@ void AddTaskDlg::SetupSizing()
 	this->SetInitialSize(ADDTASKDLG_SIZE);
 	this->SetMinSize(ADDTASKDLG_SIZE);
 	//this->SetMaxSize(ADDTASKDLG_MAX_SIZE);
+}
+
+// events
+
+void AddTaskDlg::OnTextEnter(wxCommandEvent& e)
+{
+
+}
+
+void AddTaskDlg::OnOK(wxCommandEvent& e)
+{
+
+}
+
+void AddTaskDlg::OnCancel(wxCommandEvent& e)
+{
+
 }
 
 // =========================================== TodoPanel ===========================================
