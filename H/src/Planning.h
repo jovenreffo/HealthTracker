@@ -98,6 +98,11 @@ public:
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
+	
+	// Events
+	void OnTextEnter(wxCommandEvent& e);
+	void OnOK(wxCommandEvent& e);
+	void OnCancel(wxCommandEvent& e);
 };
 
 class TodoPanel: public wxScrolled<wxPanel>
