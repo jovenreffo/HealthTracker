@@ -459,15 +459,6 @@ void DynamicPlan::SetupSizers()
 	m_pTopSizer->Add(m_pExerciseNotebook, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
-void DynamicPlan::CustomRefresh()
-{
-	// CustomRefresh:
-	// Simply increase the size and then decrement by 1 to return to original state.
-	// If this breaks in the future, resort to wxUpdateUIEvent
-	this->SetSize(wxSize(this->GetSize().GetWidth() + 1, this->GetSize().GetHeight() + 1));
-	this->SetSize(wxSize(this->GetSize().GetWidth() - 1, this->GetSize().GetHeight() - 1));
-}
-
 // events
 
 void DynamicPlan::OnAddExercise(wxCommandEvent& event)
@@ -484,7 +475,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 			m_bShowCover = false;
 			m_pHtmlPanelCover->Show(false);
 			m_pExerciseNotebook->Show(true);
-			this->CustomRefresh();
+			this->Layout();
 		}
 
 		// Add an image to the notebook's image list and create a new exercise page
