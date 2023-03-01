@@ -94,6 +94,7 @@ void AddTaskDlg::SetupSizers()
 	m_pTextSizer->Add(m_pTaskDescTxt, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pTextSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
+	// Separator
 	m_pTopSizer->Add(new wxStaticLine(this), wxSizerFlags().Expand().Border(wxALL, 5));
 
 	// Buttons
@@ -106,7 +107,7 @@ void AddTaskDlg::SetupSizing()
 {
 	this->SetInitialSize(ADDTASKDLG_SIZE);
 	this->SetMinSize(ADDTASKDLG_SIZE);
-	//this->SetMaxSize(ADDTASKDLG_MAX_SIZE);
+	this->SetMaxSize(ADDTASKDLG_MAX_SIZE);
 }
 
 // events
