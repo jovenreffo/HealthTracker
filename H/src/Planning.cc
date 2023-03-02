@@ -57,11 +57,19 @@ AddTaskDlg::AddTaskDlg(wxWindow* parent, wxWindowID id, const wxString& title, c
 	this->Init();
 
 	// Bind events
+	m_pTaskNameTxt->Bind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
+	m_pTaskDescTxt->Bind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
+	m_pOk->Bind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddTaskDlg::OnCancel, this);
 }
 
 AddTaskDlg::~AddTaskDlg()
 {
 	// Unbind events
+	m_pTaskNameTxt->Unbind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
+	m_pTaskDescTxt->Unbind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
+	m_pOk->Unbind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddTaskDlg::OnCancel, this);
 }
 
 void AddTaskDlg::Init()
@@ -110,21 +118,36 @@ void AddTaskDlg::SetupSizing()
 	this->SetMaxSize(ADDTASKDLG_MAX_SIZE);
 }
 
+void AddTaskDlg::HandleExit()
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+			SetReturnCode(wxID_OK);
+			Show(false);
+		}
+	}
+}
+
 // events
 
 void AddTaskDlg::OnTextEnter(wxCommandEvent& e)
 {
-
+	this->HandleExit();
 }
 
 void AddTaskDlg::OnOK(wxCommandEvent& e)
 {
-
+	this->HandleExit();
 }
 
 void AddTaskDlg::OnCancel(wxCommandEvent& e)
 {
-
+	SetReturnCode(wxID_CANCEL);
+	Show(false);
 }
 
 // =========================================== TodoPanel ===========================================
@@ -154,16 +177,24 @@ void TodoPanel::Init()
 void TodoPanel::SetupControls()
 {
 	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
-	m_pAddButton = new wxButton(this, static_cast<int>(TD::ID_ADD_TODO), _T("Add Task"), wxDefaultPosition, wxDefaultSize);
+	m_checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check2.png"), wxBITMAP_TYPE_PNG);
+
+	m_pAddButton = new wxButton(this, wxID_ANY, _T("Add Task"), wxDefaultPosition, wxDefaultSize);
+	m_pClearListButton = new wxButton(this, wxID_ANY, _T("Clear Task List"), wxDefaultPosition, wxDefaultSize);
+
 	m_pAddButton->SetBitmap(m_addBmp);
+	m_pClearListButton->SetBitmap(m_checkBmp);
 }
 
 void TodoPanel::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTopButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
-	m_pTopSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopButtonSizer->Add(m_pClearListButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pTopButtonSizer);
 #ifdef wxUSE_STATLINE
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 #endif
