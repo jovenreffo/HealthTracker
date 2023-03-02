@@ -18,11 +18,6 @@
 #define ADDTASKDLG_SIZE ( wxSize(315, 235) )
 #define ADDTASKDLG_MAX_SIZE	( wxSize(415, 300) )
 
-enum class TD
-{
-	ID_ADD_TODO
-};
-
 class CalendarPanel;
 class TodoPanel;
 
@@ -98,6 +93,8 @@ public:
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
+
+	void HandleExit();
 	
 	// Events
 	void OnTextEnter(wxCommandEvent& e);
@@ -110,11 +107,13 @@ class TodoPanel: public wxScrolled<wxPanel>
 private:
 	// Controls
 	wxButton* m_pAddButton; wxBitmap m_addBmp;
+	wxButton* m_pClearListButton; wxBitmap m_checkBmp;
 	wxString m_objectiveStr;
 	AddTaskDlg* m_pAddTaskDlg;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pTopButtonSizer;
 	wxBoxSizer* m_pObjectiveSizer;
 
 public:
