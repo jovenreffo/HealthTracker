@@ -141,6 +141,10 @@ public:
 // In this class deriving from wxPanel, there will be a spot for the objective name and description, and a checkbox for completing the task
 class TodoItem : public wxPanel
 {
+private:
+	wxString m_taskName;
+	wxString m_taskDesc;
+
 public:
 	TodoItem() = default;
 	TodoItem(wxWindow* parent,
