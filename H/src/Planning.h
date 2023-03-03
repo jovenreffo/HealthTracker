@@ -13,6 +13,7 @@
 #include <wx/button.h>
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
+#include <vector>
 
 #define ADDTASKDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDTASKDLG_SIZE ( wxSize(315, 235) )
@@ -116,6 +117,9 @@ private:
 	wxBoxSizer* m_pTopButtonSizer;
 	wxBoxSizer* m_pObjectiveSizer;
 
+	// Vector for storing each of the user's items
+	std::vector<TodoItem*> m_items;
+
 public:
 	TodoPanel(wxWindow* parent,
 		wxWindowID id,
@@ -147,7 +151,9 @@ private:
 
 public:
 	TodoItem() = default;
-	TodoItem(wxWindow* parent,
+	TodoItem(const wxString& taskName,
+		const wxString& taskDesc,
+		wxWindow* parent,
 		wxWindowID id = wxID_ANY,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
