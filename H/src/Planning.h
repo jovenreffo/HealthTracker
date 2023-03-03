@@ -137,7 +137,6 @@ public:
 	void SetupSizers();
 
 	// Events
-	void OnTextEnter(wxCommandEvent& event);
 	void OnAddTask(wxCommandEvent& event);
 };
 
