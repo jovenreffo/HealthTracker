@@ -4,6 +4,7 @@
 
 #include "Planning.h"
 #include "StandardPath.hpp"
+#include "Font/Font.hpp"
 
 Calendar::Calendar(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxNotebook(parent, id, pos, size, style, _T("calendar"))
@@ -253,11 +254,19 @@ void TodoItem::SetupControls()
 	m_pMarkCompleted = new wxCheckBox(this, wxID_ANY, _T("Mark as completed"), wxDefaultPosition, wxDefaultSize);
 
 	// initialise text objects
+	m_pNameTitle = new wxStaticText(this, wxID_ANY, _T("Name"), wxDefaultPosition, wxDefaultSize);
+	m_pDescTitle = new wxStaticText(this, wxID_ANY, _T("Description"), wxDefaultPosition, wxDefaultSize);
+	// make the titles bold
+	m_pNameTitle->SetFont(Fonts::GetBoldFont(10));
+	m_pDescTitle->SetFont(Fonts::GetBoldFont(10));
+
+	m_pItemName = new wxStaticText(this, wxID_ANY, m_taskName, wxDefaultPosition, wxDefaultSize);
+	m_pItemDesc = new wxStaticText(this, wxID_ANY, m_taskDesc, wxDefaultPosition, wxDefaultSize);
 }
 
 void TodoItem::SetupSizers()
 {
-
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 }
 
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
