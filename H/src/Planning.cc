@@ -198,32 +198,69 @@ void TodoPanel::SetupSizers()
 #ifdef wxUSE_STATLINE
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 #endif
+
+	// TEST
+	TodoItem* pItem = new TodoItem("K", "L", this);
+
+	m_pTopSizer->Add(pItem, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
+
 }
 
 // Events
-void TodoPanel::OnTextEnter(wxCommandEvent& event)
-{
-
-}
 
 void TodoPanel::OnAddTask(wxCommandEvent& event)
 {
 	m_pAddTaskDlg = new AddTaskDlg(this);
 	m_pAddTaskDlg->Show(true);
+
+	if (m_pAddTaskDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 // =========================================== TodoItem ===========================================
 
 wxIMPLEMENT_DYNAMIC_CLASS(TodoItem, wxHtmlListBox);
 
-TodoItem::TodoItem(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-	: wxPanel(parent, id, pos, size, style)
+TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }
 {
-	
+	this->Init();
+
+#ifdef _DEBUG
+	this->SetBackgroundColour(*wxRED);
+#endif
+
+	// Bind events
+	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
+}
+
+TodoItem::~TodoItem()
+{
+	// Unbind events
+	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 }
 
 void TodoItem::Init()
 {
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void TodoItem::SetupControls()
+{
+	m_pMarkCompleted = new wxCheckBox(this, wxID_ANY, _T("Mark as completed"), wxDefaultPosition, wxDefaultSize);
+
+	// initialise text objects
+}
+
+void TodoItem::SetupSizers()
+{
 
 }
 
+void TodoItem::OnMarkCompleted(wxCommandEvent& e)
+{
+
+}
