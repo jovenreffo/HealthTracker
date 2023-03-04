@@ -10,6 +10,7 @@
 #include <wx/statbox.h>
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
+#include <wx/checkbox.h>
 #include <wx/button.h>
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
@@ -21,6 +22,7 @@
 
 class CalendarPanel;
 class TodoPanel;
+class TodoItem;
 
 class Calendar: public wxNotebook
 {
@@ -148,6 +150,19 @@ private:
 	wxString m_taskName;
 	wxString m_taskDesc;
 
+	// Controls
+	wxCheckBox* m_pMarkCompleted;
+
+	// Text objects to be arranged
+	wxStaticText* m_pNameTitle;
+	wxStaticText* m_pDescTitle;
+	wxStaticText* m_pItemName;
+	wxStaticText* m_pItemDesc;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxFlexGridSizer* m_pFlexSizer;
+
 public:
 	TodoItem() = default;
 	TodoItem(const wxString& taskName,
@@ -158,8 +173,15 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L,
 		const wxString& name = wxHtmlListBoxNameStr);
+	~TodoItem();
 
+	// panel setup
 	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// events
+	void OnMarkCompleted(wxCommandEvent& e);
 
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
