@@ -5,6 +5,7 @@
 #include "Planning.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
+#include "Flags.hpp"
 
 Calendar::Calendar(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxNotebook(parent, id, pos, size, style, _T("calendar"))
@@ -107,9 +108,9 @@ void AddTaskDlg::SetupSizers()
 	m_pTopSizer->Add(new wxStaticLine(this), wxSizerFlags().Expand().Border(wxALL, 5));
 
 	// Buttons
-	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pOk, SIZER_FLAGS_LEFT);
+	m_pButtonSizer->Add(m_pCancel, SIZER_FLAGS_LEFT);
+	m_pTopSizer->Add(m_pButtonSizer, SIZER_FLAGS_LEFT);
 }
 
 void AddTaskDlg::SetupSizing()
@@ -201,7 +202,7 @@ void TodoPanel::SetupSizers()
 #endif
 
 	// TEST
-	TodoItem* pItem = new TodoItem("K", "L", this);
+	TodoItem* pItem = new TodoItem("Make bed", "Wake up at 3am shdfoddshfsfioesfh sieof hseof s", this);
 
 	m_pTopSizer->Add(pItem, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 
@@ -228,10 +229,7 @@ TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, wxWindow*
 	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }
 {
 	this->Init();
-
-#ifdef _DEBUG
-	this->SetBackgroundColour(*wxRED);
-#endif
+	this->SetBackgroundColour(wxColour(225, 225, 225));
 
 	// Bind events
 	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
@@ -266,7 +264,19 @@ void TodoItem::SetupControls()
 
 void TodoItem::SetupSizers()
 {
-	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTopSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(100, -1));
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pFlexSizer->Add(m_pNameTitle, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pFlexSizer->Add(m_pDescTitle, wxSizerFlags().Left().Border(wxALL, 5));
+
+	// re-initialise the flex sizer to have 3 columns:
+	// for the item's name entered by the user, its description, and the checkbox to mark the task as complete
+	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
+	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
+	m_pTopSizer->Add(m_pFlexSizer);
+	m_pTopSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxLEFT | wxTOP, 30));
 }
 
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
