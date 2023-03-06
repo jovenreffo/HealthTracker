@@ -103,6 +103,8 @@ public:
 	void OnTextEnter(wxCommandEvent& e);
 	void OnOK(wxCommandEvent& e);
 	void OnCancel(wxCommandEvent& e);
+	void OnMaxLengthName(wxCommandEvent& e);
+	void OnMaxLengthDesc(wxCommandEvent& e);
 };
 
 class TodoPanel: public wxScrolled<wxPanel>
