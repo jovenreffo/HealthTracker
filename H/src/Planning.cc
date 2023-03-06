@@ -215,6 +215,7 @@ void TodoPanel::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pTopButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pObjectiveSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
 	m_pTopButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
@@ -223,12 +224,19 @@ void TodoPanel::SetupSizers()
 #ifdef wxUSE_STATLINE
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 #endif
+	m_pTopSizer->Add(m_pObjectiveSizer, SIZER_BORDER);
+}
 
-	// TEST
-	TodoItem* pItem = new TodoItem("Make bed", "Wake up at 3am shdfoddshfsfioesfh sieof hseof s", this);
+void TodoPanel::AddTask(const wxString& name, const wxString& desc)
+{
+	// Create a new item and push it back into the vector
+	TodoItem* pItem = new TodoItem(name, desc, this);
+	pItem->Show(true);
+	m_items.push_back(pItem);
 
+	// Layout the window
 	m_pTopSizer->Add(pItem, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
-
+	Layout();
 }
 
 // Events
@@ -240,7 +248,7 @@ void TodoPanel::OnAddTask(wxCommandEvent& event)
 
 	if (m_pAddTaskDlg->ShowModal() == wxID_OK)
 	{
-
+		this->AddTask(m_pAddTaskDlg->GetTaskName(), m_pAddTaskDlg->GetTaskDesc());
 	}
 }
 
