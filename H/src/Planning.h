@@ -91,6 +91,10 @@ public:
 		long style = ADDTASKDLG_STYLE);
 	~AddTaskDlg();
 
+	// Getters
+	const wxString& GetTaskName() const { return m_taskName; }
+	const wxString& GetTaskDesc() const { return m_taskDesc; }
+
 	// Dialog setup
 	void Init();
 	void SetupControls();
@@ -129,16 +133,18 @@ public:
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
-		long style = 0L);
+		long style = wxVSCROLL | wxALWAYS_SHOW_SB);
 	~TodoPanel();
 
-	// Other
+	// Getters
 	const wxString& GetObjective() const { return m_objectiveStr; }
 
 	// Panel setup
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+
+	void AddTask(const wxString& name, const wxString& desc);
 
 	// Events
 	void OnAddTask(wxCommandEvent& event);
@@ -176,6 +182,10 @@ public:
 		long style = 0L,
 		const wxString& name = wxHtmlListBoxNameStr);
 	~TodoItem();
+
+	// getters
+	const wxString& GetTaskName() const { return m_taskName; }
+	const wxString& GetTaskDesc() const { return m_taskDesc; }
 
 	// panel setup
 	void Init();
