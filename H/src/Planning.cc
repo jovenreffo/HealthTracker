@@ -1,6 +1,7 @@
 #include <wx/statline.h>
 #include <wx/stattext.h>
 #include <wx/valtext.h>
+#include <wx/msgdlg.h>
 
 #include "Planning.h"
 #include "StandardPath.hpp"
@@ -63,6 +64,9 @@ AddTaskDlg::AddTaskDlg(wxWindow* parent, wxWindowID id, const wxString& title, c
 	m_pTaskDescTxt->Bind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pOk->Bind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
 	m_pCancel->Bind(wxEVT_BUTTON, &AddTaskDlg::OnCancel, this);
+
+	m_pTaskNameTxt->Bind(wxEVT_TEXT_MAXLEN, &AddTaskDlg::OnMaxLengthName, this);
+	m_pTaskDescTxt->Bind(wxEVT_TEXT_MAXLEN, &AddTaskDlg::OnMaxLengthDesc, this);
 }
 
 AddTaskDlg::~AddTaskDlg()
@@ -72,6 +76,9 @@ AddTaskDlg::~AddTaskDlg()
 	m_pTaskDescTxt->Unbind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
 	m_pCancel->Unbind(wxEVT_BUTTON, &AddTaskDlg::OnCancel, this);
+
+	m_pTaskNameTxt->Unbind(wxEVT_TEXT_MAXLEN, &AddTaskDlg::OnMaxLengthName, this);
+	m_pTaskDescTxt->Unbind(wxEVT_TEXT_MAXLEN, &AddTaskDlg::OnMaxLengthDesc, this);
 }
 
 void AddTaskDlg::Init()
@@ -85,6 +92,10 @@ void AddTaskDlg::SetupControls()
 {
 	m_pTaskNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskName));
 	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskDesc));
+
+	// Set max lengths
+	m_pTaskNameTxt->SetMaxLength(75);
+	m_pTaskDescTxt->SetMaxLength(200);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -150,6 +161,18 @@ void AddTaskDlg::OnCancel(wxCommandEvent& e)
 {
 	SetReturnCode(wxID_CANCEL);
 	Show(false);
+}
+
+void AddTaskDlg::OnMaxLengthName(wxCommandEvent& e)
+{
+	wxMessageBox(_T("You have reached the character limit (75/75)"), _T("Warning"), wxOK | wxICON_EXCLAMATION);
+	e.Skip();
+}
+
+void AddTaskDlg::OnMaxLengthDesc(wxCommandEvent& e)
+{
+	wxMessageBox(_T("You have reached the character limit (200/200)"), _T("Warning"), wxOK | wxICON_EXCLAMATION);
+	e.Skip();
 }
 
 // =========================================== TodoPanel ===========================================
