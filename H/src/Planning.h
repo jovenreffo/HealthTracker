@@ -9,6 +9,7 @@
 #include <wx/stattext.h>
 #include <wx/statbox.h>
 #include <wx/sizer.h>
+#include <wx/menu.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 #include <wx/button.h>
@@ -160,6 +161,7 @@ private:
 
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
+	wxMenu* m_pMenu;
 
 	// Text objects to be arranged
 	wxStaticText* m_pNameTitle;
@@ -191,9 +193,11 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupPopupMenu();
 
 	// events
 	void OnMarkCompleted(wxCommandEvent& e);
+	void OnRightClick(wxMouseEvent& e);
 
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
