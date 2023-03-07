@@ -263,12 +263,14 @@ TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, wxWindow*
 	this->SetBackgroundColour(wxColour(225, 225, 225));
 
 	// Bind events
+	this->Bind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
 	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 }
 
 TodoItem::~TodoItem()
 {
 	// Unbind events
+	this->Unbind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 }
 
@@ -310,7 +312,20 @@ void TodoItem::SetupSizers()
 	m_pTopSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxLEFT | wxTOP, 30));
 }
 
+void TodoItem::SetupPopupMenu()
+{
+	m_pMenu = new wxMenu();
+
+	m_pMenu->AppendSeparator();
+	m_pMenu->Append(wxID_REMOVE, _T("&Remove Task"));
+}
+
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
+{
+	this->Destroy();
+}
+
+void TodoItem::OnRightClick(wxMouseEvent& e)
 {
 
 }
