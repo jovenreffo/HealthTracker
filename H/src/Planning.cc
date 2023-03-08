@@ -277,6 +277,7 @@ TodoItem::~TodoItem()
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
+	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 }
 
 void TodoItem::Init()
@@ -344,5 +345,7 @@ void TodoItem::OnRightClick(wxMouseEvent& e)
 
 void TodoItem::OnRemove(wxCommandEvent& e)
 {
-	this->HandleDelete();
+	if (wxMessageBox(_T("Are you sure you want to remove this task?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->HandleDelete();
+	else return;
 }
