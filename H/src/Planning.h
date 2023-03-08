@@ -195,9 +195,12 @@ public:
 	void SetupSizers();
 	void SetupPopupMenu();
 
+	void HandleDelete();
+
 	// events
 	void OnMarkCompleted(wxCommandEvent& e);
 	void OnRightClick(wxMouseEvent& e);
+	void OnRemove(wxCommandEvent& e);
 
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
