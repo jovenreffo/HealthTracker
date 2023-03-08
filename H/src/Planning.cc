@@ -265,6 +265,9 @@ TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, wxWindow*
 	// Bind events
 	this->Bind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
 	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
+
+	// Menu events
+	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 }
 
 TodoItem::~TodoItem()
@@ -272,12 +275,15 @@ TodoItem::~TodoItem()
 	// Unbind events
 	this->Unbind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
+
+	// Menu events
 }
 
 void TodoItem::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupPopupMenu();
 }
 
 void TodoItem::SetupControls()
@@ -320,12 +326,23 @@ void TodoItem::SetupPopupMenu()
 	m_pMenu->Append(wxID_REMOVE, _T("&Remove Task"));
 }
 
+void TodoItem::HandleDelete()
+{
+	this->GetParent()->Layout();
+	this->Destroy();
+}
+
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
 {
-	this->Destroy();
+	this->HandleDelete();
 }
 
 void TodoItem::OnRightClick(wxMouseEvent& e)
 {
+	this->PopupMenu(m_pMenu);
+}
 
+void TodoItem::OnRemove(wxCommandEvent& e)
+{
+	this->HandleDelete();
 }
