@@ -13,6 +13,7 @@
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 #include <wx/button.h>
+#include <wx/listctrl.h>
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
 #include <vector>
@@ -24,6 +25,7 @@
 class CalendarPanel;
 class TodoPanel;
 class TodoItem;
+class TaskList;
 
 class Calendar: public wxNotebook
 {
@@ -120,6 +122,7 @@ private:
 	wxButton* m_pClearListButton; wxBitmap m_checkBmp;
 	wxString m_objectiveStr;
 	AddTaskDlg* m_pAddTaskDlg;
+	TaskList* m_pTaskList;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -205,6 +208,11 @@ public:
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
 	wxDECLARE_DYNAMIC_CLASS(TodoItem);
+};
+
+class TaskList : public wxListView
+{
+
 };
 
 #endif
