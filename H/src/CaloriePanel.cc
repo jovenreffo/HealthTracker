@@ -10,13 +10,6 @@
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
 
-// CalorieList event table
-BEGIN_EVENT_TABLE(CalorieList, wxListView)
-	EVT_LIST_ITEM_RIGHT_CLICK(wxID_ANY, CalorieList::OnRightClick)
-	EVT_LIST_ITEM_ACTIVATED(wxID_ANY, CalorieList::OnDoubleClick)
-	EVT_MENU(wxID_DELETE, CalorieList::OnDeleteItem)
-END_EVENT_TABLE()
-
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
@@ -150,12 +143,19 @@ CalorieList::CalorieList(CaloriePanel* pCaloriePanel, wxWindow* parent, wxWindow
 {
 	this->Init();
 
+	// Bind Events
 	this->Bind(wxEVT_KEY_DOWN, &CalorieList::OnKey, this);
+	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CalorieList::OnRightClick, this);
+	this->Bind(wxEVT_LIST_ITEM_ACTIVATED, &CalorieList::OnDoubleClick, this);
+	m_pMenu->Bind(wxEVT_MENU, &CalorieList::OnDeleteItem, this, wxID_DELETE);
 }
 
 CalorieList::~CalorieList()
 {
 	this->Unbind(wxEVT_KEY_DOWN, &CalorieList::OnKey, this);
+	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &CalorieList::OnRightClick, this);
+	this->Unbind(wxEVT_LIST_ITEM_ACTIVATED, &CalorieList::OnDoubleClick, this);
+	m_pMenu->Unbind(wxEVT_MENU, &CalorieList::OnDeleteItem, this, wxID_DELETE);
 }
 
 void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
