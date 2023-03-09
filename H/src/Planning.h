@@ -212,7 +212,14 @@ public:
 
 class TaskList : public wxListView
 {
-
+public:
+	TaskList() = default;
+	TaskList(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+	~TaskList();
 };
 
 #endif
