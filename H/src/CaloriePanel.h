@@ -61,9 +61,6 @@ public:
 class CalorieList: public wxListView
 {
 private:
-	DECLARE_EVENT_TABLE()
-
-private:
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
 	wxBitmap m_calorieBmp;
