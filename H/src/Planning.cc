@@ -207,6 +207,8 @@ void TodoPanel::SetupControls()
 	m_pAddButton = new wxButton(this, wxID_ANY, _T("Add Task"), wxDefaultPosition, wxDefaultSize);
 	m_pClearListButton = new wxButton(this, wxID_ANY, _T("Clear Task List"), wxDefaultPosition, wxDefaultSize);
 
+	m_pTaskList = new TaskList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
 	m_pAddButton->SetBitmap(m_addBmp);
 	m_pClearListButton->SetBitmap(m_checkBmp);
 }
@@ -215,16 +217,24 @@ void TodoPanel::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pTopButtonSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pObjectiveSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
-	m_pTopButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pTopButtonSizer->Add(m_pClearListButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopButtonSizer->Add(m_pAddButton, SIZER_FLAGS_LEFT);
+	m_pTopButtonSizer->Add(m_pClearListButton, SIZER_FLAGS_LEFT);
 	m_pTopSizer->Add(m_pTopButtonSizer);
 #ifdef wxUSE_STATLINE
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 #endif
-	m_pTopSizer->Add(m_pObjectiveSizer, SIZER_BORDER);
+
+	// Task panel
+
+
+	// Completed panel
+}
+
+void TodoPanel::SetupSplitter()
+{
+
 }
 
 void TodoPanel::AddTask(const wxString& name, const wxString& desc)
@@ -323,7 +333,6 @@ void TodoItem::SetupPopupMenu()
 {
 	m_pMenu = new wxMenu();
 
-	m_pMenu->AppendSeparator();
 	m_pMenu->Append(wxID_REMOVE, _T("&Remove Task"));
 }
 
@@ -348,4 +357,19 @@ void TodoItem::OnRemove(wxCommandEvent& e)
 	if (wxMessageBox(_T("Are you sure you want to remove this task?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 		this->HandleDelete();
 	else return;
+}
+
+// =========================================== TaskList ===========================================
+
+TaskList::TaskList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style)
+{
+
+
+	// Bind events
+}
+
+TaskList::~TaskList()
+{
+	// Unbind events
 }
