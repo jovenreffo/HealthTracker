@@ -124,6 +124,11 @@ private:
 	AddTaskDlg* m_pAddTaskDlg;
 	TaskList* m_pTaskList;
 
+	// Splitter
+	wxSplitterWindow* m_pSplitter;
+	wxPanel* m_pTaskPanel;
+	wxPanel* m_pCompletedPanel;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTopButtonSizer;
@@ -147,6 +152,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupSplitter();
 
 	void AddTask(const wxString& name, const wxString& desc);
 
