@@ -127,7 +127,7 @@ private:
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTopButtonSizer;
-	wxBoxSizer* m_pObjectiveSizer;
+	wxStaticBoxSizer* m_pListSizer;
 
 	// Vector for storing each of the user's items
 	std::vector<TodoItem*> m_items;
@@ -220,6 +220,11 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 	~TaskList();
+
+	// List setup
+
+
+	// Events
 };
 
 #endif
