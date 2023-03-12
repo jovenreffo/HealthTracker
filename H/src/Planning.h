@@ -222,6 +222,16 @@ public:
 
 class TaskList : public wxListView
 {
+private:
+	wxMenu* m_pMenu;
+
+	wxImageList* m_pImageList;
+	wxBitmap m_taskBmp;
+
+	// List info
+	wxString m_currentItemName;
+	long m_selectionIndex;
+
 public:
 	TaskList() = default;
 	TaskList(wxWindow* parent,
@@ -232,9 +242,15 @@ public:
 	~TaskList();
 
 	// List setup
-
+	void Init();
+	void SetupImageList();
+	void SetupColumn();
+	void SetupMenu();
 
 	// Events
+	void OnItemSelected(wxListEvent& e);
+	void OnRightClickItem(wxListEvent& e);
+	void OnRemoveItem(wxCommandEvent& e);
 };
 
 #endif
