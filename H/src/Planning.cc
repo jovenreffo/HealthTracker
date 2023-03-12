@@ -208,8 +208,6 @@ void TodoPanel::SetupControls()
 	m_pAddButton = new wxButton(this, wxID_ANY, _T("Add Task"), wxDefaultPosition, wxDefaultSize);
 	m_pClearListButton = new wxButton(this, wxID_ANY, _T("Clear Task List"), wxDefaultPosition, wxDefaultSize);
 
-	//m_pTaskList = new TaskList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-
 	m_pAddButton->SetBitmap(m_addBmp);
 	m_pClearListButton->SetBitmap(m_checkBmp);
 }
@@ -235,14 +233,18 @@ void TodoPanel::SetupPanels()
 	m_pCompletedPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTaskPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
-	// Sizers
+	// initialise the task list with m_pCompletedPanel as the parent
+	m_pTaskList = new TaskList(m_pCompletedPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	// sizers
 	m_pCompletedSizer = new wxBoxSizer(wxVERTICAL);
 	m_pTaskSizer = new wxBoxSizer(wxVERTICAL);
 	m_pCompletedPanel->SetSizerAndFit(m_pCompletedSizer);
 	m_pTaskPanel->SetSizerAndFit(m_pTaskSizer);
 
 	// static box sizer for completed task panel
-	m_pListSizer = new wxStaticBoxSizer(wxVERTICAL, m_pCompletedPanel, _T("Completed"));
+	m_pListSizer = new wxStaticBoxSizer(wxVERTICAL, m_pCompletedPanel, _T("Completed Tasks"));
+	m_pListSizer->Add(m_pTaskList, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 	m_pCompletedSizer->Add(m_pListSizer, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 
 	// Split
