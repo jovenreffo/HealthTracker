@@ -133,6 +133,9 @@ private:
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTopButtonSizer;
 	wxStaticBoxSizer* m_pListSizer;
+	// Sizers for panels
+	wxBoxSizer* m_pCompletedSizer;
+	wxBoxSizer* m_pTaskSizer;
 
 	// Vector for storing each of the user's items
 	std::vector<TodoItem*> m_items;
@@ -152,6 +155,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupPanels();
 	void SetupSplitter();
 
 	void AddTask(const wxString& name, const wxString& desc);
