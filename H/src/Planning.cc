@@ -94,8 +94,8 @@ void AddTaskDlg::SetupControls()
 	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskDesc));
 
 	// Set max lengths
-	m_pTaskNameTxt->SetMaxLength(75);
-	m_pTaskDescTxt->SetMaxLength(200);
+	m_pTaskNameTxt->SetMaxLength(35);
+	m_pTaskDescTxt->SetMaxLength(100);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -197,6 +197,7 @@ void TodoPanel::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupPanels(); // SetupSplitter() called here
 }
 
 void TodoPanel::SetupControls()
@@ -207,7 +208,7 @@ void TodoPanel::SetupControls()
 	m_pAddButton = new wxButton(this, wxID_ANY, _T("Add Task"), wxDefaultPosition, wxDefaultSize);
 	m_pClearListButton = new wxButton(this, wxID_ANY, _T("Clear Task List"), wxDefaultPosition, wxDefaultSize);
 
-	m_pTaskList = new TaskList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	//m_pTaskList = new TaskList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	m_pAddButton->SetBitmap(m_addBmp);
 	m_pClearListButton->SetBitmap(m_checkBmp);
@@ -225,28 +226,47 @@ void TodoPanel::SetupSizers()
 #ifdef wxUSE_STATLINE
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 #endif
+}
 
-	// Task panel
+void TodoPanel::SetupPanels()
+{
+	this->SetupSplitter();
 
+	m_pCompletedPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pTaskPanel = new wxPanel(m_pSplitter, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
-	// Completed panel
+	// Sizers
+	m_pCompletedSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTaskSizer = new wxBoxSizer(wxVERTICAL);
+	m_pCompletedPanel->SetSizerAndFit(m_pCompletedSizer);
+	m_pTaskPanel->SetSizerAndFit(m_pTaskSizer);
+
+	// static box sizer for completed task panel
+	m_pListSizer = new wxStaticBoxSizer(wxVERTICAL, m_pCompletedPanel, _T("Completed"));
+	m_pCompletedSizer->Add(m_pListSizer, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
+
+	// Split
+	m_pSplitter->SplitVertically(m_pTaskPanel, m_pCompletedPanel);
+	m_pTopSizer->Add(m_pSplitter, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 }
 
 void TodoPanel::SetupSplitter()
 {
-
+	m_pSplitter = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
+	m_pSplitter->SetSashGravity(0.5);
+	m_pSplitter->SetMinimumPaneSize(150);
 }
 
 void TodoPanel::AddTask(const wxString& name, const wxString& desc)
 {
 	// Create a new item and push it back into the vector
-	TodoItem* pItem = new TodoItem(name, desc, this);
+	TodoItem* pItem = new TodoItem(name, desc, m_pTaskPanel);
 	pItem->Show(true);
 	m_items.push_back(pItem);
 
 	// Layout the window
-	m_pTopSizer->Add(pItem, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
-	Layout();
+	m_pTaskSizer->Add(pItem, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
+	m_pTaskPanel->Layout();
 }
 
 // Events
@@ -315,7 +335,7 @@ void TodoItem::SetupControls()
 void TodoItem::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(100, -1));
+	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(65, -1));
 	this->SetSizerAndFit(m_pTopSizer);
 
 	m_pFlexSizer->Add(m_pNameTitle, wxSizerFlags().Left().Border(wxALL, 5));
