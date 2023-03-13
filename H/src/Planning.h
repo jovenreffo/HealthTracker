@@ -171,6 +171,7 @@ class TodoItem : public wxPanel
 private:
 	wxString m_taskName;
 	wxString m_taskDesc;
+	TaskList* m_pTaskList;
 
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
@@ -190,6 +191,7 @@ public:
 	TodoItem() = default;
 	TodoItem(const wxString& taskName,
 		const wxString& taskDesc,
+		TaskList* pTaskList,
 		wxWindow* parent,
 		wxWindowID id = wxID_ANY,
 		const wxPoint& pos = wxDefaultPosition,
@@ -246,6 +248,8 @@ public:
 	void SetupImageList();
 	void SetupColumn();
 	void SetupMenu();
+
+	void AddItem(const wxString& name);
 
 	// Events
 	void OnItemSelected(wxListEvent& e);
