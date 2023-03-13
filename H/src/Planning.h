@@ -161,7 +161,8 @@ public:
 	void AddTask(const wxString& name, const wxString& desc);
 
 	// Events
-	void OnAddTask(wxCommandEvent& event);
+	void OnAddTask(wxCommandEvent& e);
+	void OnClearTaskList(wxCommandEvent& e);
 };
 
 // For the to-do list items, customization will be needed.
