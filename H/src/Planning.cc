@@ -262,7 +262,7 @@ void TodoPanel::SetupSplitter()
 void TodoPanel::AddTask(const wxString& name, const wxString& desc)
 {
 	// Create a new item and push it back into the vector
-	TodoItem* pItem = new TodoItem(name, desc, m_pTaskPanel);
+	TodoItem* pItem = new TodoItem(name, desc, m_pTaskList, m_pTaskPanel);
 	pItem->Show(true);
 	m_items.push_back(pItem);
 
@@ -288,8 +288,8 @@ void TodoPanel::OnAddTask(wxCommandEvent& event)
 
 wxIMPLEMENT_DYNAMIC_CLASS(TodoItem, wxHtmlListBox);
 
-TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }
+TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, TaskList* pTaskList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }, m_pTaskList{ pTaskList }
 {
 	this->Init();
 	this->SetBackgroundColour(wxColour(225, 225, 225));
@@ -386,12 +386,76 @@ void TodoItem::OnRemove(wxCommandEvent& e)
 TaskList::TaskList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView(parent, id, pos, size, style)
 {
-
+	this->Init();
 
 	// Bind events
+	this->Bind(wxEVT_LIST_ITEM_SELECTED, &TaskList::OnItemSelected, this);
+	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &TaskList::OnRightClickItem, this);
+	m_pMenu->Bind(wxEVT_MENU, &TaskList::OnRemoveItem, this, wxID_REMOVE);
 }
 
 TaskList::~TaskList()
 {
 	// Unbind events
+	this->Unbind(wxEVT_LIST_ITEM_SELECTED, &TaskList::OnItemSelected, this);
+	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &TaskList::OnRightClickItem, this);
+	m_pMenu->Unbind(wxEVT_MENU, &TaskList::OnRemoveItem, this, wxID_REMOVE);
+}
+
+void TaskList::Init()
+{
+	this->SetupImageList();
+	this->SetupColumn();
+	this->SetupMenu();
+}
+
+void TaskList::SetupImageList()
+{
+	m_pImageList = new wxImageList(16, 16);
+
+	m_taskBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check2_small.png"), wxBITMAP_TYPE_PNG);
+	m_taskBmp.ResetAlpha();
+
+	m_pImageList->Add(m_taskBmp);
+	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
+}
+
+void TaskList::SetupColumn()
+{
+	wxListItem taskCol;
+	taskCol.SetText(_T("Completed Tasks"));
+	taskCol.SetImage(-1);
+	this->InsertColumn(0, taskCol);
+	this->SetColumnWidth(0, 200);
+}
+
+void TaskList::SetupMenu()
+{
+	m_pMenu = new wxMenu();
+
+	m_pMenu->Append(wxID_REMOVE, _T("&Remove Item"));
+}
+
+void TaskList::AddItem(const wxString& name)
+{
+	this->InsertItem(0, name, 0);
+}
+
+// Events
+
+void TaskList::OnItemSelected(wxListEvent& e)
+{
+	m_selectionIndex = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+	m_currentItemName = GetItemText(m_selectionIndex, 0);
+}
+
+void TaskList::OnRightClickItem(wxListEvent& e)
+{
+	this->PopupMenu(m_pMenu);
+}
+
+void TaskList::OnRemoveItem(wxCommandEvent& e)
+{
+	if (wxMessageBox(_T("Are you sure you want to remove this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->DeleteItem(m_selectionIndex);
 }
