@@ -27,7 +27,7 @@ class TodoPanel;
 class TodoItem;
 class TaskList;
 
-class Calendar: public wxNotebook
+class Planning: public wxNotebook
 {
 private:
 
@@ -42,7 +42,7 @@ private:
 	TodoPanel* m_pTodoPanel;
 
 public:
-	Calendar(wxWindow* parent,
+	Planning(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
