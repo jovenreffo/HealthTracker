@@ -1,6 +1,7 @@
 #ifndef _CALENDAR_H_
 #define _CALENDAR_H_
 
+#include <wx/wx.h>
 #include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/bitmap.h>
@@ -13,6 +14,7 @@
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
 #include <wx/button.h>
+#include <wx/choice.h>
 #include <wx/listctrl.h>
 #include <wx/splitter.h>
 #include <wx/htmllbox.h>
@@ -75,6 +77,10 @@ private:
 	wxTextCtrl* m_pTaskNameTxt;
 	wxTextCtrl* m_pTaskDescTxt;
 
+	// Control members for urgency selector
+	wxChoice* m_pUrgencyLevel;
+	wxArrayString m_urgencyLevels;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pButtonSizer;
@@ -100,6 +106,7 @@ public:
 
 	// Dialog setup
 	void Init();
+	void InitUrgencyArray();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
