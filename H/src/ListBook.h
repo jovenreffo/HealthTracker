@@ -14,7 +14,7 @@ class Listbook: public wxListbook
 private:
 	// Tabs
 	Journal* m_pJournal;
-	Calendar* m_pCalendar;
+	Planning* m_pPlanning;
 	ExerciseBook* m_pExerciseBook;
 	Settings* m_pSettings;
 
