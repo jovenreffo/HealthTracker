@@ -8,19 +8,19 @@
 #include "Font/Font.hpp"
 #include "Flags.hpp"
 
-Calendar::Calendar(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+Planning::Planning(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxNotebook(parent, id, pos, size, style, _T("calendar"))
 {
 	this->Init();
 }
 
-void Calendar::Init()
+void Planning::Init()
 {
 	this->SetupImageList();
 	this->SetupPages();
 }
 
-void Calendar::SetupImageList()
+void Planning::SetupImageList()
 {
 	m_pImageList = new wxImageList(30, 30);
 
@@ -35,7 +35,7 @@ void Calendar::SetupImageList()
 	this->AssignImageList(m_pImageList);
 }
 
-void Calendar::SetupPages()
+void Planning::SetupPages()
 {
 	m_pCalendarPanel = new CalendarPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTodoPanel = new TodoPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
@@ -184,12 +184,14 @@ TodoPanel::TodoPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const 
 
 	// Bind events
 	m_pAddButton->Bind(wxEVT_BUTTON, &TodoPanel::OnAddTask, this);
+	m_pClearListButton->Bind(wxEVT_BUTTON, &TodoPanel::OnClearTaskList, this);
 }
 
 TodoPanel::~TodoPanel()
 {
 	// Unbind events
 	m_pAddButton->Unbind(wxEVT_BUTTON, &TodoPanel::OnAddTask, this);
+	m_pClearListButton->Unbind(wxEVT_BUTTON, &TodoPanel::OnClearTaskList, this);
 }
 
 // Panel setup
@@ -273,7 +275,7 @@ void TodoPanel::AddTask(const wxString& name, const wxString& desc)
 
 // Events
 
-void TodoPanel::OnAddTask(wxCommandEvent& event)
+void TodoPanel::OnAddTask(wxCommandEvent& e)
 {
 	m_pAddTaskDlg = new AddTaskDlg(this);
 	m_pAddTaskDlg->Show(true);
@@ -282,6 +284,11 @@ void TodoPanel::OnAddTask(wxCommandEvent& event)
 	{
 		this->AddTask(m_pAddTaskDlg->GetTaskName(), m_pAddTaskDlg->GetTaskDesc());
 	}
+}
+
+void TodoPanel::OnClearTaskList(wxCommandEvent& e)
+{
+
 }
 
 // =========================================== TodoItem ===========================================
@@ -366,6 +373,7 @@ void TodoItem::HandleDelete()
 
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
 {
+	m_pTaskList->AddItem(m_taskName);
 	this->HandleDelete();
 }
 
