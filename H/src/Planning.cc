@@ -480,3 +480,11 @@ void TaskList::OnRemoveItem(wxCommandEvent& e)
 	if (wxMessageBox(_T("Are you sure you want to remove this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 		this->DeleteItem(m_selectionIndex);
 }
+
+// =========================================== PriorityLevel ===========================================
+
+PriorityLevel::PriorityLevel(wxWindow* parent)
+	: wxPaintDC{ parent }
+{
+
+}

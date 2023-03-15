@@ -265,4 +265,10 @@ public:
 	void OnRemoveItem(wxCommandEvent& e);
 };
 
+class PriorityLevel : public wxPaintDC
+{
+public:
+	PriorityLevel(wxWindow* parent);
+};
+
 #endif
