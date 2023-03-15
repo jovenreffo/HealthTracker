@@ -78,8 +78,8 @@ private:
 	wxTextCtrl* m_pTaskDescTxt;
 
 	// Control members for urgency selector
-	wxChoice* m_pUrgencyLevel;
-	wxArrayString m_urgencyLevels;
+	wxChoice* m_pPriorityLevel;
+	wxArrayString m_priorityLevels;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -106,7 +106,7 @@ public:
 
 	// Dialog setup
 	void Init();
-	void InitUrgencyArray();
+	void SetupPriorityLevels();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
