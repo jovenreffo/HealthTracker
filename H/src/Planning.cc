@@ -83,9 +83,18 @@ AddTaskDlg::~AddTaskDlg()
 
 void AddTaskDlg::Init()
 {
+	this->SetupPriorityLevels();
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupSizing();
+}
+
+void AddTaskDlg::SetupPriorityLevels()
+{
+	m_priorityLevels.Add(_T("Minor"));
+	m_priorityLevels.Add(_T("Medium"));
+	m_priorityLevels.Add(_T("Major"));
+	m_priorityLevels.Add(_T("Critical"));
 }
 
 void AddTaskDlg::SetupControls()
@@ -96,6 +105,8 @@ void AddTaskDlg::SetupControls()
 	// Set max lengths
 	m_pTaskNameTxt->SetMaxLength(35);
 	m_pTaskDescTxt->SetMaxLength(100);
+
+	m_pPriorityLevel = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_priorityLevels);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -113,6 +124,8 @@ void AddTaskDlg::SetupSizers()
 	m_pTextSizer->Add(m_pTaskNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task description:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTextSizer->Add(m_pTaskDescTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Priority level:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(m_pPriorityLevel, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pTextSizer, wxSizerFlags().Left().Border(wxALL, 5));
 
 	// Separator
