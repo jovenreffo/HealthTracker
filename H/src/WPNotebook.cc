@@ -11,7 +11,6 @@ WPNotebook::WPNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, cons
 	: wxNotebook(parent, id, pos, size, style)
 {
 	this->Init();
-
 }
 
 WPNotebook::~WPNotebook()
