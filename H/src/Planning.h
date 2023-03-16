@@ -28,6 +28,7 @@ class CalendarPanel;
 class TodoPanel;
 class TodoItem;
 class TaskList;
+class PriorityLevel;
 
 class Planning: public wxNotebook
 {
