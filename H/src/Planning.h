@@ -182,6 +182,8 @@ private:
 	wxString m_taskDesc;
 	TaskList* m_pTaskList;
 
+	PriorityLevel* m_pPriorityLevel;
+
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
 	wxMenu* m_pMenu;
@@ -225,6 +227,7 @@ public:
 	void OnMarkCompleted(wxCommandEvent& e);
 	void OnRightClick(wxMouseEvent& e);
 	void OnRemove(wxCommandEvent& e);
+	void OnPaint(wxPaintEvent& e);
 
 public:
 	wxDECLARE_NO_COPY_CLASS(TodoItem);
@@ -266,7 +269,7 @@ public:
 	void OnRemoveItem(wxCommandEvent& e);
 };
 
-class PriorityLevel : public wxPaintDC
+class PriorityLevel : public wxClientDC
 {
 public:
 	PriorityLevel(wxWindow* parent);
