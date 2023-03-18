@@ -301,12 +301,19 @@ void TodoPanel::OnAddTask(wxCommandEvent& e)
 
 void TodoPanel::OnClearTaskList(wxCommandEvent& e)
 {
-
+	if (wxMessageBox(_T("Are you sure you want to remove all of your tasks?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	{
+		wxLogMessage("Active items: %d", m_items.size());
+		for (auto i : m_items)
+		{
+			i->Show(false);
+			i->Destroy();
+			this->Layout();
+		}
+	}
 }
 
 // =========================================== TodoItem ===========================================
-
-wxIMPLEMENT_DYNAMIC_CLASS(TodoItem, wxHtmlListBox);
 
 TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, TaskList* pTaskList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
 	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }, m_pTaskList{ pTaskList }
@@ -316,6 +323,7 @@ TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, TaskList*
 
 	// Bind events
 	this->Bind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
+	this->Bind(wxEVT_PAINT, &TodoItem::OnPaint, this);
 	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
@@ -326,6 +334,7 @@ TodoItem::~TodoItem()
 {
 	// Unbind events
 	this->Unbind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
+	this->Unbind(wxEVT_PAINT, &TodoItem::OnPaint, this);
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
@@ -367,7 +376,7 @@ void TodoItem::SetupSizers()
 	// for the item's name entered by the user, its description, and the checkbox to mark the task as complete
 	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
 	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
-	m_pTopSizer->Add(m_pFlexSizer);
+	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLeft, 100));
 	m_pTopSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxLEFT | wxTOP, 30));
 }
 
@@ -400,6 +409,16 @@ void TodoItem::OnRemove(wxCommandEvent& e)
 	if (wxMessageBox(_T("Are you sure you want to remove this task?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 		this->HandleDelete();
 	else return;
+}
+
+void TodoItem::OnPaint(wxPaintEvent& e)
+{
+	wxPaintDC dc(this);
+	
+	dc.SetPen(wxPen(*wxBLACK, 2, wxPENSTYLE_SOLID));
+	dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
+	
+	dc.DrawRectangle(20, 20, 10, 10);
 }
 
 // =========================================== TaskList ===========================================
@@ -484,7 +503,7 @@ void TaskList::OnRemoveItem(wxCommandEvent& e)
 // =========================================== PriorityLevel ===========================================
 
 PriorityLevel::PriorityLevel(wxWindow* parent)
-	: wxPaintDC{ parent }
+	: wxClientDC{ parent }
 {
 
 }

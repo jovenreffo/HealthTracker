@@ -183,7 +183,6 @@ private:
 	TaskList* m_pTaskList;
 
 	PriorityLevel* m_pPriorityLevel;
-	wxPaintDC m_dc;
 
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
