@@ -183,6 +183,7 @@ private:
 	TaskList* m_pTaskList;
 
 	PriorityLevel* m_pPriorityLevel;
+	wxPaintDC m_dc;
 
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
@@ -199,7 +200,6 @@ private:
 	wxFlexGridSizer* m_pFlexSizer;
 
 public:
-	TodoItem() = default;
 	TodoItem(const wxString& taskName,
 		const wxString& taskDesc,
 		TaskList* pTaskList,
@@ -228,10 +228,6 @@ public:
 	void OnRightClick(wxMouseEvent& e);
 	void OnRemove(wxCommandEvent& e);
 	void OnPaint(wxPaintEvent& e);
-
-public:
-	wxDECLARE_NO_COPY_CLASS(TodoItem);
-	wxDECLARE_DYNAMIC_CLASS(TodoItem);
 };
 
 class TaskList : public wxListView
