@@ -104,6 +104,7 @@ public:
 	// Getters
 	const wxString& GetTaskName() const { return m_taskName; }
 	const wxString& GetTaskDesc() const { return m_taskDesc; }
+	int GetPriorityLevel() const { return m_pPriorityLevel->GetSelection(); }
 
 	// Dialog setup
 	void Init();
@@ -166,7 +167,7 @@ public:
 	void SetupPanels();
 	void SetupSplitter();
 
-	void AddTask(const wxString& name, const wxString& desc);
+	void AddTask(int priorityLevel, const wxString& name, const wxString& desc);
 
 	// Events
 	void OnAddTask(wxCommandEvent& e);
@@ -178,11 +179,13 @@ public:
 class TodoItem : public wxPanel
 {
 private:
+	// Information
 	wxString m_taskName;
 	wxString m_taskDesc;
 	TaskList* m_pTaskList;
 
 	PriorityLevel* m_pPriorityLevel;
+	int m_nPriorityLevel;
 
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
@@ -199,7 +202,8 @@ private:
 	wxFlexGridSizer* m_pFlexSizer;
 
 public:
-	TodoItem(const wxString& taskName,
+	TodoItem(int priorityLevel,
+		const wxString& taskName,
 		const wxString& taskDesc,
 		TaskList* pTaskList,
 		wxWindow* parent,
