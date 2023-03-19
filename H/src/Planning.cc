@@ -94,7 +94,6 @@ void AddTaskDlg::SetupPriorityLevels()
 	m_priorityLevels.Add(_T("Minor"));
 	m_priorityLevels.Add(_T("Medium"));
 	m_priorityLevels.Add(_T("Major"));
-	m_priorityLevels.Add(_T("Critical"));
 }
 
 void AddTaskDlg::SetupControls()
@@ -274,10 +273,10 @@ void TodoPanel::SetupSplitter()
 	m_pSplitter->SetMinimumPaneSize(150);
 }
 
-void TodoPanel::AddTask(const wxString& name, const wxString& desc)
+void TodoPanel::AddTask(int priorityLevel, const wxString& name, const wxString& desc)
 {
 	// Create a new item and push it back into the vector
-	TodoItem* pItem = new TodoItem(name, desc, m_pTaskList, m_pTaskPanel);
+	TodoItem* pItem = new TodoItem(priorityLevel, name, desc, m_pTaskList, m_pTaskPanel);
 	pItem->Show(true);
 	m_items.push_back(pItem);
 
@@ -295,7 +294,7 @@ void TodoPanel::OnAddTask(wxCommandEvent& e)
 
 	if (m_pAddTaskDlg->ShowModal() == wxID_OK)
 	{
-		this->AddTask(m_pAddTaskDlg->GetTaskName(), m_pAddTaskDlg->GetTaskDesc());
+		this->AddTask(m_pAddTaskDlg->GetPriorityLevel(), m_pAddTaskDlg->GetTaskName(), m_pAddTaskDlg->GetTaskDesc());
 	}
 }
 
@@ -315,8 +314,8 @@ void TodoPanel::OnClearTaskList(wxCommandEvent& e)
 
 // =========================================== TodoItem ===========================================
 
-TodoItem::TodoItem(const wxString& taskName, const wxString& taskDesc, TaskList* pTaskList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-	: wxPanel(parent, id, pos, size, style), m_taskName{ taskName }, m_taskDesc{ taskDesc }, m_pTaskList{ pTaskList }
+TodoItem::TodoItem(int priorityLevel, const wxString& taskName, const wxString& taskDesc, TaskList* pTaskList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxString& name)
+	: wxPanel(parent, id, pos, size, style), m_nPriorityLevel{ priorityLevel }, m_taskName{ taskName }, m_taskDesc{ taskDesc }, m_pTaskList{ pTaskList }
 {
 	this->Init();
 	this->SetBackgroundColour(wxColour(225, 225, 225));
@@ -376,7 +375,7 @@ void TodoItem::SetupSizers()
 	// for the item's name entered by the user, its description, and the checkbox to mark the task as complete
 	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
 	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
-	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLeft, 100));
+	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLEFT, 20));
 	m_pTopSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxLEFT | wxTOP, 30));
 }
 
@@ -414,11 +413,23 @@ void TodoItem::OnRemove(wxCommandEvent& e)
 void TodoItem::OnPaint(wxPaintEvent& e)
 {
 	wxPaintDC dc(this);
-	
 	dc.SetPen(wxPen(*wxBLACK, 2, wxPENSTYLE_SOLID));
-	dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
 	
-	dc.DrawRectangle(20, 20, 10, 10);
+	switch (m_nPriorityLevel)
+	{
+	case 0: // minor
+		dc.SetBrush(wxBrush(*wxGREEN, wxBRUSHSTYLE_SOLID));
+		break;
+	case 1: // medium
+		dc.SetBrush(wxBrush(*wxYELLOW, wxBRUSHSTYLE_SOLID));
+		break;
+	case 2: // major
+		dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
+		break;
+	}
+
+	
+	dc.DrawRectangle(10, 8, 10, 10);
 }
 
 // =========================================== TaskList ===========================================
