@@ -190,6 +190,8 @@ private:
 	// Controls
 	wxCheckBox* m_pMarkCompleted;
 	wxMenu* m_pMenu;
+	wxBitmapButton* m_pEditButton; wxBitmap m_editBmp;
+	wxBitmapButton* m_pRemoveButton; wxBitmap m_removeBmp;
 
 	// Text objects to be arranged
 	wxStaticText* m_pNameTitle;
@@ -200,6 +202,7 @@ private:
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxFlexGridSizer* m_pFlexSizer;
+	wxBoxSizer* m_pSettingsSizer;
 
 public:
 	TodoItem(int priorityLevel,
