@@ -351,6 +351,12 @@ void TodoItem::SetupControls()
 {
 	m_pMarkCompleted = new wxCheckBox(this, wxID_ANY, _T("Mark as completed"), wxDefaultPosition, wxDefaultSize);
 
+	// buttons
+	m_editBmp = wxBitmap(path_data::dataDir + _T("\\Images\\edit.png"), wxBITMAP_TYPE_PNG);
+	m_removeBmp = wxBitmap(path_data::dataDir + _T("\\Images\\remove.png"), wxBITMAP_TYPE_PNG);
+	m_pEditButton = new wxBitmapButton(this, wxID_ANY, m_editBmp, wxDefaultPosition, wxDefaultSize);
+	m_pRemoveButton = new wxBitmapButton(this, wxID_ANY, m_removeBmp, wxDefaultPosition, wxDefaultSize);
+
 	// initialise text objects
 	m_pNameTitle = new wxStaticText(this, wxID_ANY, _T("Name"), wxDefaultPosition, wxDefaultSize);
 	m_pDescTitle = new wxStaticText(this, wxID_ANY, _T("Description"), wxDefaultPosition, wxDefaultSize);
@@ -364,10 +370,16 @@ void TodoItem::SetupControls()
 
 void TodoItem::SetupSizers()
 {
-	m_pTopSizer = new wxBoxSizer(wxHORIZONTAL);
-	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(65, -1));
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pFlexSizer = new wxFlexGridSizer(3, wxSize(65, -1));
+	m_pSettingsSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
+	// Settings sizer
+	m_pSettingsSizer->Add(m_pEditButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pSettingsSizer->Add(m_pRemoveButton, wxSizerFlags().Left().Border(wxALL, 5));
+
+	// Flex sizer
 	m_pFlexSizer->Add(m_pNameTitle, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pFlexSizer->Add(m_pDescTitle, wxSizerFlags().Left().Border(wxALL, 5));
 
@@ -376,7 +388,7 @@ void TodoItem::SetupSizers()
 	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
 	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
 	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLEFT, 20));
-	m_pTopSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxLEFT | wxTOP, 30));
+	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left());
 }
 
 void TodoItem::SetupPopupMenu()
@@ -427,7 +439,6 @@ void TodoItem::OnPaint(wxPaintEvent& e)
 		dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
 		break;
 	}
-
 	
 	dc.DrawRectangle(10, 8, 10, 10);
 }
