@@ -349,13 +349,18 @@ void TodoItem::Init()
 
 void TodoItem::SetupControls()
 {
-	m_pMarkCompleted = new wxCheckBox(this, wxID_ANY, _T("Mark as completed"), wxDefaultPosition, wxDefaultSize);
 
 	// buttons
 	m_editBmp = wxBitmap(path_data::dataDir + _T("\\Images\\edit.png"), wxBITMAP_TYPE_PNG);
 	m_removeBmp = wxBitmap(path_data::dataDir + _T("\\Images\\remove.png"), wxBITMAP_TYPE_PNG);
+	m_checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check2.png"), wxBITMAP_TYPE_PNG);
 	m_pEditButton = new wxBitmapButton(this, wxID_ANY, m_editBmp, wxDefaultPosition, wxDefaultSize);
 	m_pRemoveButton = new wxBitmapButton(this, wxID_ANY, m_removeBmp, wxDefaultPosition, wxDefaultSize);
+	m_pMarkCompleted = new wxBitmapButton(this, wxID_ANY, m_checkBmp, wxDefaultPosition, wxDefaultSize);
+	// tooltips
+	m_pEditButton->SetToolTip(_T("Edit this task."));
+	m_pRemoveButton->SetToolTip(_T("Remove this task."));
+	m_pMarkCompleted->SetToolTip(_T("Mark this task as complete."));
 
 	// initialise text objects
 	m_pNameTitle = new wxStaticText(this, wxID_ANY, _T("Name"), wxDefaultPosition, wxDefaultSize);
@@ -376,6 +381,7 @@ void TodoItem::SetupSizers()
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Settings sizer
+	m_pSettingsSizer->Add(m_pMarkCompleted, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pSettingsSizer->Add(m_pEditButton, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pSettingsSizer->Add(m_pRemoveButton, wxSizerFlags().Left().Border(wxALL, 5));
 
@@ -388,7 +394,7 @@ void TodoItem::SetupSizers()
 	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
 	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
 	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLEFT, 20));
-	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left());
+	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left().Border(wxTOP, 25));
 }
 
 void TodoItem::SetupPopupMenu()

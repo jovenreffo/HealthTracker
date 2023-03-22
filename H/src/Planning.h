@@ -188,8 +188,8 @@ private:
 	int m_nPriorityLevel;
 
 	// Controls
-	wxCheckBox* m_pMarkCompleted;
 	wxMenu* m_pMenu;
+	wxBitmapButton* m_pMarkCompleted; wxBitmap m_checkBmp;
 	wxBitmapButton* m_pEditButton; wxBitmap m_editBmp;
 	wxBitmapButton* m_pRemoveButton; wxBitmap m_removeBmp;
 
