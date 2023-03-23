@@ -323,10 +323,12 @@ TodoItem::TodoItem(int priorityLevel, const wxString& taskName, const wxString& 
 	// Bind events
 	this->Bind(wxEVT_RIGHT_DOWN, &TodoItem::OnRightClick, this);
 	this->Bind(wxEVT_PAINT, &TodoItem::OnPaint, this);
-	m_pMarkCompleted->Bind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
 	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
+
+	// Button events
+	m_pMarkCompleted->Bind(wxEVT_BUTTON, &TodoItem::OnMarkCompleted, this);
 }
 
 TodoItem::~TodoItem()
@@ -338,6 +340,9 @@ TodoItem::~TodoItem()
 
 	// Menu events
 	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
+
+	// Button events
+	m_pMarkCompleted->Unbind(wxEVT_BUTTON, &TodoItem::OnMarkCompleted, this);
 }
 
 void TodoItem::Init()
@@ -376,7 +381,7 @@ void TodoItem::SetupControls()
 void TodoItem::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pFlexSizer = new wxFlexGridSizer(3, wxSize(65, -1));
+	m_pFlexSizer = new wxFlexGridSizer(2, wxSize(65, -1));
 	m_pSettingsSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
@@ -393,8 +398,8 @@ void TodoItem::SetupSizers()
 	// for the item's name entered by the user, its description, and the checkbox to mark the task as complete
 	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
 	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
+	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLEFT, 20));
-	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left().Border(wxTOP, 25));
 }
 
 void TodoItem::SetupPopupMenu()
@@ -446,7 +451,7 @@ void TodoItem::OnPaint(wxPaintEvent& e)
 		break;
 	}
 	
-	dc.DrawRectangle(10, 8, 10, 10);
+	dc.DrawRectangle(10, m_pNameTitle->GetPosition().y + 3, 10, 10);
 }
 
 // =========================================== TaskList ===========================================
