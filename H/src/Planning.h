@@ -20,6 +20,8 @@
 #include <wx/htmllbox.h>
 #include <vector>
 
+#include "EditTaskDlg.h"
+
 #define ADDTASKDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDTASKDLG_SIZE ( wxSize(315, 235) )
 #define ADDTASKDLG_MAX_SIZE	( wxSize(415, 300) )
@@ -192,6 +194,7 @@ private:
 	wxBitmapButton* m_pMarkCompleted; wxBitmap m_checkBmp;
 	wxBitmapButton* m_pEditButton; wxBitmap m_editBmp;
 	wxBitmapButton* m_pRemoveButton; wxBitmap m_removeBmp;
+	EditTaskDlg* m_pEditTaskDlg;
 
 	// Text objects to be arranged
 	wxStaticText* m_pNameTitle;
@@ -231,6 +234,7 @@ public:
 
 	// events
 	void OnMarkCompleted(wxCommandEvent& e);
+	void OnEditTask(wxCommandEvent& e);
 	void OnRightClick(wxMouseEvent& e);
 	void OnRemove(wxCommandEvent& e);
 	void OnPaint(wxPaintEvent& e);
