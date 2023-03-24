@@ -329,6 +329,8 @@ TodoItem::TodoItem(int priorityLevel, const wxString& taskName, const wxString& 
 
 	// Button events
 	m_pMarkCompleted->Bind(wxEVT_BUTTON, &TodoItem::OnMarkCompleted, this);
+	m_pEditButton->Bind(wxEVT_BUTTON, &TodoItem::OnEditTask, this);
+	m_pRemoveButton->Bind(wxEVT_BUTTON, &TodoItem::OnRemove, this);
 }
 
 TodoItem::~TodoItem()
@@ -343,6 +345,8 @@ TodoItem::~TodoItem()
 
 	// Button events
 	m_pMarkCompleted->Unbind(wxEVT_BUTTON, &TodoItem::OnMarkCompleted, this);
+	m_pEditButton->Unbind(wxEVT_BUTTON, &TodoItem::OnEditTask, this);
+	m_pRemoveButton->Unbind(wxEVT_BUTTON, &TodoItem::OnRemove, this);
 }
 
 void TodoItem::Init()
@@ -419,6 +423,17 @@ void TodoItem::OnMarkCompleted(wxCommandEvent& e)
 {
 	m_pTaskList->AddItem(m_taskName);
 	this->HandleDelete();
+}
+
+void TodoItem::OnEditTask(wxCommandEvent& e)
+{
+	m_pEditTaskDlg = new EditTaskDlg(m_taskName, m_taskDesc, this, wxID_ANY);
+	m_pEditTaskDlg->Show(true);
+
+	if (m_pEditTaskDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void TodoItem::OnRightClick(wxMouseEvent& e)
