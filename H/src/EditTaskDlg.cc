@@ -1,3 +1,5 @@
+#include <wx/valtext.h>
+
 #include "EditTaskDlg.h"
 
 EditTaskDlg::EditTaskDlg(const wxString& taskName, const wxString& taskDesc, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -25,7 +27,11 @@ void EditTaskDlg::Init()
 
 void EditTaskDlg::SetupControls()
 {
+	m_pTaskName = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0L, wxTextValidator(0, &m_nameVal));
+	m_pTaskDesc = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE, wxTextValidator(0, &m_descVal));
 
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void EditTaskDlg::SetupSizers()
