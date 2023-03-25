@@ -3,7 +3,8 @@
 
 #include <wx/wx.h>
 
-#define ETD_SIZE (wxSize(325, 275))
+#define ETD_SIZE (wxSize(315, 235))
+#define ETD_SIZE_MAX (wxSize(415, 300))
 
 class EditTaskDlg : public wxDialog
 {
@@ -19,6 +20,10 @@ private:
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pControlSizer;
 
 public:
 	EditTaskDlg() = default;
