@@ -13,6 +13,12 @@ private:
 
 	wxTextCtrl* m_pTaskName;
 	wxTextCtrl* m_pTaskDesc; // wxTE_MULTILINE
+	// Validators
+	wxString m_nameVal;
+	wxString m_descVal;
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
 
 public:
 	EditTaskDlg() = default;
@@ -32,7 +38,10 @@ public:
 	void SetupSizers();
 	void SetupSizing();
 
-	// Eventgs
+	// Events
+	void OnEnter(wxCommandEvent& e);
+	void OnOK(wxCommandEvent& e);
+	void OnCancel(wxCommandEvent& e);
 };
 
 #endif
