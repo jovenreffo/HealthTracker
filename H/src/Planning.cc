@@ -119,7 +119,7 @@ void AddTaskDlg::SetupSizers()
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Main text controls
-	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task title:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task name:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTextSizer->Add(m_pTaskNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTextSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Task description:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTextSizer->Add(m_pTaskDescTxt, wxSizerFlags().Left().Border(wxALL, 5));
@@ -177,13 +177,13 @@ void AddTaskDlg::OnCancel(wxCommandEvent& e)
 
 void AddTaskDlg::OnMaxLengthName(wxCommandEvent& e)
 {
-	wxMessageBox(_T("You have reached the character limit (75/75)"), _T("Warning"), wxOK | wxICON_EXCLAMATION);
+	wxMessageBox(_T("You have reached the character limit."), _T("Warning"), wxOK | wxICON_EXCLAMATION);
 	e.Skip();
 }
 
 void AddTaskDlg::OnMaxLengthDesc(wxCommandEvent& e)
 {
-	wxMessageBox(_T("You have reached the character limit (200/200)"), _T("Warning"), wxOK | wxICON_EXCLAMATION);
+	wxMessageBox(_T("You have reached the character limit."), _T("Warning"), wxOK | wxICON_EXCLAMATION);
 	e.Skip();
 }
 
@@ -427,7 +427,7 @@ void TodoItem::OnMarkCompleted(wxCommandEvent& e)
 
 void TodoItem::OnEditTask(wxCommandEvent& e)
 {
-	m_pEditTaskDlg = new EditTaskDlg(m_taskName, m_taskDesc, this, wxID_ANY);
+	m_pEditTaskDlg = new EditTaskDlg(m_nPriorityLevel, m_taskName, m_taskDesc, this, wxID_ANY);
 	m_pEditTaskDlg->Show(true);
 
 	if (m_pEditTaskDlg->ShowModal() == wxID_OK)
@@ -546,12 +546,4 @@ void TaskList::OnRemoveItem(wxCommandEvent& e)
 {
 	if (wxMessageBox(_T("Are you sure you want to remove this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 		this->DeleteItem(m_selectionIndex);
-}
-
-// =========================================== PriorityLevel ===========================================
-
-PriorityLevel::PriorityLevel(wxWindow* parent)
-	: wxClientDC{ parent }
-{
-
 }
