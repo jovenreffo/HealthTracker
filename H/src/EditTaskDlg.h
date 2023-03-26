@@ -11,12 +11,13 @@ class EditTaskDlg : public wxDialog
 private:
 	wxString m_taskName;
 	wxString m_taskDesc;
+	int m_priorityLevel;
 
 	wxTextCtrl* m_pTaskName;
 	wxTextCtrl* m_pTaskDesc; // wxTE_MULTILINE
-	// Validators
-	wxString m_nameVal;
-	wxString m_descVal;
+
+	wxChoice* m_pPriorityLevel;
+	wxArrayString m_priorityLevels;
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
@@ -27,7 +28,8 @@ private:
 
 public:
 	EditTaskDlg() = default;
-	EditTaskDlg(const wxString& taskName,
+	EditTaskDlg(int priorityLevel,
+		const wxString& taskName,
 		const wxString& taskDesc,
 		wxWindow* parent,
 		wxWindowID id,
@@ -39,14 +41,19 @@ public:
 
 	// Dialog setup
 	void Init();
+	void SetupPriorityLevels();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
+
+	void HandleExit();
 
 	// Events
 	void OnEnter(wxCommandEvent& e);
 	void OnOK(wxCommandEvent& e);
 	void OnCancel(wxCommandEvent& e);
+	void OnMaxLengthName(wxCommandEvent& e);
+	void OnMaxLengthDesc(wxCommandEvent& e);
 };
 
 #endif
