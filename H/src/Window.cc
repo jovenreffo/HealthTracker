@@ -132,7 +132,6 @@ void Frame::SetupMenuBar()
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
 
 
-
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
 	m_pMenuBar->Append(m_pHelpMenu, _T("&Help"));
@@ -144,7 +143,7 @@ void Frame::SetupMenuBar()
 	m_pDebugMenu->Append(ID_WINSIZE, _T("&Get Window Size"));
 	m_pDebugMenu->Bind(wxEVT_MENU, &Frame::OnGetWindowSize, this, ID_WINSIZE);
 
-	m_pMenuBar->Append(m_pDebugMenu, _T("&Debug"));
+	//m_pMenuBar->Append(m_pDebugMenu, _T("&Debug"));
 #endif //_DEBUG
 
 #endif // wxUSE_MENUS
