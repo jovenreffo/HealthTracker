@@ -275,10 +275,4 @@ public:
 	void OnRemoveItem(wxCommandEvent& e);
 };
 
-class PriorityLevel : public wxClientDC
-{
-public:
-	PriorityLevel(wxWindow* parent);
-};
-
 #endif
