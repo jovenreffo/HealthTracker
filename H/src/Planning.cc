@@ -435,6 +435,7 @@ void TodoItem::OnEditTask(wxCommandEvent& e)
 		// Set the values of strings and labels
 		m_taskName = m_pEditTaskDlg->GetTaskName();
 		m_taskDesc = m_pEditTaskDlg->GetTaskDesc();
+		m_nPriorityLevel = m_pEditTaskDlg->GetPriorityLevel();
 
 		m_pItemName->SetLabel(m_taskName);
 		m_pItemDesc->SetLabel(m_taskDesc);
