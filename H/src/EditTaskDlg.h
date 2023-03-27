@@ -39,6 +39,11 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~EditTaskDlg();
 
+	// Getters
+	const wxString& GetTaskName() const { return m_taskName; }
+	const wxString& GetTaskDesc() const { return m_taskDesc; }
+	const int GetPriorityLevel()  const { return m_priorityLevel; }
+
 	// Dialog setup
 	void Init();
 	void SetupPriorityLevels();
