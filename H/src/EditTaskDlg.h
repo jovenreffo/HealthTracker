@@ -55,6 +55,7 @@ public:
 
 	// Events
 	void OnEnter(wxCommandEvent& e);
+	void OnChoice(wxCommandEvent& e);
 	void OnOK(wxCommandEvent& e);
 	void OnCancel(wxCommandEvent& e);
 	void OnMaxLengthName(wxCommandEvent& e);
