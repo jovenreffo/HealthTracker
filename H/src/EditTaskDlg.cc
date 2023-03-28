@@ -1,4 +1,5 @@
 #include <wx/valtext.h>
+#include <wx/valgen.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
 
@@ -17,6 +18,11 @@ EditTaskDlg::EditTaskDlg(int priorityLevel, const wxString& taskName, const wxSt
 	m_pTaskName->Bind(wxEVT_TEXT_MAXLEN, &EditTaskDlg::OnMaxLengthName, this);
 	m_pTaskDesc->Bind(wxEVT_TEXT_ENTER, &EditTaskDlg::OnEnter, this);
 	m_pTaskDesc->Bind(wxEVT_TEXT_MAXLEN, &EditTaskDlg::OnMaxLengthDesc, this);
+
+	m_pPriorityLevel->Bind(wxEVT_CHOICE, &EditTaskDlg::OnChoice, this);
+
+	m_pOk->Bind(wxEVT_BUTTON, &EditTaskDlg::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &EditTaskDlg::OnCancel, this);
 }
 
 EditTaskDlg::~EditTaskDlg()
@@ -26,6 +32,11 @@ EditTaskDlg::~EditTaskDlg()
 	m_pTaskName->Unbind(wxEVT_TEXT_MAXLEN, &EditTaskDlg::OnMaxLengthName, this);
 	m_pTaskDesc->Unbind(wxEVT_TEXT_ENTER, &EditTaskDlg::OnEnter, this);
 	m_pTaskDesc->Unbind(wxEVT_TEXT_MAXLEN, &EditTaskDlg::OnMaxLengthDesc, this);
+
+	m_pPriorityLevel->Unbind(wxEVT_CHOICE, &EditTaskDlg::OnChoice, this);
+
+	m_pOk->Unbind(wxEVT_BUTTON, &EditTaskDlg::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &EditTaskDlg::OnCancel, this);
 }
 
 void EditTaskDlg::Init()
@@ -52,7 +63,7 @@ void EditTaskDlg::SetupControls()
 	m_pTaskName->SetMaxLength(35);
 	m_pTaskDesc->SetMaxLength(100);
 
-	m_pPriorityLevel = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_priorityLevels);
+	m_pPriorityLevel = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_priorityLevels, 0L, wxGenericValidator(&m_priorityLevel));
 	m_pPriorityLevel->SetSelection(m_priorityLevel);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
@@ -106,6 +117,11 @@ void EditTaskDlg::HandleExit()
 void EditTaskDlg::OnEnter(wxCommandEvent& e)
 {
 	this->HandleExit();
+}
+
+void EditTaskDlg::OnChoice(wxCommandEvent& e)
+{
+	m_priorityLevel = m_pPriorityLevel->GetSelection();
 }
 
 void EditTaskDlg::OnOK(wxCommandEvent& e)
