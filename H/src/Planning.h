@@ -231,6 +231,7 @@ public:
 	void SetupPopupMenu();
 
 	void HandleDelete();
+	void DrawPriority(int priorityLevel);
 
 	// events
 	void OnMarkCompleted(wxCommandEvent& e);
