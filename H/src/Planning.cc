@@ -419,6 +419,27 @@ void TodoItem::HandleDelete()
 	this->Destroy();
 }
 
+void TodoItem::DrawPriority(int priorityLevel)
+{
+	wxPaintDC dc(this);
+	dc.SetPen(wxPen(*wxBLACK, 2, wxPENSTYLE_SOLID));
+
+	switch (priorityLevel)
+	{
+	case 0: // minor
+		dc.SetBrush(wxBrush(*wxGREEN, wxBRUSHSTYLE_SOLID));
+		break;
+	case 1: // medium
+		dc.SetBrush(wxBrush(*wxYELLOW, wxBRUSHSTYLE_SOLID));
+		break;
+	case 2: // major
+		dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
+		break;
+	}
+
+	dc.DrawRectangle(10, m_pNameTitle->GetPosition().y + 3, 10, 10);
+}
+
 void TodoItem::OnMarkCompleted(wxCommandEvent& e)
 {
 	m_pTaskList->AddItem(m_taskName);
@@ -439,6 +460,8 @@ void TodoItem::OnEditTask(wxCommandEvent& e)
 
 		m_pItemName->SetLabel(m_taskName);
 		m_pItemDesc->SetLabel(m_taskDesc);
+
+		this->Refresh();
 	}
 }
 
@@ -456,23 +479,7 @@ void TodoItem::OnRemove(wxCommandEvent& e)
 
 void TodoItem::OnPaint(wxPaintEvent& e)
 {
-	wxPaintDC dc(this);
-	dc.SetPen(wxPen(*wxBLACK, 2, wxPENSTYLE_SOLID));
-	
-	switch (m_nPriorityLevel)
-	{
-	case 0: // minor
-		dc.SetBrush(wxBrush(*wxGREEN, wxBRUSHSTYLE_SOLID));
-		break;
-	case 1: // medium
-		dc.SetBrush(wxBrush(*wxYELLOW, wxBRUSHSTYLE_SOLID));
-		break;
-	case 2: // major
-		dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
-		break;
-	}
-	
-	dc.DrawRectangle(10, m_pNameTitle->GetPosition().y + 3, 10, 10);
+	this->DrawPriority(m_nPriorityLevel);
 }
 
 // =========================================== TaskList ===========================================
