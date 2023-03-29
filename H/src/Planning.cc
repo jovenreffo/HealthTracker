@@ -8,6 +8,9 @@
 #include "Font/Font.hpp"
 #include "Flags.hpp"
 
+#define NAME_CHAR_LIMIT (35)
+#define DESC_CHAR_LIMIT (100)
+
 Planning::Planning(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxNotebook(parent, id, pos, size, style, _T("calendar"))
 {
@@ -102,8 +105,8 @@ void AddTaskDlg::SetupControls()
 	m_pTaskDescTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_PROCESS_ENTER, wxTextValidator(0, &m_taskDesc));
 
 	// Set max lengths
-	m_pTaskNameTxt->SetMaxLength(35);
-	m_pTaskDescTxt->SetMaxLength(100);
+	m_pTaskNameTxt->SetMaxLength(NAME_CHAR_LIMIT);
+	m_pTaskDescTxt->SetMaxLength(DESC_CHAR_LIMIT);
 
 	m_pPriorityLevel = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_priorityLevels);
 
@@ -325,6 +328,7 @@ TodoItem::TodoItem(int priorityLevel, const wxString& taskName, const wxString& 
 	this->Bind(wxEVT_PAINT, &TodoItem::OnPaint, this);
 
 	// Menu events
+	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnEditTask, this, wxID_EDIT);
 	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 
 	// Button events
@@ -341,6 +345,7 @@ TodoItem::~TodoItem()
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
+	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnEditTask, this, wxID_EDIT);
 	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 
 	// Button events
@@ -358,7 +363,6 @@ void TodoItem::Init()
 
 void TodoItem::SetupControls()
 {
-
 	// buttons
 	m_editBmp = wxBitmap(path_data::dataDir + _T("\\Images\\edit.png"), wxBITMAP_TYPE_PNG);
 	m_removeBmp = wxBitmap(path_data::dataDir + _T("\\Images\\remove.png"), wxBITMAP_TYPE_PNG);
@@ -377,6 +381,20 @@ void TodoItem::SetupControls()
 	// make the titles bold
 	m_pNameTitle->SetFont(Fonts::GetBoldFont(10));
 	m_pDescTitle->SetFont(Fonts::GetBoldFont(10));
+
+	if (m_taskDesc.length() >= 80 && m_taskDesc.length() <= DESC_CHAR_LIMIT)
+	{
+		m_taskDesc.insert(30, '\n');
+		m_taskDesc.insert(61, '\n');
+
+		if (m_taskDesc.length() >= 92)
+			m_taskDesc.insert(92, '\n');
+	}
+
+	if (m_taskName.length() >= 20 && m_taskName.length() <= NAME_CHAR_LIMIT)
+	{
+		m_taskName.insert(20, '\n');
+	}
 
 	m_pItemName = new wxStaticText(this, wxID_ANY, m_taskName, wxDefaultPosition, wxDefaultSize);
 	m_pItemDesc = new wxStaticText(this, wxID_ANY, m_taskDesc, wxDefaultPosition, wxDefaultSize);
@@ -410,6 +428,8 @@ void TodoItem::SetupPopupMenu()
 {
 	m_pMenu = new wxMenu();
 
+	m_pMenu->Append(wxID_EDIT, _T("&Edit Task"));
+	m_pMenu->AppendSeparator();
 	m_pMenu->Append(wxID_REMOVE, _T("&Remove Task"));
 }
 
