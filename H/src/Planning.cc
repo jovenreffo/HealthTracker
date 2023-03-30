@@ -382,22 +382,9 @@ void TodoItem::SetupControls()
 	m_pNameTitle->SetFont(Fonts::GetBoldFont(10));
 	m_pDescTitle->SetFont(Fonts::GetBoldFont(10));
 
-	if (m_taskDesc.length() >= 80 && m_taskDesc.length() <= DESC_CHAR_LIMIT)
-	{
-		m_taskDesc.insert(30, '\n');
-		m_taskDesc.insert(61, '\n');
-
-		if (m_taskDesc.length() >= 92)
-			m_taskDesc.insert(92, '\n');
-	}
-
-	if (m_taskName.length() >= 20 && m_taskName.length() <= NAME_CHAR_LIMIT)
-	{
-		m_taskName.insert(20, '\n');
-	}
-
-	m_pItemName = new wxStaticText(this, wxID_ANY, m_taskName, wxDefaultPosition, wxDefaultSize);
-	m_pItemDesc = new wxStaticText(this, wxID_ANY, m_taskDesc, wxDefaultPosition, wxDefaultSize);
+	// text controls
+	m_pNameCtrl = new wxTextCtrl(this, wxID_ANY, m_taskName, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
+	m_pDescCtrl = new wxTextCtrl(this, wxID_ANY, m_taskDesc, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_READONLY);
 }
 
 void TodoItem::SetupSizers()
@@ -418,10 +405,13 @@ void TodoItem::SetupSizers()
 
 	// re-initialise the flex sizer to have 3 columns:
 	// for the item's name entered by the user, its description, and the checkbox to mark the task as complete
-	m_pFlexSizer->Add(m_pItemName, SIZER_FLAGS_LEFT);
-	m_pFlexSizer->Add(m_pItemDesc, SIZER_FLAGS_LEFT);
-	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pFlexSizer, wxSizerFlags().Border(wxLEFT, 20));
+	m_pFlexSizer->Add(m_pNameCtrl, wxSizerFlags().Border(wxALL, 5));
+	m_pFlexSizer->Add(m_pDescCtrl, wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pSettingsSizer, wxSizerFlags().Expand().Left().Border(wxALL, 5));
+
+	// Add growable columns + rows
+	m_pFlexSizer->AddGrowableRow(1, 1);
+	m_pTopSizer->Add(m_pFlexSizer, 1, wxEXPAND | wxLEFT, 20);
 }
 
 void TodoItem::SetupPopupMenu()
@@ -478,8 +468,8 @@ void TodoItem::OnEditTask(wxCommandEvent& e)
 		m_taskDesc = m_pEditTaskDlg->GetTaskDesc();
 		m_nPriorityLevel = m_pEditTaskDlg->GetPriorityLevel();
 
-		m_pItemName->SetLabel(m_taskName);
-		m_pItemDesc->SetLabel(m_taskDesc);
+		m_pNameCtrl->SetValue(m_taskName);
+		m_pDescCtrl->SetValue(m_taskDesc);
 
 		this->Refresh();
 	}

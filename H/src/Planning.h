@@ -196,7 +196,10 @@ private:
 	wxBitmapButton* m_pRemoveButton; wxBitmap m_removeBmp;
 	EditTaskDlg* m_pEditTaskDlg;
 
-	// Text objects to be arranged
+	wxTextCtrl* m_pDescCtrl;
+	wxTextCtrl* m_pNameCtrl;
+
+	// Text objects
 	wxStaticText* m_pNameTitle;
 	wxStaticText* m_pDescTitle;
 	wxStaticText* m_pItemName;

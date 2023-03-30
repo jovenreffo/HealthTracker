@@ -19,7 +19,7 @@ void NutritionBook::Init()
 {
 	this->SetupImageList();
 	this->SetupCaloriePanel();
-	this->SetupMealPlan();
+	//this->SetupMealPlan();
 	this->SetupPages();
 }
 
@@ -53,5 +53,4 @@ void NutritionBook::SetupMealPlan()
 void NutritionBook::SetupPages()
 {
 	this->AddPage(m_pCaloriePanel, _T("Nutrient Tracker"), true, 0);
-	this->AddPage(m_pMealPlan, _T("Meal Planner"), false, 1);
 }
