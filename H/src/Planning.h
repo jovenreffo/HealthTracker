@@ -202,8 +202,6 @@ private:
 	// Text objects
 	wxStaticText* m_pNameTitle;
 	wxStaticText* m_pDescTitle;
-	wxStaticText* m_pItemName;
-	wxStaticText* m_pItemDesc;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
