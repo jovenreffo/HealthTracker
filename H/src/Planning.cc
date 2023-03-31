@@ -328,6 +328,7 @@ TodoItem::TodoItem(int priorityLevel, const wxString& taskName, const wxString& 
 	this->Bind(wxEVT_PAINT, &TodoItem::OnPaint, this);
 
 	// Menu events
+	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnMarkCompleted, this, wxID_CLEAR);
 	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnEditTask, this, wxID_EDIT);
 	m_pMenu->Bind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 
@@ -345,6 +346,7 @@ TodoItem::~TodoItem()
 	m_pMarkCompleted->Unbind(wxEVT_CHECKBOX, &TodoItem::OnMarkCompleted, this);
 
 	// Menu events
+	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnMarkCompleted, this, wxID_CLEAR);
 	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnEditTask, this, wxID_EDIT);
 	m_pMenu->Unbind(wxEVT_MENU, &TodoItem::OnRemove, this, wxID_REMOVE);
 
@@ -418,6 +420,7 @@ void TodoItem::SetupPopupMenu()
 {
 	m_pMenu = new wxMenu();
 
+	m_pMenu->Append(wxID_CLEAR, _T("&Mark As Complete"));
 	m_pMenu->Append(wxID_EDIT, _T("&Edit Task"));
 	m_pMenu->AppendSeparator();
 	m_pMenu->Append(wxID_REMOVE, _T("&Remove Task"));
