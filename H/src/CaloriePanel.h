@@ -10,7 +10,7 @@
 #include <wx/bmpbuttn.h>
 
 #include "AddItemDlg/AddItemDlg.h"
-#include "NutritionCatalogHTML/NutritionCatalog.h"
+#include "NutritionCatalog.h"
 
 enum class CP
 {
