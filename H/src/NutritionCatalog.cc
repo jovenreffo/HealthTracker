@@ -69,9 +69,9 @@ NutritionCatalog::NutritionCatalog(wxWindow* parent, wxWindowID id, const wxStri
 
 void NutritionCatalog::Init()
 {
-	this->SetupSizing();
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void NutritionCatalog::SetupControls()
