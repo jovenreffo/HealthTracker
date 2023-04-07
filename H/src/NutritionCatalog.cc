@@ -15,11 +15,17 @@ FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	: wxListView(parent, id, pos, size, style)
 {
 	this->Init();
+
+	// Bind events
+	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &FoodList::OnRightClickItem, this);
+	this->Bind(wxEVT_LIST_ITEM_ACTIVATED, &FoodList::OnDoubleClickItem, this);
 }
 
 FoodList::~FoodList()
 {
-
+	// Unbind events
+	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &FoodList::OnRightClickItem, this);
+	this->Unbind(wxEVT_LIST_ITEM_ACTIVATED, &FoodList::OnDoubleClickItem, this);
 }
 
 void FoodList::Init()
@@ -39,6 +45,11 @@ void FoodList::SetupImageList()
 
 
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_NORMAL);
+}
+
+void FoodList::AddNutritionItem(const CatalogItem& info)
+{
+
 }
 
 void FoodList::OnDoubleClickItem(wxListEvent& e)
