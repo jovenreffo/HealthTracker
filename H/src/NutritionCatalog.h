@@ -36,6 +36,7 @@ private:
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
 
+	// vector for storing info about all items
 	std::vector<CatalogItem>* m_pCatalogItems;
 
 public:
@@ -50,6 +51,10 @@ public:
 	void Init();
 	void SetupMenu();
 	void SetupImageList();
+
+	// Operations
+	void AddImageToList(const wxBitmap& bmp) { m_pImageList->Add(bmp); }
+	void AddNutritionItem(const CatalogItem& info);
 
 	// Events
 	void OnDoubleClickItem(wxListEvent& event);
