@@ -59,6 +59,7 @@ public:
 	// Events
 	void OnDoubleClickItem(wxListEvent& event);
 	void OnRightClickItem(wxListEvent& event);
+	void OnOpenItem(wxCommandEvent& event);
 };
 
 class NutritionCatalog: public wxFrame
