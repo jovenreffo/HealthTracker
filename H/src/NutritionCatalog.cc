@@ -1,6 +1,49 @@
 #include "NutritionCatalog.h"
 #include "StandardPath.hpp"
 
+// =================== ItemViewer ===================
+
+#define IV_DLG_SIZE (wxSize(300, 300))
+#define IV_DLG_SIZE_MAX (wxSize())
+
+class ItemViewer : public wxDialog
+{
+private:
+	wxBoxSizer* m_pTopSizer;
+
+public:
+	ItemViewer(wxWindow* parent,
+		wxWindowID id = -1,
+		const wxString& title = _T("View Nutrition Item"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
+		: wxDialog(parent, id, title, pos, size, style)
+	{
+		this->Init();
+	}
+
+	~ItemViewer() {}
+
+	void Init()
+	{
+		this->SetupSizers();
+		this->SetupSizing();
+	}
+
+	void SetupSizers()
+	{
+
+	}
+
+	void SetupSizing()
+	{
+		this->SetInitialSize(IV_DLG_SIZE);
+		this->SetMinSize(IV_DLG_SIZE);
+		this->SetMaxSize(IV_DLG_SIZE_MAX);
+	}
+};
+
 // =================== CatalogItem ===================
 
 CatalogItem::CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieCount)
@@ -15,6 +58,10 @@ FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	: wxListView(parent, id, pos, size, style)
 {
 	this->Init();
+
+	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
+	CatalogItem ci("eggs", egg, 60);
+	this->AddNutritionItem(ci);
 
 	// Bind events
 	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &FoodList::OnRightClickItem, this);
@@ -38,7 +85,7 @@ void FoodList::SetupMenu()
 {
 	m_pMenu = new wxMenu();
 
-
+	m_pMenu->Append(wxID_OPEN, _T("&Open Item"));
 }
 
 void FoodList::SetupImageList()
@@ -51,10 +98,14 @@ void FoodList::SetupImageList()
 
 void FoodList::AddNutritionItem(const CatalogItem& info)
 {
-	m_pCatalogItems->push_back(info);
+	//m_pCatalogItems->push_back(info);
 
 	wxString name = info.GetName();
 	wxBitmap bmp = info.GetBmp();
+
+	m_pImageList->Add(bmp);
+	this->InsertItem(0, name);
+	this->SetItemImage(0, 0);
 }
 
 void FoodList::OnDoubleClickItem(wxListEvent& e)
@@ -65,6 +116,11 @@ void FoodList::OnDoubleClickItem(wxListEvent& e)
 void FoodList::OnRightClickItem(wxListEvent& e)
 {
 	this->PopupMenu(m_pMenu);
+}
+
+void FoodList::OnOpenItem(wxCommandEvent& event)
+{
+
 }
 
 // =================== NutritionCatalog ===================
