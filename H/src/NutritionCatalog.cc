@@ -37,6 +37,8 @@ void FoodList::Init()
 void FoodList::SetupMenu()
 {
 	m_pMenu = new wxMenu();
+
+
 }
 
 void FoodList::SetupImageList()
@@ -49,7 +51,10 @@ void FoodList::SetupImageList()
 
 void FoodList::AddNutritionItem(const CatalogItem& info)
 {
+	m_pCatalogItems->push_back(info);
 
+	wxString name = info.GetName();
+	wxBitmap bmp = info.GetBmp();
 }
 
 void FoodList::OnDoubleClickItem(wxListEvent& e)
