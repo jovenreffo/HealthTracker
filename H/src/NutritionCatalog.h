@@ -29,15 +29,22 @@ public:
 	void SetCalorieCount(int count) { m_calorieCount = count; }
 };
 
+class ItemViewer; // defined in NutritionCatalog.cc
+
 class FoodList: public wxListView
 {
 private:
 	// Controls
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
+	ItemViewer* m_pItemViewer;
 
 	// vector for storing info about all items
-	std::vector<CatalogItem>* m_pCatalogItems;
+	std::vector<CatalogItem> m_catalogItems;
+
+	// List vars
+	long m_selectionIndex;
+	wxString m_currentItemName;
 
 public:
 	FoodList(wxWindow* parent,
@@ -55,8 +62,10 @@ public:
 	// Operations
 	void AddImageToList(const wxBitmap& bmp) { m_pImageList->Add(bmp); }
 	void AddNutritionItem(const CatalogItem& info);
+	void OpenItem();
 
 	// Events
+	void OnSelectItem(wxListEvent& event);
 	void OnDoubleClickItem(wxListEvent& event);
 	void OnRightClickItem(wxListEvent& event);
 	void OnOpenItem(wxCommandEvent& event);
