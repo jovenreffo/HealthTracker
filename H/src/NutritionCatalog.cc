@@ -10,7 +10,7 @@ private:
 	// Item stuff
 	CatalogItem m_catalogItem;
 	wxString m_itemName;
-	wxBitmap m_itemBmp;
+	wxStaticBitmap* m_itemBmp;
 
 	// Dialog stuff
 	wxButton* m_pAdd; // adding the food item to the nutrition log
@@ -35,19 +35,26 @@ public:
 		this->Init();
 
 		// Bind events
+		m_pAdd->Bind(wxEVT_BUTTON, &ItemViewer::OnAddToNutritionLog, this);
+		m_pClose->Bind(wxEVT_BUTTON, &ItemViewer::OnClose, this);
 	}
 
-	~ItemViewer() {}
+	~ItemViewer() 
+	{
+		// Unbind events
+		m_pAdd->Unbind(wxEVT_BUTTON, &ItemViewer::OnAddToNutritionLog, this);
+		m_pClose->Unbind(wxEVT_BUTTON, &ItemViewer::OnClose, this);
+	}
 
 	void Init()
 	{
 		// Set variable information
 		m_itemName = m_catalogItem.GetName();
-		m_itemBmp = m_catalogItem.GetBmp();
+		m_itemBmp = new wxStaticBitmap(this, wxID_ANY, m_catalogItem.GetBmp(), wxDefaultPosition, wxDefaultSize);
 
 		this->SetupControls();
 		this->SetupSizers();
-		this->SetupSizing();
+		this->SetupWindow();
 	}
 
 	void SetupControls()
@@ -63,26 +70,34 @@ public:
 		m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 		this->SetSizerAndFit(m_pTopSizer);
 
+		// Button sizer
 		m_pButtonSizer->Add(m_pAdd, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 		m_pButtonSizer->Add(m_pClose, wxSizerFlags().CentreVertical().Border(wxALL, 5));
+
+		m_pTopSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
 
 		m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 		m_pTopSizer->Add(m_pButtonSizer);
 	}
 
-	void SetupSizing()
+	void SetupWindow()
 	{
+		// Sizing
 		wxSize sz = this->DoGetBestSize();
 
 		this->SetInitialSize(sz);
 		this->SetMinSize(sz);
 		this->SetMaxSize( wxSize(sz.x + 200, sz.y + 150) );
+
+		// Positioning
+		this->CentreOnScreen();
 	}
 
 	// Events
 	void OnClose(wxCommandEvent& event)
 	{
-
+		SetReturnCode(wxID_CLOSE);
+		Show(false);
 	}
 
 	void OnAddToNutritionLog(wxCommandEvent& event)
@@ -104,6 +119,8 @@ CatalogItem::CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieC
 FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView(parent, id, pos, size, style)
 {
+	m_pFrame = reinterpret_cast<wxFrame*>(parent);
+
 	this->Init();
 
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
@@ -176,6 +193,13 @@ void FoodList::OnSelectItem(wxListEvent& event)
 {
 	m_selectionIndex = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 	m_currentItemName = GetItemText(m_selectionIndex, 0);
+
+#ifdef wxUSE_STATUSBAR
+	if (IsSelected(m_selectionIndex))
+		m_pFrame->SetStatusText(wxString(_T("Current item: ")) << m_currentItemName);
+	else
+		m_pFrame->SetStatusText(_T("No item selected."));
+#endif
 }
 
 void FoodList::OnDoubleClickItem(wxListEvent& e)
