@@ -34,6 +34,8 @@ class ItemViewer; // defined in NutritionCatalog.cc
 class FoodList: public wxListView
 {
 private:
+	wxFrame* m_pFrame;
+
 	// Controls
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
