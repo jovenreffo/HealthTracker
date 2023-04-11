@@ -18,6 +18,8 @@ private:
 	
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pButtonSizer;
+	wxBoxSizer* m_pTextInfoSizer;
+	wxBoxSizer* m_pContentSizer;
 
 public:
 	ItemViewer(CatalogItem catalogItem,
@@ -68,14 +70,17 @@ public:
 	{
 		m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 		m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+		m_pTextInfoSizer = new wxBoxSizer(wxVERTICAL);
+		m_pContentSizer = new wxBoxSizer(wxHORIZONTAL);
 		this->SetSizerAndFit(m_pTopSizer);
 
 		// Button sizer
 		m_pButtonSizer->Add(m_pAdd, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 		m_pButtonSizer->Add(m_pClose, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 
-		m_pTopSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
+		m_pContentSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
 
+		m_pTopSizer->Add(m_pContentSizer);
 		m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 		m_pTopSizer->Add(m_pButtonSizer);
 	}
@@ -90,7 +95,7 @@ public:
 		this->SetMaxSize( wxSize(sz.x + 200, sz.y + 150) );
 
 		// Positioning
-		this->CentreOnScreen();
+		this->Centre();
 	}
 
 	// Events
@@ -260,5 +265,7 @@ void NutritionCatalog::SetupSizing()
 	this->SetInitialSize(NC_SIZE);
 	this->SetMinSize(NC_SIZE);
 #endif
+
+	this->Centre();
 }
 
