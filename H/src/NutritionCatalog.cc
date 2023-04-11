@@ -1,4 +1,7 @@
 #include <wx/statline.h>
+#include <wx/stattext.h>
+
+#include "Font/Font.hpp"
 #include "NutritionCatalog.h"
 #include "StandardPath.hpp"
 
@@ -20,6 +23,11 @@ private:
 	wxBoxSizer* m_pButtonSizer;
 	wxBoxSizer* m_pTextInfoSizer;
 	wxBoxSizer* m_pContentSizer;
+
+	wxStaticText* m_pNutrFactsTxt;
+	wxStaticText* m_pCalTxt;
+	wxStaticText* m_pProteinTxt;
+	wxStaticText* m_pCarbTxt;
 
 public:
 	ItemViewer(CatalogItem catalogItem,
@@ -64,6 +72,10 @@ public:
 		// Buttons
 		m_pAdd = new wxButton(this, wxID_ADD, _T("Add to Nutrition Log"), wxDefaultPosition, wxDefaultSize);
 		m_pClose = new wxButton(this, wxID_CLOSE, _T("Close"), wxDefaultPosition, wxDefaultSize);
+
+		// Text
+		m_pNutrFactsTxt = new wxStaticText(this, wxID_STATIC, _T("Nutrition Information"), wxDefaultPosition, wxDefaultSize);
+		m_pNutrFactsTxt->SetFont(Fonts::GetBoldFont(11));
 	}
 
 	void SetupSizers()
@@ -78,8 +90,14 @@ public:
 		m_pButtonSizer->Add(m_pAdd, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 		m_pButtonSizer->Add(m_pClose, wxSizerFlags().CentreVertical().Border(wxALL, 5));
 
-		m_pContentSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
+		// Text info sizer
+		m_pTextInfoSizer->Add(m_pNutrFactsTxt, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 
+		// Content sizer
+		m_pContentSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
+		m_pContentSizer->Add(m_pTextInfoSizer);
+
+		// Top sizer
 		m_pTopSizer->Add(m_pContentSizer);
 		m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 		m_pTopSizer->Add(m_pButtonSizer);
@@ -114,7 +132,7 @@ public:
 // =================== CatalogItem ===================
 
 CatalogItem::CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieCount)
-	: m_name{ name }, m_itemBmp{ bmp }, m_calorieCount{ calorieCount }
+	: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calorieCount }
 {
 
 }
@@ -129,7 +147,7 @@ FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	this->Init();
 
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("eggs", egg, 60);
+	CatalogItem ci("Eggs", egg, 60);
 	this->AddNutritionItem(ci);
 
 	// Bind events
