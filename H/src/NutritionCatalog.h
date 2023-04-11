@@ -14,7 +14,11 @@ private:
 	// Information about the item
 	wxString m_name;
 	wxBitmap m_itemBmp;
-	int m_calorieCount;
+
+	// Nutritional information
+	int m_calories;
+	int m_protein;
+	int m_carbohydrates;
 
 public:
 	CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieCount);
@@ -22,11 +26,11 @@ public:
 	// Getters + Setters
 	const wxString& GetName() const { return m_name; }
 	const wxBitmap& GetBmp() const { return m_itemBmp; }
-	const int GetCalorieCount() const { return m_calorieCount; }
+	const int GetCalorieCount() const { return m_calories; }
 
 	void SetName(const wxString& name) { m_name = name; }
 	void SetBmp(const wxBitmap& bmp) { m_itemBmp = bmp; }
-	void SetCalorieCount(int count) { m_calorieCount = count; }
+	void SetCalorieCount(int count) { m_calories = count; }
 };
 
 class ItemViewer; // defined in NutritionCatalog.cc
