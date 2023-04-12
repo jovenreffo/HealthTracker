@@ -76,6 +76,10 @@ public:
 		// Text
 		m_pNutrFactsTxt = new wxStaticText(this, wxID_STATIC, _T("Nutrition Information"), wxDefaultPosition, wxDefaultSize);
 		m_pNutrFactsTxt->SetFont(Fonts::GetBoldFont(11));
+
+		m_pCalTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Calories: ")) << m_catalogItem.GetCalories());
+		m_pProteinTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Protein: ")) << m_catalogItem.GetProtein() << 'g');
+		m_pCarbTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Carbohydrates: ")) << m_catalogItem.GetCarbohydrates() << 'g');
 	}
 
 	void SetupSizers()
@@ -92,6 +96,9 @@ public:
 
 		// Text info sizer
 		m_pTextInfoSizer->Add(m_pNutrFactsTxt, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+		m_pTextInfoSizer->Add(m_pCalTxt, wxSizerFlags().Left().Border(wxALL, 5));
+		m_pTextInfoSizer->Add(m_pProteinTxt, wxSizerFlags().Left().Border(wxALL, 5));
+		m_pTextInfoSizer->Add(m_pCarbTxt, wxSizerFlags().Left().Border(wxALL, 5));
 
 		// Content sizer
 		m_pContentSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
@@ -139,7 +146,7 @@ FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	this->Init();
 
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("Eggs", egg, 60);
+	CatalogItem ci("Eggs", egg, 60, 6, 0);
 	this->AddNutritionItem(ci);
 
 	// Bind events
