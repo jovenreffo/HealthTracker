@@ -129,14 +129,6 @@ public:
 	}
 };
 
-// =================== CatalogItem ===================
-
-CatalogItem::CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieCount)
-	: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calorieCount }
-{
-
-}
-
 // =================== FoodList ===================
 
 FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
