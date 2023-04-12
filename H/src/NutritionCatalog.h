@@ -21,7 +21,10 @@ private:
 	int m_carbohydrates;
 
 public:
-	CatalogItem(const wxString& name, const wxBitmap& bmp, int calorieCount);
+	CatalogItem(const wxString& name, const wxBitmap& bmp, int calories, int protein, int carbohydrates)
+		: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }
+	{
+	}
 
 	// Getters + Setters
 	const wxString& GetName() const { return m_name; }
