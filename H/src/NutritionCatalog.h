@@ -26,14 +26,19 @@ public:
 	{
 	}
 
-	// Getters + Setters
+	// Getters
 	const wxString& GetName() const { return m_name; }
 	const wxBitmap& GetBmp() const { return m_itemBmp; }
-	const int GetCalorieCount() const { return m_calories; }
+	const int GetCalories() const { return m_calories; }
+	const int GetProtein() const { return m_protein; }
+	const int GetCarbohydrates() const { return m_carbohydrates; }
 
+	// Setters
 	void SetName(const wxString& name) { m_name = name; }
 	void SetBmp(const wxBitmap& bmp) { m_itemBmp = bmp; }
-	void SetCalorieCount(int count) { m_calories = count; }
+	void SetCalories(int count) { m_calories = count; }
+	void SetProtein(int count) { m_protein = count; }
+	void SetCarbohydrates(int count) { m_carbohydrates = count; }
 };
 
 class ItemViewer; // defined in NutritionCatalog.cc
