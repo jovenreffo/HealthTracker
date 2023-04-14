@@ -11,6 +11,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
+#include <wx/bmpbuttn.h>
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDITEMDLG_SIZE  ( wxSize(365, 345) )
@@ -59,7 +60,8 @@ enum class AID
 	ID_CALORIE_SPIN,
 	ID_CARB_SPIN,
 	ID_PROTEIN_SPIN,
-	ID_FIBER_SPIN
+	ID_FIBER_SPIN,
+	ID_SEARCH
 };
 
 class AddItemDlg: public wxDialog
@@ -70,6 +72,7 @@ private:
 private:
 	wxCheckBox* m_pEnableMacros;
 
+	wxBitmapButton* m_pSearch; wxBitmap m_searchBmp;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
@@ -136,6 +139,7 @@ public:
 	void OnEnter(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnSearch(wxCommandEvent& event);
 	void OnSpinUp(wxSpinEvent& event);
 };
 
