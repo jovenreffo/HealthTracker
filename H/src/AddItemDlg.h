@@ -13,6 +13,8 @@
 #include <wx/checkbox.h>
 #include <wx/bmpbuttn.h>
 
+#include "NutritionCatalog.h"
+
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDITEMDLG_SIZE  ( wxSize(365, 345) )
 #define ADDITEMDLG_MAX	 ( wxSize(550, 375) )
@@ -70,6 +72,8 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
+	NutritionCatalog* m_pNutritionCatalog;
+
 	wxCheckBox* m_pEnableMacros;
 
 	wxBitmapButton* m_pSearch; wxBitmap m_searchBmp;
