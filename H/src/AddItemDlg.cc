@@ -1,12 +1,15 @@
 #include <wx/log.h>
 #include <wx/valgen.h>
 #include <wx/valtext.h>
+
 #include "AddItemDlg.h"
+#include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(AddItemDlg, wxDialog)
 	EVT_UPDATE_UI(wxID_OK, AddItemDlg::OnUpdateOK)
 	EVT_BUTTON(wxID_OK, AddItemDlg::OnOK)
 	EVT_BUTTON(wxID_CANCEL, AddItemDlg::OnCancel)
+	EVT_BUTTON((int)AID::ID_SEARCH, AddItemDlg::OnSearch)
 	EVT_TEXT_ENTER(wxID_ANY, AddItemDlg::OnEnter)
 END_EVENT_TABLE()
 
@@ -43,6 +46,9 @@ void AddItemDlg::SetupControls()
 {
 	m_pEnableMacros = new wxCheckBox(this, wxID_ANY, _T("Include other macros"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bEnableMacros));
 
+	m_searchBmp = wxBitmap(path_data::dataDir + _T("\\Images\\search.png"), wxBITMAP_TYPE_PNG);
+	m_pSearch = new wxBitmapButton(this, static_cast<int>(AID::ID_SEARCH), m_searchBmp, wxDefaultPosition, wxDefaultSize);
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 	
@@ -68,7 +74,7 @@ void AddItemDlg::SetupControls()
 void AddItemDlg::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pItemSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pItemSizer = new wxFlexGridSizer(3, wxSize(5, 1));
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
@@ -88,9 +94,11 @@ void AddItemDlg::SetupSizers()
 
 	m_pItemSizer->Add(itemName, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pFoodName, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->Add(m_pSearch, wxSizerFlags().Left().Border(wxALL, 5));
 
 	m_pItemSizer->Add(calories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 	m_pItemSizer->Add(m_pCalories, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+	m_pItemSizer->AddSpacer(5);
 
 	m_pItemSizer->Add(m_pEnableMacros, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pItemSizer->AddSpacer(5);
@@ -194,6 +202,12 @@ void AddItemDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
+}
+
+void AddItemDlg::OnSearch(wxCommandEvent& event)
+{
+	m_pNutritionCatalog = new NutritionCatalog(this, wxID_ANY);
+	m_pNutritionCatalog->Show(true);
 }
 
 void AddItemDlg::OnSpinUp(wxSpinEvent& event)
