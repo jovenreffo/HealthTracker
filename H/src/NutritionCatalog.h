@@ -68,6 +68,8 @@ public:
 		long style = wxLC_ICON);
 	~FoodList();
 
+	ItemViewer* GetItemViewer() const { return m_pItemViewer; }
+
 	// Setup
 	void Init();
 	void SetupMenu();
@@ -94,9 +96,12 @@ private:
 	wxBoxSizer* m_pTopSizer;
 
 public:
+	FoodList* GetFoodList() const { return m_pFoodList; }
+
+public:
 	NutritionCatalog(wxWindow* parent,
 		wxWindowID id,
-		const wxString& title,
+		const wxString& title = _T("Nutrition Catalog"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = NC_SIZE,
 		long style = wxDEFAULT_FRAME_STYLE);

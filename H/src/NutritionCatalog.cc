@@ -5,6 +5,8 @@
 #include "NutritionCatalog.h"
 #include "StandardPath.hpp"
 
+#include "CaloriePanel.h" // for CalorieList
+
 // =================== ItemViewer ===================
 
 class ItemViewer : public wxDialog
@@ -14,6 +16,8 @@ private:
 	CatalogItem m_catalogItem;
 	wxString m_itemName;
 	wxStaticBitmap* m_itemBmp;
+
+	CalorieList* m_pCalorieList;
 
 	// Dialog stuff
 	wxButton* m_pAdd; // adding the food item to the nutrition log
@@ -28,6 +32,9 @@ private:
 	wxStaticText* m_pCalTxt;
 	wxStaticText* m_pProteinTxt;
 	wxStaticText* m_pCarbTxt;
+
+public:
+	void SetCalorieList(CalorieList* pCalorieList) { m_pCalorieList = pCalorieList; }
 
 public:
 	ItemViewer(CatalogItem catalogItem,
