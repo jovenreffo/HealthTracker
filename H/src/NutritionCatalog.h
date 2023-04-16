@@ -19,10 +19,11 @@ private:
 	int m_calories;
 	int m_protein;
 	int m_carbohydrates;
+	int m_fiber;
 
 public:
-	CatalogItem(const wxString& name, const wxBitmap& bmp, int calories, int protein, int carbohydrates)
-		: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }
+	CatalogItem(const wxString& name, const wxBitmap& bmp, int calories, int protein, int carbohydrates, int fiber)
+		: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }, m_fiber{ fiber }
 	{
 	}
 
@@ -32,6 +33,7 @@ public:
 	const int GetCalories() const { return m_calories; }
 	const int GetProtein() const { return m_protein; }
 	const int GetCarbohydrates() const { return m_carbohydrates; }
+	const int GetFiber() const { return m_fiber; }
 
 	// Setters
 	void SetName(const wxString& name) { m_name = name; }
@@ -39,6 +41,7 @@ public:
 	void SetCalories(int count) { m_calories = count; }
 	void SetProtein(int count) { m_protein = count; }
 	void SetCarbohydrates(int count) { m_carbohydrates = count; }
+	void SetFiber(int count) { m_fiber = count; }
 };
 
 class ItemViewer; // defined in NutritionCatalog.cc
