@@ -14,47 +14,11 @@
 #include <wx/bmpbuttn.h>
 
 #include "NutritionCatalog.h"
+#include "Nutrient Total/Total.hpp"
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDITEMDLG_SIZE  ( wxSize(365, 345) )
 #define ADDITEMDLG_MAX	 ( wxSize(550, 375) )
-
-struct Total
-{
-	int m_calTotal;
-	int m_carbTotal;
-	int m_proteinTotal;
-	int m_fiberTotal;
-
-	void ResetTotal()
-	{
-		m_calTotal = 0;
-		m_carbTotal = 0;
-		m_proteinTotal = 0;
-		m_fiberTotal = 0;
-	}
-
-	Total& operator++()
-	{
-		++m_calTotal;
-		++m_carbTotal;
-		++m_proteinTotal;
-		++m_fiberTotal;
-	
-		return *this;
-	}
-	
-	Total& operator--()
-	{
-		--m_calTotal;
-		--m_carbTotal;
-		--m_proteinTotal;
-		--m_fiberTotal;
-	
-		return *this;
-	}
-};
-
 
 enum class AID
 {
