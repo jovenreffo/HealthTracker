@@ -6,6 +6,7 @@
 #include "StandardPath.hpp"
 
 #include "CaloriePanel.h" // for CalorieList
+#include "Nutrient Total/Total.hpp"
 
 // =================== ItemViewer ===================
 
@@ -153,7 +154,7 @@ FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 	this->Init();
 
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("Eggs", egg, 60, 6, 0);
+	CatalogItem ci("Eggs", egg, 60, 6, 0, 0);
 	this->AddNutritionItem(ci);
 
 	// Bind events
