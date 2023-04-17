@@ -37,9 +37,15 @@ struct Total
 	}
 };
 
-struct NutrientContent
+class NutrientContent
 {
+private:
 	int m_calories, m_protein, m_carbohydrates, m_fiber;
+
+public:
+	NutrientContent(int calories, int protein, int carbohydrates, int fiber)
+		: m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }, m_fiber{ fiber }
+	{ }
 
 	const int GetCalories() const { return m_calories; }
 	const int GetProtein() const { return m_protein; }

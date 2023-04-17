@@ -5,7 +5,7 @@
 #include "NutritionCatalog.h"
 #include "StandardPath.hpp"
 
-#include "CaloriePanel.h" // for CalorieList
+#include "Nutrient Total/Total.hpp"
 
 // =================== ItemViewer ===================
 
@@ -139,21 +139,22 @@ public:
 
 	void OnAddToNutritionLog(wxCommandEvent& event)
 	{
-
+		NutrientContent nc{ m_catalogItem.GetCalories(), m_catalogItem.GetProtein(), m_catalogItem.GetCarbohydrates(), m_catalogItem.GetFiber() };
+		//m_pCalorieList->AddItem(m_catalogItem.GetName(), nc);
 	}
 };
 
 // =================== FoodList ===================
 
-FoodList::FoodList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style)
+FoodList::FoodList(CalorieList* pCalorieList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style), m_pCalorieList{ pCalorieList }
 {
 	m_pFrame = reinterpret_cast<wxFrame*>(parent);
 
 	this->Init();
 
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("Eggs", egg, 60, 6, 0);
+	CatalogItem ci("Eggs", egg, 60, 6, 0, 0);
 	this->AddNutritionItem(ci);
 
 	// Bind events
@@ -248,8 +249,8 @@ void FoodList::OnOpenItem(wxCommandEvent& event)
 
 // =================== NutritionCatalog ===================
 
-NutritionCatalog::NutritionCatalog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxFrame(parent, id, title, pos, size, style)
+NutritionCatalog::NutritionCatalog(CalorieList* pCalorieList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxFrame(parent, id, title, pos, size, style), m_pCalorieList{ pCalorieList }
 {
 	this->SetBackgroundColour(wxColour(240, 240, 240));
 	this->SetIcon(wxIcon(path_data::dataDir + _T("\\Images\\catalog.png"), wxBITMAP_TYPE_PNG));
@@ -272,7 +273,7 @@ void NutritionCatalog::Init()
 
 void NutritionCatalog::SetupControls()
 {
-	m_pFoodList = new FoodList(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pFoodList = new FoodList(m_pCalorieList, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 }
 
 void NutritionCatalog::SetupSizers()

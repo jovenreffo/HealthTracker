@@ -21,17 +21,28 @@ CalorieList::~CalorieList()
 	m_pMenu->Unbind(wxEVT_MENU, &CalorieList::OnDeleteItem, this, wxID_DELETE);
 }
 
-void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
+//void CalorieList::AddItem(const wxString& item, AddItemDlg* pAddItemDlg)
+//{
+//	/*
+//	* When the user adds a new item, we want to insert it at index 1.
+//	* Doing this because the 0 index is the total, and that should be 'pinned' at the top of the list.
+//	*/
+//	this->InsertItem(1, item);
+//	this->SetItem(1, 1, std::to_string( pAddItemDlg->GetCalorieContent() ));
+//	this->SetItem(1, 2, std::to_string( pAddItemDlg->GetCarbContent() ));
+//	this->SetItem(1, 3, std::to_string( pAddItemDlg->GetProteinContent() ));
+//	this->SetItem(1, 4, std::to_string( pAddItemDlg->GetFiberContent() ));
+//
+//	this->UpdateTotal();
+//}
+
+void CalorieList::AddItem(const wxString& item, const NutrientContent& c)
 {
-	/*
-	* When the user adds a new item, we want to insert it at index 1.
-	* Doing this because the 0 index is the total, and that should be 'pinned' at the top of the list.
-	*/
 	this->InsertItem(1, item);
-	this->SetItem(1, 1, std::to_string(pAddItemDlg->GetCalorieContent()));
-	this->SetItem(1, 2, std::to_string(pAddItemDlg->GetCarbContent()));
-	this->SetItem(1, 3, std::to_string(pAddItemDlg->GetProteinContent()));
-	this->SetItem(1, 4, std::to_string(pAddItemDlg->GetFiberContent()));
+	this->SetItem(1, 1, std::to_string( c.GetCalories() ));
+	this->SetItem(1, 2, std::to_string( c.GetCarbohydrates() ));
+	this->SetItem(1, 3, std::to_string( c.GetProtein() ));
+	this->SetItem(1, 4, std::to_string( c.GetFiber() ));
 
 	this->UpdateTotal();
 }

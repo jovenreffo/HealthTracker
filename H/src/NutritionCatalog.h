@@ -6,6 +6,8 @@
 #include <wx/sizer.h>
 #include <vector>
 
+#include "CalorieList.h"
+
 #define NC_SIZE (wxSize(640, 480))
 
 class CatalogItem
@@ -19,10 +21,11 @@ private:
 	int m_calories;
 	int m_protein;
 	int m_carbohydrates;
+	int m_fiber;
 
 public:
-	CatalogItem(const wxString& name, const wxBitmap& bmp, int calories, int protein, int carbohydrates)
-		: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }
+	CatalogItem(const wxString& name, const wxBitmap& bmp, int calories, int protein, int carbohydrates, int fiber)
+		: m_name{ name }, m_itemBmp{ bmp }, m_calories{ calories }, m_protein{ protein }, m_carbohydrates{ carbohydrates }, m_fiber{ fiber }
 	{
 	}
 
@@ -32,6 +35,7 @@ public:
 	const int GetCalories() const { return m_calories; }
 	const int GetProtein() const { return m_protein; }
 	const int GetCarbohydrates() const { return m_carbohydrates; }
+	const int GetFiber() const { return m_fiber; }
 
 	// Setters
 	void SetName(const wxString& name) { m_name = name; }
@@ -39,6 +43,7 @@ public:
 	void SetCalories(int count) { m_calories = count; }
 	void SetProtein(int count) { m_protein = count; }
 	void SetCarbohydrates(int count) { m_carbohydrates = count; }
+	void SetFiber(int count) { m_fiber = count; }
 };
 
 class ItemViewer; // defined in NutritionCatalog.cc
@@ -53,7 +58,8 @@ private:
 	wxImageList* m_pImageList;
 	ItemViewer* m_pItemViewer;
 
-	// vector for storing info about all items
+	// Information
+	CalorieList* m_pCalorieList;
 	std::vector<CatalogItem> m_catalogItems;
 
 	// List vars
@@ -61,7 +67,8 @@ private:
 	wxString m_currentItemName;
 
 public:
-	FoodList(wxWindow* parent,
+	FoodList(CalorieList* pCalorieList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
@@ -90,6 +97,7 @@ public:
 class NutritionCatalog: public wxFrame
 {
 private:
+	CalorieList* m_pCalorieList;
 	FoodList* m_pFoodList;
 
 	// Sizers
@@ -99,7 +107,8 @@ public:
 	FoodList* GetFoodList() const { return m_pFoodList; }
 
 public:
-	NutritionCatalog(wxWindow* parent,
+	NutritionCatalog(CalorieList* pCalorieList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title = _T("Nutrition Catalog"),
 		const wxPoint& pos = wxDefaultPosition,

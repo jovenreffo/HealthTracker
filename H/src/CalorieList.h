@@ -2,9 +2,9 @@
 #define CALORIELIST_H
 
 #include <wx/wx.h>
+#include <wx/listctrl.h>
 
 #include "Nutrient Total/Total.hpp"
-#include "AddItemDlg.h"
 
 class CalorieList : public wxListView
 {
@@ -24,7 +24,7 @@ public:
 	~CalorieList();
 
 	Total GetTotal() const { return m_total; }
-	void AddItem(const wxString& item, AddItemDlg* pAddItemDlg);
+	void AddItem(const wxString& item, const NutrientContent& c);
 	void UpdateTotal();
 	void HandleDeleteItem();
 

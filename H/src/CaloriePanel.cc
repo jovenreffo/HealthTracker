@@ -9,6 +9,7 @@
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
+#include "Nutrient Total/Total.hpp"
 
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
@@ -74,7 +75,8 @@ void CaloriePanel::AddNewItem()
 
 	if (m_pAddItemDlg->ShowModal() == wxID_OK)
 	{
-		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(), m_pAddItemDlg);
+		NutrientContent nc{ m_pAddItemDlg->GetCalorieContent(), m_pAddItemDlg->GetProteinContent(), m_pAddItemDlg->GetCarbContent(), m_pAddItemDlg->GetFiberContent() };
+		m_pCalorieList->AddItem(m_pAddItemDlg->GetItemName(), nc);
 	}
 }
 
@@ -82,7 +84,7 @@ void CaloriePanel::AddNewItem()
 
 void CaloriePanel::OnSearch(wxCommandEvent& event)
 {
-	m_pNutritionCatalog = new NutritionCatalog(this, wxID_ANY, _T("Nutrition Catalog"), wxDefaultPosition, wxDefaultSize);
+	m_pNutritionCatalog = new NutritionCatalog(m_pCalorieList, this, wxID_ANY, _T("Nutrition Catalog"), wxDefaultPosition, wxDefaultSize);
 	m_pNutritionCatalog->Show(true);
 }
 
