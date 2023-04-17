@@ -9,7 +9,6 @@ BEGIN_EVENT_TABLE(AddItemDlg, wxDialog)
 	EVT_UPDATE_UI(wxID_OK, AddItemDlg::OnUpdateOK)
 	EVT_BUTTON(wxID_OK, AddItemDlg::OnOK)
 	EVT_BUTTON(wxID_CANCEL, AddItemDlg::OnCancel)
-	EVT_BUTTON((int)AID::ID_SEARCH, AddItemDlg::OnSearch)
 	EVT_TEXT_ENTER(wxID_ANY, AddItemDlg::OnEnter)
 END_EVENT_TABLE()
 
@@ -202,12 +201,6 @@ void AddItemDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
-}
-
-void AddItemDlg::OnSearch(wxCommandEvent& event)
-{
-	m_pNutritionCatalog = new NutritionCatalog(this, wxID_ANY);
-	m_pNutritionCatalog->Show(true);
 }
 
 void AddItemDlg::OnSpinUp(wxSpinEvent& event)

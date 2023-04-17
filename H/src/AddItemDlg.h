@@ -13,7 +13,6 @@
 #include <wx/checkbox.h>
 #include <wx/bmpbuttn.h>
 
-#include "NutritionCatalog.h"
 #include "Nutrient Total/Total.hpp"
 
 #define ADDITEMDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
@@ -36,8 +35,6 @@ private:
 	DECLARE_EVENT_TABLE()
 
 private:
-	NutritionCatalog* m_pNutritionCatalog;
-
 	wxCheckBox* m_pEnableMacros;
 
 	wxBitmapButton* m_pSearch; wxBitmap m_searchBmp;
@@ -107,7 +104,6 @@ public:
 	void OnEnter(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
-	void OnSearch(wxCommandEvent& event);
 	void OnSpinUp(wxSpinEvent& event);
 };
 
