@@ -6,6 +6,8 @@
 #include <wx/sizer.h>
 #include <vector>
 
+#include "CalorieList.h"
+
 #define NC_SIZE (wxSize(640, 480))
 
 class CatalogItem
@@ -56,7 +58,8 @@ private:
 	wxImageList* m_pImageList;
 	ItemViewer* m_pItemViewer;
 
-	// vector for storing info about all items
+	// Information
+	CalorieList* m_pCalorieList;
 	std::vector<CatalogItem> m_catalogItems;
 
 	// List vars
@@ -64,7 +67,8 @@ private:
 	wxString m_currentItemName;
 
 public:
-	FoodList(wxWindow* parent,
+	FoodList(CalorieList* pCalorieList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
@@ -93,6 +97,7 @@ public:
 class NutritionCatalog: public wxFrame
 {
 private:
+	CalorieList* m_pCalorieList;
 	FoodList* m_pFoodList;
 
 	// Sizers
@@ -102,7 +107,8 @@ public:
 	FoodList* GetFoodList() const { return m_pFoodList; }
 
 public:
-	NutritionCatalog(wxWindow* parent,
+	NutritionCatalog(CalorieList* pCalorieList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title = _T("Nutrition Catalog"),
 		const wxPoint& pos = wxDefaultPosition,
