@@ -37,14 +37,15 @@ public:
 	void SetCalorieList(CalorieList* pCalorieList) { m_pCalorieList = pCalorieList; }
 
 public:
-	ItemViewer(CatalogItem catalogItem,
+	ItemViewer(CalorieList* pCalorieList,
+		CatalogItem catalogItem,
 		wxWindow* parent,
 		wxWindowID id = -1,
 		const wxString& title = _T("View Nutrition Item"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
-		: wxDialog(parent, id, title, pos, size, style), m_catalogItem{ catalogItem }
+		: wxDialog(parent, id, title, pos, size, style), m_catalogItem{ catalogItem }, m_pCalorieList{ pCalorieList }
 	{
 		// Set the title to include the item which is being viewed
 		this->SetTitle(wxString(_T("View Nutritional Item - ")) << m_catalogItem.GetName());
@@ -140,7 +141,12 @@ public:
 	void OnAddToNutritionLog(wxCommandEvent& event)
 	{
 		NutrientContent nc{ m_catalogItem.GetCalories(), m_catalogItem.GetProtein(), m_catalogItem.GetCarbohydrates(), m_catalogItem.GetFiber() };
-		//m_pCalorieList->AddItem(m_catalogItem.GetName(), nc);
+#ifdef _DEBUG
+		if (m_pCalorieList == nullptr)
+			wxMessageBox(_T("Calorie List is null."));
+#endif
+		if (m_pCalorieList)
+			m_pCalorieList->AddItem(m_catalogItem.GetName(), nc);
 	}
 };
 
@@ -210,7 +216,7 @@ void FoodList::AddNutritionItem(const CatalogItem& info)
 
 void FoodList::OpenItem()
 {
-	m_pItemViewer = new ItemViewer(m_catalogItems[0], this);
+	m_pItemViewer = new ItemViewer(m_pCalorieList, m_catalogItems[0], this);
 	m_pItemViewer->Show(true);
 
 	if (m_pItemViewer->ShowModal() == wxID_OK)
