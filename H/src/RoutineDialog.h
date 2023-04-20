@@ -6,12 +6,14 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/button.h>
+#include <wx/bmpbuttn.h>
 #include <wx/statline.h>
 #include <wx/choice.h>
 #include "EntryList.h"
 #include "WPLists.h"
 #include "RoutineStruct/Routine.h"
 #include "RoutineView.h"
+#include "WorkoutWindow.h"
 
 #define RDLG_SIZE ( wxSize(250, 350) )
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
@@ -36,6 +38,7 @@ private:
 	wxChoice* m_pChoice[ROUTINE_LIST_SIZE];
 	std::vector<Routine> m_routineInfo;
 
+	wxBitmapButton* m_pView;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
