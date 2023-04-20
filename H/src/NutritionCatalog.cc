@@ -159,10 +159,6 @@ FoodList::FoodList(CalorieList* pCalorieList, wxWindow* parent, wxWindowID id, c
 
 	this->Init();
 
-	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("Eggs", egg, 60, 6, 0, 0);
-	this->AddNutritionItem(ci);
-
 	// Bind events
 	this->Bind(wxEVT_LIST_ITEM_SELECTED, &FoodList::OnSelectItem, this);
 	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &FoodList::OnRightClickItem, this);
@@ -185,6 +181,7 @@ void FoodList::Init()
 {
 	this->SetupMenu();
 	this->SetupImageList();
+	this->SetupDefaultNutritionItems();
 }
 
 void FoodList::SetupMenu()
@@ -202,6 +199,13 @@ void FoodList::SetupImageList()
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_NORMAL);
 }
 
+void FoodList::SetupDefaultNutritionItems()
+{
+	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
+	CatalogItem ci("Eggs", egg, 60, 6, 0, 0);
+	this->AddNutritionItem(ci);
+}
+
 void FoodList::AddNutritionItem(const CatalogItem& info)
 {
 	m_catalogItems.push_back(info);
@@ -216,13 +220,8 @@ void FoodList::AddNutritionItem(const CatalogItem& info)
 
 void FoodList::OpenItem()
 {
-	m_pItemViewer = new ItemViewer(m_pCalorieList, m_catalogItems[0], this);
+	m_pItemViewer = new ItemViewer(m_pCalorieList, m_catalogItems[m_selectionIndex], this);
 	m_pItemViewer->Show(true);
-
-	if (m_pItemViewer->ShowModal() == wxID_OK)
-	{
-
-	}
 }
 
 void FoodList::OnSelectItem(wxListEvent& event)
