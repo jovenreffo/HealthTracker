@@ -2,6 +2,7 @@
 #include <wx/log.h>
 #include <wx/valtext.h>
 #include "RoutineDialog.h"
+#include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
@@ -31,14 +32,20 @@ void RoutineDialog::SetupSizing()
 
 void RoutineDialog::SetupControls()
 {
+	// Sizers
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pDayFlexSizer = new wxFlexGridSizer(3, wxSize(5, 1));
+
 	this->SetSizerAndFit(m_pTopSizer);
 	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 
 	// For each day
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 	m_pDayFlexSizer->Add(m_pChoice[0], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
+	m_pDayFlexSizer->Add(m_pView, wxSizerFlags().Border(wxALL, 5));
 
-	// Re-init the sizer
+	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 	m_pDayFlexSizer->Add(m_pChoice[1], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
@@ -60,6 +67,8 @@ void RoutineDialog::SetupControls()
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 	m_pDayFlexSizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
 
+	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
+
 	// Separate the choices and buttons
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), 0, wxEXPAND | wxALL, 5);
 
@@ -78,12 +87,9 @@ void RoutineDialog::CreateControls()
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
 	// Buttons
+	m_pView = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-
-	// Sizers
-	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 
 	// Textctrl
 	m_pTextCtrl = new wxTextCtrl(this, static_cast<int>(RD::ID_ROUTINE_NAME), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(wxFILTER_NONE, &m_routineName));
