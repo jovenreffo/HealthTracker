@@ -81,6 +81,7 @@ public:
 	void Init();
 	void SetupMenu();
 	void SetupImageList();
+	void SetupDefaultNutritionItems();
 
 	// Operations
 	void AddImageToList(const wxBitmap& bmp) { m_pImageList->Add(bmp); }
