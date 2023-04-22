@@ -14,6 +14,14 @@ RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, RoutineLi
 	: wxDialog{ parent, id, title, pos, size, style }, m_content{ content }, m_pRoutineList{ pRoutineList }
 {
 	this->Init();
+
+	// dynamic event for view button
+	m_pView->Bind(wxEVT_BUTTON, &RoutineDialog::OnViewWorkout, this);
+}
+
+RoutineDialog::~RoutineDialog()
+{
+	m_pView->Unbind(wxEVT_BUTTON, &RoutineDialog::OnViewWorkout, this);
 }
 
 void RoutineDialog::Init()
@@ -137,4 +145,9 @@ void RoutineDialog::OnEnter(wxCommandEvent& WXUNUSED(event))
 
 	this->SetReturnCode(wxID_OK);
 	this->Show(false);
+}
+
+void RoutineDialog::OnViewWorkout(wxCommandEvent& WXUNUSED(event))
+{
+
 }

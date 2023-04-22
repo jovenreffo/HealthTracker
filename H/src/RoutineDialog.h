@@ -57,6 +57,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = RDLG_SIZE,
 		long style = RDLG_STYLE);
+	~RoutineDialog();
 
 	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
 	const wxString& GetRoutineName() const { return m_routineName; }
