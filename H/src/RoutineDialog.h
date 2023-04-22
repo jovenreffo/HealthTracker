@@ -73,6 +73,7 @@ public:
 	void OnOK(wxCommandEvent& WXUNUSED(event));
 	void OnClose(wxCloseEvent& WXUNUSED(event));
 	void OnEnter(wxCommandEvent& WXUNUSED(event));
+	void OnViewWorkout(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif
