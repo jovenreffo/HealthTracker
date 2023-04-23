@@ -15,13 +15,14 @@
 #include "RoutineView.h"
 #include "WorkoutWindow.h"
 
-#define RDLG_SIZE ( wxSize(250, 350) )
+#define RDLG_SIZE ( wxSize(300, 460) )
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
 #define RDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 
 enum class RD
 {
-	ID_ROUTINE_NAME
+	ID_ROUTINE_NAME,
+	ID_VIEW
 };
 
 class RoutineDialog: public wxDialog
@@ -35,8 +36,12 @@ private:
 
 	RoutineList* m_pRoutineList;
 	wxArrayString m_choiceArray;
+	wxArrayString m_daysOfWeek;
 	wxChoice* m_pChoice[ROUTINE_LIST_SIZE];
 	std::vector<Routine> m_routineInfo;
+
+	WorkoutList* m_pWorkoutList;
+	WorkoutWindow* m_pWorkoutWindow;
 
 	wxBitmapButton* m_pView;
 	wxButton* m_pOk;
@@ -50,6 +55,7 @@ private:
 
 public:
 	RoutineDialog(const std::vector<EntryContent>& content,
+		WorkoutList* pWorkoutList,
 		RoutineList* pRoutineList,
 		wxWindow* parent,
 		wxWindowID id,
