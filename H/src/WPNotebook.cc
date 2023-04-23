@@ -92,7 +92,7 @@ void WPNotebook::SetupNotebook()
 
 void WPNotebook::CreateNewRoutine()
 {
-	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pRoutineList, this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
+	m_pRoutineDialog = new RoutineDialog(m_pWorkoutList->GetContent(), m_pWorkoutList, m_pRoutineList, this, static_cast<int>(WP::ID_NEW_ROUTINE), _T("New Routine"));
 	m_pRoutineList->SetContent(m_pWorkoutList->GetContent());
 	m_pRoutineDialog->Show(true);
 }
