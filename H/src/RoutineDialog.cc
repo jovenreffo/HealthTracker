@@ -6,22 +6,19 @@
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
+	EVT_BUTTON((int)RD::ID_VIEW, RoutineDialog::OnViewWorkout)
 	EVT_CLOSE(RoutineDialog::OnClose)
 	EVT_TEXT_ENTER(wxID_ANY, RoutineDialog::OnEnter)
 END_EVENT_TABLE()
 
-RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, RoutineList* pRoutineList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog{ parent, id, title, pos, size, style }, m_content{ content }, m_pRoutineList{ pRoutineList }
+RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, WorkoutList* pWorkoutList, RoutineList* pRoutineList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog{ parent, id, title, pos, size, style }, m_content{ content }, m_pWorkoutList{ pWorkoutList }, m_pRoutineList { pRoutineList }
 {
 	this->Init();
-
-	// dynamic event for view button
-	m_pView->Bind(wxEVT_BUTTON, &RoutineDialog::OnViewWorkout, this);
 }
 
 RoutineDialog::~RoutineDialog()
 {
-	m_pView->Unbind(wxEVT_BUTTON, &RoutineDialog::OnViewWorkout, this);
 }
 
 void RoutineDialog::Init()
@@ -35,7 +32,7 @@ void RoutineDialog::SetupSizing()
 {
 	this->SetMinSize(RDLG_SIZE);
 	this->SetInitialSize(RDLG_SIZE);
-	this->SetMaxSize(RDLG_MAX_SIZE);
+	//this->SetMaxSize(RDLG_MAX_SIZE);
 }
 
 void RoutineDialog::SetupControls()
@@ -45,35 +42,22 @@ void RoutineDialog::SetupControls()
 	m_pDayFlexSizer = new wxFlexGridSizer(3, wxSize(5, 1));
 
 	this->SetSizerAndFit(m_pTopSizer);
-	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 
 	// For each day
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sunday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[0], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-	m_pDayFlexSizer->Add(m_pView, wxSizerFlags().Border(wxALL, 5));
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		// re-initialise the button for each day of week being added
+		// otherwise wx will throw an error saying a window is being added to multiple sizers
+		m_pView = new wxBitmapButton(this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 
-	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+		m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, m_daysOfWeek[i]), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+		m_pDayFlexSizer->Add(m_pChoice[i], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
+		m_pDayFlexSizer->Add(m_pView, wxSizerFlags().Border(wxALL, 5));
+	}
 
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Monday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[1], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Tuesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[2], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Wednesday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[3], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Thursday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[4], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Friday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[5], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Saturday:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
-	m_pDayFlexSizer->Add(m_pChoice[6], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-
-	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
+	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Left().Border(wxALL, 5));
 	m_pDayFlexSizer->Add(m_pTextCtrl, wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
+	m_pDayFlexSizer->AddSpacer(5);
 
 	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 
@@ -94,8 +78,16 @@ void RoutineDialog::CreateControls()
 	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
 		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
 
+	// Days of week
+	m_daysOfWeek.Add(_T("Sunday"));
+	m_daysOfWeek.Add(_T("Monday"));
+	m_daysOfWeek.Add(_T("Tuesday"));
+	m_daysOfWeek.Add(_T("Wednesday"));
+	m_daysOfWeek.Add(_T("Thursday"));
+	m_daysOfWeek.Add(_T("Friday"));
+	m_daysOfWeek.Add(_T("Saturday"));
+
 	// Buttons
-	m_pView = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 
@@ -149,5 +141,8 @@ void RoutineDialog::OnEnter(wxCommandEvent& WXUNUSED(event))
 
 void RoutineDialog::OnViewWorkout(wxCommandEvent& WXUNUSED(event))
 {
+	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")));
+	m_pWorkoutWindow->Show(true);
 
+	m_pWorkoutWindow->OpenWorkout()
 }
