@@ -4,6 +4,21 @@
 #include "RoutineDialog.h"
 #include "StandardPath.hpp"
 
+class ViewButton : public wxBitmapButton
+{
+public:
+	ViewButton(wxWindow* parent,
+		wxWindowID id,
+		const wxBitmap& bmp,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxBU_AUTODRAW)
+		: wxBitmapButton(parent, id, bmp, pos, size, style)
+	{
+
+	}
+};
+
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
 	EVT_BUTTON((int)RD::ID_VIEW, RoutineDialog::OnViewWorkout)
@@ -143,6 +158,4 @@ void RoutineDialog::OnViewWorkout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")));
 	m_pWorkoutWindow->Show(true);
-
-	m_pWorkoutWindow->OpenWorkout()
 }
