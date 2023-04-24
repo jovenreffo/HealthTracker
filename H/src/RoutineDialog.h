@@ -9,6 +9,10 @@
 #include <wx/bmpbuttn.h>
 #include <wx/statline.h>
 #include <wx/choice.h>
+
+#include <vector>
+#include <array>
+
 #include "EntryList.h"
 #include "WPLists.h"
 #include "RoutineStruct/Routine.h"
@@ -23,6 +27,21 @@ enum class RD
 {
 	ID_ROUTINE_NAME,
 	ID_VIEW
+};
+
+class ViewButton : public wxBitmapButton
+{
+private:
+	int m_uniqueID;
+
+public:
+	ViewButton(int uniqueID,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxBitmap& bmp,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxBU_AUTODRAW);
 };
 
 class RoutineDialog: public wxDialog
@@ -43,6 +62,7 @@ private:
 	WorkoutList* m_pWorkoutList;
 	WorkoutWindow* m_pWorkoutWindow;
 
+	std::array<ViewButton*, 7> m_viewButtonArr; // One unique button for each day of the week
 	wxBitmapButton* m_pView;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
