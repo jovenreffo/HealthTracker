@@ -4,20 +4,27 @@
 #include "RoutineDialog.h"
 #include "StandardPath.hpp"
 
-class ViewButton : public wxBitmapButton
-{
-public:
-	ViewButton(wxWindow* parent,
-		wxWindowID id,
-		const wxBitmap& bmp,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxBU_AUTODRAW)
-		: wxBitmapButton(parent, id, bmp, pos, size, style)
-	{
+// ViewButton
 
-	}
-};
+ViewButton::ViewButton(int uniqueID, wxWindow* parent, wxWindowID id, const wxBitmap& bmp, const wxPoint& pos, const wxSize& size, long style)
+	: wxBitmapButton(parent, id, bmp, pos, size, style), m_uniqueID{ uniqueID }
+{
+	this->Bind(wxEVT_BUTTON, &ViewButton::OnClick, this);
+}
+
+ViewButton::~ViewButton()
+{
+	this->Unbind(wxEVT_BUTTON, &ViewButton::OnClick, this);
+}
+
+void ViewButton::OnClick(wxCommandEvent& event)
+{
+#ifdef _DEBUG
+	wxLogMessage(_("%d"), m_uniqueID);
+#endif
+}
+
+// RoutineDialog
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
@@ -63,11 +70,12 @@ void RoutineDialog::SetupControls()
 	{
 		// re-initialise the button for each day of week being added
 		// otherwise wx will throw an error saying a window is being added to multiple sizers
-		m_pView = new wxBitmapButton(this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+		//m_pView = new wxBitmapButton(this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+		m_viewButtonArr[i] = new ViewButton(i, this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 
 		m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, m_daysOfWeek[i]), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 		m_pDayFlexSizer->Add(m_pChoice[i], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
-		m_pDayFlexSizer->Add(m_pView, wxSizerFlags().Border(wxALL, 5));
+		m_pDayFlexSizer->Add(m_viewButtonArr[i], wxSizerFlags().Border(wxALL, 5));
 	}
 
 	m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().Proportion(0).Left().Border(wxALL, 5));
