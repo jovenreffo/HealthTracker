@@ -42,6 +42,10 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxBU_AUTODRAW);
+	~ViewButton();
+
+	// Click event
+	void OnClick(wxCommandEvent& event);
 };
 
 class RoutineDialog: public wxDialog
