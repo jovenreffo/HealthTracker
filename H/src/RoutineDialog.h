@@ -33,9 +33,16 @@ class ViewButton : public wxBitmapButton
 {
 private:
 	int m_uniqueID;
+	wxString m_workoutName;
+
+	// Workout information
+	WorkoutList* m_pWorkoutList;
+	WorkoutWindow* m_pWorkoutWindow;
 
 public:
-	ViewButton(int uniqueID,
+	ViewButton(WorkoutList* pWorkoutList,
+		const wxString& workoutName,
+		int uniqueID,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxBitmap& bmp,
