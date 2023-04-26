@@ -6,8 +6,8 @@
 
 // ViewButton
 
-ViewButton::ViewButton(int uniqueID, wxWindow* parent, wxWindowID id, const wxBitmap& bmp, const wxPoint& pos, const wxSize& size, long style)
-	: wxBitmapButton(parent, id, bmp, pos, size, style), m_uniqueID{ uniqueID }
+ViewButton::ViewButton(WorkoutList* pWorkoutList, const wxString& workoutName, int uniqueID, wxWindow* parent, wxWindowID id, const wxBitmap& bmp, const wxPoint& pos, const wxSize& size, long style)
+	: wxBitmapButton(parent, id, bmp, pos, size, style), m_pWorkoutList{ pWorkoutList }, m_workoutName{ workoutName }, m_uniqueID{ uniqueID }
 {
 	this->Bind(wxEVT_BUTTON, &ViewButton::OnClick, this);
 }
@@ -20,8 +20,12 @@ ViewButton::~ViewButton()
 void ViewButton::OnClick(wxCommandEvent& event)
 {
 #ifdef _DEBUG
-	wxLogMessage(_("%d"), m_uniqueID);
+	wxLogMessage(_("%d\n%s"), m_uniqueID, m_workoutName);
 #endif
+
+	// Display a WorkoutWindow
+	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")));
+	m_pWorkoutWindow->Show(true);
 }
 
 // RoutineDialog
@@ -71,7 +75,7 @@ void RoutineDialog::SetupControls()
 		// re-initialise the button for each day of week being added
 		// otherwise wx will throw an error saying a window is being added to multiple sizers
 		//m_pView = new wxBitmapButton(this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
-		m_viewButtonArr[i] = new ViewButton(i, this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+		m_viewButtonArr[i] = new ViewButton(m_pWorkoutList, m_pChoice[i]->GetLabel(), i, this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 
 		m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, m_daysOfWeek[i]), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 		m_pDayFlexSizer->Add(m_pChoice[i], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
@@ -164,6 +168,5 @@ void RoutineDialog::OnEnter(wxCommandEvent& WXUNUSED(event))
 
 void RoutineDialog::OnViewWorkout(wxCommandEvent& WXUNUSED(event))
 {
-	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")));
-	m_pWorkoutWindow->Show(true);
+	
 }
