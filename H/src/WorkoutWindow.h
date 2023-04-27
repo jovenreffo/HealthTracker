@@ -61,6 +61,7 @@ public:
 	__forceinline void AddToWorkoutList();
 	void SaveToWorkoutList();
 	void OpenWorkout(const wxString& content);
+	void OpenWorkout(int index);
 
 	// Get/set
 	wxTextCtrl* GetTextCtrl() const { return m_pTextCtrl; }
