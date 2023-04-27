@@ -74,8 +74,8 @@ private:
 	WorkoutList* m_pWorkoutList;
 	WorkoutWindow* m_pWorkoutWindow;
 
+	wxArrayString m_choiceValidate;
 	std::array<ViewButton*, ROUTINE_LIST_SIZE> m_viewButtonArr; // One unique button for each day of the week
-	wxBitmapButton* m_pView;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
