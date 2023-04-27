@@ -81,6 +81,11 @@ void WorkoutWindow::OpenWorkout(const wxString& content)
 	m_pTextCtrl->SetValue(content);
 }
 
+void WorkoutWindow::OpenWorkout(int index)
+{
+
+}
+
 void WorkoutWindow::Init()
 {
 	m_pSaveWorkoutDlg = new SaveWorkoutDialog(this, wxID_ANY);
