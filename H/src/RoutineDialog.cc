@@ -1,6 +1,8 @@
 #include <wx/msgdlg.h>
 #include <wx/log.h>
 #include <wx/valtext.h>
+#include <wx/valgen.h>
+
 #include "RoutineDialog.h"
 #include "StandardPath.hpp"
 
@@ -74,7 +76,7 @@ void RoutineDialog::SetupControls()
 	{
 		// re-initialise the button for each day of week being added
 		// otherwise wx will throw an error saying a window is being added to multiple sizers
-		m_viewButtonArr[i] = new ViewButton(m_pWorkoutList, m_pChoice[i]->GetLabel(), i, this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+		m_viewButtonArr[i] = new ViewButton(m_pWorkoutList, m_pChoice[i]->GetStringSelection(), i, this, (int)RD::ID_VIEW, wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 
 		m_pDayFlexSizer->Add(new wxStaticText(this, wxID_STATIC, m_daysOfWeek[i]), wxSizerFlags().Proportion(0).Align(wxALIGN_CENTRE_VERTICAL).Border(wxALL, 5));
 		m_pDayFlexSizer->Add(m_pChoice[i], wxSizerFlags().Proportion(0).CentreVertical().Border(wxLEFT, 5));
