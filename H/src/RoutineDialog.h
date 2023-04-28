@@ -9,7 +9,6 @@
 #include <wx/bmpbuttn.h>
 #include <wx/statline.h>
 #include <wx/choice.h>
-#include <wx/valtext.h>
 
 #include <vector>
 #include <array>
@@ -74,8 +73,8 @@ private:
 	WorkoutList* m_pWorkoutList;
 	WorkoutWindow* m_pWorkoutWindow;
 
+	int m_choiceValidate[ROUTINE_LIST_SIZE];
 	std::array<ViewButton*, ROUTINE_LIST_SIZE> m_viewButtonArr; // One unique button for each day of the week
-	wxBitmapButton* m_pView;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
