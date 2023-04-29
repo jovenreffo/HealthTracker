@@ -21,12 +21,8 @@ ViewButton::~ViewButton()
 
 void ViewButton::OnClick(wxCommandEvent& event)
 {
-#ifdef _DEBUG
-	wxLogMessage(_("%d\n%s"), m_uniqueID, m_workoutName);
-#endif
-
 	// Display a WorkoutWindow
-	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")));
+	m_pWorkoutWindow = new WorkoutWindow(m_pWorkoutList, this, wxID_ANY, wxString(_T("View Workout - ")) << m_workoutName);
 	m_pWorkoutWindow->Show(true);
 }
 
@@ -66,6 +62,11 @@ RoutineDialog::RoutineDialog(const std::vector<EntryContent>& content, WorkoutLi
 
 RoutineDialog::~RoutineDialog()
 {
+	// Unbind events from the choice
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		m_pChoice[i]->Unbind(wxEVT_CHOICE, &RoutineDialog::OnChoice, this);
+	}
 }
 
 void RoutineDialog::Init()
