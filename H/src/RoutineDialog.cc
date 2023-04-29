@@ -30,11 +30,30 @@ void ViewButton::OnClick(wxCommandEvent& event)
 	m_pWorkoutWindow->Show(true);
 }
 
+// Choice
+
+Choice::Choice(int uniqueID, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, const wxArrayString& choices, long style)
+	: wxChoice(parent, id, pos, size, choices, style), m_uniqueID{ uniqueID }
+{
+	this->Bind(wxEVT_CHOICE, &Choice::OnChoice, this);
+}
+
+Choice::~Choice()
+{
+	this->Unbind(wxEVT_CHOICE, &Choice::OnChoice, this);
+}
+
+void Choice::OnChoice(wxCommandEvent& event)
+{
+#ifdef _DEBUG
+	wxLogMessage(_("%d\n%s"), m_uniqueID, this->GetStringSelection());
+#endif
+}
+
 // RoutineDialog
 
 BEGIN_EVENT_TABLE(RoutineDialog, wxDialog)
 	EVT_BUTTON(wxID_OK, RoutineDialog::OnOK)
-	EVT_BUTTON((int)RD::ID_VIEW, RoutineDialog::OnViewWorkout)
 	EVT_CLOSE(RoutineDialog::OnClose)
 	EVT_TEXT_ENTER(wxID_ANY, RoutineDialog::OnEnter)
 END_EVENT_TABLE()
@@ -104,7 +123,12 @@ void RoutineDialog::CreateControls()
 	for (auto i{ 0 }; i < m_content.size(); ++i)
 		m_choiceArray.Add(m_content[i].GetName());
 	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
-		m_pChoice[i] = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
+	{
+		m_pChoice[i] = new Choice(i, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceArray, wxCB_SORT);
+
+		// Bind OnChoice event
+		m_pChoice[i]->Bind(wxEVT_CHOICE, &RoutineDialog::OnChoice, this);
+	}
 
 	// Days of week
 	m_daysOfWeek.Add(_T("Sunday"));
@@ -167,7 +191,11 @@ void RoutineDialog::OnEnter(wxCommandEvent& WXUNUSED(event))
 	this->Show(false);
 }
 
-void RoutineDialog::OnViewWorkout(wxCommandEvent& WXUNUSED(event))
+void RoutineDialog::OnChoice(wxCommandEvent& WXUNUSED(event))
 {
-	
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		// Re-initialize the workout name for each selection, so all get updated at once.
+		m_viewButtonArr[i]->SetWorkoutName(m_pChoice[i]->GetStringSelection());
+	}
 }
