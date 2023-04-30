@@ -13,8 +13,8 @@ END_EVENT_TABLE()
 Settings::Settings(ExerciseBook* pExerciseBook, Journal* pJournal, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style), m_pExerciseBook{ pExerciseBook }, m_pJournal { pJournal }
 {
-	this->Init();
-	this->InitWindowPointers();
+	//this->Init();
+	//this->InitWindowPointers();
 }
 
 void Settings::Init()
