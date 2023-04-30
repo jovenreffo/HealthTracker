@@ -33,6 +33,7 @@ class ViewButton : public wxBitmapButton
 {
 private:
 	int m_uniqueID;
+	int m_selection;
 	wxString m_workoutName;
 
 	// Workout information
@@ -42,6 +43,7 @@ private:
 public:
 	ViewButton(WorkoutList* pWorkoutList,
 		const wxString& workoutName,
+		int selection,
 		int uniqueID,
 		wxWindow* parent,
 		wxWindowID id,
@@ -51,8 +53,28 @@ public:
 		long style = wxBU_AUTODRAW);
 	~ViewButton();
 
+	void SetWorkoutName(const wxString& name) { m_workoutName = name; }
+
 	// Click event
 	void OnClick(wxCommandEvent& event);
+};
+
+class Choice : public wxChoice
+{
+private:
+	int m_uniqueID;
+
+public:
+	Choice(int uniqueID,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos,
+		const wxSize& size,
+		const wxArrayString& choices,
+		long style = 0L);
+	~Choice();
+
+	void OnChoice(wxCommandEvent& event);
 };
 
 class RoutineDialog: public wxDialog
@@ -67,7 +89,7 @@ private:
 	RoutineList* m_pRoutineList;
 	wxArrayString m_choiceArray;
 	wxArrayString m_daysOfWeek;
-	wxChoice* m_pChoice[ROUTINE_LIST_SIZE];
+	Choice* m_pChoice[ROUTINE_LIST_SIZE];
 	std::vector<Routine> m_routineInfo;
 
 	WorkoutList* m_pWorkoutList;
@@ -111,7 +133,7 @@ public:
 	void OnOK(wxCommandEvent& WXUNUSED(event));
 	void OnClose(wxCloseEvent& WXUNUSED(event));
 	void OnEnter(wxCommandEvent& WXUNUSED(event));
-	void OnViewWorkout(wxCommandEvent& WXUNUSED(event));
+	void OnChoice(wxCommandEvent& WXUNUSED(event));
 };
 
 #endif
