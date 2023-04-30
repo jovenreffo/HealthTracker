@@ -21,11 +21,18 @@ ViewButton::~ViewButton()
 
 void ViewButton::OnClick(wxCommandEvent& event)
 {
+	if (m_workoutName.empty())
+	{
+		wxMessageBox(_T("No workout to open."));
+		return;
+	}
+
 	// Display a WorkoutWindow
 	if (m_pWorkoutList)
 	{
 		m_pWorkoutList->OpenWorkout(m_workoutName);
 	}
+	
 }
 
 // Choice
