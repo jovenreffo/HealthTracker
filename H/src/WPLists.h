@@ -41,7 +41,9 @@ public:
 
 	void AddItem(const wxString& name, const wxString& content);
 	void ResetList();
+
 	void OpenWorkout();
+	void OpenWorkout(const wxString& name);
 
 	const std::vector<EntryContent>& GetContent() const { return m_content; }
 
