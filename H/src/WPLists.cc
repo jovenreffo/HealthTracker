@@ -84,12 +84,27 @@ void WorkoutList::OpenWorkout()
 		for (auto i{ 0 }; i < m_content.size(); ++i)
 		{
 			if (m_currentItemName == m_content[i].GetName())
+			{
 				pWorkoutDlg->OpenWorkout(m_content[i].GetContent());
+				pWorkoutDlg->SetTitle(wxString(_T("View Workout - ")) << m_currentItemName);
+			}
 		}
 	}
 	catch (std::exception& e)
 	{
 		wxLogMessage(_T("No item with that name exists.\n%s"), e.what());
+	}
+}
+
+void WorkoutList::OpenWorkout(const wxString& name)
+{
+	WorkoutWindow* pWorkoutWindow = new WorkoutWindow(this, this, wxID_ANY, wxString(_T("View Workout - ")) << name);
+	pWorkoutWindow->Show(true);
+
+	for (auto i{ 0 }; i < m_content.size(); ++i)
+	{
+		if (name == m_content[i].GetName())
+			pWorkoutWindow->OpenWorkout(m_content[i].GetContent());
 	}
 }
 
