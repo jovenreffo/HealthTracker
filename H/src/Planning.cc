@@ -305,12 +305,17 @@ void TodoPanel::OnClearTaskList(wxCommandEvent& e)
 {
 	if (wxMessageBox(_T("Are you sure you want to remove all of your tasks?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
+#ifdef _DEBUG
 		wxLogMessage("Active items: %d", m_items.size());
-		for (auto i : m_items)
+#endif
+		if (m_items.size() > 0)
 		{
-			i->Show(false);
-			i->Destroy();
-			this->Layout();
+			for (auto i : m_items)
+			{
+				i->Show(false);
+				i->Destroy();
+				this->Layout();
+			}
 		}
 	}
 }
