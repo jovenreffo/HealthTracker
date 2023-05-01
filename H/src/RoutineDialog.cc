@@ -23,7 +23,7 @@ void ViewButton::OnClick(wxCommandEvent& event)
 {
 	if (m_workoutName.empty())
 	{
-		wxMessageBox(_T("No workout to open."));
+		wxMessageBox(_T("No workout to open."), _T("Notice"));
 		return;
 	}
 
