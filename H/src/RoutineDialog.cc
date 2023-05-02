@@ -6,35 +6,6 @@
 #include "RoutineDialog.h"
 #include "StandardPath.hpp"
 
-// ViewButton
-
-ViewButton::ViewButton(WorkoutList* pWorkoutList, const wxString& workoutName, int selection, int uniqueID, wxWindow* parent, wxWindowID id, const wxBitmap& bmp, const wxPoint& pos, const wxSize& size, long style)
-	: wxBitmapButton(parent, id, bmp, pos, size, style), m_pWorkoutList{ pWorkoutList }, m_workoutName{ workoutName }, m_selection{ selection }, m_uniqueID{ uniqueID }
-{
-	this->Bind(wxEVT_BUTTON, &ViewButton::OnClick, this);
-}
-
-ViewButton::~ViewButton()
-{
-	this->Unbind(wxEVT_BUTTON, &ViewButton::OnClick, this);
-}
-
-void ViewButton::OnClick(wxCommandEvent& event)
-{
-	if (m_workoutName.empty())
-	{
-		wxMessageBox(_T("No workout to open."), _T("Notice"));
-		return;
-	}
-
-	// Display a WorkoutWindow
-	if (m_pWorkoutList)
-	{
-		m_pWorkoutList->OpenWorkout(m_workoutName);
-	}
-	
-}
-
 // Choice
 
 Choice::Choice(int uniqueID, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, const wxArrayString& choices, long style)
@@ -158,16 +129,25 @@ void RoutineDialog::CreateControls()
 	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &RoutineDialog::OnEnter, this);
 }
 
+void RoutineDialog::OpenRoutine()
+{
+	// Loop through the choice array.
+	// Set up corresponding strings.
+	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
+	{
+		m_pChoice[i]->SetStringSelection(m_routine.m_daysOfWeek[i]);
+	}
+}
+
 void RoutineDialog::HandleExit()
 {
-	Routine r;
 
 	for (auto i{ 0 }; i < ROUTINE_LIST_SIZE; ++i)
 	{
-		r.m_daysOfWeek[i] = m_pChoice[i]->GetStringSelection();
+		m_routine.m_daysOfWeek[i] = m_pChoice[i]->GetStringSelection();
 	}
 
-	m_pRoutineList->AddItem(m_routineName, r);
+	m_pRoutineList->AddItem(m_routineName, m_routine);
 }
 
 // events
