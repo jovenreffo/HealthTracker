@@ -18,6 +18,7 @@
 #include "RoutineStruct/Routine.h"
 #include "RoutineView.h"
 #include "WorkoutWindow.h"
+#include "ViewButton.h"
 
 #define RDLG_SIZE ( wxSize(300, 460) )
 #define RDLG_MAX_SIZE ( wxSize(285, 365) )
@@ -27,36 +28,6 @@ enum class RD
 {
 	ID_ROUTINE_NAME,
 	ID_VIEW
-};
-
-class ViewButton : public wxBitmapButton
-{
-private:
-	int m_uniqueID;
-	int m_selection;
-	wxString m_workoutName;
-
-	// Workout information
-	WorkoutList* m_pWorkoutList;
-	WorkoutWindow* m_pWorkoutWindow;
-
-public:
-	ViewButton(WorkoutList* pWorkoutList,
-		const wxString& workoutName,
-		int selection,
-		int uniqueID,
-		wxWindow* parent,
-		wxWindowID id,
-		const wxBitmap& bmp,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = wxBU_AUTODRAW);
-	~ViewButton();
-
-	void SetWorkoutName(const wxString& name) { m_workoutName = name; }
-
-	// Click event
-	void OnClick(wxCommandEvent& event);
 };
 
 class Choice : public wxChoice
@@ -91,6 +62,7 @@ private:
 	wxArrayString m_daysOfWeek;
 	Choice* m_pChoice[ROUTINE_LIST_SIZE];
 	std::vector<Routine> m_routineInfo;
+	Routine m_routine; // transfer from RoutineView
 
 	WorkoutList* m_pWorkoutList;
 	WorkoutWindow* m_pWorkoutWindow;
@@ -118,8 +90,10 @@ public:
 		long style = RDLG_STYLE);
 	~RoutineDialog();
 
+	// Getters
 	const std::vector<Routine>& GetRoutineInfo() const { return m_routineInfo; }
 	const wxString& GetRoutineName() const { return m_routineName; }
+	const Routine& GetRoutine() const { return m_routine; }
 
 	// Setup
 	void Init();
@@ -127,6 +101,7 @@ public:
 	void SetupSizing();
 	void SetupControls();
 
+	void OpenRoutine();
 	void HandleExit();
 
 	// Events
