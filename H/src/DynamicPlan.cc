@@ -280,13 +280,15 @@ void AddExerciseDialog::SetupSizing()
 {
 	this->SetInitialSize(AED_SIZE);
 	this->SetMinSize(AED_SIZE);
-	//this->SetMaxSize(AED_SIZE_MAX);
+	this->SetMaxSize(AED_SIZE_MAX);
 }
 
 void AddExerciseDialog::SetupControls()
 {
 	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
 	m_pExerciseNameTxt->Bind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
+
+	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Timed Exercise"), wxDefaultPosition, wxDefaultSize);
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -309,6 +311,8 @@ void AddExerciseDialog::SetupSizers()
 	// Main controls
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Exercise name:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pExerciseNameTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->Add(m_pTimeChk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pHorizontalSizer->AddSpacer(0);
 	m_pHorizontalSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Custom icon (16x16):")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pSearchImg, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pHorizontalSizer->Add(m_pImageLabel, wxSizerFlags().Left().Border(wxALL, 5));
@@ -398,6 +402,11 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 		m_pImageLabel->SetLabel(wxString(_T("Image: ")) << pOpenDialog->GetFilename());
 		m_pImageLabel->Show(true);
 	}
+}
+
+void AddExerciseDialog::OnCheck(wxCommandEvent& event)
+{
+
 }
 
 // DynamicPlan
