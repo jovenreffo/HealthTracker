@@ -19,8 +19,8 @@
 
 #define CEP_SIZE (wxSize(125, 250))
 
-#define AED_SIZE (wxSize(280, 210))
-#define AED_SIZE_MAX (wxSize(340, 200))
+#define AED_SIZE (wxSize(280, 220))
+#define AED_SIZE_MAX (wxSize(340, 250))
 
 enum class CEP
 {
@@ -76,6 +76,7 @@ class AddExerciseDialog : public wxDialog
 private:
 	// Controls
 	wxTextCtrl* m_pExerciseNameTxt;
+	wxCheckBox* m_pTimeChk;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 	wxButton* m_pSearchImg;
@@ -131,6 +132,7 @@ public:
 	void OnClose(wxCloseEvent& event);
 	void OnEnter(wxCommandEvent& event);
 	void OnSearch(wxCommandEvent& event);
+	void OnCheck(wxCommandEvent& event);
 };
 
 class DynamicPlan : public wxScrolled<wxPanel>
