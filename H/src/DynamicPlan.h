@@ -104,6 +104,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~AddExerciseDialog();
 
 	// Getters
 	const bool UseImage() const { return m_bUseImage; }
