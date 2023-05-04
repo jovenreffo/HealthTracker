@@ -261,6 +261,21 @@ AddExerciseDialog::AddExerciseDialog(wxWindow* parent, wxWindowID id, const wxSt
 	: wxDialog(parent, id, title, pos, size, style)
 {
 	this->Init();
+	
+	// Bind events
+	m_pExerciseNameTxt->Bind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
+	m_pSearchImg->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
+	m_pOk->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
+}
+
+AddExerciseDialog::~AddExerciseDialog()
+{
+	// Unbind
+	m_pExerciseNameTxt->Unbind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
+	m_pSearchImg->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
+	m_pOk->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
 }
 
 void AddExerciseDialog::Init()
@@ -286,7 +301,6 @@ void AddExerciseDialog::SetupSizing()
 void AddExerciseDialog::SetupControls()
 {
 	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
-	m_pExerciseNameTxt->Bind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
 
 	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Timed Exercise"), wxDefaultPosition, wxDefaultSize);
 
@@ -296,9 +310,6 @@ void AddExerciseDialog::SetupControls()
 	m_pSearchImg->SetToolTip(_T("Set a custom image for this exercise. 16x16 for best results."));
 
 	m_pImageLabel = new wxStaticText(this, wxID_ANY, _T("Image: No selection."), wxDefaultPosition, wxDefaultSize);
-
-	// bind
-	m_pSearchImg->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
 }
 
 void AddExerciseDialog::SetupSizers()
