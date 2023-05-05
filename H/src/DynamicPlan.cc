@@ -266,7 +266,8 @@ AddExerciseDialog::AddExerciseDialog(wxWindow* parent, wxWindowID id, const wxSt
 	m_pExerciseNameTxt->Bind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
 	m_pSearchImg->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
 	m_pOk->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
-	m_pCancel->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddExerciseDialog::OnCancel, this);
+	m_pTimeChk->Bind(wxEVT_CHECKBOX, &AddExerciseDialog::OnCheck, this);
 }
 
 AddExerciseDialog::~AddExerciseDialog()
@@ -275,7 +276,8 @@ AddExerciseDialog::~AddExerciseDialog()
 	m_pExerciseNameTxt->Unbind(wxEVT_TEXT_ENTER, &AddExerciseDialog::OnEnter, this);
 	m_pSearchImg->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnSearch, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
-	m_pCancel->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddExerciseDialog::OnCancel, this);
+	m_pTimeChk->Unbind(wxEVT_CHECKBOX, &AddExerciseDialog::OnCheck, this);
 }
 
 void AddExerciseDialog::Init()
@@ -302,7 +304,7 @@ void AddExerciseDialog::SetupControls()
 {
 	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
 
-	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Timed Exercise"), wxDefaultPosition, wxDefaultSize);
+	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Timed Exercise"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bTimedExercise));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -345,6 +347,9 @@ void AddExerciseDialog::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
+#ifdef _DEBUG
+		wxLogMessage(_T("%d"), m_bTimedExercise);
+#endif
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
@@ -417,7 +422,6 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 
 void AddExerciseDialog::OnCheck(wxCommandEvent& event)
 {
-
 }
 
 // DynamicPlan
