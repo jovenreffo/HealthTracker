@@ -96,6 +96,7 @@ private:
 	// Validator
 	wxString m_exerciseName;
 	bool m_bUseImage{ false };
+	bool m_bTimedExercise{ false };
 
 public:
 	AddExerciseDialog(wxWindow* parent,
