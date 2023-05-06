@@ -279,10 +279,12 @@ void TimedExercisePanel::Init()
 
 void TimedExercisePanel::SetupControls()
 {
+
 }
 
 void TimedExercisePanel::SetupSizers()
 {
+
 }
 
 // AddExerciseDialog
@@ -520,7 +522,7 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 	m_pAddExerciseDialog = new AddExerciseDialog(this, wxID_ANY);
 	m_pAddExerciseDialog->Show(true);
 
-	if (m_pAddExerciseDialog->ShowModal() == wxID_OK)
+	if (m_pAddExerciseDialog->ShowModal() == wxID_OK && !m_pAddExerciseDialog->GetTimed())
 	{
 		// The cover should only be shown at the start of the program, when the user has not added any exercises to the notbook
 		// If the cover is shown, set m_bShowCover to false, hide the cover, and show the notebook. Finally, refresh the panel.
@@ -536,6 +538,10 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 		
 		m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
 		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName(), m_pAddExerciseDialog->UseImage());
+	}
+	else if (m_pAddExerciseDialog->GetTimed())
+	{
+
 	}
 }
 
