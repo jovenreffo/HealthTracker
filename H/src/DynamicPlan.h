@@ -33,7 +33,7 @@ class CounterList;
 class ExerciseNotebook; // Inherits from wxAuiNotebook, dockable & movable tabs will be nice for the user
 class HtmlPanelCover;
 
-class CustomExercisePanel : public wxPanel
+class CustomExercisePanel: public wxPanel
 {
 private:
 	wxString m_exerciseName;
@@ -71,7 +71,25 @@ public:
 	void OnSave(wxCommandEvent& event);
 };
 
-class AddExerciseDialog : public wxDialog
+class TimedExercisePanel: public wxPanel
+{
+public:
+	TimedExercisePanel(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = CEP_SIZE,
+		long style = 0L);
+	~TimedExercisePanel();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+};
+
+class AddExerciseDialog: public wxDialog
 {
 private:
 	// Controls
@@ -112,6 +130,7 @@ public:
 	const wxBitmapType GetBitmapType() const { return m_bitmapType; }
 	const wxString& GetImagePath() const { return m_imagePath; }
 	const wxString& GetExerciseName() const { return m_exerciseName; }
+	const bool GetTimed() const { return m_bTimedExercise; }
 	const wxBitmap& GetImage() const
 	{
 		if (m_image.IsOk())
@@ -137,7 +156,7 @@ public:
 	void OnCheck(wxCommandEvent& event);
 };
 
-class DynamicPlan : public wxScrolled<wxPanel>
+class DynamicPlan: public wxScrolled<wxPanel>
 {
 private:
 	// Controls
@@ -177,7 +196,7 @@ public:
 	void OnOpenSpreadsheet(wxCommandEvent& event);
 };
 
-class ExerciseNotebook : public wxAuiNotebook
+class ExerciseNotebook: public wxAuiNotebook
 {
 private:
 	wxImageList* m_pImageList;
