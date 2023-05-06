@@ -255,6 +255,36 @@ void CustomExercisePanel::OnSave(wxCommandEvent& event)
 	pSaveDialog->Destroy();
 }
 
+// TimedExercisePanel
+
+TimedExercisePanel::TimedExercisePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style)
+{
+	// Setup
+	this->Init();
+
+	// Bind events
+}
+
+TimedExercisePanel::~TimedExercisePanel()
+{
+	// Unbind events
+}
+
+void TimedExercisePanel::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void TimedExercisePanel::SetupControls()
+{
+}
+
+void TimedExercisePanel::SetupSizers()
+{
+}
+
 // AddExerciseDialog
 
 AddExerciseDialog::AddExerciseDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
