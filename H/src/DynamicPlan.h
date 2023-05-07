@@ -73,6 +73,22 @@ public:
 
 class TimedExercisePanel: public wxPanel
 {
+private:
+	wxString m_exerciseName;
+
+	// Sizers
+	wxFlexGridSizer* m_pControlSizer;
+	wxStaticBoxSizer* m_pTopSizer;
+	wxStaticBox* m_pTopParent;
+
+	// Controls
+	wxBitmapButton* m_pAddButton;
+	wxBitmapButton* m_pSaveButton;
+	CounterList* m_pCounterList;
+
+	// Validation
+	int m_repCount;
+
 public:
 	TimedExercisePanel(wxWindow* parent,
 		wxWindowID id,
@@ -87,6 +103,8 @@ public:
 	void SetupSizers();
 
 	// Events
+	void OnAdd(wxCommandEvent& event);
+	void OnSave(wxCommandEvent& event);
 };
 
 class AddExerciseDialog: public wxDialog
@@ -218,6 +236,7 @@ public:
 	void SetupImageList();
 
 	void AddExercisePage(CustomExercisePanel* pExercisePanel, const wxString& title, bool bUseImage);
+	void AddExercisePage(TimedExercisePanel* pTimedPanel, const wxString& title, bool bUseImage);
 	void AddImageToList(const wxBitmap& bmp);
 
 	// Events
