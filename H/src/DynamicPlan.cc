@@ -264,25 +264,38 @@ TimedExercisePanel::TimedExercisePanel(wxWindow* parent, wxWindowID id, const wx
 	this->Init();
 
 	// Bind events
+	m_pAddButton->Bind(wxEVT_BUTTON, &TimedExercisePanel::OnAdd, this);
+	m_pSaveButton->Bind(wxEVT_BUTTON, &TimedExercisePanel::OnSave, this);
 }
 
 TimedExercisePanel::~TimedExercisePanel()
 {
 	// Unbind events
+	m_pAddButton->Unbind(wxEVT_BUTTON, &TimedExercisePanel::OnAdd, this);
+	m_pSaveButton->Unbind(wxEVT_BUTTON, &TimedExercisePanel::OnSave, this);
 }
 
 void TimedExercisePanel::Init()
 {
-	this->SetupControls();
 	this->SetupSizers();
 }
 
 void TimedExercisePanel::SetupControls()
 {
-
+	
 }
 
 void TimedExercisePanel::SetupSizers()
+{
+	
+}
+
+void TimedExercisePanel::OnAdd(wxCommandEvent& event)
+{
+
+}
+
+void TimedExercisePanel::OnSave(wxCommandEvent& event)
 {
 
 }
@@ -336,7 +349,7 @@ void AddExerciseDialog::SetupControls()
 {
 	m_pExerciseNameTxt = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, wxTextValidator(0, &m_exerciseName));
 
-	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Timed Exercise"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bTimedExercise));
+	m_pTimeChk = new wxCheckBox(this, wxID_ANY, _T("Aerobic or timed activity"), wxDefaultPosition, wxDefaultSize, 0L, wxGenericValidator(&m_bTimedExercise));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
@@ -380,7 +393,7 @@ void AddExerciseDialog::OnOK(wxCommandEvent& event)
 	if (Validate() && TransferDataFromWindow())
 	{
 #ifdef _DEBUG
-		wxLogMessage(_T("%d"), m_bTimedExercise);
+		//wxLogMessage(_T("%d"), m_bTimedExercise);
 #endif
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
@@ -454,6 +467,7 @@ void AddExerciseDialog::OnSearch(wxCommandEvent& event)
 
 void AddExerciseDialog::OnCheck(wxCommandEvent& event)
 {
+	event.Skip();
 }
 
 // DynamicPlan
@@ -522,11 +536,9 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 	m_pAddExerciseDialog = new AddExerciseDialog(this, wxID_ANY);
 	m_pAddExerciseDialog->Show(true);
 
-	if (m_pAddExerciseDialog->ShowModal() == wxID_OK && !m_pAddExerciseDialog->GetTimed())
+	if (m_pAddExerciseDialog->ShowModal() == wxID_OK)
 	{
-		// The cover should only be shown at the start of the program, when the user has not added any exercises to the notbook
-		// If the cover is shown, set m_bShowCover to false, hide the cover, and show the notebook. Finally, refresh the panel.
-		if (m_bShowCover) 
+		if (m_bShowCover)
 		{
 			m_bShowCover = false;
 			m_pHtmlPanelCover->Show(false);
@@ -534,14 +546,16 @@ void DynamicPlan::OnAddExercise(wxCommandEvent& event)
 			this->Layout();
 		}
 
-		// Add an image to the notebook's image list and create a new exercise page
-		
-		m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
-		m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName(), m_pAddExerciseDialog->UseImage());
-	}
-	else if (m_pAddExerciseDialog->GetTimed())
-	{
-
+		if (m_pAddExerciseDialog->GetTimed())
+		{
+			m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
+			m_pExerciseNotebook->AddExercisePage(new TimedExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName(), m_pAddExerciseDialog->UseImage());
+		}
+		else
+		{
+			m_pExerciseNotebook->AddImageToList(m_pAddExerciseDialog->GetImage());
+			m_pExerciseNotebook->AddExercisePage(new CustomExercisePanel(this, wxID_ANY), m_pAddExerciseDialog->GetExerciseName(), m_pAddExerciseDialog->UseImage());
+		}
 	}
 }
 
@@ -600,6 +614,14 @@ void ExerciseNotebook::AddExercisePage(CustomExercisePanel* pExercisePanel, cons
 		this->AddPage(pExercisePanel, title, true, m_currentImageIndex);
 	else // Otherwise leave it blank
 		this->AddPage(pExercisePanel, title, true, -1);
+}
+
+void ExerciseNotebook::AddExercisePage(TimedExercisePanel* pTimedPanel, const wxString& title, bool bUseImage)
+{
+	if (bUseImage)
+		this->AddPage(pTimedPanel, title, true, m_currentImageIndex);
+	else
+		this->AddPage(pTimedPanel, title, true, -1);
 }
 
 void ExerciseNotebook::AddImageToList(const wxBitmap& bmp)
