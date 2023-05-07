@@ -1,4 +1,5 @@
 #include "RoutineView.h"
+#include "StandardPath.hpp"
 
 BEGIN_EVENT_TABLE(RoutineView, wxDialog)
 
@@ -27,6 +28,7 @@ void RoutineView::SetupSizing()
 
 void RoutineView::CreateControls()
 {
+
 	this->SetSizerAndFit(m_pTopSizer);
 	m_pTopSizer->Add(m_pDayFlexSizer, wxSizerFlags().CentreHorizontal());
 
@@ -76,14 +78,16 @@ void RoutineView::SetupControls()
 	// Buttons
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
-
-	// Sizers
-	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_viewBmp = wxBitmap(path_data::dataDir + _T("\\Images\\view.png"), wxBITMAP_TYPE_PNG);
+	m_pViewButton = new wxBitmapButton(this, wxID_ANY, m_viewBmp, wxDefaultPosition, wxDefaultSize);
 
 	// Textctrl
 	m_pTextCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	m_pTextCtrl->Bind(wxEVT_TEXT_ENTER, &RoutineView::OnEnter, this);
+
+	// Sizers initialization
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pDayFlexSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 }
 
 void RoutineView::SetupSelections()
