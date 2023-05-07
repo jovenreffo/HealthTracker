@@ -19,8 +19,8 @@
 
 #define CEP_SIZE (wxSize(125, 250))
 
-#define AED_SIZE (wxSize(280, 220))
-#define AED_SIZE_MAX (wxSize(340, 250))
+#define AED_SIZE (wxSize(340, 250))
+#define AED_SIZE_MAX (wxSize(400, 280))
 
 enum class CEP
 {
@@ -77,14 +77,22 @@ private:
 	wxString m_exerciseName;
 
 	// Sizers
-	wxFlexGridSizer* m_pControlSizer;
-	wxStaticBoxSizer* m_pTopSizer;
-	wxStaticBox* m_pTopParent;
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pDurationSizer; // wxHORIZONTAL
+	wxBoxSizer* m_pMiscInfoSizerl; // wxVERTICAL
 
 	// Controls
 	wxBitmapButton* m_pAddButton;
 	wxBitmapButton* m_pSaveButton;
 	CounterList* m_pCounterList;
+
+	wxSpinCtrl* m_pHourCtrl;
+	wxSpinCtrl* m_pMinCtrl;
+	wxSpinCtrl* m_pSecCtrl;
+
+	// Text
+	wxStaticText* m_pDurationTxt;
+	wxStaticText* m_pMiscInfoTxt;
 
 	// Validation
 	int m_repCount;
