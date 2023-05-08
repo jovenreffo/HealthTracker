@@ -288,6 +288,10 @@ void TimedExercisePanel::SetupControls()
 	m_pHourCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
 	m_pMinCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
 	m_pSecCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+	// Assign validators
+	m_pHourCtrl->SetValidator(wxGenericValidator(&m_hours));
+	m_pMinCtrl->SetValidator(wxGenericValidator(&m_mins));
+	m_pSecCtrl->SetValidator(wxGenericValidator(&m_secs));
 
 	// Text
 	m_pDurationTxt = new wxStaticText(this, wxID_STATIC, _T("Duration"), wxDefaultPosition, wxDefaultSize);
