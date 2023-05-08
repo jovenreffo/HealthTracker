@@ -11,6 +11,7 @@
 
 #include "DynamicPlan.h"
 #include "StandardPath.hpp"
+#include "Font/Font.hpp"
 
 class CounterList : public wxListView
 {
@@ -277,12 +278,27 @@ TimedExercisePanel::~TimedExercisePanel()
 
 void TimedExercisePanel::Init()
 {
+	this->SetupControls();
 	this->SetupSizers();
 }
 
 void TimedExercisePanel::SetupControls()
 {
-	
+	// Spin controls
+	m_pHourCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pMinCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+	m_pSecCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+
+	// Text
+	m_pDurationTxt = new wxStaticText(this, wxID_STATIC, _T("Duration"), wxDefaultPosition, wxDefaultSize);
+	m_pMiscInfoTxt = new wxStaticText(this, wxID_STATIC, _T("Other"), wxDefaultPosition, wxDefaultSize);
+
+	m_pDurationTxt->SetFont(Fonts::GetBoldFont(m_pDurationTxt->GetFont().GetPointSize()));
+	m_pMiscInfoTxt->SetFont(Fonts::GetBoldFont(m_pMiscInfoTxt->GetFont().GetPointSize()));
+
+	// Buttons
+	m_pAddButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+	m_pSaveButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 }
 
 void TimedExercisePanel::SetupSizers()
