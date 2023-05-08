@@ -86,9 +86,9 @@ private:
 	wxBitmapButton* m_pSaveButton;
 	CounterList* m_pCounterList;
 
-	wxSpinCtrl* m_pHourCtrl;
-	wxSpinCtrl* m_pMinCtrl;
-	wxSpinCtrl* m_pSecCtrl;
+	wxSpinCtrl* m_pHourCtrl; int m_hours;
+	wxSpinCtrl* m_pMinCtrl; int m_mins;
+	wxSpinCtrl* m_pSecCtrl; int m_secs;
 
 	// Text
 	wxStaticText* m_pDurationTxt;
