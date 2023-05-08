@@ -86,16 +86,18 @@ private:
 	wxBitmapButton* m_pSaveButton;
 	CounterList* m_pCounterList;
 
-	wxSpinCtrl* m_pHourCtrl; int m_hours;
-	wxSpinCtrl* m_pMinCtrl; int m_mins;
-	wxSpinCtrl* m_pSecCtrl; int m_secs;
+	wxSpinCtrl* m_pHourCtrl; 
+	wxSpinCtrl* m_pMinCtrl; 
+	wxSpinCtrl* m_pSecCtrl; 
 
 	// Text
 	wxStaticText* m_pDurationTxt;
 	wxStaticText* m_pMiscInfoTxt;
 
 	// Validation
-	int m_repCount;
+	int m_hours;
+	int m_mins;
+	int m_secs;
 
 public:
 	TimedExercisePanel(wxWindow* parent,
@@ -104,6 +106,11 @@ public:
 		const wxSize& size = CEP_SIZE,
 		long style = 0L);
 	~TimedExercisePanel();
+
+	// Getters
+	const int GetHours() const { return m_hours; }
+	const int GetMins() const { return m_mins; }
+	const int GetSecs() const { return m_secs; }
 
 	// Setup
 	void Init();
