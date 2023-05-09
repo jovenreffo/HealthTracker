@@ -307,7 +307,30 @@ void TimedExercisePanel::SetupControls()
 
 void TimedExercisePanel::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pDurationSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pMiscInfoSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
 	
+	// Duration
+	m_pTopSizer->Add(m_pDurationTxt, wxSizerFlags().Left().Border(wxALL, 5));
+
+	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Hours:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(m_pHourCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Minutes:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(m_pMinCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Seconds:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(m_pSecCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pDurationSizer);
+
+	// Misc info
+	m_pTopSizer->Add(m_pMiscInfoTxt, wxSizerFlags().Left().Border(wxALL, 5));
+
+	// Buttons
+	m_pButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pSaveButton, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer);
 }
 
 void TimedExercisePanel::OnAdd(wxCommandEvent& event)
