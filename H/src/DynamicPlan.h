@@ -79,6 +79,7 @@ private:
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pDurationSizer;
+	wxBoxSizer* m_pButtonSizer;
 	wxFlexGridSizer* m_pMiscInfoSizer;
 
 	// Controls
