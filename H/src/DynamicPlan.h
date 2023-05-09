@@ -78,8 +78,8 @@ private:
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pDurationSizer; // wxHORIZONTAL
-	wxBoxSizer* m_pMiscInfoSizerl; // wxVERTICAL
+	wxBoxSizer* m_pDurationSizer;
+	wxFlexGridSizer* m_pMiscInfoSizer;
 
 	// Controls
 	wxBitmapButton* m_pAddButton;
