@@ -90,6 +90,8 @@ private:
 	wxSpinCtrl* m_pHourCtrl; 
 	wxSpinCtrl* m_pMinCtrl; 
 	wxSpinCtrl* m_pSecCtrl; 
+	wxSpinCtrl* m_pCalsBurnedCtrl;
+	wxSpinCtrlDouble* m_pDistanceCtrl; // in KMs
 
 	// Text
 	wxStaticText* m_pDurationTxt;
@@ -99,6 +101,8 @@ private:
 	int m_hours;
 	int m_mins;
 	int m_secs;
+	int m_cals;
+	double m_distance;
 
 public:
 	TimedExercisePanel(wxWindow* parent,
