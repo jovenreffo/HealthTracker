@@ -16,6 +16,7 @@
 
 #include "aui_includes/aui_includes.h"
 #include "SpreadsheetWindow.h"
+#include "TimedExerciseList.h"
 
 #define CEP_SIZE (wxSize(125, 250))
 
@@ -98,11 +99,7 @@ private:
 	wxStaticText* m_pMiscInfoTxt;
 
 	// Validation
-	int m_hours;
-	int m_mins;
-	int m_secs;
-	int m_cals;
-	double m_distance;
+	TEL m_tel;
 
 public:
 	TimedExercisePanel(wxWindow* parent,
@@ -113,9 +110,9 @@ public:
 	~TimedExercisePanel();
 
 	// Getters
-	const int GetHours() const { return m_hours; }
-	const int GetMins() const { return m_mins; }
-	const int GetSecs() const { return m_secs; }
+	const int GetHours() const { return m_tel.m_hours; }
+	const int GetMins() const { return m_tel.m_mins; }
+	const int GetSecs() const { return m_tel.m_secs; }
 
 	// Setup
 	void Init();
@@ -125,6 +122,7 @@ public:
 	// Events
 	void OnAdd(wxCommandEvent& event);
 	void OnSave(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 class AddExerciseDialog: public wxDialog
