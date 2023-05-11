@@ -288,10 +288,14 @@ void TimedExercisePanel::SetupControls()
 	m_pHourCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
 	m_pMinCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
 	m_pSecCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+	m_pCalsBurnedCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pDistanceCtrl = new wxSpinCtrlDouble(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0.0, 100.0, 0.0);
 	// Assign validators
-	m_pHourCtrl->SetValidator(wxGenericValidator(&m_hours));
-	m_pMinCtrl->SetValidator(wxGenericValidator(&m_mins));
-	m_pSecCtrl->SetValidator(wxGenericValidator(&m_secs));
+	m_pHourCtrl->SetValidator(wxGenericValidator(&m_tel.m_hours));
+	m_pMinCtrl->SetValidator(wxGenericValidator(&m_tel.m_mins));
+	m_pSecCtrl->SetValidator(wxGenericValidator(&m_tel.m_secs));
+	m_pCalsBurnedCtrl->SetValidator(wxGenericValidator(&m_tel.m_cals));
+	m_pDistanceCtrl->SetValidator(wxGenericValidator(&m_tel.m_distance));
 
 	// Text
 	m_pDurationTxt = new wxStaticText(this, wxID_STATIC, _T("Duration"), wxDefaultPosition, wxDefaultSize);
@@ -326,6 +330,11 @@ void TimedExercisePanel::SetupSizers()
 
 	// Misc info
 	m_pTopSizer->Add(m_pMiscInfoTxt, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(m_pCalsBurnedCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Distance (km):")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(m_pDistanceCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pMiscInfoSizer);
 
 	// Buttons
 	m_pButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
@@ -335,10 +344,19 @@ void TimedExercisePanel::SetupSizers()
 
 void TimedExercisePanel::OnAdd(wxCommandEvent& event)
 {
+	this->TransferDataFromWindow();
 
+#ifdef _DEBUG
+	wxLogMessage(_T("%d\n%d\n%d"), m_tel.m_hours, m_tel.m_mins, m_tel.m_secs);
+#endif
 }
 
 void TimedExercisePanel::OnSave(wxCommandEvent& event)
+{
+
+}
+
+void TimedExercisePanel::OnEnter(wxCommandEvent& event)
 {
 
 }
