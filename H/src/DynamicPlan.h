@@ -77,6 +77,8 @@ class TimedExercisePanel: public wxPanel
 private:
 	wxString m_exerciseName;
 
+	wxSplitterWindow* m_pSplitterWin;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pDurationSizer;
@@ -93,6 +95,8 @@ private:
 	wxSpinCtrl* m_pSecCtrl; 
 	wxSpinCtrl* m_pCalsBurnedCtrl;
 	wxSpinCtrlDouble* m_pDistanceCtrl; // in KMs
+
+	TimedExerciseList* m_pTEL;
 
 	// Text
 	wxStaticText* m_pDurationTxt;
