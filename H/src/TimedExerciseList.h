@@ -20,6 +20,7 @@ private:
 
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
+	wxBitmap m_calorieBmp;
 
 public:
 	TimedExerciseList(wxWindow* parent,
