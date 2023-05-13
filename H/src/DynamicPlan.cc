@@ -278,18 +278,31 @@ TimedExercisePanel::~TimedExercisePanel()
 
 void TimedExercisePanel::Init()
 {
+	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
+	m_pMainControlPanel = new wxPanel(m_pSplitterWin, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pTELPanel = new wxPanel(m_pSplitterWin, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	m_pSplitterWin->SetSashGravity(0.5);
+	m_pSplitterWin->SetMinimumPaneSize(150);
+
 	this->SetupControls();
 	this->SetupSizers();
+
+	wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
+	this->SetSizerAndFit(pTopSizer);
+
+	m_pSplitterWin->SplitVertically(m_pMainControlPanel, m_pTELPanel);
+	pTopSizer->Add(m_pSplitterWin, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 }
 
 void TimedExercisePanel::SetupControls()
 {
 	// Spin controls
-	m_pHourCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
-	m_pMinCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
-	m_pSecCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
-	m_pCalsBurnedCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
-	m_pDistanceCtrl = new wxSpinCtrlDouble(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0.0, 100.0, 0.0);
+	m_pHourCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pMinCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+	m_pSecCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
+	m_pCalsBurnedCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pDistanceCtrl = new wxSpinCtrlDouble(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0.0, 100.0, 0.0);
 	// Assign validators
 	m_pHourCtrl->SetValidator(wxGenericValidator(&m_tel.m_hours));
 	m_pMinCtrl->SetValidator(wxGenericValidator(&m_tel.m_mins));
@@ -298,15 +311,15 @@ void TimedExercisePanel::SetupControls()
 	m_pDistanceCtrl->SetValidator(wxGenericValidator(&m_tel.m_distance));
 
 	// Text
-	m_pDurationTxt = new wxStaticText(this, wxID_STATIC, _T("Duration"), wxDefaultPosition, wxDefaultSize);
-	m_pMiscInfoTxt = new wxStaticText(this, wxID_STATIC, _T("Other"), wxDefaultPosition, wxDefaultSize);
+	m_pDurationTxt = new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Duration"), wxDefaultPosition, wxDefaultSize);
+	m_pMiscInfoTxt = new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Other"), wxDefaultPosition, wxDefaultSize);
 
 	m_pDurationTxt->SetFont(Fonts::GetBoldFont(m_pDurationTxt->GetFont().GetPointSize()));
 	m_pMiscInfoTxt->SetFont(Fonts::GetBoldFont(m_pMiscInfoTxt->GetFont().GetPointSize()));
 
 	// Buttons
-	m_pAddButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
-	m_pSaveButton = new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+	m_pAddButton = new wxBitmapButton(m_pMainControlPanel, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+	m_pSaveButton = new wxBitmapButton(m_pMainControlPanel, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 }
 
 void TimedExercisePanel::SetupSizers()
@@ -315,24 +328,24 @@ void TimedExercisePanel::SetupSizers()
 	m_pDurationSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pMiscInfoSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-	this->SetSizerAndFit(m_pTopSizer);
+	m_pMainControlPanel->SetSizerAndFit(m_pTopSizer);
 	
 	// Duration
 	m_pTopSizer->Add(m_pDurationTxt, wxSizerFlags().Left().Border(wxALL, 5));
 
-	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Hours:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Hours:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pDurationSizer->Add(m_pHourCtrl, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Minutes:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Minutes:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pDurationSizer->Add(m_pMinCtrl, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pDurationSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Seconds:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pDurationSizer->Add(new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Seconds:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pDurationSizer->Add(m_pSecCtrl, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pDurationSizer);
 
 	// Misc info
 	m_pTopSizer->Add(m_pMiscInfoTxt, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pMiscInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calories:")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Calories:")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pMiscInfoSizer->Add(m_pCalsBurnedCtrl, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pMiscInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Distance (km):")), wxSizerFlags().Left().Border(wxALL, 5));
+	m_pMiscInfoSizer->Add(new wxStaticText(m_pMainControlPanel, wxID_STATIC, _T("Distance (km):")), wxSizerFlags().Left().Border(wxALL, 5));
 	m_pMiscInfoSizer->Add(m_pDistanceCtrl, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pMiscInfoSizer);
 
