@@ -16,7 +16,7 @@ void TimedExerciseList::Init()
 
 void TimedExerciseList::SetupMenu()
 {
-
+	m_pMenu = new wxMenu();
 }
 
 void TimedExerciseList::SetupColumns()
