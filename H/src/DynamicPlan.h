@@ -78,6 +78,8 @@ private:
 	wxString m_exerciseName;
 
 	wxSplitterWindow* m_pSplitterWin;
+	wxPanel* m_pMainControlPanel;
+	wxPanel* m_pTELPanel;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
