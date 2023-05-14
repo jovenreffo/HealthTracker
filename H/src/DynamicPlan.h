@@ -82,6 +82,7 @@ private:
 	wxPanel* m_pTELPanel;
 
 	// Sizers
+	wxBoxSizer* m_pTELSizer;
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pDurationSizer;
 	wxBoxSizer* m_pButtonSizer;
