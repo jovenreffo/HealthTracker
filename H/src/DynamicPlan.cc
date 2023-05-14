@@ -293,6 +293,9 @@ void TimedExercisePanel::Init()
 
 	m_pSplitterWin->SplitVertically(m_pMainControlPanel, m_pTELPanel);
 	pTopSizer->Add(m_pSplitterWin, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
+
+	m_pSplitterWin->SetSashGravity(0.5);
+	m_pSplitterWin->SetMinimumPaneSize(315);
 }
 
 void TimedExercisePanel::SetupControls()
@@ -320,6 +323,9 @@ void TimedExercisePanel::SetupControls()
 	// Buttons
 	m_pAddButton = new wxBitmapButton(m_pMainControlPanel, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
 	m_pSaveButton = new wxBitmapButton(m_pMainControlPanel, wxID_ANY, wxBitmap(path_data::dataDir + _T("\\Images\\save.png"), wxBITMAP_TYPE_PNG), wxDefaultPosition, wxDefaultSize);
+
+	// TimedExerciseList
+	m_pTEL = new TimedExerciseList(m_pTELPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 }
 
 void TimedExercisePanel::SetupSizers()
@@ -353,6 +359,11 @@ void TimedExercisePanel::SetupSizers()
 	m_pButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pSaveButton, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer);
+
+	// For TEL panel
+	m_pTELSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTELPanel->SetSizerAndFit(m_pTELSizer);
+	m_pTELSizer->Add(m_pTEL, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
 }
 
 void TimedExercisePanel::OnAdd(wxCommandEvent& event)
