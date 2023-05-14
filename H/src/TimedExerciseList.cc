@@ -22,7 +22,7 @@ void TimedExerciseList::SetupMenu()
 void TimedExerciseList::SetupColumns()
 {
 	this->AppendColumn(_T("Duration"));
-	this->AppendColumn(_T("Distance (km)"));
+	this->AppendColumn(_T("Distance (km)"), wxLIST_FORMAT_LEFT, 100);
 	this->AppendColumn(_T("Calories"));
 }
 
@@ -30,7 +30,7 @@ void TimedExerciseList::SetupImageList()
 {
 	m_pImageList = new wxImageList(16, 16);
 
-	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\images\\calorie_small.bmp"));
+	m_calorieBmp = wxBitmap(path_data::dataDir + _T("\\images\\calorie_small.png"), wxBITMAP_TYPE_PNG);
 	m_pImageList->Add(m_calorieBmp);
 
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
