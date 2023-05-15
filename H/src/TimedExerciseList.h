@@ -29,6 +29,9 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 
+	void AddItem(const TEL& tel);
+
+	// Setup
 	void Init();
 	void SetupMenu();
 	void SetupColumns();
