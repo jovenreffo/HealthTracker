@@ -22,6 +22,8 @@ private:
 	wxImageList* m_pImageList;
 	wxBitmap m_calorieBmp;
 
+	int m_currentItemIndex;
+
 public:
 	TimedExerciseList(wxWindow* parent,
 		wxWindowID id,
@@ -39,6 +41,7 @@ public:
 	void SetupImageList();
 
 	// Events
+	void OnSelectItem(wxListEvent& event);
 	void OnRightClickItem(wxListEvent& event);
 	void OnDeleteItem(wxCommandEvent& event);
 };
