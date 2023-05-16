@@ -10,7 +10,7 @@ struct TEL
 	int m_mins;
 	int m_secs;
 	int m_cals;
-	double m_distance;
+	int m_distance;
 };
 
 class TimedExerciseList : public wxListView
@@ -28,6 +28,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
+	~TimedExerciseList();
 
 	void AddItem(const TEL& tel);
 
@@ -36,6 +37,10 @@ public:
 	void SetupMenu();
 	void SetupColumns();
 	void SetupImageList();
+
+	// Events
+	void OnRightClickItem(wxListEvent& event);
+	void OnDeleteItem(wxCommandEvent& event);
 };
 
 #endif // !TIMEDEXERCISELIST_H
