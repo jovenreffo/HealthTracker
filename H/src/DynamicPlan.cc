@@ -305,7 +305,7 @@ void TimedExercisePanel::SetupControls()
 	m_pMinCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
 	m_pSecCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 60, 0);
 	m_pCalsBurnedCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
-	m_pDistanceCtrl = new wxSpinCtrlDouble(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0.0, 100.0, 0.0);
+	m_pDistanceCtrl = new wxSpinCtrl(m_pMainControlPanel, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
 	// Assign validators
 	m_pHourCtrl->SetValidator(wxGenericValidator(&m_tel.m_hours));
 	m_pMinCtrl->SetValidator(wxGenericValidator(&m_tel.m_mins));
@@ -355,6 +355,8 @@ void TimedExercisePanel::SetupSizers()
 	m_pMiscInfoSizer->Add(m_pDistanceCtrl, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pMiscInfoSizer);
 
+	m_pTopSizer->Add(new wxStaticLine(m_pMainControlPanel, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+
 	// Buttons
 	m_pButtonSizer->Add(m_pAddButton, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pSaveButton, wxSizerFlags().Left().Border(wxALL, 5));
@@ -369,10 +371,8 @@ void TimedExercisePanel::SetupSizers()
 void TimedExercisePanel::OnAdd(wxCommandEvent& event)
 {
 	this->TransferDataFromWindow();
+	m_pTEL->AddItem(m_tel);
 
-#ifdef _DEBUG
-	wxLogMessage(_T("%d\n%d\n%d"), m_tel.m_hours, m_tel.m_mins, m_tel.m_secs);
-#endif
 }
 
 void TimedExercisePanel::OnSave(wxCommandEvent& event)
