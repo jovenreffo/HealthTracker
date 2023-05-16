@@ -97,7 +97,7 @@ private:
 	wxSpinCtrl* m_pMinCtrl; 
 	wxSpinCtrl* m_pSecCtrl; 
 	wxSpinCtrl* m_pCalsBurnedCtrl;
-	wxSpinCtrlDouble* m_pDistanceCtrl; // in KMs
+	wxSpinCtrl* m_pDistanceCtrl; // in KMs
 
 	TimedExerciseList* m_pTEL;
 
