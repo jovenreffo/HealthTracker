@@ -55,6 +55,11 @@ void TimedExerciseList::SetupImageList()
 
 	this->AssignImageList(m_pImageList, wxIMAGE_LIST_SMALL);
 }
+
+void TimedExerciseList::OnSelectItem(wxListEvent& event)
+{
+	m_currentItemIndex = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+}
 	
 void TimedExerciseList::OnRightClickItem(wxListEvent& event) 
 {
@@ -63,10 +68,8 @@ void TimedExerciseList::OnRightClickItem(wxListEvent& event)
 
 void TimedExerciseList::OnDeleteItem(wxCommandEvent& event)
 {
-	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-
-	if (selected > 0 && wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
-		this->DeleteItem(selected);
+		this->DeleteItem(m_currentItemIndex);
 	}
 }
