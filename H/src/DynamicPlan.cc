@@ -267,6 +267,12 @@ TimedExercisePanel::TimedExercisePanel(wxWindow* parent, wxWindowID id, const wx
 	// Bind events
 	m_pAddButton->Bind(wxEVT_BUTTON, &TimedExercisePanel::OnAdd, this);
 	m_pSaveButton->Bind(wxEVT_BUTTON, &TimedExercisePanel::OnSave, this);
+
+	m_pHourCtrl->Bind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pMinCtrl->Bind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pSecCtrl->Bind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pCalsBurnedCtrl->Bind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pDistanceCtrl->Bind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
 }
 
 TimedExercisePanel::~TimedExercisePanel()
@@ -274,6 +280,12 @@ TimedExercisePanel::~TimedExercisePanel()
 	// Unbind events
 	m_pAddButton->Unbind(wxEVT_BUTTON, &TimedExercisePanel::OnAdd, this);
 	m_pSaveButton->Unbind(wxEVT_BUTTON, &TimedExercisePanel::OnSave, this);
+
+	m_pHourCtrl->Unbind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pMinCtrl->Unbind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pSecCtrl->Unbind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pCalsBurnedCtrl->Unbind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
+	m_pDistanceCtrl->Unbind(wxEVT_TEXT_ENTER, &TimedExercisePanel::OnEnter, this);
 }
 
 void TimedExercisePanel::Init()
@@ -382,7 +394,8 @@ void TimedExercisePanel::OnSave(wxCommandEvent& event)
 
 void TimedExercisePanel::OnEnter(wxCommandEvent& event)
 {
-
+	this->TransferDataFromWindow();
+	m_pTEL->AddItem(m_tel);
 }
 
 // AddExerciseDialog
