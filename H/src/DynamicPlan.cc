@@ -389,7 +389,33 @@ void TimedExercisePanel::OnAdd(wxCommandEvent& event)
 
 void TimedExercisePanel::OnSave(wxCommandEvent& event)
 {
+	wxFileDialog* pSaveDialog = new wxFileDialog(this, _T("Save Exercise Information"), wxEmptyString, wxEmptyString, _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
+	wxString fileName, filePath;
+	wxFile textFile;
+
+	if (pSaveDialog->ShowModal() == wxID_OK)
+	{
+		fileName = pSaveDialog->GetFilename();
+		filePath = pSaveDialog->GetPath();
+
+		textFile.Create(filePath);
+	}
+	else return;
+
+	if (!textFile.Open(filePath, wxFile::write))
+	{
+		wxLogError(_T("Failed to create text file: %s"), fileName);
+		return;
+	}
+
+	if (textFile.Open(filePath, wxFile::write))
+	{
+
+	}
+
+	textFile.Close();
+	pSaveDialog->Destroy();
 }
 
 void TimedExercisePanel::OnEnter(wxCommandEvent& event)
