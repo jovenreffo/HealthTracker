@@ -389,6 +389,9 @@ void TimedExercisePanel::OnAdd(wxCommandEvent& event)
 
 void TimedExercisePanel::OnSave(wxCommandEvent& event)
 {
+	// Validate contents of TEL
+	this->TransferDataFromWindow();
+
 	wxFileDialog* pSaveDialog = new wxFileDialog(this, _T("Save Exercise Information"), wxEmptyString, wxEmptyString, _T("Text files (*.txt)|*.txt"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
 	wxString fileName, filePath;
@@ -411,7 +414,10 @@ void TimedExercisePanel::OnSave(wxCommandEvent& event)
 
 	if (textFile.Open(filePath, wxFile::write))
 	{
-
+		// Write the contents to the text file
+		textFile.Write(wxString(_T("Duration: ")) << m_tel.m_hours << ':' << m_tel.m_mins << ':' << m_tel.m_secs << '\n');
+		textFile.Write(wxString(_T("Calories burned: ")) << m_tel.m_cals << '\n');
+		textFile.Write(wxString(_T("Distance: ")) << m_tel.m_distance << "km\n");
 	}
 
 	textFile.Close();
