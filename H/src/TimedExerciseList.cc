@@ -23,6 +23,8 @@ void TimedExerciseList::AddItem(const TEL& tel)
 	this->InsertItem(0, wxString(std::to_string(tel.m_hours)) << ':' << tel.m_mins << ':' << tel.m_secs);
 	this->SetItem(0, 1, std::to_string(tel.m_distance));
 	this->SetItem(0, 2, std::to_string(tel.m_cals));
+
+	m_TELVec.push_back(tel);
 }
 
 void TimedExerciseList::Init()

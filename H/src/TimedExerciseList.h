@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <wx/listctrl.h>
+#include <vector>
 
 struct TEL
 {
@@ -17,6 +18,7 @@ class TimedExerciseList : public wxListView
 {
 private:
 	TEL m_exerciseInfo;
+	std::vector<TEL> m_TELVec;
 
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
@@ -40,6 +42,12 @@ public:
 	const int GetSeconds() const { return m_exerciseInfo.m_secs; }
 	const int GetCalories() const { return m_exerciseInfo.m_cals; }
 	const int GetDistance() const { return m_exerciseInfo.m_distance; }
+
+	const int GetHours(int i) const { return m_TELVec[i].m_hours; }
+	const int GetMinutes(int i) const { return m_TELVec[i].m_mins; }
+	const int GetSeconds(int i) const { return m_TELVec[i].m_secs; }
+	const int GetCalories(int i) const { return m_TELVec[i].m_cals; }
+	const int GetDistance(int i) const { return m_TELVec[i].m_distance; }
 
 	// Setup
 	void Init();
