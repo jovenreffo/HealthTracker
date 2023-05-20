@@ -43,6 +43,12 @@ public:
 	const int GetCalories() const { return m_exerciseInfo.m_cals; }
 	const int GetDistance() const { return m_exerciseInfo.m_distance; }
 
+	const int GetHours(int i) const { return m_TELVec[i].m_hours; }
+	const int GetMinutes(int i) const { return m_TELVec[i].m_mins; }
+	const int GetSeconds(int i) const { return m_TELVec[i].m_secs; }
+	const int GetCalories(int i) const { return m_TELVec[i].m_cals; }
+	const int GetDistance(int i) const { return m_TELVec[i].m_distance; }
+
 	// Setup
 	void Init();
 	void SetupMenu();
