@@ -414,10 +414,13 @@ void TimedExercisePanel::OnSave(wxCommandEvent& event)
 
 	if (textFile.Open(filePath, wxFile::write))
 	{
-		// Write the contents to the text file
-		textFile.Write(wxString(_T("Duration: ")) << m_tel.m_hours << ':' << m_tel.m_mins << ':' << m_tel.m_secs << '\n');
-		textFile.Write(wxString(_T("Calories burned: ")) << m_tel.m_cals << '\n');
-		textFile.Write(wxString(_T("Distance: ")) << m_tel.m_distance << "km\n");
+		for (auto i{ 0 }; i < m_pTEL->GetItemCount(); ++i)
+		{
+			// Write the contents to the text file
+			textFile.Write(wxString(_T("Duration: ")) << m_pTEL->GetHours(i) << ':' << m_pTEL->GetMinutes(i) << ':' << m_pTEL->GetSeconds(i) << '\n');
+			textFile.Write(wxString(_T("Calories burned: ")) << m_pTEL->GetCalories(i) << '\n');
+			textFile.Write(wxString(_T("Distance: ")) << m_pTEL->GetDistance(i) << "km\n\n");
+		}
 	}
 
 	textFile.Close();
