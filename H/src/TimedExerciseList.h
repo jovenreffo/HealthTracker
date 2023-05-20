@@ -3,6 +3,7 @@
 
 #include <wx/wx.h>
 #include <wx/listctrl.h>
+#include <vector>
 
 struct TEL
 {
@@ -17,6 +18,7 @@ class TimedExerciseList : public wxListView
 {
 private:
 	TEL m_exerciseInfo;
+	std::vector<TEL> m_TELVec;
 
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
