@@ -34,6 +34,13 @@ public:
 
 	void AddItem(const TEL& tel);
 
+	// Getters
+	const int GetHours() const { return m_exerciseInfo.m_hours; }
+	const int GetMinutes() const { return m_exerciseInfo.m_mins; }
+	const int GetSeconds() const { return m_exerciseInfo.m_secs; }
+	const int GetCalories() const { return m_exerciseInfo.m_cals; }
+	const int GetDistance() const { return m_exerciseInfo.m_distance; }
+
 	// Setup
 	void Init();
 	void SetupMenu();
