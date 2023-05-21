@@ -63,6 +63,7 @@ private:
 	std::vector<CatalogItem> m_catalogItems;
 
 	// List vars
+	long m_insertionIndex{ 0 };
 	long m_selectionIndex;
 	wxString m_currentItemName;
 
