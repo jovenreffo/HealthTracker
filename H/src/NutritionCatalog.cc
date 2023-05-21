@@ -202,8 +202,14 @@ void FoodList::SetupImageList()
 void FoodList::SetupDefaultNutritionItems()
 {
 	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
-	CatalogItem ci("Eggs", egg, 60, 6, 0, 0);
-	this->AddNutritionItem(ci);
+
+	// Define catalog items
+	CatalogItem eggs("Eggs", egg, 60, 6, 0, 0);
+	CatalogItem red_apple(_T("Red Apple (medium)"), wxNullBitmap, 95, 1, 25, 4);
+
+	// Add items to the nutrition list
+	this->AddNutritionItem(eggs);
+	this->AddNutritionItem(red_apple);
 }
 
 void FoodList::AddNutritionItem(const CatalogItem& info)
@@ -212,10 +218,15 @@ void FoodList::AddNutritionItem(const CatalogItem& info)
 
 	wxString name = info.GetName();
 	wxBitmap bmp = info.GetBmp();
+	
+	this->InsertItem(m_insertionIndex, name);
+	if (info.GetBmp().IsOk())
+	{
+		m_pImageList->Add(bmp);
+		this->SetItemImage(0, 0);
+	}
 
-	m_pImageList->Add(bmp);
-	this->InsertItem(0, name);
-	this->SetItemImage(0, 0);
+	++m_insertionIndex;
 }
 
 void FoodList::OpenItem()
