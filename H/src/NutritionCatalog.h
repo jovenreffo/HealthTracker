@@ -64,6 +64,7 @@ private:
 
 	// List vars
 	long m_insertionIndex{ 0 };
+	long m_bmpIndex{ 0 };
 	long m_selectionIndex;
 	wxString m_currentItemName;
 
