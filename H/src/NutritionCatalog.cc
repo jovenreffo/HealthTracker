@@ -48,7 +48,7 @@ public:
 		: wxDialog(parent, id, title, pos, size, style), m_catalogItem{ catalogItem }, m_pCalorieList{ pCalorieList }
 	{
 		// Set the title to include the item which is being viewed
-		this->SetTitle(wxString(_T("View Nutritional Item - ")) << m_catalogItem.GetName());
+		this->SetTitle(wxString(_T("Nutritional Item - ")) << m_catalogItem.GetName());
 
 		this->Init();
 
@@ -201,15 +201,18 @@ void FoodList::SetupImageList()
 
 void FoodList::SetupDefaultNutritionItems()
 {
-	wxBitmap egg = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
+	wxBitmap eggBmp = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\eggs.png"), wxBITMAP_TYPE_PNG);
+	wxBitmap appleBmp = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition\\apple.png"), wxBITMAP_TYPE_PNG);
 
 	// Define catalog items
-	CatalogItem eggs("Eggs", egg, 60, 6, 0, 0);
-	CatalogItem red_apple(_T("Red Apple (medium)"), wxNullBitmap, 95, 1, 25, 4);
+	CatalogItem eggs(_T("Eggs"), eggBmp, 60, 6, 0, 0);
+	CatalogItem red_apple(_T("Red Apple (medium)"), appleBmp, 95, 1, 25, 4);
+	CatalogItem bacon(_T("Bacon (100g)"), wxNullBitmap, 541, 37, 1, 0);
 
 	// Add items to the nutrition list
 	this->AddNutritionItem(eggs);
 	this->AddNutritionItem(red_apple);
+	this->AddNutritionItem(bacon);
 }
 
 void FoodList::AddNutritionItem(const CatalogItem& info)
@@ -219,14 +222,18 @@ void FoodList::AddNutritionItem(const CatalogItem& info)
 	wxString name = info.GetName();
 	wxBitmap bmp = info.GetBmp();
 	
-	this->InsertItem(m_insertionIndex, name);
 	if (info.GetBmp().IsOk())
 	{
 		m_pImageList->Add(bmp);
-		this->SetItemImage(0, 0);
+		this->InsertItem(m_insertionIndex, name, m_bmpIndex);
+	}
+	else
+	{
+		this->InsertItem(m_insertionIndex, name, -1);
 	}
 
 	++m_insertionIndex;
+	++m_bmpIndex;
 }
 
 void FoodList::OpenItem()
