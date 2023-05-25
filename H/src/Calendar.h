@@ -7,10 +7,17 @@
 
 class Calendar; // forward dec
 
+enum class CID // Calendar ID
+{
+	ID_CAL_DCLICK
+};
+
 class CalendarPanel : public wxPanel
 {
 private:
 	Calendar* m_pCalendar;
+
+	wxBoxSizer* m_pTopSizer;
 
 public:
 	CalendarPanel(wxWindow* parent,
@@ -18,6 +25,12 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
+	~CalendarPanel();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 };
 
 class Calendar : public wxGenericCalendarCtrl
@@ -29,6 +42,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAL_SHOW_HOLIDAYS);
+	~Calendar();
+
+	// Calendar events
+	void OnSelectDay(wxCalendarEvent& event);
+	void OnDoubleClickDay(wxCalendarEvent& event);
 };
 
 #endif
