@@ -21,6 +21,7 @@
 #include <vector>
 
 #include "EditTaskDlg.h"
+#include "Calendar.h"
 
 #define ADDTASKDLG_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX )
 #define ADDTASKDLG_SIZE ( wxSize(315, 235) )
@@ -57,18 +58,6 @@ public:
 	void Init();
 	void SetupImageList();
 	void SetupPages();
-};
-
-class CalendarPanel: public wxPanel
-{
-private:
-
-public:
-	CalendarPanel(wxWindow* parent,
-		wxWindowID id,
-		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
-		long style = 0L);
 };
 
 class AddTaskDlg : public wxDialog
