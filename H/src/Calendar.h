@@ -12,6 +12,17 @@ enum class CID // Calendar ID
 	ID_CAL_DCLICK
 };
 
+class CalendarPlanDlg : public wxDialog
+{
+public:
+	CalendarPlanDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Select date:"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+};
+
 class CalendarPanel : public wxPanel
 {
 private:
