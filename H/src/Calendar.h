@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #include <wx/calctrl.h>
 #include <wx/generic/calctrlg.h>
+#include <wx/textctrl.h>
 
 class Calendar; // forward dec
 
@@ -14,6 +15,9 @@ enum class CID // Calendar ID
 
 class CalendarPlanDlg : public wxDialog
 {
+private:
+
+
 public:
 	CalendarPlanDlg(wxWindow* parent,
 		wxWindowID id,
@@ -21,6 +25,12 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~CalendarPlanDlg();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
 };
 
 class CalendarPanel : public wxPanel
