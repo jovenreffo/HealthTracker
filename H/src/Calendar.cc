@@ -1,5 +1,28 @@
 #include "Calendar.h"
 
+CalendarPlanDlg::CalendarPlanDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+}
+
+CalendarPlanDlg::~CalendarPlanDlg()
+{
+}
+
+void CalendarPlanDlg::Init()
+{
+}
+
+void CalendarPlanDlg::SetupControls()
+{
+}
+
+void CalendarPlanDlg::SetupSizers()
+{
+}
+
+// ===== CalendarPanel =====
+
 CalendarPanel::CalendarPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
