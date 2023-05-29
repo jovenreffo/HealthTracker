@@ -1,3 +1,4 @@
+#include <wx/config.h>
 #include "Calendar.h"
 
 CalendarPlanDlg::CalendarPlanDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -21,16 +22,43 @@ void CalendarPlanDlg::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupConfig();
 }
 
 void CalendarPlanDlg::SetupControls()
 {
+	m_pTxtCtrl = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_RICH2);
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void CalendarPlanDlg::SetupSizers()
 {
+}
+
+void CalendarPlanDlg::SetupConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/Preferences/"));
+
+	if (pConfig->Read("Spellcheck", 0L) == 1L)
+		m_pTxtCtrl->EnableProofCheck(wxTextProofOptions::Default());
+
+	if (pConfig->Read("CheckFont", 0L) == 1L)
+	{
+		m_pTxtCtrl->SetFont(wxFont(
+			pConfig->Read("FontSize", 10L),
+			static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+			static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+			wxFONTWEIGHT_NORMAL,
+			pConfig->Read("FontUnderline", 0L),
+			pConfig->Read("FaceName", "")
+		));
+	}
 }
 
 void CalendarPlanDlg::OnOK(wxCommandEvent& event)
@@ -105,7 +133,7 @@ void Calendar::OnSelectDay(wxCalendarEvent& event)
 
 void Calendar::OnDoubleClickDay(wxCalendarEvent& event)
 {
-	m_pCalPlanDlg = new CalendarPlanDlg(this, wxID_ANY);
+	m_pCalPlanDlg = new CalendarPlanDlg(this, wxID_ANY, wxString(_T("Select date: ")) << m_currDate.FormatDate());
 	m_pCalPlanDlg->Show(true);
 
 	if (m_pCalPlanDlg->ShowModal() == wxID_OK)
