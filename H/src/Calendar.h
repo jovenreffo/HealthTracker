@@ -56,6 +56,9 @@ public:
 
 class Calendar : public wxGenericCalendarCtrl
 {
+private:
+	wxDateTime m_currDate;
+
 public:
 	Calendar(wxWindow* parent,
 		wxWindowID id,
