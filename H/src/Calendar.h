@@ -16,7 +16,16 @@ enum class CID // Calendar ID
 class CalendarPlanDlg : public wxDialog
 {
 private:
+	// Controls
+	wxTextCtrl* m_pTxtCtrl;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
 
+	// Sizer
+	wxBoxSizer* m_pTopSizer;
+	
+	// Validation
+	wxString m_txtValue;
 
 public:
 	CalendarPlanDlg(wxWindow* parent,
@@ -31,6 +40,10 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 class CalendarPanel : public wxPanel
@@ -58,6 +71,7 @@ class Calendar : public wxGenericCalendarCtrl
 {
 private:
 	wxDateTime m_currDate;
+	CalendarPlanDlg* m_pCalPlanDlg;
 
 public:
 	Calendar(wxWindow* parent,
