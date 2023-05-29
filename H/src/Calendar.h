@@ -40,6 +40,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupConfig();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
