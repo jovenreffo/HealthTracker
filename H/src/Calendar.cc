@@ -3,22 +3,45 @@
 CalendarPlanDlg::CalendarPlanDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	this->Init();
+
+	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &CalendarPlanDlg::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &CalendarPlanDlg::OnCancel, this);
 }
 
 CalendarPlanDlg::~CalendarPlanDlg()
 {
+	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &CalendarPlanDlg::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &CalendarPlanDlg::OnCancel, this);
 }
 
 void CalendarPlanDlg::Init()
 {
+	this->SetupControls();
+	this->SetupSizers();
 }
 
 void CalendarPlanDlg::SetupControls()
 {
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void CalendarPlanDlg::SetupSizers()
 {
+}
+
+void CalendarPlanDlg::OnOK(wxCommandEvent& event)
+{
+
+}
+
+void CalendarPlanDlg::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 // ===== CalendarPanel =====
@@ -72,9 +95,21 @@ Calendar::~Calendar()
 
 void Calendar::OnSelectDay(wxCalendarEvent& event)
 {
+	// Quick note: for months, indices start at 0.
+	// January - 0, February - 1, etc.
+	m_currDate = this->GetDate();
+#ifdef _DEBUG
+	//wxLogMessage(_T("%d\n%d\n%d"), m_currDate.GetYear(), m_currDate.GetMonth(), m_currDate.GetDay());
+#endif
 }
 
 void Calendar::OnDoubleClickDay(wxCalendarEvent& event)
 {
-	wxLogMessage(_T("Dclick"));
+	m_pCalPlanDlg = new CalendarPlanDlg(this, wxID_ANY);
+	m_pCalPlanDlg->Show(true);
+
+	if (m_pCalPlanDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
