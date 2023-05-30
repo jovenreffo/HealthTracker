@@ -1,4 +1,5 @@
 #include <wx/config.h>
+#include <wx/statline.h>
 #include "Calendar.h"
 
 CalendarPlanDlg::CalendarPlanDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -35,6 +36,16 @@ void CalendarPlanDlg::SetupControls()
 
 void CalendarPlanDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pTopSizer->Add(m_pTxtCtrl, wxSizerFlags().Expand().Proportion(1).Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer);
 }
 
 void CalendarPlanDlg::SetupConfig()
