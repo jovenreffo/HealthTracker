@@ -23,6 +23,7 @@ private:
 
 	// Sizer
 	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
 	
 	// Validation
 	wxString m_txtValue;
