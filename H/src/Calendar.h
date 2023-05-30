@@ -41,6 +41,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupWindowSizing();
 	void SetupConfig();
 
 	// Events
