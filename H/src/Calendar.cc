@@ -23,6 +23,7 @@ void CalendarPlanDlg::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupWindowSizing();
 	this->SetupConfig();
 }
 
@@ -46,6 +47,14 @@ void CalendarPlanDlg::SetupSizers()
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer);
+}
+
+void CalendarPlanDlg::SetupWindowSizing()
+{
+	wxSize sz{ this->GetBestSize() };
+
+	this->SetMinSize(sz);
+	this->SetInitialSize(wxSize(sz.x + 125, sz.y + 100));
 }
 
 void CalendarPlanDlg::SetupConfig()
