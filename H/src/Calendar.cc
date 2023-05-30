@@ -83,7 +83,16 @@ void CalendarPlanDlg::SetupConfig()
 
 void CalendarPlanDlg::OnOK(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		if (IsModal())
+			EndModal(wxID_OK);
+		else
+		{
+			SetReturnCode(wxID_OK);
+			Show(false);
+		}
+	}
 }
 
 void CalendarPlanDlg::OnCancel(wxCommandEvent& event)
