@@ -37,6 +37,8 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~CalendarPlanDlg();
 
+	const wxString& GetTextValue() const { return m_txtValue; }
+
 	// Setup
 	void Init();
 	void SetupControls();
@@ -49,10 +51,16 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+class CalendarInfo
+{
+
+};
+
 class CalendarPanel : public wxPanel
 {
 private:
 	Calendar* m_pCalendar;
+	CalendarInfo m_info;
 
 	wxBoxSizer* m_pTopSizer;
 
