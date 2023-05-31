@@ -6,6 +6,8 @@
 #include <wx/generic/calctrlg.h>
 #include <wx/textctrl.h>
 
+#include <vector>
+
 class Calendar; // forward dec
 
 enum class CID // Calendar ID
@@ -53,14 +55,28 @@ public:
 
 class CalendarInfo
 {
+private:
+	wxDateTime m_date;
+	wxString m_content;
 
+public:
+	CalendarInfo(const wxDateTime& dt, const wxString& content)
+		: m_date{ dt }, m_content{ content }
+	{ }
+	~CalendarInfo() { }
+
+	const wxDateTime& GetDate() const { return m_date; }
+	const wxString& GetContent() const { return m_content; }
+
+	void SetDate(const wxDateTime& dt) { m_date = dt; }
+	void SetContent(const wxString& content) { m_content = content; }
 };
 
 class CalendarPanel : public wxPanel
 {
 private:
 	Calendar* m_pCalendar;
-	CalendarInfo m_info;
+	std::vector<CalendarInfo> m_info;
 
 	wxBoxSizer* m_pTopSizer;
 
