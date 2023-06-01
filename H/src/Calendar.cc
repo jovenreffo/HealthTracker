@@ -167,6 +167,6 @@ void Calendar::OnDoubleClickDay(wxCalendarEvent& event)
 
 	if (m_pCalPlanDlg->ShowModal() == wxID_OK)
 	{
-
+		m_info.push_back(CalendarInfo(m_currDate, m_pCalPlanDlg->GetTextValue()));
 	}
 }
