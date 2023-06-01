@@ -40,6 +40,7 @@ public:
 	~CalendarPlanDlg();
 
 	const wxString& GetTextValue() const { return m_txtValue; }
+	void SetTextValue(const wxString& value) { m_pTxtCtrl->SetValue(value); }
 
 	// Setup
 	void Init();
@@ -76,7 +77,6 @@ class CalendarPanel : public wxPanel
 {
 private:
 	Calendar* m_pCalendar;
-	std::vector<CalendarInfo> m_info;
 
 	wxBoxSizer* m_pTopSizer;
 
@@ -99,6 +99,8 @@ class Calendar : public wxGenericCalendarCtrl
 private:
 	wxDateTime m_currDate;
 	CalendarPlanDlg* m_pCalPlanDlg;
+
+	std::vector<CalendarInfo> m_info;
 
 public:
 	Calendar(wxWindow* parent,
