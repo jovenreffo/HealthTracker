@@ -41,6 +41,7 @@ public:
 
 	const wxString& GetTextValue() const { return m_txtValue; }
 	void SetTextValue(const wxString& value) { m_pTxtCtrl->SetValue(value); }
+	wxTextCtrl* GetTextCtrl() { return m_pTxtCtrl; }
 
 	// Setup
 	void Init();
