@@ -165,6 +165,16 @@ void Calendar::OnDoubleClickDay(wxCalendarEvent& event)
 	m_pCalPlanDlg = new CalendarPlanDlg(this, wxID_ANY, wxString(_T("Select date: ")) << m_currDate.FormatDate());
 	m_pCalPlanDlg->Show(true);
 
+	// For loop to loop through all the info items to create a mtch and open the correct text
+	for (auto i{ 0 }; i < m_info.size(); ++i)
+	{
+		if (m_currDate == m_info[i].GetDate())
+		{
+			m_pCalPlanDlg->GetTextCtrl()->SetValue(m_info[i].GetContent());
+			return;
+		}
+	}
+
 	if (m_pCalPlanDlg->ShowModal() == wxID_OK)
 	{
 		m_info.push_back(CalendarInfo(m_currDate, m_pCalPlanDlg->GetTextValue()));
