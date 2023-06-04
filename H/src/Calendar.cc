@@ -1,6 +1,7 @@
 #include <wx/config.h>
 #include <wx/statline.h>
 #include "Calendar.h"
+#include "StandardPath.hpp"
 
 CalendarPlanDlg::CalendarPlanDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
@@ -107,10 +108,15 @@ CalendarPanel::CalendarPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
 	this->Init();
+
+	// Bind events
+	m_pClearNotes->Bind(wxEVT_BUTTON, &CalendarPanel::OnClearNotes, this);
 }
 
 CalendarPanel::~CalendarPanel()
 {
+	// Unbind events
+	m_pClearNotes->Unbind(wxEVT_BUTTON, &CalendarPanel::OnClearNotes, this);
 }
 
 void CalendarPanel::Init()
@@ -123,6 +129,10 @@ void CalendarPanel::SetupControls()
 {
 	m_pCalendar = new Calendar(this, wxID_ANY);
 	m_pCalendar->Show(true);
+
+	wxBitmap checkBmp = wxBitmap(path_data::dataDir + _T("\\Images\\check2.png"), wxBITMAP_TYPE_PNG);
+	m_pClearNotes = new wxButton(this, wxID_ANY, _T("Clear Notes"), wxDefaultPosition, wxDefaultSize);
+	m_pClearNotes->SetBitmap(checkBmp);
 }
 
 void CalendarPanel::SetupSizers()
@@ -131,6 +141,12 @@ void CalendarPanel::SetupSizers()
 	this->SetSizerAndFit(m_pTopSizer);
 
 	m_pTopSizer->Add(m_pCalendar, wxSizerFlags().Expand().Proportion(0).Border(wxALL, 5));
+	m_pTopSizer->Add(m_pClearNotes, wxSizerFlags().Left().Border(wxALL, 5));
+}
+
+void CalendarPanel::OnClearNotes(wxCommandEvent& event)
+{
+
 }
 
 // ====== CalendarCtrl ======
