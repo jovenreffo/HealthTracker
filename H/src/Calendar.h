@@ -94,6 +94,9 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+
+	// Events
+	void OnClearNotes(wxCommandEvent& event);
 };
 
 class Calendar : public wxGenericCalendarCtrl
