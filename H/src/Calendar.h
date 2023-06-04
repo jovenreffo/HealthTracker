@@ -78,6 +78,7 @@ class CalendarPanel : public wxPanel
 {
 private:
 	Calendar* m_pCalendar;
+	wxButton* m_pClearNotes;
 
 	wxBoxSizer* m_pTopSizer;
 
