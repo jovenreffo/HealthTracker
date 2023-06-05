@@ -116,6 +116,8 @@ public:
 		long style = wxCAL_SHOW_HOLIDAYS);
 	~Calendar();
 
+	void ClearNotes();
+
 	// Calendar events
 	void OnSelectDay(wxCalendarEvent& event);
 	void OnDoubleClickDay(wxCalendarEvent& event);
