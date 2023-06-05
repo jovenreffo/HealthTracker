@@ -1,5 +1,6 @@
 #include <wx/config.h>
 #include <wx/statline.h>
+#include <wx/msgdlg.h>
 #include "Calendar.h"
 #include "StandardPath.hpp"
 
@@ -47,7 +48,7 @@ void CalendarPlanDlg::SetupSizers()
 
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pButtonSizer);
+m_pTopSizer->Add(m_pButtonSizer);
 }
 
 void CalendarPlanDlg::SetupWindowSizing()
@@ -146,7 +147,10 @@ void CalendarPanel::SetupSizers()
 
 void CalendarPanel::OnClearNotes(wxCommandEvent& event)
 {
-
+	if (wxMessageBox(_T("Are you sure you want to delete all your notes?"), _T("Warning"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	{
+		m_pCalendar->ClearNotes();
+	}
 }
 
 // ====== CalendarCtrl ======
@@ -164,6 +168,11 @@ Calendar::~Calendar()
 	// Unbind events
 	this->Unbind(wxEVT_CALENDAR_DAY_CHANGED, &Calendar::OnSelectDay, this);
 	this->Unbind(wxEVT_CALENDAR_DOUBLECLICKED, &Calendar::OnDoubleClickDay, this);
+}
+
+void Calendar::ClearNotes()
+{
+	m_info.clear();
 }
 
 void Calendar::OnSelectDay(wxCalendarEvent& event)
