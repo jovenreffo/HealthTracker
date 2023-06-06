@@ -1,5 +1,7 @@
 #include <wx/statline.h>
 #include <wx/stattext.h>
+#include <wx/spinctrl.h>
+#include <wx/valgen.h>
 
 #include "Font/Font.hpp"
 #include "NutritionCatalog.h"
@@ -27,11 +29,15 @@ private:
 	wxBoxSizer* m_pButtonSizer;
 	wxBoxSizer* m_pTextInfoSizer;
 	wxBoxSizer* m_pContentSizer;
+	wxFlexGridSizer* m_pQuantitySizer;
 
 	wxStaticText* m_pNutrFactsTxt;
 	wxStaticText* m_pCalTxt;
 	wxStaticText* m_pProteinTxt;
 	wxStaticText* m_pCarbTxt;
+
+	wxSpinCtrl* m_pQuantity;
+	int m_quantity;
 
 public:
 	void SetCalorieList(CalorieList* pCalorieList) { m_pCalorieList = pCalorieList; }
@@ -88,6 +94,9 @@ public:
 		m_pCalTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Calories: ")) << m_catalogItem.GetCalories());
 		m_pProteinTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Protein: ")) << m_catalogItem.GetProtein() << 'g');
 		m_pCarbTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Carbohydrates: ")) << m_catalogItem.GetCarbohydrates() << 'g');
+
+		m_pQuantity = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+		m_pQuantity->SetValidator(wxGenericValidator(&m_quantity));
 	}
 
 	void SetupSizers()
@@ -96,6 +105,7 @@ public:
 		m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 		m_pTextInfoSizer = new wxBoxSizer(wxVERTICAL);
 		m_pContentSizer = new wxBoxSizer(wxHORIZONTAL);
+		m_pQuantitySizer = new wxFlexGridSizer(2, wxSize(5, 1));
 		this->SetSizerAndFit(m_pTopSizer);
 
 		// Button sizer
@@ -112,8 +122,13 @@ public:
 		m_pContentSizer->Add(m_itemBmp, wxSizerFlags().Left().Border(wxALL, 5));
 		m_pContentSizer->Add(m_pTextInfoSizer);
 
+		// Quantity sizer
+		m_pQuantitySizer->Add(new wxStaticText(this, wxID_STATIC, _T("Quantity:")), wxSizerFlags().Left().Border(wxALL, 5));
+		m_pQuantitySizer->Add(m_pQuantity, wxSizerFlags().Left().Border(wxALL, 5));
+
 		// Top sizer
 		m_pTopSizer->Add(m_pContentSizer);
+		m_pTopSizer->Add(m_pQuantitySizer);
 		m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 		m_pTopSizer->Add(m_pButtonSizer);
 	}
