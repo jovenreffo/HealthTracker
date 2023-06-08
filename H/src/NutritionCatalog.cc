@@ -40,6 +40,7 @@ private:
 	int m_quantity;
 
 public:
+	const int GetQuantity() const { return m_quantity; }
 	void SetCalorieList(CalorieList* pCalorieList) { m_pCalorieList = pCalorieList; }
 
 public:
@@ -95,7 +96,7 @@ public:
 		m_pProteinTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Protein: ")) << m_catalogItem.GetProtein() << 'g');
 		m_pCarbTxt = new wxStaticText(this, wxID_STATIC, wxString(_T("Carbohydrates: ")) << m_catalogItem.GetCarbohydrates() << 'g');
 
-		m_pQuantity = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+		m_pQuantity = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 100, 1);
 		m_pQuantity->SetValidator(wxGenericValidator(&m_quantity));
 	}
 
@@ -149,19 +150,25 @@ public:
 	// Events
 	void OnClose(wxCommandEvent& event)
 	{
-		SetReturnCode(wxID_CLOSE);
-		Show(false);
+		if (Validate() && TransferDataFromWindow())
+		{
+			SetReturnCode(wxID_CLOSE);
+			Show(false);
+		}
 	}
 
 	void OnAddToNutritionLog(wxCommandEvent& event)
 	{
-		NutrientContent nc{ m_catalogItem.GetCalories(), m_catalogItem.GetProtein(), m_catalogItem.GetCarbohydrates(), m_catalogItem.GetFiber() };
+		if (Validate() && TransferDataFromWindow())
+		{
+			NutrientContent nc{ m_catalogItem.GetCalories() * m_quantity, m_catalogItem.GetProtein() * m_quantity, m_catalogItem.GetCarbohydrates() * m_quantity, m_catalogItem.GetFiber() * m_quantity };
 #ifdef _DEBUG
-		if (m_pCalorieList == nullptr)
-			wxMessageBox(_T("Calorie List is null."));
+			if (m_pCalorieList == nullptr)
+				wxMessageBox(_T("Calorie List is null."));
 #endif
-		if (m_pCalorieList)
-			m_pCalorieList->AddItem(m_catalogItem.GetName(), nc);
+			if (m_pCalorieList)
+				m_pCalorieList->AddItem(m_catalogItem.GetName(), nc);
+		}
 	}
 };
 
