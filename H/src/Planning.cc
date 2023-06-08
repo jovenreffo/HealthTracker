@@ -296,6 +296,9 @@ void TodoPanel::OnAddTask(wxCommandEvent& e)
 
 void TodoPanel::OnClearTaskList(wxCommandEvent& e)
 {
+	if (!m_items.size())
+		return;
+
 	if (wxMessageBox(_T("Are you sure you want to remove all of your tasks?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
 	{
 #ifdef _DEBUG
