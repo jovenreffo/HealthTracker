@@ -1,6 +1,7 @@
 #ifndef SPREADSHEETWINDOW_H
 #define SPREADSHEETWINDOW_H
 
+#include <wx/grid.h>
 #include <wx/frame.h>
 #include <wx/sizer.h>
 #include <wx/wx.h>
@@ -12,6 +13,11 @@
 class SpreadsheetWindow : public wxFrame
 {
 private:
+	wxMenu* m_pFileMenu;
+	wxMenuBar* m_pMenuBar;
+	wxGrid* m_pGrid;
+
+	wxBoxSizer* m_pTopSizer;
 
 public:
 	SpreadsheetWindow(wxWindow* parent,
@@ -30,9 +36,13 @@ public:
 		long style = SSW_STYLE);
 
 	void Init();
+	void SetupMenu();
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
+
+	// Events
+
 };
 
 #endif
