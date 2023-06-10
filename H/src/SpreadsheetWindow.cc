@@ -11,6 +11,12 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	this->Init();
 }
 
+SpreadsheetWindow::~SpreadsheetWindow()
+{
+	// Unbind events
+	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, wxID_EXIT);
+}
+
 bool SpreadsheetWindow::Create(wxWindow* parent,
 	wxWindowID id,
 	const wxString& title,
@@ -30,6 +36,8 @@ void SpreadsheetWindow::Init()
 	this->SetupSizers();
 	this->SetupMenu();
 	this->SetupSizing();
+
+	this->BindEvents();
 }
 
 void SpreadsheetWindow::SetupMenu()
@@ -62,4 +70,18 @@ void SpreadsheetWindow::SetupSizers()
 	this->SetSizerAndFit(m_pTopSizer);
 
 	m_pTopSizer->Add(m_pGrid, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+}
+
+void SpreadsheetWindow::BindEvents()
+{
+	// Menu events
+	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, wxID_EXIT);
+}
+
+// Events
+
+void SpreadsheetWindow::OnExit(wxCommandEvent& event)
+{
+	if (wxMessageBox(_T("Are you sure you want to exit?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
+		this->Close(true);
 }
