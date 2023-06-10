@@ -26,6 +26,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = SSW_SIZE,
 		long style = SSW_STYLE);
+	~SpreadsheetWindow();
 
 	// Window setup
 	bool Create(wxWindow* parent,
@@ -40,8 +41,10 @@ public:
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
+	void BindEvents();
 
 	// Events
+	void OnExit(wxCommandEvent& event);
 };
 
 #endif
