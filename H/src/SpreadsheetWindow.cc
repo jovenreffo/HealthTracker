@@ -26,20 +26,28 @@ bool SpreadsheetWindow::Create(wxWindow* parent,
 
 void SpreadsheetWindow::Init()
 {
-	this->SetupSizing();
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupMenu();
+	this->SetupSizing();
 }
 
 void SpreadsheetWindow::SetupMenu()
 {
 	m_pFileMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
+
+	m_pFileMenu->AppendSeparator();
+	m_pFileMenu->Append(wxID_EXIT, _T("&Exit"));
+
+	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
+	this->SetMenuBar(m_pMenuBar);
 }
 
 void SpreadsheetWindow::SetupSizing()
 {
-
+	this->SetInitialSize(SSW_SIZE);
+	this->SetMinSize(SSW_SIZE);
 }
 
 void SpreadsheetWindow::SetupControls()
