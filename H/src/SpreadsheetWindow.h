@@ -8,7 +8,7 @@
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
-#define SSW_SIZE ( wxSize(675, 450) )
+#define SSW_SIZE ( wxSize(440, 280) )
 
 class SpreadsheetWindow : public wxFrame
 {
@@ -42,7 +42,6 @@ public:
 	void SetupSizers();
 
 	// Events
-
 };
 
 #endif
