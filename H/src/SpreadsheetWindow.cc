@@ -1,3 +1,4 @@
+#include <wx/config.h>
 #include "SpreadsheetWindow.h"
 
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
@@ -14,7 +15,7 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 SpreadsheetWindow::~SpreadsheetWindow()
 {
 	// Unbind events
-	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, wxID_EXIT);
+	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -36,6 +37,7 @@ void SpreadsheetWindow::Init()
 	this->SetupSizers();
 	this->SetupMenu();
 	this->SetupSizing();
+	this->SetupConfig();
 
 	this->BindEvents();
 }
@@ -72,10 +74,37 @@ void SpreadsheetWindow::SetupSizers()
 	m_pTopSizer->Add(m_pGrid, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
+void SpreadsheetWindow::SetupConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/Preferences/"));
+
+	if (pConfig->Read(_T("CheckFont"), 0L) == 1L)
+	{
+		for (auto rows{ 0 }; rows < m_pGrid->GetNumberRows(); ++rows)
+		{
+			for (auto cols{ 0 }; cols < m_pGrid->GetNumberCols(); ++cols)
+			{
+				m_pGrid->SetCellFont(rows, cols, wxFont(
+					pConfig->Read("FontSize", 10L),
+					static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+					static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+					wxFONTWEIGHT_NORMAL,
+					pConfig->Read("FontUnderline", 0L),
+					pConfig->Read("FaceName", "")
+				));
+			}
+		}
+	}
+}
+
 void SpreadsheetWindow::BindEvents()
 {
 	// Menu events
-	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, wxID_EXIT);
+	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 }
 
 // Events
