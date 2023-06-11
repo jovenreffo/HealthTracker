@@ -41,6 +41,7 @@ public:
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
+	void SetupConfig();
 	void BindEvents();
 
 	// Events
