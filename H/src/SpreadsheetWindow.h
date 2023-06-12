@@ -16,6 +16,7 @@ class SpreadsheetWindow : public wxFrame
 {
 private:
 	wxMenu* m_pFileMenu;
+	wxMenu* m_pInsertMenu;
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
 
@@ -43,7 +44,6 @@ public:
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
-	void SetupConfig();
 	void BindEvents();
 
 	// Events
@@ -58,6 +58,9 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxWANTS_CHARS);
+
+	void Init();
+	void SetupConfig();
 };
 
 #endif
