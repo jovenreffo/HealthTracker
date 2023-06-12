@@ -10,12 +10,14 @@
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define SSW_SIZE ( wxSize(440, 280) )
 
+class ExerciseGrid;
+
 class SpreadsheetWindow : public wxFrame
 {
 private:
 	wxMenu* m_pFileMenu;
 	wxMenuBar* m_pMenuBar;
-	wxGrid* m_pGrid;
+	ExerciseGrid* m_pGrid;
 
 	wxBoxSizer* m_pTopSizer;
 
@@ -46,6 +48,16 @@ public:
 
 	// Events
 	void OnExit(wxCommandEvent& event);
+};
+
+class ExerciseGrid: public wxGrid
+{
+public:
+	ExerciseGrid(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxWANTS_CHARS);
 };
 
 #endif
