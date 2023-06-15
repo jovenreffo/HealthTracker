@@ -10,12 +10,17 @@
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define SSW_SIZE ( wxSize(440, 280) )
 
+enum class SSW
+{
+	ID_EXPORT_PDF
+};
+
 class ExerciseGrid;
 
 class SpreadsheetWindow : public wxFrame
 {
 private:
-	wxMenu* m_pFileMenu;
+	wxMenu* m_pFileMenu; wxMenu* m_pExportSubMenu;
 	wxMenu* m_pInsertMenu;
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
@@ -48,6 +53,8 @@ public:
 
 	// Events
 	void OnExit(wxCommandEvent& event);
+	void OnSave(wxCommandEvent& event);
+	void OnExportPDF(wxCommandEvent& event);
 };
 
 class ExerciseGrid: public wxGrid
