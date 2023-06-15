@@ -44,10 +44,15 @@ void SpreadsheetWindow::Init()
 void SpreadsheetWindow::SetupMenu()
 {
 	m_pFileMenu = new wxMenu();
+	m_pExportSubMenu = new wxMenu();
 	m_pInsertMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
 
-	// File menu
+	// File menu + export menu
+	m_pExportSubMenu->Append((int)SSW::ID_EXPORT_PDF, _T("&PDF"));
+
+	m_pFileMenu->Append(wxID_SAVEAS, _T("&Save As"));
+	m_pFileMenu->AppendSubMenu(m_pExportSubMenu, _T("&Export"));
 	m_pFileMenu->AppendSeparator();
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit"));
 
@@ -91,6 +96,14 @@ void SpreadsheetWindow::OnExit(wxCommandEvent& event)
 {
 	if (wxMessageBox(_T("Are you sure you want to exit?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
 		this->Close(true);
+}
+
+void SpreadsheetWindow::OnSave(wxCommandEvent& event)
+{
+}
+
+void SpreadsheetWindow::OnExportPDF(wxCommandEvent& event)
+{
 }
 
 // ===== ExerciseGrid ======
