@@ -4,15 +4,30 @@
 #include <wx/grid.h>
 #include <wx/frame.h>
 #include <wx/sizer.h>
+#include <wx/dialog.h>
 #include <wx/wx.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define SSW_SIZE ( wxSize(440, 280) )
 
+class AddTableDlg : public wxDialog
+{
+public:
+	AddTableDlg(const wxString& which,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+};
+
 enum class SSW
 {
-	ID_EXPORT_PDF
+	ID_EXPORT_PDF,
+	ID_INSERT_ROW,
+	ID_INSERT_COL
 };
 
 class ExerciseGrid;
@@ -55,6 +70,9 @@ public:
 	void OnExit(wxCommandEvent& event);
 	void OnSave(wxCommandEvent& event);
 	void OnExportPDF(wxCommandEvent& event);
+
+	void OnAddRow(wxCommandEvent& event);
+	void OnAddCol(wxCommandEvent& event);
 };
 
 class ExerciseGrid: public wxGrid
