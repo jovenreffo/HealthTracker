@@ -1,6 +1,16 @@
 #include <wx/config.h>
 #include "SpreadsheetWindow.h"
 
+// ===== AddTableDlg =====
+
+AddTableDlg::AddTableDlg(const wxString& which, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+}
+
+
+// ===== SpreadsheetWindow =====
+
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	wxWindowID id,
 	const wxString& title,
@@ -10,12 +20,15 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	: wxFrame(parent, id, title, pos, size, style)
 {
 	this->Init();
+	this->BindEvents();
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
 {
 	// Unbind events
 	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
+	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
+	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -31,14 +44,20 @@ bool SpreadsheetWindow::Create(wxWindow* parent,
 	return true;
 }
 
+void SpreadsheetWindow::BindEvents()
+{
+	// Menu events
+	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
+	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
+	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
+}
+
 void SpreadsheetWindow::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupMenu();
 	this->SetupSizing();
-
-	this->BindEvents();
 }
 
 void SpreadsheetWindow::SetupMenu()
@@ -57,7 +76,8 @@ void SpreadsheetWindow::SetupMenu()
 	m_pFileMenu->Append(wxID_EXIT, _T("&Exit"));
 
 	// Insert menu
-
+	m_pInsertMenu->Append((int)SSW::ID_INSERT_COL, _T("&New Column"));
+	m_pInsertMenu->Append((int)SSW::ID_INSERT_ROW, _T("&New Row"));
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
@@ -84,12 +104,6 @@ void SpreadsheetWindow::SetupSizers()
 	m_pTopSizer->Add(m_pGrid, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
-void SpreadsheetWindow::BindEvents()
-{
-	// Menu events
-	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
-}
-
 // Events
 
 void SpreadsheetWindow::OnExit(wxCommandEvent& event)
@@ -104,6 +118,16 @@ void SpreadsheetWindow::OnSave(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnExportPDF(wxCommandEvent& event)
 {
+}
+
+void SpreadsheetWindow::OnAddRow(wxCommandEvent& event)
+{
+	m_pGrid->AppendRows(1, true);
+}
+
+void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
+{
+	m_pGrid->AppendCols(1, true);
 }
 
 // ===== ExerciseGrid ======
