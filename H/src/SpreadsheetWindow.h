@@ -4,6 +4,7 @@
 #include <wx/grid.h>
 #include <wx/frame.h>
 #include <wx/sizer.h>
+#include <wx/spinctrl.h>
 #include <wx/dialog.h>
 #include <wx/wx.h>
 
@@ -64,6 +65,7 @@ private:
 	wxMenu* m_pInsertMenu;
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
+	AddTableDlg* m_pAddTableDlg;
 
 	wxBoxSizer* m_pTopSizer;
 

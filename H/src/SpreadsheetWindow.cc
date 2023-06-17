@@ -1,5 +1,6 @@
 #include <wx/config.h>
 #include <wx/stattext.h>
+#include <wx/statline.h>
 #include "SpreadsheetWindow.h"
 
 // ===== AddTableDlg =====
@@ -14,11 +15,15 @@ AddTableDlg::AddTableDlg(const wxString& which, wxWindow* parent, wxWindowID id,
 AddTableDlg::~AddTableDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void AddTableDlg::BindEvents()
 {
-
+	// Button events
+	m_pOk->Bind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void AddTableDlg::Init()
@@ -29,10 +34,27 @@ void AddTableDlg::Init()
 
 void AddTableDlg::SetupControls()
 {
+	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 100, 1);
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_OK, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void AddTableDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	wxStaticText* pNum = new wxStaticText(this, wxID_STATIC, wxString("Number of ") << m_whichStr << ':', wxDefaultPosition, wxDefaultSize);
+	m_pCtrlSizer->Add(pNum, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pNumCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pCtrlSizer);
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer);
 }
 
 void AddTableDlg::OnOK(wxCommandEvent& event)
@@ -157,12 +179,24 @@ void SpreadsheetWindow::OnExportPDF(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnAddRow(wxCommandEvent& event)
 {
-	m_pGrid->AppendRows(1, true);
+	m_pAddTableDlg = new AddTableDlg(_T("Rows"), this, wxID_ANY, _T("Add New Row(s)"));
+	m_pAddTableDlg->Show(true);
+
+	if (m_pAddTableDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 {
-	m_pGrid->AppendCols(1, true);
+	m_pAddTableDlg = new AddTableDlg(_T("Columns"), this, wxID_ANY, _T("Add New Column(s)"));
+	m_pAddTableDlg->Show(true);
+
+	if (m_pAddTableDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 // ===== ExerciseGrid ======
