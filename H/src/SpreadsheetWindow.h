@@ -13,6 +13,19 @@
 
 class AddTableDlg : public wxDialog
 {
+private:
+	wxString m_whichStr;
+
+	// Controls
+	wxSpinCtrl* m_pNumCtrl;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pCtrlSizer; //wxHORIZONTAL
+	wxBoxSizer* m_pButtonSizer; //wxHORIZONTAL
+
 public:
 	AddTableDlg(const wxString& which,
 		wxWindow* parent,
@@ -21,6 +34,18 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~AddTableDlg();
+
+	void BindEvents();
+
+	// Init
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 enum class SSW
