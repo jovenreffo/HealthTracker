@@ -1,10 +1,45 @@
 #include <wx/config.h>
+#include <wx/stattext.h>
 #include "SpreadsheetWindow.h"
 
 // ===== AddTableDlg =====
 
 AddTableDlg::AddTableDlg(const wxString& which, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style)
+	: wxDialog(parent, id, title, pos, size, style), m_whichStr{ which }
+{
+	this->Init();
+	this->BindEvents();
+}
+
+AddTableDlg::~AddTableDlg()
+{
+	// Unbind events
+}
+
+void AddTableDlg::BindEvents()
+{
+
+}
+
+void AddTableDlg::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void AddTableDlg::SetupControls()
+{
+}
+
+void AddTableDlg::SetupSizers()
+{
+}
+
+void AddTableDlg::OnOK(wxCommandEvent& event)
+{
+}
+
+void AddTableDlg::OnCancel(wxCommandEvent& event)
 {
 }
 
