@@ -27,6 +27,9 @@ private:
 	wxBoxSizer* m_pCtrlSizer; //wxHORIZONTAL
 	wxBoxSizer* m_pButtonSizer; //wxHORIZONTAL
 
+	// Validator
+	int m_num;
+
 public:
 	AddTableDlg(const wxString& which,
 		wxWindow* parent,
@@ -38,6 +41,9 @@ public:
 	~AddTableDlg();
 
 	void BindEvents();
+
+	// Getter
+	const int GetNum() const { return m_num; }
 
 	// Init
 	void Init();
