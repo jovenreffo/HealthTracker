@@ -1,6 +1,7 @@
 #include <wx/config.h>
 #include <wx/stattext.h>
 #include <wx/statline.h>
+#include <wx/valgen.h>
 #include "SpreadsheetWindow.h"
 
 // ===== AddTableDlg =====
@@ -35,6 +36,8 @@ void AddTableDlg::Init()
 void AddTableDlg::SetupControls()
 {
 	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 100, 1);
+	m_pNumCtrl->SetValidator(wxGenericValidator(&m_num));
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_OK, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
@@ -59,10 +62,17 @@ void AddTableDlg::SetupSizers()
 
 void AddTableDlg::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void AddTableDlg::OnCancel(wxCommandEvent& event)
 {
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 
@@ -184,7 +194,7 @@ void SpreadsheetWindow::OnAddRow(wxCommandEvent& event)
 
 	if (m_pAddTableDlg->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->AppendRows(m_pAddTableDlg->GetNum(), true);
 	}
 }
 
@@ -195,7 +205,7 @@ void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 
 	if (m_pAddTableDlg->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->AppendCols(m_pAddTableDlg->GetNum(), true);
 	}
 }
 
