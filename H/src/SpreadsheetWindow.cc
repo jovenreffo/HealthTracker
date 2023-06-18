@@ -31,6 +31,7 @@ void AddTableDlg::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void AddTableDlg::SetupControls()
@@ -52,12 +53,23 @@ void AddTableDlg::SetupSizers()
 	wxStaticText* pNum = new wxStaticText(this, wxID_STATIC, wxString("Number of ") << m_whichStr << ':', wxDefaultPosition, wxDefaultSize);
 	m_pCtrlSizer->Add(pNum, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pCtrlSizer->Add(m_pNumCtrl, wxSizerFlags().Left().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pCtrlSizer);
+	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal());
 
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pButtonSizer);
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal());
+}
+
+void AddTableDlg::SetupSizing()
+{
+	wxSize size = this->GetBestSize();
+	wxSize initial = wxSize(size.x + 50, size.y + 35);
+	wxSize max = wxSize(size.x + 125, size.y + 75);
+
+	this->SetMinSize(size);
+	this->SetInitialSize(initial);
+	this->SetMaxSize(max);
 }
 
 void AddTableDlg::OnOK(wxCommandEvent& event)
@@ -88,6 +100,7 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 {
 	this->Init();
 	this->BindEvents();
+	this->CentreOnScreen();
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
@@ -154,7 +167,10 @@ void SpreadsheetWindow::SetupMenu()
 
 void SpreadsheetWindow::SetupSizing()
 {
-	this->SetInitialSize(SSW_SIZE);
+	wxSize size = this->GetBestSize();
+	wxSize initial = wxSize(size.x + 50, 480);
+
+	this->SetInitialSize(initial);
 	this->SetMinSize(SSW_SIZE);
 }
 
