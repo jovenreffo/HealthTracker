@@ -240,6 +240,12 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Init();
 }
 
+void ExerciseGrid::ResetTable()
+{
+	this->ResetColPos();
+	this->ResetRowPos();
+}
+
 void ExerciseGrid::Init()
 {
 	this->SetupConfig();
