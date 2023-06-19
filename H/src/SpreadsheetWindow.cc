@@ -145,6 +145,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pFileMenu = new wxMenu();
 	m_pExportSubMenu = new wxMenu();
 	m_pInsertMenu = new wxMenu();
+	m_pEditMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
 
 	// File menu + export menu
@@ -158,6 +159,8 @@ void SpreadsheetWindow::SetupMenu()
 	// Insert menu
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_COL, _T("&New Column"));
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_ROW, _T("&New Row"));
+
+	// Edit menu
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
@@ -230,8 +233,10 @@ void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxGrid(parent, id, pos, size, style)
 {
+	// Grid setup
 	this->CreateGrid(100, 10); // Create a grid with 100 rows and 10 columns
 
+	// Grid member initialization
 	this->Init();
 }
 
