@@ -119,6 +119,10 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxWANTS_CHARS);
 
+	// general grid functionality
+	void ResetTable();
+
+	// init
 	void Init();
 	void SetupConfig();
 };
