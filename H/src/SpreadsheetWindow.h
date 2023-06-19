@@ -60,7 +60,8 @@ enum class SSW
 {
 	ID_EXPORT_PDF,
 	ID_INSERT_ROW,
-	ID_INSERT_COL
+	ID_INSERT_COL,
+	ID_RESET_TABLE
 };
 
 class ExerciseGrid;
@@ -108,6 +109,9 @@ public:
 
 	void OnAddRow(wxCommandEvent& event);
 	void OnAddCol(wxCommandEvent& event);
+
+	void OnResetTablePosition(wxCommandEvent& event);
+	void OnResetTableSize(wxCommandEvent& event);
 };
 
 class ExerciseGrid: public wxGrid
@@ -120,7 +124,7 @@ public:
 		long style = wxWANTS_CHARS);
 
 	// general grid functionality
-	void ResetTable();
+	void ResetTablePosition();
 
 	// init
 	void Init();
