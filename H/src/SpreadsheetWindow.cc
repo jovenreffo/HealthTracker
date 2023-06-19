@@ -109,6 +109,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
+	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -130,6 +131,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
+	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 }
 
 void SpreadsheetWindow::Init()
@@ -161,10 +163,12 @@ void SpreadsheetWindow::SetupMenu()
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_ROW, _T("&New Row"));
 
 	// Edit menu
+	m_pEditMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Reset Table Position"));
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
 	m_pMenuBar->Append(m_pInsertMenu, _T("&Insert"));
+	m_pMenuBar->Append(m_pEditMenu, _T("&Edit"));
 	this->SetMenuBar(m_pMenuBar);
 }
 
@@ -228,6 +232,11 @@ void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 	}
 }
 
+void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
+{
+	m_pGrid->ResetTablePosition();
+}
+
 // ===== ExerciseGrid ======
 
 ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -240,7 +249,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Init();
 }
 
-void ExerciseGrid::ResetTable()
+void ExerciseGrid::ResetTablePosition()
 {
 	this->ResetColPos();
 	this->ResetRowPos();
