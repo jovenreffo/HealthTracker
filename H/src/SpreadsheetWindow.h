@@ -70,6 +70,7 @@ class SpreadsheetWindow : public wxFrame
 private:
 	wxMenu* m_pFileMenu; wxMenu* m_pExportSubMenu;
 	wxMenu* m_pInsertMenu;
+	wxMenu* m_pEditMenu;
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
