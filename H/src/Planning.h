@@ -107,6 +107,7 @@ public:
 	void HandleExit();
 	
 	// Events
+	void OnUpdateField(wxUpdateUIEvent& event);
 	void OnTextEnter(wxCommandEvent& e);
 	void OnOK(wxCommandEvent& e);
 	void OnCancel(wxCommandEvent& e);
