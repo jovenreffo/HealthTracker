@@ -110,6 +110,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
+	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -132,6 +133,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
+	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 }
 
 void SpreadsheetWindow::Init()
@@ -164,6 +166,7 @@ void SpreadsheetWindow::SetupMenu()
 
 	// Edit menu
 	m_pEditMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Reset Table Position"));
+	m_pEditMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Reset Table Size"));
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
@@ -237,6 +240,12 @@ void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
 	m_pGrid->ResetTablePosition();
 }
 
+void SpreadsheetWindow::OnResetTableSize(wxCommandEvent& event)
+{
+	m_pGrid->ResetTableSize();
+
+}
+
 // ===== ExerciseGrid ======
 
 ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -253,6 +262,22 @@ void ExerciseGrid::ResetTablePosition()
 {
 	this->ResetColPos();
 	this->ResetRowPos();
+}
+
+void ExerciseGrid::ResetTableSize()
+{
+	int defCol{ this->GetDefaultColSize() };
+	int defRow{ this->GetDefaultRowSize() };
+	
+	// loop through rows and cols to reset their sizes
+	for (auto i{ 0 }; i < GetNumberRows(); ++i)
+	{
+		this->SetRowSize(i, defRow);
+	}
+	for (auto i{ 0 }; i < GetNumberCols(); ++i)
+	{
+		this->SetColSize(i, defCol);
+	}
 }
 
 void ExerciseGrid::Init()
