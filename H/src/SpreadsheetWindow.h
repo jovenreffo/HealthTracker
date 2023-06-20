@@ -61,7 +61,8 @@ enum class SSW
 	ID_EXPORT_PDF,
 	ID_INSERT_ROW,
 	ID_INSERT_COL,
-	ID_RESET_TABLE
+	ID_RESET_TABLE,
+	ID_RESET_TABLE_SIZE
 };
 
 class ExerciseGrid;
@@ -125,6 +126,7 @@ public:
 
 	// general grid functionality
 	void ResetTablePosition();
+	void ResetTableSize();
 
 	// init
 	void Init();
