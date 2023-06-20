@@ -56,6 +56,8 @@ AddTaskDlg::AddTaskDlg(wxWindow* parent, wxWindowID id, const wxString& title, c
 	this->Init();
 
 	// Bind events
+	m_pOk->Bind(wxEVT_UPDATE_UI, &AddTaskDlg::OnUpdateField, this, wxID_OK);
+
 	m_pTaskNameTxt->Bind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pTaskDescTxt->Bind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pOk->Bind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
@@ -68,6 +70,8 @@ AddTaskDlg::AddTaskDlg(wxWindow* parent, wxWindowID id, const wxString& title, c
 AddTaskDlg::~AddTaskDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_UPDATE_UI, &AddTaskDlg::OnUpdateField, this, wxID_OK);
+
 	m_pTaskNameTxt->Unbind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pTaskDescTxt->Unbind(wxEVT_TEXT_ENTER, &AddTaskDlg::OnTextEnter, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &AddTaskDlg::OnOK, this);
@@ -154,6 +158,14 @@ void AddTaskDlg::HandleExit()
 }
 
 // events
+
+void AddTaskDlg::OnUpdateField(wxUpdateUIEvent& event)
+{
+	if (m_pTaskNameTxt->IsEmpty())
+		event.Enable(false);
+	else
+		event.Enable(true);
+}
 
 void AddTaskDlg::OnTextEnter(wxCommandEvent& e)
 {
