@@ -117,6 +117,9 @@ public:
 
 class ExerciseGrid: public wxGrid
 {
+private:
+	wxFont m_cellFont;
+
 public:
 	ExerciseGrid(wxWindow* parent,
 		wxWindowID id,
@@ -131,6 +134,10 @@ public:
 	// init
 	void Init();
 	void SetupConfig();
+
+	// init workout template
+	void SetupWorkoutTemplate();
+	void SetupTitle();
 };
 
 #endif
