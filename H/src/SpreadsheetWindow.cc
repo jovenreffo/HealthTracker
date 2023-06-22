@@ -2,7 +2,10 @@
 #include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/valgen.h>
+#include <wx/dc.h>
+
 #include "SpreadsheetWindow.h"
+#include "Font/Font.hpp"
 
 // ===== AddTableDlg =====
 
@@ -243,7 +246,6 @@ void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
 void SpreadsheetWindow::OnResetTableSize(wxCommandEvent& event)
 {
 	m_pGrid->ResetTableSize();
-
 }
 
 // ===== ExerciseGrid ======
@@ -256,6 +258,9 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 
 	// Grid member initialization
 	this->Init();
+
+	// Workout template setup
+	this->SetupWorkoutTemplate();
 }
 
 void ExerciseGrid::ResetTablePosition()
@@ -295,19 +300,34 @@ void ExerciseGrid::SetupConfig()
 
 	if (pConfig->Read(_T("CheckFont"), 0L) == 1L)
 	{
+		m_cellFont = wxFont(
+			pConfig->Read("FontSize", 10L),
+			static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+			static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+			wxFONTWEIGHT_NORMAL,
+			pConfig->Read("FontUnderline", 0L),
+			pConfig->Read("FaceName", ""));
+
 		for (auto rows{ 0 }; rows < this->GetNumberRows(); ++rows)
 		{
 			for (auto cols{ 0 }; cols < this->GetNumberCols(); ++cols)
 			{
-				this->SetCellFont(rows, cols, wxFont(
-					pConfig->Read("FontSize", 10L),
-					static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
-					static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
-					wxFONTWEIGHT_NORMAL,
-					pConfig->Read("FontUnderline", 0L),
-					pConfig->Read("FaceName", "")
-				));
+				this->SetCellFont(rows, cols, m_cellFont);
 			}
 		}
 	}
+}
+
+void ExerciseGrid::SetupWorkoutTemplate()
+{
+	this->SetupTitle();
+}
+
+void ExerciseGrid::SetupTitle()
+{
+	// Set properties for the title so it looks nice and sizes correctly
+	this->SetCellValue(wxGridCellCoords(0, 0), _T("Resistance Training Routine"));
+	this->SetCellFont(0, 0, Fonts::GetBoldFont(20));
+	this->SetCellSize(0, 0, 2, 5); // determine how many rows and cols the title will take
+	this->SetCellBackgroundColour(0, 0, wxColour(255, 100, 100));
 }
