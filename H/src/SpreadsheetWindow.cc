@@ -321,6 +321,11 @@ void ExerciseGrid::SetupConfig()
 void ExerciseGrid::SetupWorkoutTemplate()
 {
 	this->SetupTitle();
+
+	for (auto i{ 0 }; i < 3; ++i)
+	{
+		this->SetupDayLabel();
+	}
 }
 
 void ExerciseGrid::SetupTitle()
@@ -330,4 +335,20 @@ void ExerciseGrid::SetupTitle()
 	this->SetCellFont(0, 0, Fonts::GetBoldFont(20));
 	this->SetCellSize(0, 0, 2, 5); // determine how many rows and cols the title will take
 	this->SetCellBackgroundColour(0, 0, wxColour(255, 100, 100));
+}
+
+void ExerciseGrid::SetupDayLabel()
+{
+	this->SetCellValue(wxGridCellCoords(m_rowDayCoord, 0), wxString(_T("Day ")) << m_currDay); // write the day label
+	this->SetCellFont(m_rowDayCoord, 0, Fonts::GetBoldFont(10)); // set the font for the day label
+
+
+	// handle value updates
+	++m_currDay;
+	m_rowDayCoord += 11;
+}
+
+void ExerciseGrid::SetupMuscleGroups()
+{
+
 }
