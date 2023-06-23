@@ -138,6 +138,8 @@ public:
 	// init workout template
 	void SetupWorkoutTemplate();
 	void SetupTitle();
+	void SetupDayLabel();
+	void SetupMuscleGroups();
 };
 
 #endif
