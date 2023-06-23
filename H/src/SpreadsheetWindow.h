@@ -115,10 +115,13 @@ public:
 	void OnResetTableSize(wxCommandEvent& event);
 };
 
-class ExerciseGrid: public wxGrid
+class ExerciseGrid : public wxGrid
 {
 private:
 	wxFont m_cellFont;
+
+	int m_currDay{ 1 };
+	int m_rowDayCoord{ 9 }; // value for writing the day number in a certain row
 
 public:
 	ExerciseGrid(wxWindow* parent,
