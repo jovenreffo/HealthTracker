@@ -255,12 +255,24 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 {
 	// Grid setup
 	this->CreateGrid(100, 10); // Create a grid with 100 rows and 10 columns
+	this->EnableDragCell(true);
+	this->EnableDragColMove(true);
+	this->EnableDragRowMove(true);
 
 	// Grid member initialization
 	this->Init();
 
 	// Workout template setup
 	this->SetupWorkoutTemplate();
+
+	// Bind events
+	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
+}
+
+ExerciseGrid::~ExerciseGrid()
+{
+	// Unbind events
+	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 }
 
 void ExerciseGrid::ResetTablePosition()
@@ -342,6 +354,11 @@ void ExerciseGrid::SetupDayLabel()
 	this->SetCellValue(wxGridCellCoords(m_rowDayCoord, 0), wxString(_T("Day ")) << m_currDay); // write the day label
 	this->SetCellFont(m_rowDayCoord, 0, Fonts::GetBoldFont(10)); // set the font for the day label
 
+	// colour of cell
+	for (auto i{ m_rowDayCoord }; i < m_rowDayCoord + 10; ++i)
+	{
+		this->SetCellBackgroundColour(i, 0, wxColour(0, 150, 255));
+	}
 
 	// handle value updates
 	++m_currDay;
@@ -351,4 +368,9 @@ void ExerciseGrid::SetupDayLabel()
 void ExerciseGrid::SetupMuscleGroups()
 {
 
+}
+
+void ExerciseGrid::OnRightClickCell(wxGridEvent& event)
+{
+	
 }
