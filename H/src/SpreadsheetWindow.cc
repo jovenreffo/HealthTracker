@@ -112,8 +112,8 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
-	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
-	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
+	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -135,8 +135,8 @@ void SpreadsheetWindow::BindEvents()
 	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
-	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
-	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
+	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 }
 
 void SpreadsheetWindow::Init()
@@ -153,6 +153,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pExportSubMenu = new wxMenu();
 	m_pInsertMenu = new wxMenu();
 	m_pEditMenu = new wxMenu();
+	m_pResetSubMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
 
 	// File menu + export menu
@@ -168,8 +169,9 @@ void SpreadsheetWindow::SetupMenu()
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_ROW, _T("&New Row"));
 
 	// Edit menu
-	m_pEditMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Reset Table Position"));
-	m_pEditMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Reset Table Size"));
+	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Table Position"));
+	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Table Size"));
+	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
