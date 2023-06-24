@@ -121,7 +121,7 @@ private:
 	wxFont m_cellFont;
 
 	int m_currDay{ 1 };
-	int m_rowDayCoord{ 9 }; // value for writing the day number in a certain row
+	int m_rowDayCoord{ 4 }; // value for writing the day number in a certain row
 
 public:
 	ExerciseGrid(wxWindow* parent,
@@ -129,6 +129,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxWANTS_CHARS);
+	~ExerciseGrid();
 
 	// general grid functionality
 	void ResetTablePosition();
@@ -143,6 +144,9 @@ public:
 	void SetupTitle();
 	void SetupDayLabel();
 	void SetupMuscleGroups();
+
+	// events
+	void OnRightClickCell(wxGridEvent& event);
 };
 
 #endif
