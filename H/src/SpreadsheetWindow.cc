@@ -332,6 +332,15 @@ void ExerciseGrid::SetupConfig()
 	}
 }
 
+void ExerciseGrid::SetupLabelArray()
+{
+	m_labels.Add(_T("Muscle Group"));
+	m_labels.Add(_T("Exercise"));
+	m_labels.Add(_T("Sets"));
+	m_labels.Add(_T("Repetitions"));
+	m_labels.Add(_T("Notes"));
+}
+
 void ExerciseGrid::SetupWorkoutTemplate()
 {
 	this->SetupTitle();
@@ -356,20 +365,23 @@ void ExerciseGrid::SetupDayLabel()
 	this->SetCellValue(wxGridCellCoords(m_rowDayCoord, 0), wxString(_T("Day ")) << m_currDay); // write the day label
 	this->SetCellFont(m_rowDayCoord, 0, Fonts::GetBoldFont(10)); // set the font for the day label
 
-	// colour of cell
+	// colour of cell which spans for 10 cols
 	for (auto i{ m_rowDayCoord }; i < m_rowDayCoord + 10; ++i)
 	{
 		this->SetCellBackgroundColour(i, 0, wxColour(0, 150, 255));
 	}
 
+	// loop through the labels and set their background colours
+	this->SetupLabelArray();
+	for (auto i{ 0 }; i < 5; ++i)
+	{
+		this->SetCellFont(m_rowDayCoord, i + 1, Fonts::GetBoldFont(9));
+		this->SetCellValue(wxGridCellCoords(m_rowDayCoord, i + 1), m_labels[i]);
+	}
+
 	// handle value updates
 	++m_currDay;
 	m_rowDayCoord += 11;
-}
-
-void ExerciseGrid::SetupMuscleGroups()
-{
-
 }
 
 void ExerciseGrid::OnRightClickCell(wxGridEvent& event)
