@@ -375,9 +375,13 @@ void ExerciseGrid::SetupDayLabel()
 	this->SetupLabelArray();
 	for (auto i{ 0 }; i < 5; ++i)
 	{
-		this->SetCellFont(m_rowDayCoord, i + 1, Fonts::GetBoldFont(9));
+		this->SetCellFont(m_rowDayCoord, i + 1, Fonts::GetBoldFont(8));
 		this->SetCellValue(wxGridCellCoords(m_rowDayCoord, i + 1), m_labels[i]);
+		this->SetCellBackgroundColour(m_rowDayCoord, i + 1, wxColour(0, 150, 255));
 	}
+	// with the exception of the notes label: change it to yellow
+	this->SetCellBackgroundColour(m_rowDayCoord, 5, wxColour(255, 255, 0));
+
 
 	// handle value updates
 	++m_currDay;
