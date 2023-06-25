@@ -120,6 +120,8 @@ class ExerciseGrid : public wxGrid
 private:
 	wxFont m_cellFont;
 
+	wxArrayString m_labels;
+
 	int m_currDay{ 1 };
 	int m_rowDayCoord{ 4 }; // value for writing the day number in a certain row
 
@@ -138,12 +140,12 @@ public:
 	// init
 	void Init();
 	void SetupConfig();
+	void SetupLabelArray();
 
 	// init workout template
 	void SetupWorkoutTemplate();
 	void SetupTitle();
 	void SetupDayLabel();
-	void SetupMuscleGroups();
 
 	// events
 	void OnRightClickCell(wxGridEvent& event);
