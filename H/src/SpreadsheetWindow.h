@@ -153,6 +153,7 @@ public:
 	void SetupDayLabel();
 
 	// events
+	void OnSelectCell(wxGridEvent& event);
 	void OnRightClickCell(wxGridEvent& event);
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 };
