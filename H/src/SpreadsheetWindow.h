@@ -62,7 +62,8 @@ enum class SSW
 	ID_INSERT_ROW,
 	ID_INSERT_COL,
 	ID_RESET_TABLE,
-	ID_RESET_TABLE_SIZE
+	ID_RESET_TABLE_SIZE,
+	ID_CHANGE_CELL_BG_COLOUR
 };
 
 class ExerciseGrid;
@@ -118,6 +119,9 @@ public:
 class ExerciseGrid : public wxGrid
 {
 private:
+	wxMenu* m_pPopupMenu;
+	wxMenu* m_pEditCellSub;
+
 	wxFont m_cellFont;
 
 	wxArrayString m_labels;
@@ -140,6 +144,7 @@ public:
 	// init
 	void Init();
 	void SetupConfig();
+	void SetupMenu();
 	void SetupLabelArray();
 
 	// init workout template
@@ -149,6 +154,7 @@ public:
 
 	// events
 	void OnRightClickCell(wxGridEvent& event);
+	void OnChangeBackgroundColour(wxCommandEvent& event);
 };
 
 #endif
