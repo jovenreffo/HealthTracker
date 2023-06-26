@@ -269,12 +269,14 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 
 	// Bind events
 	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
+	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
 
 ExerciseGrid::~ExerciseGrid()
 {
 	// Unbind events
 	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
+	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
 
 void ExerciseGrid::ResetTablePosition()
@@ -302,6 +304,7 @@ void ExerciseGrid::ResetTableSize()
 void ExerciseGrid::Init()
 {
 	this->SetupConfig();
+	this->SetupMenu();
 }
 
 void ExerciseGrid::SetupConfig()
@@ -332,6 +335,15 @@ void ExerciseGrid::SetupConfig()
 	}
 }
 
+void ExerciseGrid::SetupMenu()
+{
+	m_pPopupMenu = new wxMenu();
+	m_pEditCellSub = new wxMenu();
+
+	m_pPopupMenu->AppendSubMenu(m_pEditCellSub, _T("&Modify Cell..."));
+	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
+}
+
 void ExerciseGrid::SetupLabelArray()
 {
 	m_labels.Add(_T("Muscle Group"));
@@ -345,7 +357,7 @@ void ExerciseGrid::SetupWorkoutTemplate()
 {
 	this->SetupTitle();
 
-	for (auto i{ 0 }; i < 3; ++i)
+	for (auto i{ 0 }; i < 5; ++i)
 	{
 		this->SetupDayLabel();
 	}
@@ -390,5 +402,10 @@ void ExerciseGrid::SetupDayLabel()
 
 void ExerciseGrid::OnRightClickCell(wxGridEvent& event)
 {
-	
+	this->PopupMenu(m_pPopupMenu);
+}
+
+void ExerciseGrid::OnChangeBackgroundColour(wxCommandEvent& event)
+{
+
 }
