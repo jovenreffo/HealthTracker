@@ -67,6 +67,11 @@ private:
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+	
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pCtrlSizer;
 
 	// Validators
 	int m_row;
