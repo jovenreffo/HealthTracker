@@ -3,6 +3,7 @@
 #include <wx/statline.h>
 #include <wx/valgen.h>
 #include <wx/dc.h>
+#include <wx/colordlg.h>
 
 #include "SpreadsheetWindow.h"
 #include "Font/Font.hpp"
@@ -88,6 +89,37 @@ void AddTableDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
+}
+
+// ChangeCellBackgroundDlg
+
+ChangeCellBackgroundDlg::ChangeCellBackgroundDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+}
+
+ChangeCellBackgroundDlg::~ChangeCellBackgroundDlg()
+{
+}
+
+void ChangeCellBackgroundDlg::Init()
+{
+}
+
+void ChangeCellBackgroundDlg::SetupControls()
+{
+}
+
+void ChangeCellBackgroundDlg::SetupSizers()
+{
+}
+
+void ChangeCellBackgroundDlg::OnOK(wxCommandEvent& event)
+{
+}
+
+void ChangeCellBackgroundDlg::OnCancel(wxCommandEvent& event)
+{
 }
 
 
@@ -268,6 +300,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->SetupWorkoutTemplate();
 
 	// Bind events
+	this->Bind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
@@ -275,6 +308,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 ExerciseGrid::~ExerciseGrid()
 {
 	// Unbind events
+	this->Unbind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
@@ -400,12 +434,28 @@ void ExerciseGrid::SetupDayLabel()
 	m_rowDayCoord += 11;
 }
 
+void ExerciseGrid::OnSelectCell(wxGridEvent& event)
+{
+	m_currCell = wxGridCellCoords(event.GetRow(), event.GetCol());
+}
+
 void ExerciseGrid::OnRightClickCell(wxGridEvent& event)
 {
+	m_currCell = wxGridCellCoords(event.GetRow(), event.GetCol()); // update cell coordinates
+
 	this->PopupMenu(m_pPopupMenu);
 }
 
 void ExerciseGrid::OnChangeBackgroundColour(wxCommandEvent& event)
 {
+	wxColourDialog* pClrDlg = new wxColourDialog(this);
+	pClrDlg->Show(true);
 
+	if (pClrDlg->ShowModal() == wxID_OK)
+	{
+		wxColourData data = pClrDlg->GetColourData();
+		wxColour colour = data.GetColour();
+
+		this->SetCellBackgroundColour(m_currCell.GetRow(), m_currCell.GetCol(), colour);
+	}
 }
