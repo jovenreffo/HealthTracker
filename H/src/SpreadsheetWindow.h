@@ -7,6 +7,7 @@
 #include <wx/spinctrl.h>
 #include <wx/dialog.h>
 #include <wx/wx.h>
+#include <wx/clrpicker.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
@@ -56,6 +57,44 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+class ChangeCellBackgroundDlg : public wxDialog
+{
+private:
+	// Controls
+	wxSpinCtrl* m_pRowSpin;
+	wxSpinCtrl* m_pColSpin;
+	wxColourPickerCtrl* m_pClrPicker;
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Validators
+	int m_row;
+	int m_col;
+	wxColour m_colour;
+
+public:
+	ChangeCellBackgroundDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~ChangeCellBackgroundDlg();
+
+	// Init
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+};
+
+// alias for the class so it's not a pain to type out
+using CCBD = ChangeCellBackgroundDlg;
+
 enum class SSW
 {
 	ID_EXPORT_PDF,
@@ -77,6 +116,7 @@ private:
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
+	CCBD* m_pCCBD;
 
 	wxBoxSizer* m_pTopSizer;
 
@@ -125,6 +165,7 @@ private:
 	wxFont m_cellFont;
 
 	wxArrayString m_labels;
+	wxGridCellCoords m_currCell;
 
 	int m_currDay{ 1 };
 	int m_rowDayCoord{ 4 }; // value for writing the day number in a certain row
