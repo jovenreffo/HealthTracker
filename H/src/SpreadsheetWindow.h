@@ -91,6 +91,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SetupSizing();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
