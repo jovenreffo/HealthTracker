@@ -99,11 +99,15 @@ ChangeCellBackgroundDlg::ChangeCellBackgroundDlg(wxWindow* parent, wxWindowID id
 	this->Init();
 	
 	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &ChangeCellBackgroundDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &ChangeCellBackgroundDlg::OnCancel, this, wxID_CANCEL);
 }
 
 ChangeCellBackgroundDlg::~ChangeCellBackgroundDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &ChangeCellBackgroundDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &ChangeCellBackgroundDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void ChangeCellBackgroundDlg::Init()
@@ -345,7 +349,7 @@ void SpreadsheetWindow::OnChangeBackgroundColour(wxCommandEvent& event)
 
 	if (m_pCCBD->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->SetCellBackgroundColour(m_pCCBD->GetRow(), m_pCCBD->GetCol(), m_pCCBD->GetColour());
 	}
 }
 
