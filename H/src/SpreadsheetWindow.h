@@ -117,7 +117,7 @@ class SpreadsheetWindow : public wxFrame
 private:
 	wxMenu* m_pFileMenu; wxMenu* m_pExportSubMenu;
 	wxMenu* m_pInsertMenu;
-	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu;
+	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu; wxMenu* m_pModifySubMenu;
 	wxMenuBar* m_pMenuBar;
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
@@ -159,6 +159,9 @@ public:
 
 	void OnResetTablePosition(wxCommandEvent& event);
 	void OnResetTableSize(wxCommandEvent& event);
+
+	void OnChangeBackgroundColour(wxCommandEvent& event);
+	void OnChangeCellFont(wxCommandEvent& event);
 };
 
 class ExerciseGrid : public wxGrid
