@@ -110,6 +110,7 @@ void ChangeCellBackgroundDlg::Init()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void ChangeCellBackgroundDlg::SetupControls()
@@ -121,6 +122,9 @@ void ChangeCellBackgroundDlg::SetupControls()
 	m_pColSpin->SetValidator(wxGenericValidator(&m_col));
 
 	m_pClrPicker = new wxColourPickerCtrl(this, wxID_ANY);
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void ChangeCellBackgroundDlg::SetupSizers()
@@ -137,14 +141,35 @@ void ChangeCellBackgroundDlg::SetupSizers()
 	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Colour: ")), wxSizerFlags().Border(wxALL, 5));
 	m_pCtrlSizer->Add(m_pClrPicker, wxSizerFlags().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+}
+
+void ChangeCellBackgroundDlg::SetupSizing()
+{
+	wxSize size{ this->GetBestSize() };
+	this->SetMinSize(size);
+	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
 }
 
 void ChangeCellBackgroundDlg::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		m_colour = m_pClrPicker->GetColour();
+
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void ChangeCellBackgroundDlg::OnCancel(wxCommandEvent& event)
 {
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 
