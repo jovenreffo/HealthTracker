@@ -96,22 +96,47 @@ void AddTableDlg::OnCancel(wxCommandEvent& event)
 ChangeCellBackgroundDlg::ChangeCellBackgroundDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	this->Init();
+	
+	// Bind events
 }
 
 ChangeCellBackgroundDlg::~ChangeCellBackgroundDlg()
 {
+	// Unbind events
 }
 
 void ChangeCellBackgroundDlg::Init()
 {
+	this->SetupControls();
+	this->SetupSizers();
 }
 
 void ChangeCellBackgroundDlg::SetupControls()
 {
+	m_pRowSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pRowSpin->SetValidator(wxGenericValidator(&m_row));
+
+	m_pColSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pColSpin->SetValidator(wxGenericValidator(&m_col));
+
+	m_pClrPicker = new wxColourPickerCtrl(this, wxID_ANY);
 }
 
 void ChangeCellBackgroundDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pCtrlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Row: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pRowSpin, wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Column: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pColSpin, wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Colour: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pClrPicker, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void ChangeCellBackgroundDlg::OnOK(wxCommandEvent& event)
@@ -146,6 +171,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -169,6 +195,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 }
 
 void SpreadsheetWindow::Init()
@@ -186,6 +213,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pInsertMenu = new wxMenu();
 	m_pEditMenu = new wxMenu();
 	m_pResetSubMenu = new wxMenu();
+	m_pModifySubMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
 
 	// File menu + export menu
@@ -203,7 +231,10 @@ void SpreadsheetWindow::SetupMenu()
 	// Edit menu
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Table Position"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Table Size"));
+	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
+
 	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
+	m_pEditMenu->AppendSubMenu(m_pModifySubMenu, _T("&Change Cell..."));
 
 	// Menubar
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
@@ -280,6 +311,21 @@ void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
 void SpreadsheetWindow::OnResetTableSize(wxCommandEvent& event)
 {
 	m_pGrid->ResetTableSize();
+}
+
+void SpreadsheetWindow::OnChangeBackgroundColour(wxCommandEvent& event)
+{
+	m_pCCBD = new CCBD(this, wxID_ANY, _T("Change Cell Background Colour"));
+	m_pCCBD->Show(true);
+
+	if (m_pCCBD->ShowModal() == wxID_OK)
+	{
+
+	}
+}
+
+void SpreadsheetWindow::OnChangeCellFont(wxCommandEvent& event)
+{
 }
 
 // ===== ExerciseGrid ======
