@@ -87,6 +87,11 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~ChangeCellBackgroundDlg();
 
+	// Getters
+	const int GetRow() const { return m_row; }
+	const int GetCol() const { return m_col; }
+	const wxColour& GetColour() const { return m_colour; }
+
 	// Init
 	void Init();
 	void SetupControls();
