@@ -8,6 +8,7 @@
 #include <wx/dialog.h>
 #include <wx/wx.h>
 #include <wx/clrpicker.h>
+#include <wx/fontdlg.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
@@ -106,6 +107,52 @@ public:
 // alias for the class so it's not a pain to type out
 using CCBD = ChangeCellBackgroundDlg;
 
+class ChangeCellFontDlg : public wxDialog
+{
+private:
+	// Controls
+	wxSpinCtrl* m_pRowSpin;
+	wxSpinCtrl* m_pColSpin;
+	wxFontDialog* m_pFontDlg;
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pCtrlSizer;
+
+	// Validators
+	int m_row;
+	int m_col;
+	wxFont m_font;
+
+public:
+	ChangeCellFontDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~ChangeCellFontDlg();
+
+	// Getters
+	const int GetRow() const { return m_row; }
+	const int GetCol() const { return m_col; }
+	const wxFont& GetFont() const { return m_font; }
+
+	// Init
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+};
+
 enum class SSW
 {
 	ID_EXPORT_PDF,
@@ -113,7 +160,8 @@ enum class SSW
 	ID_INSERT_COL,
 	ID_RESET_TABLE,
 	ID_RESET_TABLE_SIZE,
-	ID_CHANGE_CELL_BG_COLOUR
+	ID_CHANGE_CELL_BG_COLOUR,
+	ID_CHANGE_CELL_FONT
 };
 
 class ExerciseGrid;
