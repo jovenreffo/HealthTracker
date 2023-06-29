@@ -200,10 +200,37 @@ void ChangeCellFontDlg::Init()
 
 void ChangeCellFontDlg::SetupControls()
 {
+	m_pRowSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pRowSpin->SetValidator(wxGenericValidator(&m_row));
+
+	m_pColSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pColSpin->SetValidator(wxGenericValidator(&m_col));
+
+	m_pFontPicker = new wxFontPickerCtrl(this, wxID_ANY);
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void ChangeCellFontDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pCtrlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Row: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pRowSpin, wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Column: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pColSpin, wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Font: ")), wxSizerFlags().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pFontPicker, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void ChangeCellFontDlg::SetupSizing()
@@ -217,6 +244,8 @@ void ChangeCellFontDlg::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
+		m_font = m_pFontPicker->GetFont();
+
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
@@ -409,6 +438,13 @@ void SpreadsheetWindow::OnChangeBackgroundColour(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnChangeCellFont(wxCommandEvent& event)
 {
+	m_pCCFD = new ChangeCellFontDlg(this, wxID_ANY, _T("Change Cell Font"));
+	m_pCCFD->Show(true);
+
+	if (m_pCCFD->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 // ===== ExerciseGrid ======
