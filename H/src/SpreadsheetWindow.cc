@@ -176,6 +176,57 @@ void ChangeCellBackgroundDlg::OnCancel(wxCommandEvent& event)
 	this->Show(false);
 }
 
+// ==== ChangeCellFontDlg ====
+
+ChangeCellFontDlg::ChangeCellFontDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+	this->Init();
+
+	// Bind events
+}
+
+ChangeCellFontDlg::~ChangeCellFontDlg()
+{
+	// Unbind events
+}
+
+void ChangeCellFontDlg::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void ChangeCellFontDlg::SetupControls()
+{
+}
+
+void ChangeCellFontDlg::SetupSizers()
+{
+}
+
+void ChangeCellFontDlg::SetupSizing()
+{
+	wxSize size{ this->GetBestSize() };
+	this->SetMinSize(size);
+	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
+}
+
+void ChangeCellFontDlg::OnOK(wxCommandEvent& event)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
+}
+
+void ChangeCellFontDlg::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
+}
 
 // ===== SpreadsheetWindow =====
 
@@ -201,6 +252,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
+	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -225,6 +277,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
+	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
 
 void SpreadsheetWindow::Init()
@@ -261,6 +314,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE, _T("&Table Position"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Table Size"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
+	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 
 	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 	m_pEditMenu->AppendSubMenu(m_pModifySubMenu, _T("&Change Cell..."));
