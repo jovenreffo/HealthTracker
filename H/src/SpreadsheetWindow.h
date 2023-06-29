@@ -8,7 +8,7 @@
 #include <wx/dialog.h>
 #include <wx/wx.h>
 #include <wx/clrpicker.h>
-#include <wx/fontdlg.h>
+#include <wx/fontpicker.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
@@ -113,7 +113,7 @@ private:
 	// Controls
 	wxSpinCtrl* m_pRowSpin;
 	wxSpinCtrl* m_pColSpin;
-	wxFontDialog* m_pFontDlg;
+	wxFontPickerCtrl* m_pFontPicker;
 
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
@@ -176,6 +176,7 @@ private:
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
 	CCBD* m_pCCBD;
+	ChangeCellFontDlg* m_pCCFD;
 
 	wxBoxSizer* m_pTopSizer;
 
