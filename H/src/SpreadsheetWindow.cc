@@ -184,11 +184,17 @@ ChangeCellFontDlg::ChangeCellFontDlg(wxWindow* parent, wxWindowID id, const wxSt
 	this->Init();
 
 	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &ChangeCellFontDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &ChangeCellFontDlg::OnCancel, this, wxID_CANCEL);
+	m_pFontPicker->Bind(wxEVT_FONTPICKER_CHANGED, &ChangeCellFontDlg::OnSelectFont, this);
 }
 
 ChangeCellFontDlg::~ChangeCellFontDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &ChangeCellFontDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &ChangeCellFontDlg::OnCancel, this, wxID_CANCEL);
+	m_pFontPicker->Unbind(wxEVT_FONTPICKER_CHANGED, &ChangeCellFontDlg::OnSelectFont, this);
 }
 
 void ChangeCellFontDlg::Init()
@@ -255,6 +261,13 @@ void ChangeCellFontDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
+}
+
+void ChangeCellFontDlg::OnSelectFont(wxFontPickerEvent& event)
+{
+	wxMessageBox(_T("DSAIJD"));
+	m_font = m_pFontPicker->GetFont();
+	this->Refresh();
 }
 
 // ===== SpreadsheetWindow =====
@@ -443,7 +456,7 @@ void SpreadsheetWindow::OnChangeCellFont(wxCommandEvent& event)
 
 	if (m_pCCFD->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->SetCellFont(m_pCCFD->GetRow(), m_pCCFD->GetCol(), m_pCCFD->GetFont());
 	}
 }
 
@@ -468,6 +481,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Bind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
+	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
 
 ExerciseGrid::~ExerciseGrid()
@@ -476,6 +490,7 @@ ExerciseGrid::~ExerciseGrid()
 	this->Unbind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
+	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
 
 void ExerciseGrid::ResetTablePosition()
@@ -541,6 +556,7 @@ void ExerciseGrid::SetupMenu()
 
 	m_pPopupMenu->AppendSubMenu(m_pEditCellSub, _T("&Modify Cell..."));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
+	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 }
 
 void ExerciseGrid::SetupLabelArray()
@@ -622,5 +638,20 @@ void ExerciseGrid::OnChangeBackgroundColour(wxCommandEvent& event)
 		wxColour colour = data.GetColour();
 
 		this->SetCellBackgroundColour(m_currCell.GetRow(), m_currCell.GetCol(), colour);
+	}
+}
+
+void ExerciseGrid::OnChangeCellFont(wxCommandEvent& event)
+{
+	m_pFontDlg = new wxFontDialog(this);
+	m_pFontDlg->Show(true);
+
+	if (m_pFontDlg->ShowModal() == wxID_OK)
+	{
+		wxFontData data = m_pFontDlg->GetFontData();
+		wxFont font = data.GetChosenFont();
+
+		this->SetCellFont(m_currCell.GetRow(), m_currCell.GetCol(), font);
+		this->ForceRefresh();
 	}
 }
