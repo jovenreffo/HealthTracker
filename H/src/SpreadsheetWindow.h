@@ -9,6 +9,7 @@
 #include <wx/wx.h>
 #include <wx/clrpicker.h>
 #include <wx/fontpicker.h>
+#include <wx/fontdlg.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
@@ -151,6 +152,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnSelectFont(wxFontPickerEvent& event);
 };
 
 enum class SSW
@@ -225,6 +227,8 @@ private:
 	wxMenu* m_pPopupMenu;
 	wxMenu* m_pEditCellSub;
 
+	wxFontDialog* m_pFontDlg;
+
 	wxFont m_cellFont;
 
 	wxArrayString m_labels;
@@ -260,6 +264,7 @@ public:
 	void OnSelectCell(wxGridEvent& event);
 	void OnRightClickCell(wxGridEvent& event);
 	void OnChangeBackgroundColour(wxCommandEvent& event);
+	void OnChangeCellFont(wxCommandEvent& event);
 };
 
 #endif
