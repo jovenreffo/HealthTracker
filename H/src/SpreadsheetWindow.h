@@ -142,6 +142,7 @@ public:
 	const int GetRow() const { return m_row; }
 	const int GetCol() const { return m_col; }
 	const wxFont& GetFont() const { return m_font; }
+	const wxFontPickerCtrl* GetPickerCtrl() const { return m_pFontPicker; }
 
 	// Init
 	void Init();
