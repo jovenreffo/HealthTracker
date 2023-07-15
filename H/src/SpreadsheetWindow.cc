@@ -265,8 +265,7 @@ void ChangeCellFontDlg::OnCancel(wxCommandEvent& event)
 
 void ChangeCellFontDlg::OnSelectFont(wxFontPickerEvent& event)
 {
-	wxMessageBox(_T("DSAIJD"));
-	m_font = m_pFontPicker->GetFont();
+	m_font = m_pFontPicker->GetSelectedFont();
 	this->Refresh();
 }
 
@@ -456,7 +455,10 @@ void SpreadsheetWindow::OnChangeCellFont(wxCommandEvent& event)
 
 	if (m_pCCFD->ShowModal() == wxID_OK)
 	{
-		m_pGrid->SetCellFont(m_pCCFD->GetRow(), m_pCCFD->GetCol(), m_pCCFD->GetFont());
+		wxFont font = m_pCCFD->GetPickerCtrl()->GetSelectedFont();
+
+		m_pGrid->SetCellFont(m_pCCFD->GetRow(), m_pCCFD->GetCol(), font);
+		this->Refresh();
 	}
 }
 
