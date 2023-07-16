@@ -292,6 +292,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE_POS);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
@@ -317,6 +318,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE_POS);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
+	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 }
@@ -354,6 +356,7 @@ void SpreadsheetWindow::SetupMenu()
 	// Edit menu
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_POS, _T("&Table Position"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Table Size"));
+	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_LAYOUT, _T("&Table Configuration"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 
@@ -439,7 +442,18 @@ void SpreadsheetWindow::OnResetTableSize(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnResetTableLayout(wxCommandEvent& event)
 {
+	m_pGrid->ResetTableSize();
+	m_pGrid->ResetTablePosition();
 
+	for (auto r{ 0 }; r < m_pGrid->GetNumberRows(); ++r)
+	{
+		for (auto c{ 0 }; c < m_pGrid->GetNumberCols(); ++c)
+		{
+			m_pGrid->SetCellValue(wxGridCellCoords(r, c), wxEmptyString);
+			m_pGrid->SetCellBackgroundColour(r, c, wxColour(255, 255, 255));
+		}
+	}
+	m_pGrid->SetupWorkoutTemplate();
 }
 
 void SpreadsheetWindow::OnChangeBackgroundColour(wxCommandEvent& event)
@@ -480,6 +494,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 
 	// Grid member initialization
 	this->Init();
+	this->SetupLabelArray();
 
 	// Workout template setup
 	this->SetupWorkoutTemplate();
@@ -579,6 +594,9 @@ void ExerciseGrid::SetupWorkoutTemplate()
 {
 	this->SetupTitle();
 
+	m_currDay = 1;
+	m_rowDayCoord = 4;
+
 	for (auto i{ 0 }; i < 5; ++i)
 	{
 		this->SetupDayLabel();
@@ -606,7 +624,6 @@ void ExerciseGrid::SetupDayLabel()
 	}
 
 	// loop through the labels and set their background colours
-	this->SetupLabelArray();
 	for (auto i{ 0 }; i < 5; ++i)
 	{
 		this->SetCellFont(m_rowDayCoord, i + 1, Fonts::GetBoldFont(8));
@@ -615,7 +632,6 @@ void ExerciseGrid::SetupDayLabel()
 	}
 	// with the exception of the notes label: change it to yellow
 	this->SetCellBackgroundColour(m_rowDayCoord, 5, wxColour(255, 255, 0));
-
 
 	// handle value updates
 	++m_currDay;
