@@ -237,8 +237,8 @@ private:
 	wxArrayString m_labels;
 	wxGridCellCoords m_currCell;
 
-	int m_currDay{ 1 };
-	int m_rowDayCoord{ 4 }; // value for writing the day number in a certain row
+	int m_currDay;
+	int m_rowDayCoord; // value for writing the day number in a certain row
 
 public:
 	ExerciseGrid(wxWindow* parent,
