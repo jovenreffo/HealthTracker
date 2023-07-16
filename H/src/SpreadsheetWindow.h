@@ -163,6 +163,7 @@ enum class SSW
 	ID_INSERT_COL,
 	ID_RESET_TABLE,
 	ID_RESET_TABLE_SIZE,
+	ID_RESET_TABLE_LAYOUT,
 	ID_CHANGE_CELL_BG_COLOUR,
 	ID_CHANGE_CELL_FONT
 };
@@ -217,6 +218,7 @@ public:
 
 	void OnResetTablePosition(wxCommandEvent& event);
 	void OnResetTableSize(wxCommandEvent& event);
+	void OnResetTableLayout(wxCommandEvent& event);
 
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 	void OnChangeCellFont(wxCommandEvent& event);
