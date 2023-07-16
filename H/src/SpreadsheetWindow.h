@@ -219,6 +219,7 @@ public:
 	void OnResetTablePosition(wxCommandEvent& event);
 	void OnResetTableSize(wxCommandEvent& event);
 	void OnResetTableLayout(wxCommandEvent& event);
+	void OnClearTableConfiguration(wxCommandEvent& event);
 
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 	void OnChangeCellFont(wxCommandEvent& event);
