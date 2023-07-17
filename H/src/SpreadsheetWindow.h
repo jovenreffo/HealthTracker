@@ -156,6 +156,18 @@ public:
 	void OnSelectFont(wxFontPickerEvent& event);
 };
 
+class ChangeCellSizeDlg : public wxDialog
+{
+public:
+	ChangeCellSizeDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Change Cell Size"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~ChangeCellSizeDlg();
+};
+
 enum class SSW
 {
 	ID_EXPORT_PDF,
