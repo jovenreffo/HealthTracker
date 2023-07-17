@@ -119,10 +119,10 @@ void ChangeCellBackgroundDlg::Init()
 
 void ChangeCellBackgroundDlg::SetupControls()
 {
-	m_pRowSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pRowSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
 	m_pRowSpin->SetValidator(wxGenericValidator(&m_row));
 
-	m_pColSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 0);
+	m_pColSpin = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
 	m_pColSpin->SetValidator(wxGenericValidator(&m_col));
 
 	m_pClrPicker = new wxColourPickerCtrl(this, wxID_ANY);
@@ -274,32 +274,52 @@ void ChangeCellFontDlg::OnSelectFont(wxFontPickerEvent& event)
 ChangeCellSizeDlg::ChangeCellSizeDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	this->Init();
 
+	// Bind events
 }
 
 ChangeCellSizeDlg::~ChangeCellSizeDlg()
 {
-
+	// Unbind events
 }
 
 void ChangeCellSizeDlg::Init()
 {
-
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void ChangeCellSizeDlg::SetupControls()
 {
+	// Spin controls
+	m_pRow = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pCol = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pNumRows = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pNumCols = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	// Validators
+	m_pRow->SetValidator(wxGenericValidator(&m_row));
+	m_pCol->SetValidator(wxGenericValidator(&m_col));
+	m_pNumRows->SetValidator(wxGenericValidator(&m_numRows));
+	m_pNumCols->SetValidator(wxGenericValidator(&m_numCols));
 
+	// Buttons
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void ChangeCellSizeDlg::SetupSizers()
 {
-
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 }
 
 void ChangeCellSizeDlg::SetupSizing()
 {
-
+	wxSize size{ this->GetBestSize() };
+	this->SetMinSize(size);
+	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
 }
 
 void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
@@ -343,6 +363,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
 	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
 }
 
@@ -370,6 +391,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
 	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
 }
 
@@ -409,6 +431,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_LAYOUT, _T("&Table Configuration"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
+	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_SIZE, _T("&Size"));
 
 	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 	m_pEditMenu->Append((int)SSW::ID_CLEAR_TABLE_CONFIG, _T("&Clear Configuration"));
@@ -547,6 +570,17 @@ void SpreadsheetWindow::OnChangeCellFont(wxCommandEvent& event)
 
 		m_pGrid->SetCellFont(m_pCCFD->GetRow(), m_pCCFD->GetCol(), font);
 		this->Refresh();
+	}
+}
+
+void SpreadsheetWindow::OnChangeCellSize(wxCommandEvent& event)
+{
+	m_pCCSD = new ChangeCellSizeDlg(this, wxID_ANY);
+	m_pCCSD->Show(true);
+
+	if (m_pCCSD->ShowModal() == wxID_OK)
+	{
+
 	}
 }
 
