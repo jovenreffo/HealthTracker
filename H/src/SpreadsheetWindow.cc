@@ -295,6 +295,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -321,6 +322,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
 }
 
 void SpreadsheetWindow::Init()
@@ -361,6 +363,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 
 	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
+	m_pEditMenu->Append((int)SSW::ID_CLEAR_TABLE_CONFIG, _T("&Clear Configuration"));
 	m_pEditMenu->AppendSubMenu(m_pModifySubMenu, _T("&Change Cell..."));
 
 	// Menubar
@@ -454,6 +457,24 @@ void SpreadsheetWindow::OnResetTableLayout(wxCommandEvent& event)
 		}
 	}
 	m_pGrid->SetupWorkoutTemplate();
+}
+
+void SpreadsheetWindow::OnClearTableConfiguration(wxCommandEvent& event)
+{
+	m_pGrid->ResetTablePosition();
+	m_pGrid->ResetTableSize();
+
+	for (auto r{ 0 }; r < m_pGrid->GetNumberRows(); ++r)
+	{
+		for (auto c{ 0 }; c < m_pGrid->GetNumberCols(); ++c)
+		{
+			m_pGrid->SetCellValue(wxGridCellCoords(r, c), wxEmptyString);
+			m_pGrid->SetCellBackgroundColour(r, c, wxColour(255, 255, 255));
+		}
+	}
+
+	// Reset the cell where the title is to its default size
+	m_pGrid->SetCellSize(0, 0, 1, 1);
 }
 
 void SpreadsheetWindow::OnChangeBackgroundColour(wxCommandEvent& event)
