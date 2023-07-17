@@ -313,6 +313,23 @@ void ChangeCellSizeDlg::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Row:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pRow, wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Column:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pCol, wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Number of Rows:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pNumRows, wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Number of Columns:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pNumCols, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void ChangeCellSizeDlg::SetupSizing()
