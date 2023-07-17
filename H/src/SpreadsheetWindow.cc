@@ -277,6 +277,46 @@ ChangeCellSizeDlg::ChangeCellSizeDlg(wxWindow* parent, wxWindowID id, const wxSt
 
 }
 
+ChangeCellSizeDlg::~ChangeCellSizeDlg()
+{
+
+}
+
+void ChangeCellSizeDlg::Init()
+{
+
+}
+
+void ChangeCellSizeDlg::SetupControls()
+{
+
+}
+
+void ChangeCellSizeDlg::SetupSizers()
+{
+
+}
+
+void ChangeCellSizeDlg::SetupSizing()
+{
+
+}
+
+void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
+}
+
+void ChangeCellSizeDlg::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
+}
+
 // ===== SpreadsheetWindow =====
 
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
