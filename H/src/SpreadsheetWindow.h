@@ -158,6 +158,26 @@ public:
 
 class ChangeCellSizeDlg : public wxDialog
 {
+private:
+	// Controls
+	wxSpinCtrl* m_pRow;
+	wxSpinCtrl* m_pCol;
+	wxSpinCtrl* m_pNumRows; // the number of rows the new cell will occupy
+	wxSpinCtrl* m_pNumCols; // the number of cols the new cell will occupy
+	// Validators
+	int m_row;
+	int m_col;
+	int m_numRows;
+	int m_numCols;
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pControlSizer;
+
 public:
 	ChangeCellSizeDlg(wxWindow* parent,
 		wxWindowID id,
@@ -166,6 +186,16 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~ChangeCellSizeDlg();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 enum class SSW
@@ -178,7 +208,8 @@ enum class SSW
 	ID_RESET_TABLE_LAYOUT,
 	ID_CLEAR_TABLE_CONFIG,
 	ID_CHANGE_CELL_BG_COLOUR,
-	ID_CHANGE_CELL_FONT
+	ID_CHANGE_CELL_FONT,
+	ID_CHANGE_CELL_SIZE
 };
 
 class ExerciseGrid;
@@ -186,15 +217,20 @@ class ExerciseGrid;
 class SpreadsheetWindow : public wxFrame
 {
 private:
+	// Menu
 	wxMenu* m_pFileMenu; wxMenu* m_pExportSubMenu;
 	wxMenu* m_pInsertMenu;
 	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu; wxMenu* m_pModifySubMenu;
 	wxMenuBar* m_pMenuBar;
+
+	// Control + dlg members
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
 	CCBD* m_pCCBD;
 	ChangeCellFontDlg* m_pCCFD;
+	ChangeCellSizeDlg* m_pCCSD;
 
+	// Sizers
 	wxBoxSizer* m_pTopSizer;
 
 public:
@@ -236,6 +272,7 @@ public:
 
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 	void OnChangeCellFont(wxCommandEvent& event);
+	void OnChangeCellSize(wxCommandEvent& event);
 };
 
 class ExerciseGrid : public wxGrid
