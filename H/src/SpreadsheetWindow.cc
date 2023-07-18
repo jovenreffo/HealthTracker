@@ -339,6 +339,11 @@ void ChangeCellSizeDlg::SetupSizing()
 	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
 }
 
+void ChangeCellSizeDlg::ToolTips()
+{
+
+}
+
 void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
@@ -624,6 +629,7 @@ ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
 }
 
 ExerciseGrid::~ExerciseGrid()
@@ -633,6 +639,7 @@ ExerciseGrid::~ExerciseGrid()
 	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
+	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
 }
 
 void ExerciseGrid::ResetTablePosition()
@@ -699,6 +706,7 @@ void ExerciseGrid::SetupMenu()
 	m_pPopupMenu->AppendSubMenu(m_pEditCellSub, _T("&Modify Cell..."));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
+	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_SIZE, _T("&Size"));
 }
 
 void ExerciseGrid::SetupLabelArray()
@@ -796,5 +804,20 @@ void ExerciseGrid::OnChangeCellFont(wxCommandEvent& event)
 
 		this->SetCellFont(m_currCell.GetRow(), m_currCell.GetCol(), font);
 		this->ForceRefresh();
+	}
+}
+
+void ExerciseGrid::OnChangeCellSize(wxCommandEvent& event)
+{
+	m_pCCSD = new ChangeCellSizeDlg(this, wxID_ANY);
+	m_pCCSD->Show(true);
+
+	// pass the current row and col to the spin ctrls
+	m_pCCSD->SetRow(m_currCell.GetRow());
+	m_pCCSD->SetCol(m_currCell.GetCol());
+
+	if (m_pCCSD->ShowModal() == wxID_OK)
+	{
+		this->SetCellSize(m_pCCSD->GetRow(), m_pCCSD->GetCol(), m_pCCSD->GetNumRows(), m_pCCSD->GetNumCols());
 	}
 }
