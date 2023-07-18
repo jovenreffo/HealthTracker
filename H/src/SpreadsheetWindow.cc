@@ -597,7 +597,7 @@ void SpreadsheetWindow::OnChangeCellSize(wxCommandEvent& event)
 
 	if (m_pCCSD->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->SetCellSize(m_pCCSD->GetRow(), m_pCCSD->GetCol(), m_pCCSD->GetNumRows(), m_pCCSD->GetNumCols());
 	}
 }
 
