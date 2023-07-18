@@ -193,11 +193,16 @@ public:
 	const int GetNumRows() const { return m_numRows; }
 	const int GetNumCols() const { return m_numCols; }
 
+	// Setters for spin controls
+	void SetRow(int r) { m_pRow->SetValue(r); }
+	void SetCol(int c) { m_pCol->SetValue(c); }
+
 	// Setup
 	void Init();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
+	void ToolTips();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
@@ -288,6 +293,7 @@ private:
 	wxMenu* m_pEditCellSub;
 
 	wxFontDialog* m_pFontDlg;
+	ChangeCellSizeDlg* m_pCCSD;
 
 	wxFont m_cellFont;
 
@@ -325,6 +331,7 @@ public:
 	void OnRightClickCell(wxGridEvent& event);
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 	void OnChangeCellFont(wxCommandEvent& event);
+	void OnChangeCellSize(wxCommandEvent& event);
 };
 
 #endif
