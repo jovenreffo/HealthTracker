@@ -187,6 +187,12 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~ChangeCellSizeDlg();
 
+	// Getters
+	const int GetRow() const { return m_row; }
+	const int GetCol() const { return m_col; }
+	const int GetNumRows() const { return m_numRows; }
+	const int GetNumCols() const { return m_numCols; }
+
 	// Setup
 	void Init();
 	void SetupControls();
