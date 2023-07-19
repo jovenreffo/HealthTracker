@@ -65,7 +65,8 @@ public:
 
 	// Panel setup
 	void LoadConfig();
-	void UpdateConfig();
+	void UpdateConfigPerspective();
+	void SaveEntriesToConfig();
 	void Init();
 	void SetupControls();
 	void SetupSizers();
