@@ -67,6 +67,7 @@ public:
 	void LoadConfig();
 	void UpdateConfigPerspective();
 	void SaveEntriesToConfig();
+	void LoadEntriesFromConfig();
 	void Init();
 	void SetupControls();
 	void SetupSizers();
