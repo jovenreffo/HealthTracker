@@ -13,8 +13,8 @@ BEGIN_EVENT_TABLE(EntryList, wxListView)
 	EVT_KEY_DOWN(EntryList::OnKey)
 END_EVENT_TABLE()
 
-EntryList::EntryList(wxTextCtrl* pTextCtrl, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style), m_pTextCtrl{ pTextCtrl }
+EntryList::EntryList(int* pNumEntries, wxTextCtrl* pTextCtrl, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style), m_pTextCtrl{ pTextCtrl }, m_numEntries{ *pNumEntries }
 {
 	this->Init();
 }
@@ -78,12 +78,14 @@ void EntryList::SetupList()
 void EntryList::ResetList()
 {
 	this->DeleteAllItems();
+	m_numEntries = 0; // There are no remaining entries
 }
 
 void EntryList::HandleDeleteItem()
 {
 	if (wxMessageBox(_T("Are you sure you want to delete this item?"), _T("Confirm"), wxYES_NO | wxICON_WARNING) == wxYES)
 		this->DeleteItem(m_selectionIndex);
+	m_numEntries -= 1; // one less entry in the list
 }
 
 // Events
