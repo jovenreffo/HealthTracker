@@ -47,8 +47,12 @@ private:
 	wxString m_currentItemName;
 	long m_selectionIndex;
 
+	// Config
+	int m_numEntries;
+
 public:
-	EntryList(wxTextCtrl* pTextCtrl,
+	EntryList(int* pNumEntries,
+		wxTextCtrl* pTextCtrl,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
