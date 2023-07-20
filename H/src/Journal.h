@@ -52,6 +52,7 @@ private:
 
 	// Config
 	int m_nameID{ 0 };
+	int m_numEntries{ 0 };
 
 public:
 	Journal(wxWindow* parent,
