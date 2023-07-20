@@ -3,6 +3,8 @@
 #include <wx/string.h>
 #include <wx/config.h>
 #include <wx/datetime.h>
+#include <wx/msgdlg.h>
+#include <wx/stringops.h>
 #include "Journal.h"
 
 BEGIN_EVENT_TABLE(Journal, wxPanel)
@@ -15,11 +17,13 @@ Journal::Journal(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSi
 {
 	this->Init();
 	this->LoadConfig();
+	this->LoadEntriesFromConfig();
 }
 
 Journal::~Journal()
 {
-	this->UpdateConfig();
+	this->UpdateConfigPerspective();
+	this->SaveEntriesToConfig();
 	m_auiMgr.UnInit();
 }
 
@@ -77,7 +81,7 @@ void Journal::LoadConfig()
 	m_auiMgr.LoadPerspective(pConfig->Read(_T("Perspective"), m_defPerspective), true);
 }
 
-void Journal::UpdateConfig()
+void Journal::UpdateConfigPerspective()
 {
 	// Update the program config using SavePerspective
 	wxConfigBase* pConfig = wxConfigBase::Get();
@@ -88,6 +92,62 @@ void Journal::UpdateConfig()
 
 	m_perspective = m_auiMgr.SavePerspective();
 	pConfig->Write(_T("Perspective"), m_perspective);
+}
+
+void Journal::SaveEntriesToConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	// Set the config path to something different in order to keep things separate
+	pConfig->SetPath(_T("/Journal/EntryNames"));
+
+	// Save an integer for the number of entries
+	m_numEntries = m_pEntryList->GetItemCount();
+	pConfig->Write(_T("NumEntries"), m_numEntries);
+
+	// Loop through all the entries and save their strings to the program configuration
+	// First: for the entry names
+	for (auto i{ 0 }; i < m_pEntryList->GetItemCount(); ++i, ++m_nameID)
+	{
+		// Convert the m_nameID to a string and associate it with the current item's text
+		pConfig->Write(std::to_string(i), m_pEntryList->GetItemText(i));
+	}
+
+	// Second: for the entry content
+	//pConfig->SetPath(_T("/Journal/EntryContent"));
+}
+
+void Journal::LoadEntriesFromConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+	
+	// Start by loading the entry names & items before the corresponding content strings
+	pConfig->SetPath(_T("/Journal/EntryNames/"));
+	m_numEntries = pConfig->Read(_T("NumEntries"), 0L);
+
+	//wxString t;
+	//if (pConfig->Read(std::to_string(0), &t))
+	//{
+	//	wxLogMessage("%s", t);
+	//}
+
+	for (auto i{ 0 }; i < m_numEntries; ++i)
+	{
+		wxString curr;
+		if (pConfig->Read(std::to_string(i), &curr))
+		{
+			m_pEntryList->AddItem(curr, wxEmptyString);
+		}
+	}
+
+#ifdef _DEBUG
+	wxLogMessage("%d", m_numEntries);
+#endif
+
 }
 
 void Journal::SetupControls()
@@ -106,7 +166,7 @@ void Journal::SetupControls()
 
 	// Control classes
 	m_pTextCtrl = new wxTextCtrl(m_pTextPanel, ID_ENTRY_TEXT, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE | wxTE_RICH2, wxDefaultValidator, _T("journalctrl"));
-	m_pEntryList = new EntryList(m_pTextCtrl, m_pEntryPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pEntryList = new EntryList(&m_numEntries, m_pTextCtrl, m_pEntryPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pTextCtrl->DragAcceptFiles(true);
 
 	// Buttons
