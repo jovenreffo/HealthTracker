@@ -50,6 +50,9 @@ private:
 	wxPanel* m_pTextPanel; // this panel will contain the date, textctrl, and buttons
 	wxPanel* m_pEntryPanel; // contains the entry list and m_pPrevEntryText
 
+	// Config
+	int m_nameID{ 0 };
+
 public:
 	Journal(wxWindow* parent,
 		wxWindowID id,
