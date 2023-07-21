@@ -116,7 +116,12 @@ void Journal::SaveEntriesToConfig()
 	}
 
 	// Second: for the entry content
-	//pConfig->SetPath(_T("/Journal/EntryContent"));
+	pConfig->SetPath(_T("/Journal/EntryContent"));
+	for (auto i{ 0 }; i < m_pEntryList->GetItemCount(); ++i)
+	{
+		// Recieve the content associated with index 'i'
+		pConfig->Write(std::to_string(i), m_pEntryList->GetEntryContent()[i].GetContent());
+	}
 }
 
 void Journal::LoadEntriesFromConfig()
@@ -125,7 +130,9 @@ void Journal::LoadEntriesFromConfig()
 	if (pConfig == nullptr)
 		return;
 	
-	// Start by loading the entry names & items before the corresponding content strings
+	// setup an array for content
+
+	// load the entry names
 	pConfig->SetPath(_T("/Journal/EntryNames/"));
 	m_numEntries = pConfig->Read(_T("NumEntries"), 0L);
 
