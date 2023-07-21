@@ -62,6 +62,9 @@ public:
 	void AddItem(const wxString& name, const wxString& content);
 	void OpenEntry();
 
+	// Getters
+	const std::vector<EntryContent> GetEntryContent() const { return m_entryContent; }
+
 	// Initialization
 	void Init();
 	void SetupPopUpMenu();
