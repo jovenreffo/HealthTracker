@@ -129,12 +129,6 @@ void Journal::LoadEntriesFromConfig()
 	pConfig->SetPath(_T("/Journal/EntryNames/"));
 	m_numEntries = pConfig->Read(_T("NumEntries"), 0L);
 
-	//wxString t;
-	//if (pConfig->Read(std::to_string(0), &t))
-	//{
-	//	wxLogMessage("%s", t);
-	//}
-
 	for (auto i{ m_numEntries - 1 }; i >= 0; --i)
 	{
 		wxString curr;
@@ -147,7 +141,6 @@ void Journal::LoadEntriesFromConfig()
 #ifdef _DEBUG
 	wxLogMessage("%d", m_numEntries);
 #endif
-
 }
 
 void Journal::SetupControls()
