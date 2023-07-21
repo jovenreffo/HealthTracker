@@ -135,7 +135,7 @@ void Journal::LoadEntriesFromConfig()
 	//	wxLogMessage("%s", t);
 	//}
 
-	for (auto i{ 0 }; i < m_numEntries; ++i)
+	for (auto i{ m_numEntries - 1 }; i >= 0; --i)
 	{
 		wxString curr;
 		if (pConfig->Read(std::to_string(i), &curr))
