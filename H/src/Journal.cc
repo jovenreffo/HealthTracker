@@ -129,20 +129,30 @@ void Journal::LoadEntriesFromConfig()
 	wxConfigBase* pConfig = wxConfigBase::Get();
 	if (pConfig == nullptr)
 		return;
+
+	pConfig->SetPath(_T("/Journal/EntryNames/"));
+	m_numEntries = pConfig->Read(_T("NumEntries"), 0L);
 	
 	// setup an array for content
+	wxArrayString entryContentArr;
+	pConfig->SetPath(_T("/Journal/EntryContent"));
+	for (auto i{ m_numEntries - 1 }; i >= 0; --i)
+	{
+		wxString curr;
+
+		if (pConfig->Read(std::to_string(i), &curr))
+			entryContentArr.Add(curr);
+	}
 
 	// load the entry names
 	pConfig->SetPath(_T("/Journal/EntryNames/"));
-	m_numEntries = pConfig->Read(_T("NumEntries"), 0L);
 
 	for (auto i{ m_numEntries - 1 }; i >= 0; --i)
 	{
 		wxString curr;
+
 		if (pConfig->Read(std::to_string(i), &curr))
-		{
-			m_pEntryList->AddItem(curr, wxEmptyString);
-		}
+			m_pEntryList->AddItem(curr, entryContentArr[i]);
 	}
 
 #ifdef _DEBUG
