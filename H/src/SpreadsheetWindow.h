@@ -209,6 +209,24 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+
+// ===== AddWorkoutDayDlg =====
+
+class AddWorkoutDayDlg : public wxDialog
+{
+private:
+
+
+public:
+	AddWorkoutDayDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Add Workout Day"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~AddWorkoutDayDlg();
+};
+
 enum class SSW
 {
 	ID_EXPORT_PDF,
