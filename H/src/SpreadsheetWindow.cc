@@ -364,10 +364,44 @@ void ChangeCellSizeDlg::OnCancel(wxCommandEvent& event)
 AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
+	this->Init();
 
+	// Bind events
 }
 
 AddWorkoutDayDlg::~AddWorkoutDayDlg()
+{
+	// Unbind events
+}
+
+void AddWorkoutDayDlg::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void AddWorkoutDayDlg::SetupControls()
+{
+
+}
+
+void AddWorkoutDayDlg::SetupSizers()
+{
+
+}
+
+void AddWorkoutDayDlg::SetupSizing()
+{
+
+}
+
+void AddWorkoutDayDlg::OnOK(wxCommandEvent& event)
+{
+
+}
+
+void AddWorkoutDayDlg::OnCancel(wxCommandEvent& event)
 {
 
 }
