@@ -359,6 +359,19 @@ void ChangeCellSizeDlg::OnCancel(wxCommandEvent& event)
 	this->Show(false);
 }
 
+// ===== AddWorkoutDayDlg =====
+
+AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+
+}
+
+AddWorkoutDayDlg::~AddWorkoutDayDlg()
+{
+
+}
+
 // ===== SpreadsheetWindow =====
 
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
