@@ -215,7 +215,18 @@ public:
 class AddWorkoutDayDlg : public wxDialog
 {
 private:
+	// Controls
+	wxSpinCtrl* m_pNumCtrl;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
 
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pControlSizer;
+
+	// Validation
+	int m_num;
 
 public:
 	AddWorkoutDayDlg(wxWindow* parent,
@@ -225,6 +236,16 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~AddWorkoutDayDlg();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 enum class SSW
