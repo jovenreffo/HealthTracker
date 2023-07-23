@@ -214,6 +214,7 @@ enum class SSW
 	ID_EXPORT_PDF,
 	ID_INSERT_ROW,
 	ID_INSERT_COL,
+	ID_INSERT_DAY,
 	ID_RESET_TABLE_POS,
 	ID_RESET_TABLE_SIZE,
 	ID_RESET_TABLE_LAYOUT,
@@ -275,6 +276,7 @@ public:
 
 	void OnAddRow(wxCommandEvent& event);
 	void OnAddCol(wxCommandEvent& event);
+	void OnInsertDay(wxCommandEvent& event);
 
 	void OnResetTablePosition(wxCommandEvent& event);
 	void OnResetTableSize(wxCommandEvent& event);
