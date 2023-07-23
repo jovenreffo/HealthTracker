@@ -380,6 +380,7 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pFileMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
+	m_pInsertMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnInsertDay, this, (int)SSW::ID_INSERT_DAY);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE_POS);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 	m_pResetSubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
@@ -408,6 +409,7 @@ void SpreadsheetWindow::BindEvents()
 	m_pFileMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnExit, this, wxID_EXIT);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddCol, this, (int)SSW::ID_INSERT_COL);
 	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnAddRow, this, (int)SSW::ID_INSERT_ROW);
+	m_pInsertMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnInsertDay, this, (int)SSW::ID_INSERT_DAY);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTablePosition, this, (int)SSW::ID_RESET_TABLE_POS);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableSize, this, (int)SSW::ID_RESET_TABLE_SIZE);
 	m_pResetSubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnResetTableLayout, this, (int)SSW::ID_RESET_TABLE_LAYOUT);
@@ -446,6 +448,7 @@ void SpreadsheetWindow::SetupMenu()
 	// Insert menu
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_COL, _T("&New Column"));
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_ROW, _T("&New Row"));
+	m_pInsertMenu->Append((int)SSW::ID_INSERT_DAY, _T("&New Workout Day"));
 
 	// Edit menu
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_POS, _T("&Table Position"));
@@ -524,6 +527,11 @@ void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 	{
 		m_pGrid->AppendCols(m_pAddTableDlg->GetNum(), true);
 	}
+}
+
+void SpreadsheetWindow::OnInsertDay(wxCommandEvent& event)
+{
+
 }
 
 void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
