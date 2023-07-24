@@ -277,11 +277,15 @@ ChangeCellSizeDlg::ChangeCellSizeDlg(wxWindow* parent, wxWindowID id, const wxSt
 	this->Init();
 
 	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &ChangeCellSizeDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &ChangeCellSizeDlg::OnCancel, this, wxID_CANCEL);
 }
 
 ChangeCellSizeDlg::~ChangeCellSizeDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &ChangeCellSizeDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &ChangeCellSizeDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void ChangeCellSizeDlg::Init()
@@ -350,6 +354,12 @@ void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
+		// Secondary validation
+		m_row = m_pRow->GetValue();
+		m_col = m_pCol->GetValue();
+		m_numRows = m_pNumRows->GetValue();
+		m_numCols = m_pNumCols->GetValue();
+
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
