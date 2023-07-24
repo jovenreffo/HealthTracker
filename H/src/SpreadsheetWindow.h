@@ -226,7 +226,7 @@ private:
 	wxFlexGridSizer* m_pControlSizer;
 
 	// Validation
-	int m_num;
+	int m_numDays;
 
 public:
 	AddWorkoutDayDlg(wxWindow* parent,
@@ -236,6 +236,9 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~AddWorkoutDayDlg();
+
+	// Getters
+	const int GetNumDays() const { return m_numDays; }
 
 	// Setup
 	void Init();
@@ -277,6 +280,7 @@ private:
 	// Control + dlg members
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
+	AddWorkoutDayDlg* m_pAddWorkoutDayDlg;
 	CCBD* m_pCCBD;
 	ChangeCellFontDlg* m_pCCFD;
 	ChangeCellSizeDlg* m_pCCSD;
