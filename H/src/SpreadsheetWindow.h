@@ -249,6 +249,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 enum class SSW
