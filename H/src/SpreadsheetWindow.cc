@@ -341,7 +341,7 @@ void ChangeCellSizeDlg::SetupSizing()
 
 void ChangeCellSizeDlg::ToolTips()
 {
-
+	
 }
 
 void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
@@ -367,7 +367,7 @@ AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxStri
 	this->Init();
 
 	// Bind events
-	
+	m_pNumCtrl->Bind(wxEVT_TEXT_ENTER, &AddWorkoutDayDlg::OnEnter, this);
 	m_pOk->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
@@ -375,6 +375,7 @@ AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxStri
 AddWorkoutDayDlg::~AddWorkoutDayDlg()
 {
 	// Unbind events
+	m_pNumCtrl->Unbind(wxEVT_TEXT_ENTER, &AddWorkoutDayDlg::OnEnter, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
