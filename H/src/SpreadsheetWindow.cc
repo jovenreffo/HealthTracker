@@ -367,11 +367,15 @@ AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxStri
 	this->Init();
 
 	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
 
 AddWorkoutDayDlg::~AddWorkoutDayDlg()
 {
 	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void AddWorkoutDayDlg::Init()
@@ -385,6 +389,9 @@ void AddWorkoutDayDlg::SetupControls()
 {
 	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 100, 1);
 	m_pNumCtrl->SetValidator(wxGenericValidator(&m_numDays));
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void AddWorkoutDayDlg::SetupSizers()
