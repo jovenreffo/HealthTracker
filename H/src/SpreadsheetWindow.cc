@@ -383,7 +383,8 @@ void AddWorkoutDayDlg::Init()
 
 void AddWorkoutDayDlg::SetupControls()
 {
-
+	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 100, 1);
+	m_pNumCtrl->SetValidator(wxGenericValidator(&m_numDays));
 }
 
 void AddWorkoutDayDlg::SetupSizers()
@@ -393,17 +394,24 @@ void AddWorkoutDayDlg::SetupSizers()
 
 void AddWorkoutDayDlg::SetupSizing()
 {
-
+	wxSize size{ this->GetBestSize() };
+	this->SetMinSize(size);
+	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
 }
 
 void AddWorkoutDayDlg::OnOK(wxCommandEvent& event)
 {
-
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void AddWorkoutDayDlg::OnCancel(wxCommandEvent& event)
 {
-
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 // ===== SpreadsheetWindow =====
@@ -578,7 +586,13 @@ void SpreadsheetWindow::OnAddCol(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnInsertDay(wxCommandEvent& event)
 {
+	m_pAddWorkoutDayDlg = new AddWorkoutDayDlg(this, wxID_ANY);
+	m_pAddWorkoutDayDlg->Show(true);
 
+	if (m_pAddWorkoutDayDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void SpreadsheetWindow::OnResetTablePosition(wxCommandEvent& event)
