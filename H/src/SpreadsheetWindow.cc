@@ -367,6 +367,7 @@ AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxStri
 	this->Init();
 
 	// Bind events
+	
 	m_pOk->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
@@ -387,7 +388,7 @@ void AddWorkoutDayDlg::Init()
 
 void AddWorkoutDayDlg::SetupControls()
 {
-	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, 100, 1);
+	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 1);
 	m_pNumCtrl->SetValidator(wxGenericValidator(&m_numDays));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
@@ -396,7 +397,19 @@ void AddWorkoutDayDlg::SetupControls()
 
 void AddWorkoutDayDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Number of days:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pNumCtrl, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void AddWorkoutDayDlg::SetupSizing()
@@ -419,6 +432,15 @@ void AddWorkoutDayDlg::OnCancel(wxCommandEvent& event)
 {
 	this->SetReturnCode(wxID_CANCEL);
 	this->Show(false);
+}
+
+void AddWorkoutDayDlg::OnEnter(wxCommandEvent& event)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 // ===== SpreadsheetWindow =====
