@@ -289,6 +289,7 @@ void ChangeCellSizeDlg::Init()
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupSizing();
+	this->ToolTips();
 }
 
 void ChangeCellSizeDlg::SetupControls()
@@ -341,7 +342,8 @@ void ChangeCellSizeDlg::SetupSizing()
 
 void ChangeCellSizeDlg::ToolTips()
 {
-	
+	m_pNumRows->SetToolTip(_T("Number of rows the new cell will occupy."));
+	m_pNumCols->SetToolTip(_T("Number of columns the new cell will occupy."));
 }
 
 void ChangeCellSizeDlg::OnOK(wxCommandEvent& event)
