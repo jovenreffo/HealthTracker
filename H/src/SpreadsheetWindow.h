@@ -369,6 +369,7 @@ public:
 
 	// init workout template
 	void SetupWorkoutTemplate();
+	void AddWorkoutDay();
 	void SetupTitle();
 	void SetupDayLabel();
 
