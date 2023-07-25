@@ -633,7 +633,7 @@ void SpreadsheetWindow::OnInsertDay(wxCommandEvent& event)
 
 	if (m_pAddWorkoutDayDlg->ShowModal() == wxID_OK)
 	{
-
+		m_pGrid->AddWorkoutDay();
 	}
 }
 
@@ -844,7 +844,7 @@ void ExerciseGrid::SetupWorkoutTemplate()
 
 void ExerciseGrid::AddWorkoutDay()
 {
-
+	this->SetupDayLabel();
 }
 
 void ExerciseGrid::SetupTitle()
@@ -880,6 +880,11 @@ void ExerciseGrid::SetupDayLabel()
 	// handle value updates
 	++m_currDay;
 	m_rowDayCoord += 11;
+
+	// Check to ensure we have enough room on the grid
+	// if not, add more rows
+	if (m_rowDayCoord >= GetNumberRows())
+		this->AppendRows(10, true);
 }
 
 void ExerciseGrid::OnSelectCell(wxGridEvent& event)
