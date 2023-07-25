@@ -842,6 +842,11 @@ void ExerciseGrid::SetupWorkoutTemplate()
 	}
 }
 
+void ExerciseGrid::AddWorkoutDay()
+{
+
+}
+
 void ExerciseGrid::SetupTitle()
 {
 	// Set properties for the title so it looks nice and sizes correctly
