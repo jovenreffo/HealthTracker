@@ -380,6 +380,7 @@ AddWorkoutDayDlg::AddWorkoutDayDlg(wxWindow* parent, wxWindowID id, const wxStri
 
 	// Bind events
 	m_pNumCtrl->Bind(wxEVT_TEXT_ENTER, &AddWorkoutDayDlg::OnEnter, this);
+	m_pNumCtrl->Bind(wxEVT_TEXT, &AddWorkoutDayDlg::OnExceedLimit, this);
 	m_pOk->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
@@ -388,6 +389,7 @@ AddWorkoutDayDlg::~AddWorkoutDayDlg()
 {
 	// Unbind events
 	m_pNumCtrl->Unbind(wxEVT_TEXT_ENTER, &AddWorkoutDayDlg::OnEnter, this);
+	m_pNumCtrl->Unbind(wxEVT_TEXT, &AddWorkoutDayDlg::OnExceedLimit, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &AddWorkoutDayDlg::OnCancel, this, wxID_CANCEL);
 }
@@ -397,11 +399,12 @@ void AddWorkoutDayDlg::Init()
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupSizing();
+	this->ToolTip();
 }
 
 void AddWorkoutDayDlg::SetupControls()
 {
-	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 100, 1);
+	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 100, 1);
 	m_pNumCtrl->SetValidator(wxGenericValidator(&m_numDays));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
@@ -432,8 +435,19 @@ void AddWorkoutDayDlg::SetupSizing()
 	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
 }
 
+void AddWorkoutDayDlg::ToolTip()
+{
+	m_pNumCtrl->SetToolTip(_T("Number of days to be added. Maximum 100 at a time."));
+}
+
 void AddWorkoutDayDlg::OnOK(wxCommandEvent& event)
 {
+	if (m_pNumCtrl->GetValue() > 100)
+	{
+		wxMessageBox(_T("A maximum of 100 days can be added at a time."), _T("Limit Exceeded"), wxICON_EXCLAMATION | wxOK);
+		return;
+	}
+
 	if (Validate() && TransferDataFromWindow())
 	{
 		this->SetReturnCode(wxID_OK);
@@ -453,6 +467,14 @@ void AddWorkoutDayDlg::OnEnter(wxCommandEvent& event)
 	{
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
+	}
+}
+
+void AddWorkoutDayDlg::OnExceedLimit(wxCommandEvent& event)
+{
+	if (m_pNumCtrl->GetValue() > 100)
+	{
+		wxMessageBox(_T("A maximum of 100 days can be added at a time."), _T("Limit Exceeded"), wxICON_EXCLAMATION | wxOK);
 	}
 }
 
