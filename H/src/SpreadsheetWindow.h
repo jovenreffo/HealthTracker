@@ -245,11 +245,13 @@ public:
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
+	void ToolTip();
 
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	void OnEnter(wxCommandEvent& event);
+	void OnExceedLimit(wxCommandEvent& event);
 };
 
 enum class SSW
