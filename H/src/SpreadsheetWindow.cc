@@ -886,8 +886,8 @@ void ExerciseGrid::SetupDayLabel()
 
 	// Check to ensure we have enough room on the grid
 	// if not, add more rows
-	if (m_rowDayCoord >= GetNumberRows())
-		this->AppendRows(10, true);
+	if (m_rowDayCoord + 10 >= GetNumberRows() || m_rowDayCoord >= GetNumberRows())
+		this->AppendRows(20, true);
 }
 
 void ExerciseGrid::OnSelectCell(wxGridEvent& event)
