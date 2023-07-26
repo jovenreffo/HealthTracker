@@ -633,7 +633,10 @@ void SpreadsheetWindow::OnInsertDay(wxCommandEvent& event)
 
 	if (m_pAddWorkoutDayDlg->ShowModal() == wxID_OK)
 	{
-		m_pGrid->AddWorkoutDay();
+		int numDays{ m_pAddWorkoutDayDlg->GetNumDays() };
+
+		for (auto i{ 0 }; i < numDays; ++i)
+			m_pGrid->AddWorkoutDay();
 	}
 }
 
