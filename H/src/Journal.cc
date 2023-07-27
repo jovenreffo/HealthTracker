@@ -156,7 +156,7 @@ void Journal::LoadEntriesFromConfig()
 	}
 
 #ifdef _DEBUG
-	wxLogMessage("%d", m_numEntries);
+	//wxLogMessage("%d", m_numEntries);
 #endif
 }
 
