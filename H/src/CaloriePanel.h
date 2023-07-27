@@ -13,6 +13,32 @@
 #include "NutritionCatalog.h"
 #include "CalorieList.h"
 
+// ===== CPanelSettings =====
+
+class CPanelSettings: public wxDialog
+{
+public:
+	CPanelSettings(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Nutrition Settings"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~CPanelSettings();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+};
+
+// ===== CaloriePanel =====
+
 enum class CP
 {
 	ID_SEARCH,
