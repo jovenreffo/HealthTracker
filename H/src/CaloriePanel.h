@@ -17,7 +17,8 @@ enum class CP
 {
 	ID_SEARCH,
 	ID_NEW_ITEM,
-	ID_TOTAL
+	ID_TOTAL,
+	ID_SETTINGS
 };
 
 class CaloriePanel: public wxPanel
@@ -32,9 +33,11 @@ private:
 	wxBitmapButton* m_pSearchButton;
 	wxBitmapButton* m_pAddButton;
 	wxBitmapButton* m_pSaveButton;
+	wxBitmapButton* m_pSettingsButton;
 	wxBitmap m_searchBmp;
 	wxBitmap m_addBmp;
 	wxBitmap m_saveBmp;
+	wxBitmap m_settingsBmp;
 	
 public:
 	CaloriePanel(wxWindow* parent,
