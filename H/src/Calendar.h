@@ -15,6 +15,8 @@ enum class CID // Calendar ID
 	ID_CAL_DCLICK
 };
 
+// ====== CalendarPlanDlg ======
+
 class CalendarPlanDlg : public wxDialog
 {
 private:
@@ -33,7 +35,7 @@ private:
 public:
 	CalendarPlanDlg(wxWindow* parent,
 		wxWindowID id,
-		const wxString& title = _T("Select date:"),
+		const wxString& title = _T("Selected date:"),
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
@@ -55,6 +57,8 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+// ====== CalendarInfo ======
+
 class CalendarInfo
 {
 private:
@@ -74,12 +78,17 @@ public:
 	void SetContent(const wxString& content) { m_content = content; }
 };
 
+// ====== CalendarPanel ======
+
 class CalendarPanel : public wxPanel
 {
 private:
+	// Controls
 	Calendar* m_pCalendar;
+	wxButton* m_pAddEvent;
 	wxButton* m_pClearNotes;
 
+	// Sizer
 	wxBoxSizer* m_pTopSizer;
 
 public:
@@ -98,6 +107,8 @@ public:
 	// Events
 	void OnClearNotes(wxCommandEvent& event);
 };
+
+// ====== Calendar ======
 
 class Calendar : public wxGenericCalendarCtrl
 {
