@@ -11,15 +11,63 @@
 #include "Font/Font.hpp"
 #include "Nutrient Total/Total.hpp"
 
+// ===== CPanelSettings =====
+
+CPanelSettings::CPanelSettings(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+	this->Init();
+
+	// Bind events
+}
+
+CPanelSettings::~CPanelSettings()
+{
+	// Unbind events
+}
+
+void CPanelSettings::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void CPanelSettings::SetupControls()
+{
+}
+
+void CPanelSettings::SetupSizers()
+{
+}
+
+void CPanelSettings::SetupSizing()
+{
+	wxSize sz{ this->GetBestSize() };
+	this->SetMinSize(sz);
+	this->SetInitialSize(wxSize(sz.GetWidth() + 50, sz.GetHeight() + 35));
+}
+
+void CPanelSettings::OnOK(wxCommandEvent& event)
+{
+}
+
+void CPanelSettings::OnCancel(wxCommandEvent& event)
+{
+}
+
+// ===== CaloriePanel =====
+
 CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
 	this->Init();
 
 	// Bind events
-	m_pSearchButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, static_cast<int>(CP::ID_SEARCH));
-	m_pAddButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
+	m_pSearchButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, (int)(CP::ID_SEARCH));
+	m_pAddButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, (int)(CP::ID_NEW_ITEM));
 	m_pSaveButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
+	m_pSettingsButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnOpenSettings, this, (int)(CP::ID_SETTINGS))
 }
 
 CaloriePanel::~CaloriePanel()
@@ -141,4 +189,15 @@ void CaloriePanel::OnSaveInformation(wxCommandEvent& event)
 
 	textFile.Close();
 	pSaveDialog->Destroy();
+}
+
+void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
+{
+	m_pPanelSettings = new CPanelSettings(this, wxID_ANY);
+	m_pPanelSettings->Show(true);
+
+	if (m_pPanelSettings->ShowModal() == wxID_OK)
+	{
+
+	}
 }
