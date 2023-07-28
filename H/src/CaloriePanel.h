@@ -17,6 +17,15 @@
 
 class CPanelSettings: public wxDialog
 {
+private:
+	// Controls
+	wxSpinCtrl* m_pCalorieGoal;
+	wxBitmapButton* m_pViewTools;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+
 public:
 	CPanelSettings(wxWindow* parent,
 		wxWindowID id,
@@ -55,6 +64,7 @@ private:
 
 	AddItemDlg* m_pAddItemDlg;
 	NutritionCatalog* m_pNutritionCatalog;
+	CPanelSettings* m_pPanelSettings;
 
 	wxBitmapButton* m_pSearchButton;
 	wxBitmapButton* m_pAddButton;
@@ -84,6 +94,7 @@ public:
 	void OnSearch(wxCommandEvent& event);
 	void OnNewItem(wxCommandEvent& event);
 	void OnSaveInformation(wxCommandEvent& event);
+	void OnOpenSettings(wxCommandEvent& event);
 };
 
 #endif
