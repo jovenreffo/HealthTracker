@@ -67,7 +67,7 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	m_pSearchButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, (int)(CP::ID_SEARCH));
 	m_pAddButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, (int)(CP::ID_NEW_ITEM));
 	m_pSaveButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
-	m_pSettingsButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnOpenSettings, this, (int)(CP::ID_SETTINGS))
+	m_pSettingsButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnOpenSettings, this, (int)(CP::ID_SETTINGS));
 }
 
 CaloriePanel::~CaloriePanel()
@@ -76,6 +76,7 @@ CaloriePanel::~CaloriePanel()
 	m_pSearchButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, static_cast<int>(CP::ID_SEARCH));
 	m_pAddButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
 	m_pSaveButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSaveInformation, this, wxID_SAVE);
+	m_pSettingsButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnOpenSettings, this, (int)(CP::ID_SETTINGS));
 }
 
 void CaloriePanel::Init()
