@@ -48,6 +48,10 @@ public:
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~CPanelSettings();
 
+	// Getters
+	const int GetCalorieGoal() const { return m_calorieGoal; }
+	const int GetProteinGoal() const { return m_proteinGoal; }
+
 	// Setup
 	void Init();
 	void SetupControls();
