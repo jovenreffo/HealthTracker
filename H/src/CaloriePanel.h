@@ -15,16 +15,29 @@
 
 // ===== CPanelSettings =====
 
+enum class CPS
+{
+	ID_VIEW_TOOLS
+};
+
 class CPanelSettings: public wxDialog
 {
 private:
 	// Controls
 	wxSpinCtrl* m_pCalorieGoal;
-	wxBitmapButton* m_pViewTools;
+	wxSpinCtrl* m_pProteinGoal;
+	wxButton* m_pViewTools;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
 	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pControlSizer;
+	
+	// Validator
+	int m_calorieGoal;
+	int m_proteinGoal;
 
 public:
 	CPanelSettings(wxWindow* parent,
@@ -44,6 +57,7 @@ public:
 	// Events
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
+	void OnEnter(wxCommandEvent& event);
 };
 
 // ===== CaloriePanel =====
