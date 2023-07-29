@@ -20,11 +20,19 @@ CPanelSettings::CPanelSettings(wxWindow* parent, wxWindowID id, const wxString& 
 	this->Init();
 
 	// Bind events
+	m_pCalorieGoal->Bind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
+	m_pProteinGoal->Bind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
+	m_pOk->Bind(wxEVT_BUTTON, &CPanelSettings::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &CPanelSettings::OnCancel, this, wxID_CANCEL);
 }
 
 CPanelSettings::~CPanelSettings()
 {
 	// Unbind events
+	m_pCalorieGoal->Unbind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
+	m_pProteinGoal->Unbind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
+	m_pOk->Unbind(wxEVT_BUTTON, &CPanelSettings::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &CPanelSettings::OnCancel, this, wxID_CANCEL);
 }
 
 void CPanelSettings::Init()
@@ -79,14 +87,26 @@ void CPanelSettings::SetupSizing()
 
 void CPanelSettings::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void CPanelSettings::OnCancel(wxCommandEvent& event)
 {
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 void CPanelSettings::OnEnter(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 // ===== CaloriePanel =====
