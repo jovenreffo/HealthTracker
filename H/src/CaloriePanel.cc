@@ -5,6 +5,7 @@
 #include <wx/filedlg.h>
 #include <wx/string.h>
 #include <wx/datetime.h>
+#include <wx/valgen.h>
 
 #include "CaloriePanel.h"
 #include "StandardPath.hpp"
@@ -35,10 +36,38 @@ void CPanelSettings::Init()
 
 void CPanelSettings::SetupControls()
 {
+	m_pCalorieGoal = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pCalorieGoal->SetValidator(wxGenericValidator(&m_calorieGoal));
+
+	m_pProteinGoal = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 0, 10000, 0);
+	m_pProteinGoal->SetValidator(wxGenericValidator(&m_proteinGoal));
+
+	m_pViewTools = new wxButton(this, (int)(CPS::ID_VIEW_TOOLS), _T("View Tools"));
+	m_pViewTools->SetBitmap(wxBitmap(path_data::dataDir + _T("\\Images\\wrench.png"), wxBITMAP_TYPE_PNG));
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void CPanelSettings::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Calorie Goal:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pCalorieGoal, wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Protein Goal:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pProteinGoal, wxSizerFlags().Border(wxALL, 5));
+
+	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pViewTools, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void CPanelSettings::SetupSizing()
@@ -53,6 +82,10 @@ void CPanelSettings::OnOK(wxCommandEvent& event)
 }
 
 void CPanelSettings::OnCancel(wxCommandEvent& event)
+{
+}
+
+void CPanelSettings::OnEnter(wxCommandEvent& event)
 {
 }
 
