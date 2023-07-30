@@ -12,6 +12,63 @@
 #include "Font/Font.hpp"
 #include "Nutrient Total/Total.hpp"
 
+// ===== ToolsWindow =====
+
+ToolsWindow::ToolsWindow(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+	this->InitToolsWindow();
+
+	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &ToolsWindow::OnCancel, this, wxID_CANCEL);
+}
+
+ToolsWindow::~ToolsWindow()
+{
+	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &ToolsWindow::OnCancel, this, wxID_CANCEL);
+}
+
+void ToolsWindow::InitToolsWindow()
+{
+	this->SetupHTMLWindow();
+	this->SetupButtons();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void ToolsWindow::SetupHTMLWindow()
+{
+	m_pHTMLWin = new wxHtmlWindow(this);
+}
+
+void ToolsWindow::SetupButtons()
+{
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
+}
+
+void ToolsWindow::SetupSizers()
+{
+}
+
+void ToolsWindow::SetupSizing()
+{
+	wxSize sz{ this->GetBestSize() };
+	this->SetMinSize(sz);
+	this->SetInitialSize(wxSize(sz.GetWidth() + 50, sz.GetHeight() + 35)); // upscale the window a bit
+}
+
+void ToolsWindow::OnOK(wxCommandEvent& event)
+{
+}
+
+void ToolsWindow::OnCancel(wxCommandEvent& event)
+{
+}
+
 // ===== CPanelSettings =====
 
 CPanelSettings::CPanelSettings(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
