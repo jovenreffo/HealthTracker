@@ -60,6 +60,16 @@ void CalorieList::UpdateTotal()
 		m_total.m_proteinTotal += wxAtoi(this->GetItemText(i, 3));
 		m_total.m_fiberTotal += wxAtoi(this->GetItemText(i, 4));
 	}
+
+	if (m_nutrientGoals.IsActive())
+	{
+		this->SetItem(0, 1, wxString(std::to_string(m_total.m_calTotal)) << '/' << m_nutrientGoals.GetCalorieGoal());
+		this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
+		this->SetItem(0, 3, wxString(std::to_string(m_total.m_proteinTotal)) << '/' << m_nutrientGoals.GetProteinGoal());
+		this->SetItem(0, 4, std::to_string(m_total.m_fiberTotal));
+		return;
+	}
+
 	// Set the total by converting ints back into strings
 	this->SetItem(0, 1, std::to_string(m_total.m_calTotal));
 	this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
