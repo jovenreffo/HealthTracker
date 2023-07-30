@@ -12,6 +12,7 @@
 #include "AddItemDlg.h"
 #include "NutritionCatalog.h"
 #include "CalorieList.h"
+#include "Nutrient Total/Total.hpp"
 
 // ===== CPanelSettings =====
 
