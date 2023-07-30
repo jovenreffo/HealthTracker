@@ -14,6 +14,7 @@ private:
 	wxBitmap m_calorieBmp;
 
 	Total m_total;
+	NutrientGoals m_nutrientGoals;
 
 public:
 	CalorieList(wxWindow* parent,
@@ -23,7 +24,12 @@ public:
 		long style = wxLC_REPORT | wxLC_SINGLE_SEL);
 	~CalorieList();
 
+	// Getters
 	Total GetTotal() const { return m_total; }
+
+	// Setters
+	void SetNutrientGoals(const NutrientGoals& g) { m_nutrientGoals = g; }
+
 	void AddItem(const wxString& item, const NutrientContent& c);
 	void UpdateTotal();
 	void HandleDeleteItem();
