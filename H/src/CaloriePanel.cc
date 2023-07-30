@@ -21,14 +21,12 @@ ToolsWindow::ToolsWindow(wxWindow* parent, wxWindowID id, const wxString& title,
 
 	// Bind events
 	m_pOk->Bind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
-	m_pCancel->Bind(wxEVT_BUTTON, &ToolsWindow::OnCancel, this, wxID_CANCEL);
 }
 
 ToolsWindow::~ToolsWindow()
 {
 	// Unbind events
 	m_pOk->Unbind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
-	m_pCancel->Unbind(wxEVT_BUTTON, &ToolsWindow::OnCancel, this, wxID_CANCEL);
 }
 
 void ToolsWindow::InitToolsWindow()
@@ -47,7 +45,6 @@ void ToolsWindow::SetupHTMLWindow()
 void ToolsWindow::SetupButtons()
 {
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
-	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void ToolsWindow::SetupSizers()
@@ -62,10 +59,6 @@ void ToolsWindow::SetupSizing()
 }
 
 void ToolsWindow::OnOK(wxCommandEvent& event)
-{
-}
-
-void ToolsWindow::OnCancel(wxCommandEvent& event)
 {
 }
 

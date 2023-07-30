@@ -23,7 +23,6 @@ private:
 	// Controls and necessary members
 	wxHtmlWindow* m_pHTMLWin;
 	wxButton* m_pOk;
-	wxButton* m_pCancel;
 
 public:
 	ToolsWindow(wxWindow* parent,
@@ -43,7 +42,6 @@ public:
 
 	// Events
 	void OnOK(wxCommandEvent& event);
-	void OnCancel(wxCommandEvent& event);
 };
 
 // ===== CPanelSettings =====
