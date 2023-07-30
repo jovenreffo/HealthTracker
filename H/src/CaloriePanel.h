@@ -8,11 +8,43 @@
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
 #include <wx/bmpbuttn.h>
+#include <wx/html/htmlwin.h>
 
 #include "AddItemDlg.h"
 #include "NutritionCatalog.h"
 #include "CalorieList.h"
 #include "Nutrient Total/Total.hpp"
+
+// ===== ToolsWindow =====
+
+class ToolsWindow: public wxDialog
+{
+private:
+	// Controls and necessary members
+	wxHtmlWindow* m_pHTMLWin;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+public:
+	ToolsWindow(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Nutrition Tools"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~ToolsWindow();
+
+	// Setup
+	void InitToolsWindow();
+	void SetupHTMLWindow();
+	void SetupButtons();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+};
 
 // ===== CPanelSettings =====
 
