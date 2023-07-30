@@ -252,6 +252,13 @@ void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
 
 	if (m_pPanelSettings->ShowModal() == wxID_OK)
 	{
+		// retrieve data
+		NutrientGoals ng{ m_pPanelSettings->GetCalorieGoal() , m_pPanelSettings->GetProteinGoal() };
+		int calorieTotal{ m_pCalorieList->GetTotal().GetCalTotal() };
+		int proteinTotal{ m_pCalorieList->GetTotal().GetProteinTotal() };
 
+		m_pCalorieList->SetNutrientGoals(ng);
+		m_pCalorieList->SetItem(0, 1, wxString(std::to_string(calorieTotal)) << '/' << std::to_string(ng.GetCalorieGoal()));
+		m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(ng.GetProteinGoal()));
 	}
 }
