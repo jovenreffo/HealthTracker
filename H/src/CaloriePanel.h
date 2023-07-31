@@ -24,6 +24,9 @@ private:
 	wxHtmlWindow* m_pHTMLWin;
 	wxButton* m_pOk;
 
+	// Sizer
+	wxBoxSizer* m_pTopSizer;
+
 public:
 	ToolsWindow(wxWindow* parent,
 		wxWindowID id,
@@ -60,6 +63,7 @@ private:
 	wxButton* m_pViewTools;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+	ToolsWindow* m_pToolsWindow;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -93,6 +97,7 @@ public:
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 	void OnEnter(wxCommandEvent& event);
+	void OnViewTools(wxCommandEvent& event);
 };
 
 // ===== CaloriePanel =====
