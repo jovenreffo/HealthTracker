@@ -49,6 +49,12 @@ void ToolsWindow::SetupButtons()
 
 void ToolsWindow::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	m_pTopSizer->Add(m_pHTMLWin, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pOk, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void ToolsWindow::SetupSizing()
@@ -60,6 +66,11 @@ void ToolsWindow::SetupSizing()
 
 void ToolsWindow::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 // ===== CPanelSettings =====
@@ -74,6 +85,7 @@ CPanelSettings::CPanelSettings(wxWindow* parent, wxWindowID id, const wxString& 
 	m_pProteinGoal->Bind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
 	m_pOk->Bind(wxEVT_BUTTON, &CPanelSettings::OnOK, this, wxID_OK);
 	m_pCancel->Bind(wxEVT_BUTTON, &CPanelSettings::OnCancel, this, wxID_CANCEL);
+	m_pViewTools->Bind(wxEVT_BUTTON, &CPanelSettings::OnViewTools, this);
 }
 
 CPanelSettings::~CPanelSettings()
@@ -83,6 +95,7 @@ CPanelSettings::~CPanelSettings()
 	m_pProteinGoal->Unbind(wxEVT_TEXT_ENTER, &CPanelSettings::OnEnter, this);
 	m_pOk->Unbind(wxEVT_BUTTON, &CPanelSettings::OnOK, this, wxID_OK);
 	m_pCancel->Unbind(wxEVT_BUTTON, &CPanelSettings::OnCancel, this, wxID_CANCEL);
+	m_pViewTools->Unbind(wxEVT_BUTTON, &CPanelSettings::OnViewTools, this);
 }
 
 void CPanelSettings::Init()
@@ -156,6 +169,16 @@ void CPanelSettings::OnEnter(wxCommandEvent& event)
 	{
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
+	}
+}
+
+void CPanelSettings::OnViewTools(wxCommandEvent& event)
+{
+	m_pToolsWindow = new ToolsWindow(this, wxID_ANY);
+	m_pToolsWindow->Show(true);
+
+	if (m_pToolsWindow->ShowModal() == wxID_OK)
+	{
 	}
 }
 
