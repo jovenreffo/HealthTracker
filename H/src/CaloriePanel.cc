@@ -39,7 +39,10 @@ void ToolsWindow::InitToolsWindow()
 
 void ToolsWindow::SetupHTMLWindow()
 {
-	m_pHTMLWin = new wxHtmlWindow(this);
+	m_pHtmlWin = new wxHtmlWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHW_DEFAULT_STYLE);
+	m_pHtmlWin->LoadPage(path_data::dataDir + _T("\\H\\src\\HTML\\nutrition_tools.html"));
+	m_pHtmlWin->SetBorders(0);
+	m_pHtmlWin->SetSize(wxSize(m_pHtmlWin->GetInternalRepresentation()->GetWidth(), m_pHtmlWin->GetInternalRepresentation()->GetHeight()));
 }
 
 void ToolsWindow::SetupButtons()
@@ -52,7 +55,7 @@ void ToolsWindow::SetupSizers()
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
-	m_pTopSizer->Add(m_pHTMLWin, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pHtmlWin, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 10));
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pOk, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
