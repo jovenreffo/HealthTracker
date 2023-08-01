@@ -21,7 +21,7 @@ class ToolsWindow: public wxDialog
 {
 private:
 	// Controls and necessary members
-	wxHtmlWindow* m_pHTMLWin;
+	wxHtmlWindow* m_pHtmlWin;
 	wxButton* m_pOk;
 
 	// Sizer
