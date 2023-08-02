@@ -62,9 +62,8 @@ void ToolsWindow::SetupSizers()
 
 void ToolsWindow::SetupSizing()
 {
-	wxSize sz{ this->GetBestSize() };
-	this->SetMinSize(sz);
-	this->SetInitialSize(wxSize(sz.GetWidth() + 50, sz.GetHeight() + 35)); // upscale the window a bit
+	this->SetMinSize(TW_SIZE);
+	this->SetInitialSize(TW_SIZE);
 }
 
 void ToolsWindow::OnOK(wxCommandEvent& event)
