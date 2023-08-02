@@ -47,6 +47,7 @@ public:
 
 	// Events
 	void OnOK(wxCommandEvent& event);
+	void OnLinkClicked(wxHtmlLinkEvent& event);
 };
 
 // ===== CPanelSettings =====
