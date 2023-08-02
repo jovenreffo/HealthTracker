@@ -17,6 +17,8 @@
 
 // ===== ToolsWindow =====
 
+#define TW_SIZE (wxSize(400, 375))
+
 class ToolsWindow: public wxDialog
 {
 private:
@@ -32,7 +34,7 @@ public:
 		wxWindowID id,
 		const wxString& title = _T("Nutrition Tools"),
 		const wxPoint& pos = wxDefaultPosition,
-		const wxSize& size = wxDefaultSize,
+		const wxSize& size = TW_SIZE,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~ToolsWindow();
 
