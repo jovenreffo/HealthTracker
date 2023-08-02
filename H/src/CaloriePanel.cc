@@ -21,12 +21,14 @@ ToolsWindow::ToolsWindow(wxWindow* parent, wxWindowID id, const wxString& title,
 
 	// Bind events
 	m_pOk->Bind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
+	m_pHtmlWin->Bind(wxEVT_HTML_LINK_CLICKED, &ToolsWindow::OnLinkClicked, this);
 }
 
 ToolsWindow::~ToolsWindow()
 {
 	// Unbind events
 	m_pOk->Unbind(wxEVT_BUTTON, &ToolsWindow::OnOK, this, wxID_OK);
+	m_pHtmlWin->Unbind(wxEVT_HTML_LINK_CLICKED, &ToolsWindow::OnLinkClicked, this);
 }
 
 void ToolsWindow::InitToolsWindow()
@@ -73,6 +75,13 @@ void ToolsWindow::OnOK(wxCommandEvent& event)
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
+}
+
+void ToolsWindow::OnLinkClicked(wxHtmlLinkEvent& event)
+{
+	// If it is a valid link containing the proper prefixed, launch the default browser.
+	if (event.GetLinkInfo().GetHref().StartsWith("https://") || event.GetLinkInfo().GetHref().StartsWith("http://"))
+		wxLaunchDefaultBrowser(event.GetLinkInfo().GetHref());
 }
 
 // ===== CPanelSettings =====
