@@ -17,7 +17,7 @@
 
 // ===== ToolsWindow =====
 
-#define TW_SIZE (wxSize(400, 375))
+#define TW_SIZE (wxSize(465, 440))
 
 class ToolsWindow: public wxDialog
 {
