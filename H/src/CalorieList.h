@@ -26,6 +26,7 @@ public:
 
 	// Getters
 	Total GetTotal() const { return m_total; }
+	NutrientGoals& GetNutrientGoals() { return m_nutrientGoals; }
 
 	// Setters
 	void SetNutrientGoals(const NutrientGoals& g) { m_nutrientGoals = g; }
