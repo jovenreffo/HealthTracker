@@ -135,6 +135,10 @@ private:
 	wxBitmap m_addBmp;
 	wxBitmap m_saveBmp;
 	wxBitmap m_settingsBmp;
+
+	// vars for config
+	int m_calorieGoal;
+	int m_proteinGoal;
 	
 public:
 	CaloriePanel(wxWindow* parent,
@@ -148,6 +152,8 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupSizers();
+	void SaveConfig();
+	void LoadConfig();
 
 	void AddNewItem();
 
