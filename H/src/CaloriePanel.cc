@@ -209,6 +209,7 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 	: wxPanel(parent, id, pos, size, style, _T("caloriepanel"))
 {
 	this->Init();
+	this->LoadConfig();
 
 	// Bind events
 	m_pSearchButton->Bind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, (int)(CP::ID_SEARCH));
@@ -219,6 +220,9 @@ CaloriePanel::CaloriePanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, 
 
 CaloriePanel::~CaloriePanel()
 {
+	// Save config
+	this->SaveConfig();
+
 	// Unbind events
 	m_pSearchButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnSearch, this, static_cast<int>(CP::ID_SEARCH));
 	m_pAddButton->Unbind(wxEVT_BUTTON, &CaloriePanel::OnNewItem, this, static_cast<int>(CP::ID_NEW_ITEM));
@@ -267,6 +271,29 @@ void CaloriePanel::SetupSizers()
 
 	m_pBoxSizer->Add(m_pCalorieList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 	m_pBoxSizer->Add(m_pHorizontalSizer, wxSizerFlags().Border(wxALL, 5));
+}
+
+void CaloriePanel::SaveConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	// create a new directory in which to store the nutrient & macro goals
+	pConfig->SetPath(_T("/CaloriePanel/Goals"));
+
+	// write the variables to the config
+	pConfig->Write(_T("CalorieGoal"), m_calorieGoal);
+	pConfig->Write(_T("ProteinGoal"), m_proteinGoal);
+}
+
+void CaloriePanel::LoadConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/CaloriePanel/Goals"));
 }
 
 void CaloriePanel::AddNewItem()
@@ -363,5 +390,9 @@ void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
 
 		if (ng.GetProteinGoal() > 0)
 			m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(ng.GetProteinGoal()));
+
+		// assign values to member variables
+		m_calorieGoal = m_pPanelSettings->GetCalorieGoal();
+		m_proteinGoal = m_pPanelSettings->GetProteinGoal();
 	}
 }
