@@ -90,6 +90,10 @@ public:
 	const int GetCalorieGoal() const { return m_calorieGoal; }
 	const int GetProteinGoal() const { return m_proteinGoal; }
 
+	// Setters for ctrls
+	void SetCalorieCtrl(int val);
+	void SetProteinCtrl(int val);
+
 	// Setup
 	void Init();
 	void SetupControls();
