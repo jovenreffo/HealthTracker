@@ -63,17 +63,20 @@ void CalorieList::UpdateTotal()
 
 	if (m_nutrientGoals.IsActive())
 	{
-		this->SetItem(0, 1, wxString(std::to_string(m_total.m_calTotal)) << '/' << m_nutrientGoals.GetCalorieGoal());
-		this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
-		this->SetItem(0, 3, wxString(std::to_string(m_total.m_proteinTotal)) << '/' << m_nutrientGoals.GetProteinGoal());
-		this->SetItem(0, 4, std::to_string(m_total.m_fiberTotal));
-		return;
-	}
+		// Check if the calorie goal is greater than 0, and only set it if it is.
+		if (m_nutrientGoals.GetCalorieGoal() > 0)
+			this->SetItem(0, 1, wxString(std::to_string(m_total.m_calTotal)) << '/' << m_nutrientGoals.GetCalorieGoal());
+		else
+			this->SetItem(0, 1, std::to_string(m_total.m_calTotal));
 
-	// Set the total by converting ints back into strings
-	this->SetItem(0, 1, std::to_string(m_total.m_calTotal));
+		// same for protein goal
+		if (m_nutrientGoals.GetProteinGoal() > 0)
+			this->SetItem(0, 3, wxString(std::to_string(m_total.m_proteinTotal)) << '/' << m_nutrientGoals.GetProteinGoal());
+		else
+			this->SetItem(0, 3, std::to_string(m_total.m_proteinTotal));
+	}
+	// Set carb and fibre totals
 	this->SetItem(0, 2, std::to_string(m_total.m_carbTotal));
-	this->SetItem(0, 3, std::to_string(m_total.m_proteinTotal));
 	this->SetItem(0, 4, std::to_string(m_total.m_fiberTotal));
 }
 
