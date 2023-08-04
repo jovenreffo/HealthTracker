@@ -109,6 +109,16 @@ CPanelSettings::~CPanelSettings()
 	m_pViewTools->Unbind(wxEVT_BUTTON, &CPanelSettings::OnViewTools, this);
 }
 
+void CPanelSettings::SetCalorieCtrl(int val)
+{
+	m_pCalorieGoal->SetValue(val);
+}
+
+void CPanelSettings::SetProteinCtrl(int val)
+{
+	m_pProteinGoal->SetValue(val);
+}
+
 void CPanelSettings::Init()
 {
 	this->SetupControls();
@@ -334,15 +344,24 @@ void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
 	m_pPanelSettings = new CPanelSettings(this, wxID_ANY);
 	m_pPanelSettings->Show(true);
 
+	if (m_pCalorieList->GetNutrientGoals().IsActive())
+	{
+		m_pPanelSettings->SetCalorieCtrl(m_pCalorieList->GetNutrientGoals().GetCalorieGoal());
+		m_pPanelSettings->SetProteinCtrl(m_pCalorieList->GetNutrientGoals().GetProteinGoal());
+	}
+
 	if (m_pPanelSettings->ShowModal() == wxID_OK)
 	{
 		// retrieve data
 		NutrientGoals ng{ m_pPanelSettings->GetCalorieGoal() , m_pPanelSettings->GetProteinGoal() };
 		int calorieTotal{ m_pCalorieList->GetTotal().GetCalTotal() };
 		int proteinTotal{ m_pCalorieList->GetTotal().GetProteinTotal() };
-
 		m_pCalorieList->SetNutrientGoals(ng);
-		m_pCalorieList->SetItem(0, 1, wxString(std::to_string(calorieTotal)) << '/' << std::to_string(ng.GetCalorieGoal()));
-		m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(ng.GetProteinGoal()));
+
+		if (ng.GetCalorieGoal() > 0)
+			m_pCalorieList->SetItem(0, 1, wxString(std::to_string(calorieTotal)) << '/' << std::to_string(ng.GetCalorieGoal()));
+
+		if (ng.GetProteinGoal() > 0)
+			m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(ng.GetProteinGoal()));
 	}
 }
