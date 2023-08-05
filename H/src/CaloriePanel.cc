@@ -294,6 +294,13 @@ void CaloriePanel::LoadConfig()
 		return;
 
 	pConfig->SetPath(_T("/CaloriePanel/Goals"));
+
+	m_calorieGoal = pConfig->Read(_T("CalorieGoal"), 0L);
+	m_proteinGoal = pConfig->Read(_T("ProteinGoal"), 0L);
+
+#ifdef _DEBUG
+	wxLogMessage(_T("Calorie goal: %d\nProtein goal: %d"), m_calorieGoal, m_proteinGoal);
+#endif
 }
 
 void CaloriePanel::AddNewItem()
