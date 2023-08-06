@@ -301,6 +301,17 @@ void CaloriePanel::LoadConfig()
 #ifdef _DEBUG
 	wxLogMessage(_T("Calorie goal: %d\nProtein goal: %d"), m_calorieGoal, m_proteinGoal);
 #endif
+
+	// Get the calorie & protein totals from the list
+	int calorieTotal{ m_pCalorieList->GetTotal().GetCalTotal() };
+	int proteinTotal{ m_pCalorieList->GetTotal().GetProteinTotal() };
+
+	// test if the values are valid, then assign them to the list
+	if (m_calorieGoal)
+		m_pCalorieList->SetItem(0, 1, wxString(std::to_string(calorieTotal)) << '/' << std::to_string(m_calorieGoal));
+
+	if (m_proteinGoal)
+		m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(m_proteinGoal));
 }
 
 void CaloriePanel::AddNewItem()
@@ -378,10 +389,11 @@ void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
 	m_pPanelSettings = new CPanelSettings(this, wxID_ANY);
 	m_pPanelSettings->Show(true);
 
-	if (m_pCalorieList->GetNutrientGoals().IsActive())
+	// check to see if the valuesa are active for loading onto the dialog
+	if (m_calorieGoal || m_proteinGoal)
 	{
-		m_pPanelSettings->SetCalorieCtrl(m_pCalorieList->GetNutrientGoals().GetCalorieGoal());
-		m_pPanelSettings->SetProteinCtrl(m_pCalorieList->GetNutrientGoals().GetProteinGoal());
+		m_pPanelSettings->SetCalorieCtrl(m_calorieGoal);
+		m_pPanelSettings->SetProteinCtrl(m_proteinGoal);
 	}
 
 	if (m_pPanelSettings->ShowModal() == wxID_OK)
@@ -398,7 +410,7 @@ void CaloriePanel::OnOpenSettings(wxCommandEvent& event)
 		if (ng.GetProteinGoal() > 0)
 			m_pCalorieList->SetItem(0, 3, wxString(std::to_string(proteinTotal)) << '/' << std::to_string(ng.GetProteinGoal()));
 
-		// assign values to member variables
+		// assign values to member variables again
 		m_calorieGoal = m_pPanelSettings->GetCalorieGoal();
 		m_proteinGoal = m_pPanelSettings->GetProteinGoal();
 	}
