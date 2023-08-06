@@ -305,6 +305,8 @@ void CaloriePanel::LoadConfig()
 	// Get the calorie & protein totals from the list
 	int calorieTotal{ m_pCalorieList->GetTotal().GetCalTotal() };
 	int proteinTotal{ m_pCalorieList->GetTotal().GetProteinTotal() };
+	NutrientGoals ng{ m_calorieGoal, m_proteinGoal };
+	m_pCalorieList->SetNutrientGoals(ng);
 
 	// test if the values are valid, then assign them to the list
 	if (m_calorieGoal)
