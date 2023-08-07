@@ -478,6 +478,36 @@ void AddWorkoutDayDlg::OnExceedLimit(wxCommandEvent& event)
 	}
 }
 
+// ===== SSWToolBar =====
+
+SSWToolBar::SSWToolBar(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxToolBar(parent, id, pos, size, style)
+{
+	this->Init();
+
+}
+
+SSWToolBar::~SSWToolBar()
+{
+
+}
+
+void SSWToolBar::Init()
+{
+	this->SetupBitmaps();
+	this->SetupTools();
+}
+
+void SSWToolBar::SetupBitmaps()
+{
+
+}
+
+void SSWToolBar::SetupTools()
+{
+
+}
+
 // ===== SpreadsheetWindow =====
 
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
