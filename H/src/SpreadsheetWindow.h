@@ -10,6 +10,7 @@
 #include <wx/clrpicker.h>
 #include <wx/fontpicker.h>
 #include <wx/fontdlg.h>
+#include <wx/toolbar.h>
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
@@ -252,6 +253,44 @@ public:
 	void OnCancel(wxCommandEvent& event);
 	void OnEnter(wxCommandEvent& event);
 	void OnExceedLimit(wxCommandEvent& event);
+};
+
+// ===== SSWToolBar =====
+
+enum class SSWTB
+{
+
+};
+
+class SSWToolBar : public wxToolBar
+{
+private:
+	// Bitmaps
+	wxBitmap m_undoBmp;
+	wxBitmap m_redoBmp;
+
+	wxBitmap m_cutBmp;
+	wxBitmap m_copyBmp;
+	wxBitmap m_pasteBmp;
+
+	wxBitmap m_fontBmp;
+	wxBitmap m_fillBmp;
+
+
+public:
+	SSWToolBar(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxTB_DEFAULT_STYLE);
+	~SSWToolBar();
+
+	// Setup
+	void Init();
+	void SetupBitmaps();
+	void SetupTools();
+
+	// Events
 };
 
 enum class SSW
