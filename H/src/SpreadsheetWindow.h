@@ -259,7 +259,8 @@ public:
 
 enum class SSWTB
 {
-
+	ID_CHANGE_FONT,
+	ID_SET_FILL
 };
 
 class SSWToolBar : public wxToolBar
@@ -290,6 +291,15 @@ public:
 	void SetupTools();
 
 	// Events
+	void OnUndo(wxCommandEvent& event);
+	void OnRedo(wxCommandEvent& event);
+
+	void OnCut(wxCommandEvent& event);
+	void OnCopy(wxCommandEvent& event);
+	void OnPaste(wxCommandEvent& event);
+
+	void OnChangeFont(wxCommandEvent& event);
+	void OnSetFill(wxCommandEvent& event);
 };
 
 enum class SSW
