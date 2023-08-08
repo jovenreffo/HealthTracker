@@ -515,7 +515,19 @@ void SSWToolBar::SetupBitmaps()
 
 void SSWToolBar::SetupTools()
 {
+	this->AddTool(wxID_UNDO, _T("Undo"), m_undoBmp);
+	this->AddTool(wxID_REDO, _T("Redo"), m_redoBmp);
+	this->AddSeparator();
+	this->AddTool(wxID_CUT, _T("Cut"), m_cutBmp);
+	this->AddTool(wxID_COPY, _T("Copy"), m_copyBmp);
+	this->AddTool(wxID_PASTE, _T("Paste"), m_pasteBmp);
+	this->AddSeparator();
+	this->AddTool((int)SSWTB::ID_CHANGE_FONT, _T("Change Font"), m_fontBmp);
+	this->AddTool((int)SSWTB::ID_SET_FILL, _T("Set Fill"), m_fillBmp);
+}
 
+void SSWToolBar::OnUndo(wxCommandEvent& event)
+{
 }
 
 // ===== SpreadsheetWindow =====
@@ -631,7 +643,9 @@ void SpreadsheetWindow::SetupMenu()
 
 void SpreadsheetWindow::SetupToolBar()
 {
-
+	m_pToolBar = new SSWToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT);
+	m_pToolBar->Realize();
+	this->SetToolBar(m_pToolBar);
 }
 
 void SpreadsheetWindow::SetupSizing()
