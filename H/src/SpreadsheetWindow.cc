@@ -6,6 +6,7 @@
 #include <wx/colordlg.h>
 
 #include "SpreadsheetWindow.h"
+#include "StandardPath.hpp"
 #include "Font/Font.hpp"
 
 // ===== AddTableDlg =====
@@ -500,7 +501,16 @@ void SSWToolBar::Init()
 
 void SSWToolBar::SetupBitmaps()
 {
+	// SSWTB = Spread sheet window tool bar
+	m_undoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\undo20.png"), wxBITMAP_TYPE_PNG);
+	m_redoBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\redo20.png"), wxBITMAP_TYPE_PNG);
 
+	m_cutBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\cut20.png"), wxBITMAP_TYPE_PNG);
+	m_copyBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\copy20.png"), wxBITMAP_TYPE_PNG);
+	m_pasteBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\paste20.png"), wxBITMAP_TYPE_PNG);
+
+	m_fontBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\change_font.png"), wxBITMAP_TYPE_PNG);
+	m_fillBmp = wxBitmap(path_data::dataDir + _T("\\Images\\SSWTB\\fill20.png"), wxBITMAP_TYPE_PNG);
 }
 
 void SSWToolBar::SetupTools()
@@ -573,6 +583,7 @@ void SpreadsheetWindow::Init()
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupMenu();
+	this->SetupToolBar();
 	this->SetupSizing();
 }
 
@@ -616,6 +627,11 @@ void SpreadsheetWindow::SetupMenu()
 	m_pMenuBar->Append(m_pInsertMenu, _T("&Insert"));
 	m_pMenuBar->Append(m_pEditMenu, _T("&Edit"));
 	this->SetMenuBar(m_pMenuBar);
+}
+
+void SpreadsheetWindow::SetupToolBar()
+{
+
 }
 
 void SpreadsheetWindow::SetupSizing()
