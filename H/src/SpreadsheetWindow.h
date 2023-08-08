@@ -276,7 +276,6 @@ private:
 	wxBitmap m_fontBmp;
 	wxBitmap m_fillBmp;
 
-
 public:
 	SSWToolBar(wxWindow* parent,
 		wxWindowID id,
@@ -319,6 +318,9 @@ private:
 	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu; wxMenu* m_pModifySubMenu;
 	wxMenuBar* m_pMenuBar;
 
+	// Toolbar 
+	SSWToolBar* m_pToolBar;
+
 	// Control + dlg members
 	ExerciseGrid* m_pGrid;
 	AddTableDlg* m_pAddTableDlg;
@@ -349,6 +351,7 @@ public:
 
 	void Init();
 	void SetupMenu();
+	void SetupToolBar();
 	void SetupSizing();
 	void SetupControls();
 	void SetupSizers();
