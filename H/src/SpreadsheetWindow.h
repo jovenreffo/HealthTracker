@@ -263,9 +263,31 @@ enum class SSWTB
 	ID_SET_FILL
 };
 
+// class for storing info about the cell for actions: cut, copy, paste
+class CellInfo
+{
+private:
+	wxColour m_bgColour;
+	wxString m_cellText;
+	wxFont m_cellFont;
+
+public:
+	CellInfo(const wxColour& bgColour, const wxString& cellText, const wxFont& cellFont)
+		: m_bgColour{ bgColour }, m_cellText{ cellText }, m_cellFont{ cellFont }
+	{ }
+
+	// Getters
+	const wxColour& GetBackgroundColour() const { return m_bgColour; }
+	const wxString& GetCellText() const { return m_cellText; }
+	const wxFont& GetCellFont() const { return m_cellFont; }
+};
+
 class SSWToolBar : public wxToolBar
 {
 private:
+	// Grid needed for modifications
+	wxGrid* m_pGrid;
+
 	// Bitmaps
 	wxBitmap m_undoBmp;
 	wxBitmap m_redoBmp;
@@ -278,7 +300,8 @@ private:
 	wxBitmap m_fillBmp;
 
 public:
-	SSWToolBar(wxWindow* parent,
+	SSWToolBar(wxGrid* pGrid,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
