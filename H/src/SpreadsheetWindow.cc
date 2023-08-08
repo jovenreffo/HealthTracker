@@ -530,6 +530,30 @@ void SSWToolBar::OnUndo(wxCommandEvent& event)
 {
 }
 
+void SSWToolBar::OnRedo(wxCommandEvent& event)
+{
+}
+
+void SSWToolBar::OnCut(wxCommandEvent& event)
+{
+}
+
+void SSWToolBar::OnCopy(wxCommandEvent& event)
+{
+}
+
+void SSWToolBar::OnPaste(wxCommandEvent& event)
+{
+}
+
+void SSWToolBar::OnChangeFont(wxCommandEvent& event)
+{
+}
+
+void SSWToolBar::OnSetFill(wxCommandEvent& event)
+{
+}
+
 // ===== SpreadsheetWindow =====
 
 SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
