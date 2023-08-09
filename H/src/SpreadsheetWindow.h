@@ -314,6 +314,9 @@ public:
 	void SetupTools();
 
 	// Events
+	void BindEvents();
+	void UnbindEvents();
+
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
 
