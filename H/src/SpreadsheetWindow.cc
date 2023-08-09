@@ -593,7 +593,6 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	this->Init();
 	this->BindEvents();
 	this->CentreOnScreen();
-
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
