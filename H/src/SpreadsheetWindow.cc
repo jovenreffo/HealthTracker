@@ -481,16 +481,16 @@ void AddWorkoutDayDlg::OnExceedLimit(wxCommandEvent& event)
 
 // ===== SSWToolBar =====
 
-SSWToolBar::SSWToolBar(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxToolBar(parent, id, pos, size, style)
+SSWToolBar::SSWToolBar(wxGrid* pGrid, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxToolBar(parent, id, pos, size, style), m_pGrid{ pGrid }
 {
 	this->Init();
-
+	this->BindEvents();
 }
 
 SSWToolBar::~SSWToolBar()
 {
-
+	this->UnbindEvents();
 }
 
 void SSWToolBar::Init()
@@ -526,6 +526,23 @@ void SSWToolBar::SetupTools()
 	this->AddTool((int)SSWTB::ID_SET_FILL, _T("Set Fill"), m_fillBmp);
 }
 
+void SSWToolBar::BindEvents()
+{
+	m_pGrid->Bind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+	this->Bind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
+}
+
+void SSWToolBar::UnbindEvents()
+{
+	m_pGrid->Unbind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
+}
+
+void SSWToolBar::OnSelectCell(wxGridEvent& event)
+{
+	m_selectedCell = wxGridCellCoords(event.GetRow(), event.GetCol());
+}
+
 void SSWToolBar::OnUndo(wxCommandEvent& event)
 {
 }
@@ -552,6 +569,15 @@ void SSWToolBar::OnChangeFont(wxCommandEvent& event)
 
 void SSWToolBar::OnSetFill(wxCommandEvent& event)
 {
+	// Create a colour dialog to have the user select a colour
+	wxColourDialog* pColourDlg = new wxColourDialog(this);
+	pColourDlg->Show(true);
+
+	if (pColourDlg->ShowModal() == wxID_OK)
+	{
+		wxColour clr = pColourDlg->GetColourData().GetColour();
+		m_pGrid->SetCellBackgroundColour(m_selectedCell.GetRow(), m_selectedCell.GetCol(), clr);
+	}
 }
 
 // ===== SpreadsheetWindow =====
@@ -567,6 +593,7 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	this->Init();
 	this->BindEvents();
 	this->CentreOnScreen();
+
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
@@ -667,7 +694,7 @@ void SpreadsheetWindow::SetupMenu()
 
 void SpreadsheetWindow::SetupToolBar()
 {
-	m_pToolBar = new SSWToolBar(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT);
+	m_pToolBar = new SSWToolBar(m_pGrid, this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_FLAT);
 	m_pToolBar->Realize();
 	this->SetToolBar(m_pToolBar);
 }
