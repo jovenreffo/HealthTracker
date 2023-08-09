@@ -287,6 +287,7 @@ class SSWToolBar : public wxToolBar
 private:
 	// Grid needed for modifications
 	wxGrid* m_pGrid;
+	wxGridCellCoords m_selectedCell;
 
 	// Bitmaps
 	wxBitmap m_undoBmp;
@@ -316,6 +317,8 @@ public:
 	// Events
 	void BindEvents();
 	void UnbindEvents();
+
+	void OnSelectCell(wxGridEvent& event);
 
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
