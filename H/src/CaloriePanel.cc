@@ -299,7 +299,7 @@ void CaloriePanel::LoadConfig()
 	m_proteinGoal = pConfig->Read(_T("ProteinGoal"), 0L);
 
 #ifdef _DEBUG
-	wxLogMessage(_T("Calorie goal: %d\nProtein goal: %d"), m_calorieGoal, m_proteinGoal);
+	//wxLogMessage(_T("Calorie goal: %d\nProtein goal: %d"), m_calorieGoal, m_proteinGoal);
 #endif
 
 	// Get the calorie & protein totals from the list
