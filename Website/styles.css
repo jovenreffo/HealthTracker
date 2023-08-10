@@ -18,7 +18,32 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     border: 0;
     top: 10px;
     width: 100%;
-    height: 70px;
+    height: 80px;
     background-color: rgb(88, 88, 88);
     vertical-align: baseline;
+    display: flex;
+    box-shadow: 0 0 6px rgb(70, 70, 70);
+}
+
+#title-bar-content {
+    position: sticky;
+    margin: 0;
+    padding-left: 2%;
+    border: 0;
+    display: flex;
+}
+
+h1.main-title {
+    -webkit-user-select: none;
+    color: rgb(207, 54, 54);
+    text-decoration: 3px underline solid white;
+    font-size: 50px;
+    font-weight: 900;
+    font-family: neue-haas-grotesk-display,sans-serif;
+    text-shadow: 0.5px 0.5px 2px rgb(133, 33, 33);
+}
+
+h1.mt2 {
+    color: white;
+    text-shadow: 0.5px 0.5px 2px rgb(148, 148, 148);
 }
