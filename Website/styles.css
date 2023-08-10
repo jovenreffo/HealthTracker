@@ -22,7 +22,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     background-color: rgb(88, 88, 88);
     vertical-align: baseline;
     display: flex;
-    box-shadow: 0 0 6px rgb(70, 70, 70);
+    box-shadow: 0 0 8px rgb(22, 22, 22);
 }
 
 #title-bar-content {
