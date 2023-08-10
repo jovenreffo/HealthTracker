@@ -289,6 +289,9 @@ private:
 	wxGrid* m_pGrid;
 	wxGridCellCoords m_selectedCell;
 
+	// Cell info for cutting/copying/pasting
+	CellInfo m_selectedCellInfo;
+
 	// Bitmaps
 	wxBitmap m_undoBmp;
 	wxBitmap m_redoBmp;
