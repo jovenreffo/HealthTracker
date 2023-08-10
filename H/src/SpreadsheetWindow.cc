@@ -515,15 +515,15 @@ void SSWToolBar::SetupBitmaps()
 
 void SSWToolBar::SetupTools()
 {
-	this->AddTool(wxID_UNDO, _T("Undo"), m_undoBmp);
-	this->AddTool(wxID_REDO, _T("Redo"), m_redoBmp);
+	this->AddTool(wxID_UNDO, _T("Undo"), m_undoBmp, _T("Undo last action."));
+	this->AddTool(wxID_REDO, _T("Redo"), m_redoBmp, _T("Redo last action."));
 	this->AddSeparator();
-	this->AddTool(wxID_CUT, _T("Cut"), m_cutBmp);
-	this->AddTool(wxID_COPY, _T("Copy"), m_copyBmp);
-	this->AddTool(wxID_PASTE, _T("Paste"), m_pasteBmp);
+	this->AddTool(wxID_CUT, _T("Cut"), m_cutBmp, _T("Cut selected item."));
+	this->AddTool(wxID_COPY, _T("Copy"), m_copyBmp, _T("Copy selected item."));
+	this->AddTool(wxID_PASTE, _T("Paste"), m_pasteBmp, _T("Paste selected item."));
 	this->AddSeparator();
-	this->AddTool((int)SSWTB::ID_CHANGE_FONT, _T("Change Font"), m_fontBmp);
-	this->AddTool((int)SSWTB::ID_SET_FILL, _T("Set Fill"), m_fillBmp);
+	this->AddTool((int)SSWTB::ID_CHANGE_FONT, _T("Change Font"), m_fontBmp, _T("Set cell font."));
+	this->AddTool((int)SSWTB::ID_SET_FILL, _T("Set Fill"), m_fillBmp, _T("Set cell fill colour."));
 }
 
 void SSWToolBar::BindEvents()
