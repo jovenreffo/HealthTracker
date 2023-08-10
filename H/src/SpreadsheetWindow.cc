@@ -528,13 +528,21 @@ void SSWToolBar::SetupTools()
 
 void SSWToolBar::BindEvents()
 {
+	// Member events
 	m_pGrid->Bind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+
+	// Toolbar events
+	this->Bind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Bind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
 }
 
 void SSWToolBar::UnbindEvents()
 {
+	// mmbr events
 	m_pGrid->Unbind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+
+	// tb events
+	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
 }
 
@@ -565,6 +573,15 @@ void SSWToolBar::OnPaste(wxCommandEvent& event)
 
 void SSWToolBar::OnChangeFont(wxCommandEvent& event)
 {
+	// Create a font dialog to have the user select a font
+	wxFontDialog* pFontDlg = new wxFontDialog(this);
+	pFontDlg->Show(true);
+
+	if (pFontDlg->ShowModal() == wxID_OK)
+	{
+		wxFont font = pFontDlg->GetFontData().GetChosenFont();
+		m_pGrid->SetCellFont(m_selectedCell.GetRow(), m_selectedCell.GetCol(), font);
+	}
 }
 
 void SSWToolBar::OnSetFill(wxCommandEvent& event)
