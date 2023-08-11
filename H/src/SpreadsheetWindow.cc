@@ -610,6 +610,9 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	this->Init();
 	this->BindEvents();
 	this->CentreOnScreen();
+
+	// Load config
+	this->LoadConfig();
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
@@ -626,6 +629,19 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
 	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
+
+	// Save the config
+	this->SaveConfig();
+}
+
+void SpreadsheetWindow::LoadConfig()
+{
+
+}
+
+void SpreadsheetWindow::SaveConfig()
+{
+
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -727,6 +743,10 @@ void SpreadsheetWindow::SetupSizing()
 void SpreadsheetWindow::SetupControls()
 {
 	m_pGrid = new ExerciseGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+
+	// Set up the grid table base for information
+	m_pTableBase = new GridTableBaseDerivative(m_pGrid);
+	m_pGrid->SetTable(m_pTableBase);
 }
 
 void SpreadsheetWindow::SetupSizers()
