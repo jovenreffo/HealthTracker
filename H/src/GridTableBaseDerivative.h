@@ -11,6 +11,13 @@ private:
 
 public:
 	GridTableBaseDerivative(wxGrid* pGrid);
+
+	// Override functions
+	int GetNumberRows() override;
+	int GetNumberCols() override;
+	bool IsEmptyCell(int r, int c) override;
+	wxString GetValue(int r, int c) override;
+	void SetValue(int r, int c, const wxString& value) override;
 };
 
 #endif
