@@ -283,7 +283,7 @@ public:
 };
 
 class SSWToolBar : public wxToolBar
-{
+{  
 private:
 	// Grid needed for modifications
 	wxGrid* m_pGrid;
