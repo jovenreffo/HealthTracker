@@ -365,8 +365,11 @@ private:
 	// Toolbar 
 	SSWToolBar* m_pToolBar;
 
-	// Control + dlg members
+	// Grid stuff
 	ExerciseGrid* m_pGrid;
+	GridTableBaseDerivative* m_pTableBase;
+
+	// Control + dlg members
 	AddTableDlg* m_pAddTableDlg;
 	AddWorkoutDayDlg* m_pAddWorkoutDayDlg;
 	CCBD* m_pCCBD;
@@ -384,6 +387,10 @@ public:
 		const wxSize& size = SSW_SIZE,
 		long style = SSW_STYLE);
 	~SpreadsheetWindow();
+
+	// Config
+	void LoadConfig();
+	void SaveConfig();
 
 	// Window setup
 	bool Create(wxWindow* parent,
