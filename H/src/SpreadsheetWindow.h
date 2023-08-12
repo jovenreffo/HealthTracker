@@ -12,8 +12,6 @@
 #include <wx/fontdlg.h>
 #include <wx/toolbar.h>
 
-#include "GridTableBaseDerivative.h"
-
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define SSW_SIZE ( wxSize(440, 280) )
@@ -367,7 +365,6 @@ private:
 
 	// Grid stuff
 	ExerciseGrid* m_pGrid;
-	GridTableBaseDerivative* m_pTableBase;
 
 	// Control + dlg members
 	AddTableDlg* m_pAddTableDlg;
@@ -378,6 +375,10 @@ private:
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
+
+	// Config stuff
+	int m_numRows;
+	int m_numCols;
 
 public:
 	SpreadsheetWindow(wxWindow* parent,
