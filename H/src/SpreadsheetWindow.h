@@ -12,6 +12,9 @@
 #include <wx/fontdlg.h>
 #include <wx/toolbar.h>
 
+#include <vector>
+#include "GridCommand.h"
+
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
 #define SSW_SIZE ( wxSize(440, 280) )
@@ -379,6 +382,7 @@ private:
 	// Config stuff
 	int m_numRows;
 	int m_numCols;
+	std::vector<GridCellState> m_gridState;
 
 public:
 	SpreadsheetWindow(wxWindow* parent,
