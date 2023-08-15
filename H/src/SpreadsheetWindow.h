@@ -17,7 +17,7 @@
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
-#define SSW_SIZE ( wxSize(440, 280) )
+#define SSW_SIZE ( wxSize(1000, 800) )
 
 class AddTableDlg : public wxDialog
 {
