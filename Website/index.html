@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
-<html lang = "en">
+<html lang="en">
     <head>
         <title>Health++</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/main.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
@@ -12,8 +13,8 @@
                 <h1 class="main-title">Health</h1><h1 class="main-title mt2">++</h1>
             </div>
             <div id="title-bar-btns">
-                <h2 class="top-btn">Features</h2>
-                <h2 class="top-btn" style="padding-left: 30%;">Contact</h2>
+                <button class="top-btn" onclick="onFeatures()">Features</button>
+                <button class="top-btn" style="padding-left: 30%;" onclick="onContact()">Contact</button>
             </div>
         </div>
     </body>
