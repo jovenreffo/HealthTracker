@@ -448,9 +448,15 @@ private:
 
 	int m_currDay;
 	int m_rowDayCoord; // value for writing the day number in a certain row
+	
+	// Load from config
+	int m_numRows;
+	int m_numCols;
 
 public:
-	ExerciseGrid(wxWindow* parent,
+	ExerciseGrid(int rows,
+		int cols,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
