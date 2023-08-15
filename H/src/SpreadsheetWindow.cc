@@ -760,11 +760,7 @@ void SpreadsheetWindow::SetupToolBar()
 
 void SpreadsheetWindow::SetupSizing()
 {
-	wxSize size = this->GetBestSize();
-	wxSize initial = wxSize(size.x + 50, 480);
-
-	this->SetInitialSize(initial);
-	this->SetMinSize(SSW_SIZE);
+	this->SetInitialSize(SSW_SIZE);
 }
 
 void SpreadsheetWindow::SetupControls()
