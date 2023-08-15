@@ -611,8 +611,6 @@ SpreadsheetWindow::SpreadsheetWindow(wxWindow* parent,
 	this->BindEvents();
 	this->CentreOnScreen();
 
-	// Load config
-	this->LoadConfig();
 }
 
 SpreadsheetWindow::~SpreadsheetWindow()
@@ -636,12 +634,34 @@ SpreadsheetWindow::~SpreadsheetWindow()
 
 void SpreadsheetWindow::LoadConfig()
 {
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
 
+	pConfig->SetPath(_T("/SSW/"));
+	
+	// Read the number of rows & cols from the config
+	m_numRows = pConfig->Read(_T("NumRows"), 0L);
+	m_numCols = pConfig->Read(_T("NumCols"), 0L);
+#ifdef _DEBUG
+	wxLogMessage(_T("Num Rows: %d\nNum Cols: %d"), m_numRows, m_numCols);
+#endif
 }
 
 void SpreadsheetWindow::SaveConfig()
 {
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
 
+	pConfig->SetPath(_T("/SSW/"));
+
+	// Write the number of rows & columns to the config
+	m_numRows = m_pGrid->GetNumberRows();
+	m_numCols = m_pGrid->GetNumberCols();
+
+	pConfig->Write(_T("NumRows"), m_numRows);
+	pConfig->Write(_T("NumCols"), m_numCols);
 }
 
 bool SpreadsheetWindow::Create(wxWindow* parent,
@@ -653,6 +673,9 @@ bool SpreadsheetWindow::Create(wxWindow* parent,
 {
 	wxFrame::Create(parent, id, title, pos, size, style);
 	this->Init();
+	this->BindEvents();
+	this->CentreOnScreen();
+	this->LoadConfig();
 
 	return true;
 }
@@ -675,6 +698,10 @@ void SpreadsheetWindow::BindEvents()
 
 void SpreadsheetWindow::Init()
 {
+	// Load config
+	this->LoadConfig();
+
+	// Setup
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupMenu();
@@ -742,7 +769,7 @@ void SpreadsheetWindow::SetupSizing()
 
 void SpreadsheetWindow::SetupControls()
 {
-	m_pGrid = new ExerciseGrid(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pGrid = new ExerciseGrid(m_numRows, m_numCols, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 }
 
 void SpreadsheetWindow::SetupSizers()
@@ -887,11 +914,14 @@ void SpreadsheetWindow::OnChangeCellSize(wxCommandEvent& event)
 
 // ===== ExerciseGrid ======
 
-ExerciseGrid::ExerciseGrid(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxGrid(parent, id, pos, size, style)
+ExerciseGrid::ExerciseGrid(int rows, int cols, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxGrid(parent, id, pos, size, style), m_numRows{ rows }, m_numCols{ cols }
 {
 	// Grid setup
-	this->CreateGrid(100, 10); // Create a grid with 100 rows and 10 columns
+	if (!m_numRows || !m_numCols)
+		this->CreateGrid(100, 10);
+	else
+		this->CreateGrid(m_numRows, m_numCols);
 	this->EnableDragCell(true);
 	this->EnableDragColMove(true);
 	this->EnableDragRowMove(true);
