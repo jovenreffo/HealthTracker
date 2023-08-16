@@ -740,8 +740,9 @@ void SpreadsheetWindow::SetupMenu()
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_SIZE, _T("&Size"));
 
-	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 	m_pEditMenu->Append((int)SSW::ID_CLEAR_TABLE_CONFIG, _T("&Clear Configuration"));
+	m_pEditMenu->Append((int)SSW::ID_RESET_GRID_DIMENSIONS, _T("&Grid Dimensions"));
+	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 	m_pEditMenu->AppendSubMenu(m_pModifySubMenu, _T("&Change Cell..."));
 
 	// Menubar
@@ -908,6 +909,16 @@ void SpreadsheetWindow::OnChangeCellSize(wxCommandEvent& event)
 	}
 }
 
+void SpreadsheetWindow::OnDeleteRows(wxCommandEvent& event)
+{
+
+}
+
+void SpreadsheetWindow::OnDeleteCols(wxCommandEvent& event)
+{
+
+}
+
 // ===== ExerciseGrid ======
 
 ExerciseGrid::ExerciseGrid(int rows, int cols, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -1008,10 +1019,11 @@ void ExerciseGrid::SetupMenu()
 	m_pPopupMenu = new wxMenu();
 	m_pEditCellSub = new wxMenu();
 
-	m_pPopupMenu->AppendSubMenu(m_pEditCellSub, _T("&Modify Cell..."));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 	m_pEditCellSub->Append((int)SSW::ID_CHANGE_CELL_SIZE, _T("&Size"));
+
+	m_pPopupMenu->AppendSubMenu(m_pEditCellSub, _T("&Modify Cell..."));
 }
 
 void ExerciseGrid::SetupLabelArray()
