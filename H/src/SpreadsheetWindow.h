@@ -17,7 +17,7 @@
 
 // Spreadsheet window style and size macros
 #define SSW_STYLE ( wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxCLOSE_BOX )
-#define SSW_SIZE ( wxSize(1000, 800) )
+#define SSW_SIZE ( wxSize(850, 600) )
 
 class AddTableDlg : public wxDialog
 {
@@ -345,11 +345,13 @@ enum class SSW
 	ID_INSERT_DAY,
 	ID_RESET_TABLE_POS,
 	ID_RESET_TABLE_SIZE,
+	ID_RESET_GRID_DIMENSIONS,
 	ID_RESET_TABLE_LAYOUT,
 	ID_CLEAR_TABLE_CONFIG,
 	ID_CHANGE_CELL_BG_COLOUR,
 	ID_CHANGE_CELL_FONT,
-	ID_CHANGE_CELL_SIZE
+	ID_CHANGE_CELL_SIZE,
+	ID_DELETE_CELL
 };
 
 class ExerciseGrid;
@@ -430,6 +432,9 @@ public:
 	void OnChangeBackgroundColour(wxCommandEvent& event);
 	void OnChangeCellFont(wxCommandEvent& event);
 	void OnChangeCellSize(wxCommandEvent& event);
+
+	void OnDeleteRows(wxCommandEvent& event);
+	void OnDeleteCols(wxCommandEvent& event);
 };
 
 class ExerciseGrid : public wxGrid
@@ -465,7 +470,7 @@ public:
 
 	// general grid functionality
 	void ResetTablePosition();
-	void ResetTableSize();
+	void ResetTableSize(); // resets CELL size
 
 	// init
 	void Init();
