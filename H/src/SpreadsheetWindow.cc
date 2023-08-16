@@ -733,8 +733,8 @@ void SpreadsheetWindow::SetupMenu()
 	m_pInsertMenu->Append((int)SSW::ID_INSERT_DAY, _T("&New Workout Day"));
 
 	// Edit menu
+	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Cell Size"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_POS, _T("&Table Position"));
-	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Table Size"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_LAYOUT, _T("&Table Configuration"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
