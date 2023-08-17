@@ -92,6 +92,18 @@ void AddTableDlg::OnCancel(wxCommandEvent& event)
 	this->Show(false);
 }
 
+// DeleteElementsDlg
+
+DeleteElementsDlg::DeleteElementsDlg(const wxString& which, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_whichStr{ which }
+{
+}
+
+DeleteElementsDlg::~DeleteElementsDlg()
+{
+
+}
+
 // ChangeCellBackgroundDlg
 
 ChangeCellBackgroundDlg::ChangeCellBackgroundDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
