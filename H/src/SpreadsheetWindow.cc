@@ -45,7 +45,7 @@ void AddTableDlg::SetupControls()
 	m_pNumCtrl->SetValidator(wxGenericValidator(&m_num));
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
-	m_pCancel = new wxButton(this, wxID_OK, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
 
 void AddTableDlg::SetupSizers()
