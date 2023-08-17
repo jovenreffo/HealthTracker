@@ -63,6 +63,35 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+class DeleteElementsDlg : public wxDialog
+{
+private:
+	wxString m_whichStr;
+
+	// Controls
+	wxSpinCtrl* m_pNumCtrl;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pCtrlSizer; //wxHORIZONTAL
+	wxBoxSizer* m_pButtonSizer; //wxHORIZONTAL
+
+	// Validator
+	int m_num;
+
+public:
+	DeleteElementsDlg(const wxString& which,
+		wxWindow* parent,
+		wxWindowID id,
+		const wxString& title,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~DeleteElementsDlg();
+};
+
 class ChangeCellBackgroundDlg : public wxDialog
 {
 private:
