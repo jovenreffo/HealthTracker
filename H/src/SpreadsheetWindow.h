@@ -73,6 +73,8 @@ private:
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
+	wxGrid* m_pGrid;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pCtrlSizer; //wxHORIZONTAL
@@ -82,7 +84,8 @@ private:
 	int m_num;
 
 public:
-	DeleteElementsDlg(const wxString& which,
+	DeleteElementsDlg(wxGrid* pGrid,
+		const wxString& which,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title,
@@ -90,6 +93,19 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~DeleteElementsDlg();
+
+	// Getter
+	const int GetNum() const { return m_num; }
+
+	// Init
+	void Init();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 class ChangeCellBackgroundDlg : public wxDialog
@@ -380,7 +396,8 @@ enum class SSW
 	ID_CHANGE_CELL_BG_COLOUR,
 	ID_CHANGE_CELL_FONT,
 	ID_CHANGE_CELL_SIZE,
-	ID_DELETE_CELL
+	ID_DELETE_ROW,
+	ID_DELETE_COL
 };
 
 class ExerciseGrid;
@@ -391,7 +408,7 @@ private:
 	// Menu
 	wxMenu* m_pFileMenu; wxMenu* m_pExportSubMenu;
 	wxMenu* m_pInsertMenu;
-	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu; wxMenu* m_pModifySubMenu;
+	wxMenu* m_pEditMenu; wxMenu* m_pResetSubMenu; wxMenu* m_pModifySubMenu; wxMenu* m_pEditDeleteMenu;
 	wxMenuBar* m_pMenuBar;
 
 	// Toolbar 
@@ -406,6 +423,7 @@ private:
 	CCBD* m_pCCBD;
 	ChangeCellFontDlg* m_pCCFD;
 	ChangeCellSizeDlg* m_pCCSD;
+	DeleteElementsDlg* m_pDeleteElemsDlg;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
