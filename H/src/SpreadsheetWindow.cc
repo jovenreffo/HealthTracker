@@ -94,14 +94,82 @@ void AddTableDlg::OnCancel(wxCommandEvent& event)
 
 // DeleteElementsDlg
 
-DeleteElementsDlg::DeleteElementsDlg(const wxString& which, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style), m_whichStr{ which }
+DeleteElementsDlg::DeleteElementsDlg(wxGrid* pGrid, const wxString& which, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_pGrid{ pGrid }, m_whichStr{which}
 {
+	this->Init();
+
+	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
 }
 
 DeleteElementsDlg::~DeleteElementsDlg()
 {
+	// Unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
+}
 
+void DeleteElementsDlg::Init()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void DeleteElementsDlg::SetupControls()
+{
+	m_pNumCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 100, 1);
+	m_pNumCtrl->SetToolTip(wxString(_T("Number of ")) << m_whichStr << _T(" to delete."));
+	m_pNumCtrl->SetValidator(wxGenericValidator(&m_num));
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
+}
+
+void DeleteElementsDlg::SetupSizers()
+{
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
+
+	wxStaticText* pNum = new wxStaticText(this, wxID_STATIC, wxString("Number of ") << m_whichStr << ':', wxDefaultPosition, wxDefaultSize);
+	m_pCtrlSizer->Add(pNum, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pNumCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal());
+
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal());
+}
+
+void DeleteElementsDlg::SetupSizing()
+{
+	wxSize size = this->GetBestSize();
+	wxSize initial = wxSize(size.x + 50, size.y + 35);
+	wxSize max = wxSize(size.x + 125, size.y + 75);
+
+	this->SetMinSize(size);
+	this->SetInitialSize(initial);
+	this->SetMaxSize(max);
+}
+
+void DeleteElementsDlg::OnOK(wxCommandEvent& event)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
+}
+
+void DeleteElementsDlg::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 // ChangeCellBackgroundDlg
@@ -638,7 +706,10 @@ SpreadsheetWindow::~SpreadsheetWindow()
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 	m_pModifySubMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
+
 	m_pEditMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
+	m_pEditDeleteMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnDeleteRows, this, (int)SSW::ID_DELETE_ROW);
+	m_pEditDeleteMenu->Unbind(wxEVT_MENU, &SpreadsheetWindow::OnDeleteCols, this, (int)SSW::ID_DELETE_COL);
 
 	// Save the config
 	this->SaveConfig();
@@ -705,7 +776,10 @@ void SpreadsheetWindow::BindEvents()
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellFont, this, (int)SSW::ID_CHANGE_CELL_FONT);
 	m_pModifySubMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnChangeCellSize, this, (int)SSW::ID_CHANGE_CELL_SIZE);
+
 	m_pEditMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnClearTableConfiguration, this, (int)SSW::ID_CLEAR_TABLE_CONFIG);
+	m_pEditDeleteMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnDeleteRows, this, (int)SSW::ID_DELETE_ROW);
+	m_pEditDeleteMenu->Bind(wxEVT_MENU, &SpreadsheetWindow::OnDeleteCols, this, (int)SSW::ID_DELETE_COL);
 }
 
 void SpreadsheetWindow::Init()
@@ -729,6 +803,7 @@ void SpreadsheetWindow::SetupMenu()
 	m_pEditMenu = new wxMenu();
 	m_pResetSubMenu = new wxMenu();
 	m_pModifySubMenu = new wxMenu();
+	m_pEditDeleteMenu = new wxMenu();
 	m_pMenuBar = new wxMenuBar();
 
 	// File menu + export menu
@@ -748,12 +823,18 @@ void SpreadsheetWindow::SetupMenu()
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_SIZE, _T("&Cell Size"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_POS, _T("&Table Position"));
 	m_pResetSubMenu->Append((int)SSW::ID_RESET_TABLE_LAYOUT, _T("&Table Configuration"));
+
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_BG_COLOUR, _T("&Background Colour"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_FONT, _T("&Font"));
 	m_pModifySubMenu->Append((int)SSW::ID_CHANGE_CELL_SIZE, _T("&Size"));
 
+	m_pEditDeleteMenu->Append((int)SSW::ID_DELETE_ROW, _T("Row"));
+	m_pEditDeleteMenu->Append((int)SSW::ID_DELETE_COL, _T("Column"));
+
+
 	m_pEditMenu->Append((int)SSW::ID_CLEAR_TABLE_CONFIG, _T("&Clear Configuration"));
 	m_pEditMenu->Append((int)SSW::ID_RESET_GRID_DIMENSIONS, _T("&Grid Dimensions"));
+	m_pEditMenu->AppendSubMenu(m_pEditDeleteMenu, _T("&Delete..."));
 	m_pEditMenu->AppendSubMenu(m_pResetSubMenu, _T("&Reset..."));
 	m_pEditMenu->AppendSubMenu(m_pModifySubMenu, _T("&Change Cell..."));
 
@@ -923,12 +1004,26 @@ void SpreadsheetWindow::OnChangeCellSize(wxCommandEvent& event)
 
 void SpreadsheetWindow::OnDeleteRows(wxCommandEvent& event)
 {
+	m_pDeleteElemsDlg = new DeleteElementsDlg(m_pGrid, _T("Rows"), this, wxID_ANY, _T("Delete Row(s)"));
+	m_pDeleteElemsDlg->Show(true);
 
+	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void SpreadsheetWindow::OnDeleteCols(wxCommandEvent& event)
 {
+	m_pDeleteElemsDlg = new DeleteElementsDlg(m_pGrid, _T("Columns"), this, wxID_ANY, _T("Delete Column(s)"));
+	m_pDeleteElemsDlg->Show(true);
 
+	int num{ m_pGrid->GetNumberCols() };
+
+	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
+	{
+		return;
+	}
 }
 
 // ===== ExerciseGrid ======
