@@ -78,11 +78,12 @@ private:
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
-	wxBoxSizer* m_pCtrlSizer; //wxHORIZONTAL
+	wxFlexGridSizer* m_pCtrlSizer;
 	wxBoxSizer* m_pButtonSizer; //wxHORIZONTAL
 
 	// Validator
 	int m_num;
+	bool m_bRemoveFromFront{ false };
 
 public:
 	DeleteElementsDlg(wxGrid* pGrid,
@@ -97,6 +98,7 @@ public:
 
 	// Getter
 	const int GetNum() const { return m_num; }
+	const bool IsFrontChecked() const { return m_bRemoveFromFront; }
 
 	// Init
 	void Init();
