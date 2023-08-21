@@ -133,7 +133,7 @@ void DeleteElementsDlg::SetupControls()
 void DeleteElementsDlg::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
-	m_pCtrlSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pCtrlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->SetSizerAndFit(m_pTopSizer);
 
@@ -165,6 +165,9 @@ void DeleteElementsDlg::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
+		if (m_pCheckBox->IsChecked())
+			m_bRemoveFromFront = true;
+
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
@@ -1013,8 +1016,16 @@ void SpreadsheetWindow::OnDeleteRows(wxCommandEvent& event)
 
 	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
 	{
-		int num{ m_pGrid->GetNumberRows() - m_pDeleteElemsDlg->GetNum() };
-		m_pGrid->DeleteRows(num, m_pDeleteElemsDlg->GetNum());
+		if (m_pDeleteElemsDlg->IsFrontChecked())
+		{
+			// Delete rows from the front
+			m_pGrid->DeleteRows(0, m_pDeleteElemsDlg->GetNum());
+		}
+		else
+		{
+			int pos{ m_pGrid->GetNumberRows() - m_pDeleteElemsDlg->GetNum() };
+			m_pGrid->DeleteRows(pos, m_pDeleteElemsDlg->GetNum());
+		}
 	}
 }
 
@@ -1025,8 +1036,16 @@ void SpreadsheetWindow::OnDeleteCols(wxCommandEvent& event)
 
 	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
 	{
-		int num{ m_pGrid->GetNumberCols() - m_pDeleteElemsDlg->GetNum() };
-		m_pGrid->DeleteCols(num, m_pDeleteElemsDlg->GetNum());
+		if (m_pDeleteElemsDlg->IsFrontChecked())
+		{
+			// delete columns from the front
+			m_pGrid->DeleteCols(0, m_pDeleteElemsDlg->GetNum());
+		}
+		else
+		{
+			int pos{ m_pGrid->GetNumberCols() - m_pDeleteElemsDlg->GetNum() };
+			m_pGrid->DeleteCols(pos, m_pDeleteElemsDlg->GetNum());
+		}
 	}
 }
 
