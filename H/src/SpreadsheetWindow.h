@@ -72,6 +72,7 @@ private:
 	wxSpinCtrl* m_pNumCtrl;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+	wxCheckBox* m_pCheckBox;
 
 	wxGrid* m_pGrid;
 
