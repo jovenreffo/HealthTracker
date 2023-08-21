@@ -32,7 +32,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 #title-bar-title {
     position: sticky;
     margin: 0;
-    padding-left: 2%;
+    padding-left: 20%;
     border: 0;
     align-items: center;
     display: flex;
@@ -43,7 +43,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     margin: 0;
     top: 20px;
     right: 0;
-    padding-right: 30%;
+    padding-right: 45%;
     border: 0;
     align-items: center;
     display: flex;
@@ -54,7 +54,7 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     margin: 0;
     top: 20px;
     right: 0;
-    padding-right: 10%;
+    padding-right: 20%;
     border: 0;
     align-items: center;
     display: flex;
@@ -87,6 +87,7 @@ button.top-btn {
     font-weight: 700;
     font-family: neue-haas-grotesk-display,sans-serif;
     text-shadow: 1px 1px 2px rgb(49, 49, 49);
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }
 
 button.rounded-sm {
@@ -109,4 +110,25 @@ button.btn-primary {
     background-color: rgb(207, 54, 54);
     border-color: rgb(133, 33, 33);
     padding: .50rem !important;
+}
+
+/* for when buttons are being hovered over */
+
+button.top-btn:hover {
+    cursor: pointer;
+    color: rgb(145, 145, 145);
+}
+
+button.btn-darker:hover {
+    color: white;
+    cursor: pointer;
+    background-color: #181415;
+    background-color: #181415;
+}
+
+button.btn-primary:hover {
+    color: white;
+    cursor: pointer;
+    background-color: rgb(190, 54, 54);
+    border-color: rgb(133, 33, 33);
 }
