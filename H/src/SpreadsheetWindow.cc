@@ -100,15 +100,15 @@ DeleteElementsDlg::DeleteElementsDlg(wxGrid* pGrid, const wxString& which, wxWin
 	this->Init();
 
 	// Bind events
-	m_pOk->Bind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
-	m_pCancel->Bind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
+	m_pOk->Bind(wxEVT_BUTTON, &DeleteElementsDlg::OnOK, this, wxID_OK);
+	m_pCancel->Bind(wxEVT_BUTTON, &DeleteElementsDlg::OnCancel, this, wxID_CANCEL);
 }
 
 DeleteElementsDlg::~DeleteElementsDlg()
 {
 	// Unbind events
-	m_pOk->Unbind(wxEVT_BUTTON, &AddTableDlg::OnOK, this, wxID_OK);
-	m_pCancel->Unbind(wxEVT_BUTTON, &AddTableDlg::OnCancel, this, wxID_CANCEL);
+	m_pOk->Unbind(wxEVT_BUTTON, &DeleteElementsDlg::OnOK, this, wxID_OK);
+	m_pCancel->Unbind(wxEVT_BUTTON, &DeleteElementsDlg::OnCancel, this, wxID_CANCEL);
 }
 
 void DeleteElementsDlg::Init()
@@ -1009,7 +1009,8 @@ void SpreadsheetWindow::OnDeleteRows(wxCommandEvent& event)
 
 	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
 	{
-
+		int num{ m_pGrid->GetNumberRows() - m_pDeleteElemsDlg->GetNum() };
+		m_pGrid->DeleteRows(num, m_pDeleteElemsDlg->GetNum());
 	}
 }
 
@@ -1018,11 +1019,10 @@ void SpreadsheetWindow::OnDeleteCols(wxCommandEvent& event)
 	m_pDeleteElemsDlg = new DeleteElementsDlg(m_pGrid, _T("Columns"), this, wxID_ANY, _T("Delete Column(s)"));
 	m_pDeleteElemsDlg->Show(true);
 
-	int num{ m_pGrid->GetNumberCols() };
-
 	if (m_pDeleteElemsDlg->ShowModal() == wxID_OK)
 	{
-		return;
+		int num{ m_pGrid->GetNumberCols() - m_pDeleteElemsDlg->GetNum() };
+		m_pGrid->DeleteCols(num, m_pDeleteElemsDlg->GetNum());
 	}
 }
 
