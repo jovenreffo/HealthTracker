@@ -124,6 +124,8 @@ void DeleteElementsDlg::SetupControls()
 	m_pNumCtrl->SetToolTip(wxString(_T("Number of ")) << m_whichStr << _T(" to delete."));
 	m_pNumCtrl->SetValidator(wxGenericValidator(&m_num));
 
+	m_pCheckBox = new wxCheckBox(this, wxID_ANY, _T("Remove from front"));
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"), wxDefaultPosition, wxDefaultSize);
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"), wxDefaultPosition, wxDefaultSize);
 }
@@ -138,6 +140,8 @@ void DeleteElementsDlg::SetupSizers()
 	wxStaticText* pNum = new wxStaticText(this, wxID_STATIC, wxString("Number of ") << m_whichStr << ':', wxDefaultPosition, wxDefaultSize);
 	m_pCtrlSizer->Add(pNum, wxSizerFlags().Left().Border(wxALL, 5));
 	m_pCtrlSizer->Add(m_pNumCtrl, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pCtrlSizer->Add(m_pCheckBox, wxSizerFlags().Left().Border(wxALL, 5));
+	m_pCtrlSizer->AddSpacer(5);
 	m_pTopSizer->Add(m_pCtrlSizer, wxSizerFlags().CentreHorizontal());
 
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Left().Border(wxALL, 5));
