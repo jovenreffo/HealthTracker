@@ -60,6 +60,40 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     display: flex;
 }
 
+#banner {
+    background-color: #181516;
+}
+
+#introduction {
+    display: block;
+    height: 600px;
+}
+
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    text-align: center;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
+.banner-text {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: .5rem 0rem 0rem 1.25rem;
+    -webkit-user-select: none;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: 700;
+    font-family: neue-haas-grotesk-display,sans-serif;
+    text-shadow: 1px 1px 2px rgb(49, 49, 49);
+}
+
+.bg-secondary {
+    background-color: rgb(88, 88, 88);
+}
+
 h1.main-title {
     -webkit-user-select: none;
     color: rgb(207, 54, 54);
