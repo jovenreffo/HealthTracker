@@ -5,6 +5,7 @@
 #include <wx/app.h>
 #include <wx/fontdlg.h>
 #include <wx/valgen.h>
+#include <wx/valtext.h>
 #include <wx/stattext.h>
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
@@ -54,6 +55,9 @@ private:
 	wxString m_nameStr;
 	wxString m_emailStr;
 
+	wxTextCtrl* m_pNameTxt;
+	wxTextCtrl* m_pEmailTxt;
+
 public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, 0L, _("generalpagepanel"))
@@ -62,10 +66,24 @@ public:
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
 
-		// information about the user
+		// =============== info section ===============
 		wxStaticText* pInfoTitle = new wxStaticText(this, wxID_STATIC, _T("Information about the user"));
 		pInfoTitle->SetFont(Fonts::GetBoldFont(10));
 		pTopSizer->Add(pInfoTitle, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
+
+		wxFlexGridSizer* pInfoSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+		pInfoSizer->AddGrowableCol(1);
+		pTopSizer->Add(pInfoSizer, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
+		
+		m_pNameTxt = new wxTextCtrl(this, wxID_ANY);
+		m_pEmailTxt = new wxTextCtrl(this, wxID_ANY);
+		m_pNameTxt->SetValidator(wxTextValidator(wxFILTER_NONE, &m_nameStr));
+		m_pEmailTxt->SetValidator(wxTextValidator(wxFILTER_NONE, &m_emailStr));
+
+		pInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pInfoSizer->Add(m_pNameTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Email:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pInfoSizer->Add(m_pEmailTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 
 		// =============== environment ===============
 		// Initialization
