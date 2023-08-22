@@ -50,6 +50,10 @@ private:
 	wxFont m_defaultFont;
 	wxString m_faceName;
 
+	// information about user
+	wxString m_nameStr;
+	wxString m_emailStr;
+
 public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, 0L, _("generalpagepanel"))
@@ -57,6 +61,11 @@ public:
 		this->SetupWindowPointers();
 		wxBoxSizer* pTopSizer = new wxBoxSizer(wxVERTICAL);
 		this->SetSizerAndFit(pTopSizer);
+
+		// information about the user
+		wxStaticText* pInfoTitle = new wxStaticText(this, wxID_STATIC, _T("Information about the user"));
+		pInfoTitle->SetFont(Fonts::GetBoldFont(10));
+		pTopSizer->Add(pInfoTitle, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
 
 		// =============== environment ===============
 		// Initialization
