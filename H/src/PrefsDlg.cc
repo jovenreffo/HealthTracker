@@ -148,6 +148,13 @@ public:
 
 		pConfig->SetPath(_("/Preferences"));
 
+		// Load user info prefs and set the text control value
+		m_nameStr = pConfig->Read("UserName", wxEmptyString);
+		m_emailStr = pConfig->Read("UserEmail", wxEmptyString);
+		m_pNameTxt->SetValue(m_nameStr);
+		m_pEmailTxt->SetValue(m_emailStr);
+
+		// Load font prefs
 		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L));
 		m_faceName = pConfig->Read("FaceName", "");
 		m_pWhatFont->SetLabel(wxString(_("Current font: ")) << m_faceName);
@@ -173,11 +180,18 @@ public:
 		if (pConfig == nullptr)
 			return;
 
+		// user info preferences
+		if (!m_pNameTxt->IsEmpty())
+			pConfig->Write("/Preferences/UserName", m_pNameTxt->GetValue());
+
+		if (!m_pEmailTxt->IsEmpty())
+			pConfig->Write("/Preferences/UserEmail", m_pEmailTxt->GetValue());
+
+		// font preferences
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 		pConfig->Write("/Preferences/FaceName", m_faceName);
 		pConfig->Write("/Preferences/Spellcheck", m_pEnableSpellCheck->GetValue());
 		
-		// save font information
 		if (m_selectedFont.IsOk())
 		{
 			pConfig->Write("/Preferences/FontSize", static_cast<long>(m_selectedFont.GetPointSize()));
