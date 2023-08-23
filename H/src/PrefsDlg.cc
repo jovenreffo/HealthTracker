@@ -58,6 +58,8 @@ private:
 	wxTextCtrl* m_pNameTxt;
 	wxTextCtrl* m_pEmailTxt;
 
+	wxStaticText* m_pInfoDesc;
+
 public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, 0L, _("generalpagepanel"))
@@ -80,10 +82,15 @@ public:
 		m_pNameTxt->SetValidator(wxTextValidator(wxFILTER_NONE, &m_nameStr));
 		m_pEmailTxt->SetValidator(wxTextValidator(wxFILTER_NONE, &m_emailStr));
 
+		m_pInfoDesc = new wxStaticText(this, wxID_STATIC, _T("Your name and email will only be shown\nwhen submitting a ticket or bug report."));
+		m_pInfoDesc->SetForegroundColour(wxColour(128, 128, 128));
+
 		pInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Name:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pInfoSizer->Add(m_pNameTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pInfoSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Email:")), wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pInfoSizer->Add(m_pEmailTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pInfoSizer->Add(m_pInfoDesc, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pInfoSizer->AddSpacer(5);
 
 		// =============== environment ===============
 		// Initialization
