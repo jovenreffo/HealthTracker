@@ -6,8 +6,9 @@
 BEGIN_EVENT_TABLE(Frame, wxFrame)
 	EVT_MENU(wxID_EXIT, Frame::OnExit)
 	EVT_MENU(ID_ENABLE_FULLSCREEN, Frame::OnFullScreen)
-	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
 	EVT_MENU(ID_PREFERENCES, Frame::OnPreferences)
+	EVT_MENU(wxID_ABOUT, Frame::OnAbout)
+	EVT_MENU(ID_SUBMIT_REPORT, Frame::OnSubmitBugReport)
 	// reset events
 	EVT_MENU(wxID_RESET, Frame::OnResetAll)
 	EVT_MENU(ID_RESET_ENTRIES, Frame::OnResetEntries)
@@ -130,7 +131,7 @@ void Frame::SetupMenuBar()
 
 	// Help menu
 	m_pHelpMenu->Append(wxID_ABOUT, _T("&About"));
-
+	m_pHelpMenu->Append(ID_SUBMIT_REPORT, _T("Report a bug"));
 
 	m_pMenuBar->Append(m_pFileMenu, _T("&File"));
 	m_pMenuBar->Append(m_pViewMenu, _T("&View"));
@@ -195,6 +196,13 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
 	m_pAboutDialog = new AboutDialog(this, wxID_ANY);
 	m_pAboutDialog->Show(true);
+}
+
+void Frame::OnSubmitBugReport(wxCommandEvent& event)
+{
+	wxString sendTo = "mailto:jovenreffo@gmail.com";
+
+	ShellExecute(NULL, L"open", sendTo.c_str(), L"", L"", 0);
 }
 
 void Frame::OnPreferences(wxCommandEvent& event)
