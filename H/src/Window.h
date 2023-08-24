@@ -40,7 +40,8 @@ enum
 	ID_ADD_MEALPLAN,
 	ID_PREFERENCES,
 	ID_RESET_LAYOUT,
-	ID_WINSIZE
+	ID_WINSIZE,
+	ID_SUBMIT_REPORT
 };
 
 class Frame: public wxFrame
@@ -99,20 +100,21 @@ public:
 	// Events
 	void OnExit(wxCommandEvent& event);
 	void OnFullScreen(wxCommandEvent& event);
-	void OnAbout(wxCommandEvent& event);
 	void OnPreferences(wxCommandEvent& event);
+	void OnAbout(wxCommandEvent& event);
+	void OnSubmitBugReport(wxCommandEvent& event);
 	// reset events
-	void OnResetAll(wxCommandEvent& WXUNUSED(event));
-	void OnResetEntries(wxCommandEvent& WXUNUSED(event));
-	void OnResetWorkouts(wxCommandEvent& WXUNUSED(event));
-	void OnResetRoutines(wxCommandEvent& WXUNUSED(event));
-	void OnResetWindowLayout(wxCommandEvent& WXUNUSED(event));
+	void OnResetAll(wxCommandEvent& event);
+	void OnResetEntries(wxCommandEvent& event);
+	void OnResetWorkouts(wxCommandEvent& event);
+	void OnResetRoutines(wxCommandEvent& event);
+	void OnResetWindowLayout(wxCommandEvent& event);
 	// add events
-	void OnAddWorkout(wxCommandEvent& WXUNUSED(event));
-	void OnAddRoutine(wxCommandEvent& WXUNUSED(event));
-	void OnAddNutritonItem(wxCommandEvent& WXUNUSED(event));
+	void OnAddWorkout(wxCommandEvent& event);
+	void OnAddRoutine(wxCommandEvent& event);
+	void OnAddNutritonItem(wxCommandEvent& event);
 	// debug events
-	void OnGetWindowSize(wxCommandEvent& WXUNUSED(event));
+	void OnGetWindowSize(wxCommandEvent& event);
 };
 
 #endif
