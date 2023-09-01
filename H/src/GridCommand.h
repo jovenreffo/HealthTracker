@@ -14,6 +14,7 @@ private:
 	wxColour m_cellBackgroundColour;
 
 public:
+	GridCellState() = default;
 	GridCellState(const wxString& cellValue,
 		const wxString& cellFont,
 		const wxSize& cellSize,
