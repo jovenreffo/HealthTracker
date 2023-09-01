@@ -5,15 +5,22 @@
 #include <wx/textctrl.h>
 #include <wx/bmpbuttn.h>
 #include <wx/sizer.h>
+#include <array>
 #include "PrefsDlg.h"
+
 
 class BugReport : public wxDialog
 {
 private:
 	// Controls
-	wxBitmapButton* m_pModifyName;
+	std::array<wxBitmapButton*, 2> m_pModifyBtn;
 	wxTextCtrl* m_pNameTxt;
 	wxTextCtrl* m_pEmailTxt;
+	wxTextCtrl* m_pReportTxt;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	PrefsDlg* m_pPrefsDlg;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -25,7 +32,8 @@ private:
 	wxString m_email;
 
 public:
-	BugReport(wxWindow* parent,
+	BugReport(PrefsDlg* pPrefsDlg,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title,
 		const wxPoint& pos = wxDefaultPosition,
