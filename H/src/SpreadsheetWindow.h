@@ -333,15 +333,19 @@ public:
 	const wxFont& GetCellFont() const { return m_cellFont; }
 };
 
+class ExerciseGrid;
+
 class SSWToolBar : public wxToolBar
 {  
 private:
 	// Grid needed for modifications
-	wxGrid* m_pGrid;
+	ExerciseGrid* m_pExerciseGrid;
 	wxGridCellCoords m_selectedCell;
 
 	// Cell info for cutting/copying/pasting
 	//CellInfo m_selectedCellInfo;
+	GridCellState m_currCellState;
+
 
 	// Bitmaps
 	wxBitmap m_undoBmp;
@@ -355,7 +359,7 @@ private:
 	wxBitmap m_fillBmp;
 
 public:
-	SSWToolBar(wxGrid* pGrid,
+	SSWToolBar(ExerciseGrid* pExerciseGrid,
 		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
@@ -371,8 +375,6 @@ public:
 	// Events
 	void BindEvents();
 	void UnbindEvents();
-
-	void OnSelectCell(wxGridEvent& event);
 
 	void OnUndo(wxCommandEvent& event);
 	void OnRedo(wxCommandEvent& event);
@@ -402,8 +404,6 @@ enum class SSW
 	ID_DELETE_ROW,
 	ID_DELETE_COL
 };
-
-class ExerciseGrid;
 
 class SpreadsheetWindow : public wxFrame
 {
@@ -501,6 +501,8 @@ private:
 	wxArrayString m_labels;
 	wxGridCellCoords m_currCell;
 
+	GridCellState m_currCellState;
+
 	int m_currDay;
 	int m_rowDayCoord; // value for writing the day number in a certain row
 	
@@ -517,6 +519,10 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxWANTS_CHARS);
 	~ExerciseGrid();
+
+	// getters
+	const GridCellState GetSelectedCellState() const { return m_currCellState; }
+	const wxGridCellCoords GetSelectedCell() const { return m_currCell; }
 
 	// general grid functionality
 	void ResetTablePosition();
@@ -535,6 +541,8 @@ public:
 	void SetupDayLabel();
 
 	// events
+	void OnUpdateCell(wxGridEvent& event);
+	void OnLeftClickCell(wxGridEvent& event);
 	void OnSelectCell(wxGridEvent& event);
 	void OnRightClickCell(wxGridEvent& event);
 	void OnChangeBackgroundColour(wxCommandEvent& event);
