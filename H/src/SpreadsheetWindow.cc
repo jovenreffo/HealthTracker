@@ -568,8 +568,8 @@ void AddWorkoutDayDlg::OnExceedLimit(wxCommandEvent& event)
 
 // ===== SSWToolBar =====
 
-SSWToolBar::SSWToolBar(wxGrid* pGrid, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxToolBar(parent, id, pos, size, style), m_pGrid{ pGrid }
+SSWToolBar::SSWToolBar(ExerciseGrid* pExerciseGrid, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxToolBar(parent, id, pos, size, style), m_pExerciseGrid{ pExerciseGrid }
 {
 	this->Init();
 	this->BindEvents();
@@ -616,21 +616,27 @@ void SSWToolBar::SetupTools()
 void SSWToolBar::BindEvents()
 {
 	// Member events
-	m_pGrid->Bind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+	//m_pExerciseGrid->Bind(wxEVT_GRID_CELL_LEFT_CLICK, &SSWToolBar::OnSelectCell, this);
 
 	// Toolbar events
 	this->Bind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Bind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
+	this->Bind(wxEVT_TOOL, &SSWToolBar::OnCopy, this, wxID_COPY);
+	this->Bind(wxEVT_TOOL, &SSWToolBar::OnPaste, this, wxID_PASTE);
+	this->Bind(wxEVT_TOOL, &SSWToolBar::OnCut, this, wxID_CUT);
 }
 
 void SSWToolBar::UnbindEvents()
 {
 	// mmbr events
-	m_pGrid->Unbind(wxEVT_GRID_SELECT_CELL, &SSWToolBar::OnSelectCell, this);
+	//m_pExerciseGrid->Unbind(wxEVT_GRID_CELL_LEFT_CLICK, &SSWToolBar::OnSelectCell, this);
 
 	// tb events
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
+	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnCopy, this, wxID_COPY);
+	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnPaste, this, wxID_PASTE);
+	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnCut, this, wxID_CUT);
 }
 
 void SSWToolBar::OnSelectCell(wxGridEvent& event)
@@ -652,10 +658,22 @@ void SSWToolBar::OnCut(wxCommandEvent& event)
 
 void SSWToolBar::OnCopy(wxCommandEvent& event)
 {
+	m_currCellState = m_pExerciseGrid->GetSelectedCellState();
 }
 
 void SSWToolBar::OnPaste(wxCommandEvent& event)
 {
+	wxGridCellCoords selected = m_pExerciseGrid->GetSelectedCell();
+	int r = selected.GetRow();
+	int c = selected.GetCol();
+
+	if ((selected.GetRow() >= 0) && (selected.GetCol() >= 0))
+	{
+		m_pExerciseGrid->SetCellValue(selected, m_currCellState.GetCellValue());
+		m_pExerciseGrid->SetCellFont(r, c, m_currCellState.GetCellFont());
+		//m_pExerciseGrid->SetCellSize(r, c, m_currCellState.GetCellSize().GetX(), m_currCellState.GetCellSize().GetY());
+		m_pExerciseGrid->SetCellBackgroundColour(r, c, m_currCellState.GetCellColour());
+	}
 }
 
 void SSWToolBar::OnChangeFont(wxCommandEvent& event)
@@ -667,7 +685,7 @@ void SSWToolBar::OnChangeFont(wxCommandEvent& event)
 	if (pFontDlg->ShowModal() == wxID_OK)
 	{
 		wxFont font = pFontDlg->GetFontData().GetChosenFont();
-		m_pGrid->SetCellFont(m_selectedCell.GetRow(), m_selectedCell.GetCol(), font);
+		m_pExerciseGrid->SetCellFont(m_selectedCell.GetRow(), m_selectedCell.GetCol(), font);
 	}
 }
 
@@ -680,7 +698,7 @@ void SSWToolBar::OnSetFill(wxCommandEvent& event)
 	if (pColourDlg->ShowModal() == wxID_OK)
 	{
 		wxColour clr = pColourDlg->GetColourData().GetColour();
-		m_pGrid->SetCellBackgroundColour(m_selectedCell.GetRow(), m_selectedCell.GetCol(), clr);
+		m_pExerciseGrid->SetCellBackgroundColour(m_selectedCell.GetRow(), m_selectedCell.GetCol(), clr);
 	}
 }
 
@@ -734,7 +752,7 @@ void SpreadsheetWindow::LoadConfig()
 	m_numRows = pConfig->Read(_T("NumRows"), 0L);
 	m_numCols = pConfig->Read(_T("NumCols"), 0L);
 #ifdef _DEBUG
-	wxLogMessage(_T("Num Rows: %d\nNum Cols: %d"), m_numRows, m_numCols);
+	//wxLogMessage(_T("Num Rows: %d\nNum Cols: %d"), m_numRows, m_numCols);
 #endif
 }
 
@@ -1071,6 +1089,8 @@ ExerciseGrid::ExerciseGrid(int rows, int cols, wxWindow* parent, wxWindowID id, 
 	this->SetupWorkoutTemplate();
 
 	// Bind events
+	this->Bind(wxEVT_GRID_CELL_CHANGED, &ExerciseGrid::OnUpdateCell, this);
+	this->Bind(wxEVT_GRID_CELL_LEFT_CLICK, &ExerciseGrid::OnLeftClickCell, this);
 	this->Bind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Bind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Bind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
@@ -1081,6 +1101,8 @@ ExerciseGrid::ExerciseGrid(int rows, int cols, wxWindow* parent, wxWindowID id, 
 ExerciseGrid::~ExerciseGrid()
 {
 	// Unbind events
+	this->Unbind(wxEVT_GRID_CELL_CHANGED, &ExerciseGrid::OnUpdateCell, this);
+	this->Unbind(wxEVT_GRID_CELL_LEFT_CLICK, &ExerciseGrid::OnLeftClickCell, this);
 	this->Unbind(wxEVT_GRID_SELECT_CELL, &ExerciseGrid::OnSelectCell, this);
 	this->Unbind(wxEVT_GRID_CELL_RIGHT_CLICK, &ExerciseGrid::OnRightClickCell, this);
 	m_pEditCellSub->Unbind(wxEVT_MENU, &ExerciseGrid::OnChangeBackgroundColour, this, (int)SSW::ID_CHANGE_CELL_BG_COLOUR);
@@ -1221,6 +1243,24 @@ void ExerciseGrid::SetupDayLabel()
 	// if not, add more rows
 	if (m_rowDayCoord + 10 >= GetNumberRows() || m_rowDayCoord >= GetNumberRows())
 		this->AppendRows(20, true);
+}
+
+void ExerciseGrid::OnUpdateCell(wxGridEvent& event)
+{
+	// Ensure there is a currently active or selected cell.
+	if ( (m_currCell.GetCol() >= 0) && (m_currCell.GetRow() >= 0) )
+	{
+		int row = m_currCell.GetRow();
+		int col = m_currCell.GetCol();
+
+		m_currCellState = GridCellState(row, col, this->GetCellValue(row, col), this->GetCellFont(row, col), this->GetCellSize(wxGridCellCoords(row, col)), this->GetCellBackgroundColour(row, col));
+	}
+}
+
+void ExerciseGrid::OnLeftClickCell(wxGridEvent& event)
+{
+	m_currCell = wxGridCellCoords(event.GetRow(), event.GetCol());
+	this->SetGridCursor(m_currCell);
 }
 
 void ExerciseGrid::OnSelectCell(wxGridEvent& event)
