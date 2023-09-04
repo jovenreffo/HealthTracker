@@ -615,9 +615,6 @@ void SSWToolBar::SetupTools()
 
 void SSWToolBar::BindEvents()
 {
-	// Member events
-	//m_pExerciseGrid->Bind(wxEVT_GRID_CELL_LEFT_CLICK, &SSWToolBar::OnSelectCell, this);
-
 	// Toolbar events
 	this->Bind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Bind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
@@ -628,20 +625,12 @@ void SSWToolBar::BindEvents()
 
 void SSWToolBar::UnbindEvents()
 {
-	// mmbr events
-	//m_pExerciseGrid->Unbind(wxEVT_GRID_CELL_LEFT_CLICK, &SSWToolBar::OnSelectCell, this);
-
 	// tb events
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnChangeFont, this, (int)SSWTB::ID_CHANGE_FONT);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnSetFill, this, (int)SSWTB::ID_SET_FILL);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnCopy, this, wxID_COPY);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnPaste, this, wxID_PASTE);
 	this->Unbind(wxEVT_TOOL, &SSWToolBar::OnCut, this, wxID_CUT);
-}
-
-void SSWToolBar::OnSelectCell(wxGridEvent& event)
-{
-	m_selectedCell = wxGridCellCoords(event.GetRow(), event.GetCol());
 }
 
 void SSWToolBar::OnUndo(wxCommandEvent& event)
