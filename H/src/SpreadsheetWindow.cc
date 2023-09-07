@@ -643,6 +643,28 @@ void SSWToolBar::OnRedo(wxCommandEvent& event)
 
 void SSWToolBar::OnCut(wxCommandEvent& event)
 {
+	// copy the contents of the cell before erasing it
+	m_currCellState = m_pExerciseGrid->GetSelectedCellState();
+
+	wxGridCellCoords selected = m_pExerciseGrid->GetSelectedCell();
+	int r = selected.GetRow();
+	int c = selected.GetCol();
+
+	// Load the config, we will need it to get the default font
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	m_pExerciseGrid->SetCellSize(r, c, 1, 1); // reset cell size to 1rowx1col
+	m_pExerciseGrid->SetCellValue(r, c,wxEmptyString); // set the cell to an empty string
+	m_pExerciseGrid->SetCellFont(r, c, wxFont( // reset the font to the one that is selected in the preferences dialog
+		pConfig->Read("FontSize", 10L),
+		static_cast<wxFontFamily>(pConfig->Read("FontFamily", static_cast<long>(wxFONTFAMILY_DEFAULT))),
+		static_cast<wxFontStyle>(pConfig->Read("FontStyle", static_cast<long>(wxFONTSTYLE_NORMAL))),
+		wxFONTWEIGHT_NORMAL,
+		pConfig->Read("FontUnderline", 0L),
+		pConfig->Read("FaceName", "")
+	));
 }
 
 void SSWToolBar::OnCopy(wxCommandEvent& event)
@@ -656,11 +678,14 @@ void SSWToolBar::OnPaste(wxCommandEvent& event)
 	int r = selected.GetRow();
 	int c = selected.GetCol();
 
+	int sizeX = m_currCellState.GetCellSize().GetX();
+	int sizeY = m_currCellState.GetCellSize().GetY();
+
 	if ((selected.GetRow() >= 0) && (selected.GetCol() >= 0))
 	{
 		m_pExerciseGrid->SetCellValue(selected, m_currCellState.GetCellValue());
 		m_pExerciseGrid->SetCellFont(r, c, m_currCellState.GetCellFont());
-		//m_pExerciseGrid->SetCellSize(r, c, m_currCellState.GetCellSize().GetX(), m_currCellState.GetCellSize().GetY());
+		m_pExerciseGrid->SetCellSize(r, c, sizeX, sizeY);
 		m_pExerciseGrid->SetCellBackgroundColour(r, c, m_currCellState.GetCellColour());
 	}
 }
@@ -671,10 +696,12 @@ void SSWToolBar::OnChangeFont(wxCommandEvent& event)
 	wxFontDialog* pFontDlg = new wxFontDialog(this);
 	pFontDlg->Show(true);
 
+	wxGridCellCoords selected = m_pExerciseGrid->GetSelectedCell();
+
 	if (pFontDlg->ShowModal() == wxID_OK)
 	{
 		wxFont font = pFontDlg->GetFontData().GetChosenFont();
-		m_pExerciseGrid->SetCellFont(m_selectedCell.GetRow(), m_selectedCell.GetCol(), font);
+		m_pExerciseGrid->SetCellFont(selected.GetRow(), selected.GetCol(), font);
 	}
 }
 
@@ -684,10 +711,12 @@ void SSWToolBar::OnSetFill(wxCommandEvent& event)
 	wxColourDialog* pColourDlg = new wxColourDialog(this);
 	pColourDlg->Show(true);
 
+	wxGridCellCoords selected = m_pExerciseGrid->GetSelectedCell();
+
 	if (pColourDlg->ShowModal() == wxID_OK)
 	{
 		wxColour clr = pColourDlg->GetColourData().GetColour();
-		m_pExerciseGrid->SetCellBackgroundColour(m_selectedCell.GetRow(), m_selectedCell.GetCol(), clr);
+		m_pExerciseGrid->SetCellBackgroundColour(selected.GetRow(), selected.GetCol(), clr);
 	}
 }
 
