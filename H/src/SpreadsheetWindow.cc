@@ -678,16 +678,20 @@ void SSWToolBar::OnPaste(wxCommandEvent& event)
 	int r = selected.GetRow();
 	int c = selected.GetCol();
 
-	int sizeX = m_currCellState.GetCellSize().GetX();
-	int sizeY = m_currCellState.GetCellSize().GetY();
+	wxString cellValue = m_currCellState.GetCellValue();
+	wxFont cellFont = m_currCellState.GetCellFont();
+	wxSize cellSize = m_currCellState.GetCellSize();
+	wxColour cellColour = m_currCellState.GetCellColour();
 
 	if ((selected.GetRow() >= 0) && (selected.GetCol() >= 0))
 	{
-		m_pExerciseGrid->SetCellValue(selected, m_currCellState.GetCellValue());
-		m_pExerciseGrid->SetCellFont(r, c, m_currCellState.GetCellFont());
-		m_pExerciseGrid->SetCellSize(r, c, sizeX, sizeY);
-		m_pExerciseGrid->SetCellBackgroundColour(r, c, m_currCellState.GetCellColour());
+		m_pExerciseGrid->SetCellValue(selected, cellValue);
+		m_pExerciseGrid->SetCellFont(r, c, cellFont);
+		m_pExerciseGrid->SetCellSize(r, c, cellSize.GetX(), cellSize.GetY());
+		m_pExerciseGrid->SetCellBackgroundColour(r, c, cellColour);
 	}
+
+	m_pExerciseGrid->Refresh();
 }
 
 void SSWToolBar::OnChangeFont(wxCommandEvent& event)
