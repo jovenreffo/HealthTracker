@@ -52,8 +52,8 @@ void WPNotebook::SetupPanels()
 
 	m_pSplitter->SplitVertically(m_pWorkoutPanel, m_pRoutinePanel);
 
-	this->AddPage(m_pSplitter, _T("Planned Workouts"), true, 0);
-	this->AddPage(m_pDynamicPlan, _T("Track-On-The-Go"), false, 1);
+	this->AddPage(m_pSplitter, _T("Pre-made Workouts"), true, 0);
+	this->AddPage(m_pDynamicPlan, _T("Tracking"), false, 1);
 }
 
 void WPNotebook::SetupSplitter()
