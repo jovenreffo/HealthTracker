@@ -18,6 +18,7 @@
 #include "CaloriePanel.h"
 #include "WorkoutWindow.h"
 #include "MealPlanWindow.h"
+#include "BugReport.h"
 
 class App: public wxApp
 {
@@ -66,6 +67,7 @@ private:
 	wxIcon m_heartIcon;
 	TaskbarIcon* m_pTaskbarIcon;
 	PrefsDlg* m_pPrefsDlg;
+	BugReport* m_pBugRepDlg;
 
 	WorkoutList* m_pWorkoutList;
 	RoutineList* m_pRoutineList;

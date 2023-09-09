@@ -200,9 +200,16 @@ void Frame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void Frame::OnSubmitBugReport(wxCommandEvent& event)
 {
-	wxString sendTo = "mailto:jovenreffo@gmail.com";
+	//wxString sendTo = "mailto:jovenreffo@gmail.com";
+	//
+	//ShellExecute(NULL, L"open", sendTo.c_str(), L"", L"", 0);
+	m_pBugRepDlg = new BugReport(m_pPrefsDlg, this, wxID_ANY, _T("Submit Bug Report"));
+	m_pBugRepDlg->Show(true);
 
-	ShellExecute(NULL, L"open", sendTo.c_str(), L"", L"", 0);
+	if (m_pBugRepDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void Frame::OnPreferences(wxCommandEvent& event)
