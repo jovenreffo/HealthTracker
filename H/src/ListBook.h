@@ -8,6 +8,7 @@
 #include "Planning.h"
 #include "ExercisePanel.h"
 #include "Settings.h"
+#include "ClientPanel.h"
 
 class Listbook: public wxListbook
 {
@@ -17,12 +18,14 @@ private:
 	Planning* m_pPlanning;
 	ExerciseBook* m_pExerciseBook;
 	Settings* m_pSettings;
+	ClientPanel* m_pClientPanel;
 
 	wxImageList* m_pImageList;
 	wxBitmap m_journalBmp;
 	wxBitmap m_calendarBmp;
 	wxBitmap m_exerciseBmp;
 	wxBitmap m_settingsBmp;
+	wxBitmap m_clientsBmp;
 
 public:
 	Listbook(wxWindow* parent,
