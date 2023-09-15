@@ -686,8 +686,14 @@ void SSWToolBar::OnPaste(wxCommandEvent& event)
 	if ((selected.GetRow() >= 0) && (selected.GetCol() >= 0))
 	{
 		m_pExerciseGrid->SetCellValue(selected, cellValue);
+
+		// check the size of the cell
+		if (m_pExerciseGrid->GetCellSize(selected).GetX() > 1 || m_pExerciseGrid->GetCellSize(selected).GetY() > 1)
+			m_pExerciseGrid->SetCellSize(r, c, cellSize.GetX(), cellSize.GetY());
+		else
+			m_pExerciseGrid->SetCellSize(r, c, 1, 1);
+
 		m_pExerciseGrid->SetCellFont(r, c, cellFont);
-		m_pExerciseGrid->SetCellSize(r, c, cellSize.GetX(), cellSize.GetY());
 		m_pExerciseGrid->SetCellBackgroundColour(r, c, cellColour);
 	}
 
