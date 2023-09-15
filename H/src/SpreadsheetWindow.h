@@ -346,7 +346,6 @@ private:
 	//CellInfo m_selectedCellInfo;
 	GridCellState m_currCellState;
 
-
 	// Bitmaps
 	wxBitmap m_undoBmp;
 	wxBitmap m_redoBmp;
@@ -521,7 +520,7 @@ public:
 	~ExerciseGrid();
 
 	// getters
-	const GridCellState GetSelectedCellState() const { return m_currCellState; }
+	const GridCellState& GetSelectedCellState() const { return m_currCellState; }
 	const wxGridCellCoords GetSelectedCell() const { return m_currCell; }
 
 	// general grid functionality
