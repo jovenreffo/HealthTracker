@@ -7,6 +7,40 @@
 #include <wx/panel.h>
 #include <wx/listctrl.h>
 
+class NewClientDlg : public wxDialog
+{
+private:
+	// Controls
+	wxTextCtrl* m_pClientNameTxt;
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// Sizers
+
+
+	// Validators
+	wxString m_clientName;
+
+public:
+	NewClientDlg(wxWindow* parent,
+		wxWindowID id,
+		const wxString& title = _T("Add New Client"),
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
+	~NewClientDlg();
+
+	// Setup
+	void SetupNewClientDlg();
+	void SetupControls();
+	void SetupSizers();
+	void SetupSizing();
+
+	// Events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
+};
+
 class ClientList : public wxListView
 {
 private:
@@ -43,6 +77,7 @@ private:
 	// Controls
 	wxButton* m_pAddClientBtn;
 	ClientList* m_pClientList;
+	NewClientDlg* m_pNewClientDlg;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
@@ -62,6 +97,7 @@ public:
 	void SetupSizers();
 
 	// Events
+	void OnAddClient(wxCommandEvent& event);
 };
 
 #endif
