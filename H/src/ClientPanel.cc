@@ -3,6 +3,62 @@
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
 
+// === NewClientDlg ===
+
+NewClientDlg::NewClientDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
+{
+	this->SetupNewClientDlg();
+
+	// Bind events
+	m_pOk->Bind(wxEVT_BUTTON, &NewClientDlg::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &NewClientDlg::OnCancel, this);
+}
+
+NewClientDlg::~NewClientDlg()
+{
+	// unbind
+	m_pOk->Unbind(wxEVT_BUTTON, &NewClientDlg::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &NewClientDlg::OnCancel, this);
+}
+
+void NewClientDlg::SetupNewClientDlg()
+{
+	this->SetupControls();
+	this->SetupSizers();
+	this->SetupSizing();
+}
+
+void NewClientDlg::SetupControls()
+{
+}
+
+void NewClientDlg::SetupSizers()
+{
+}
+
+void NewClientDlg::SetupSizing()
+{
+	wxSize size{ this->GetBestSize() };
+	this->SetMinSize(size);
+	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
+}
+
+void NewClientDlg::OnOK(wxCommandEvent& event)
+{
+	if (Validate() && TransferDataFromWindow())
+	{
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
+}
+
+void NewClientDlg::OnCancel(wxCommandEvent& event)
+{
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
+}
+
 // === ClientList === 
 
 ClientList::ClientList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -59,11 +115,14 @@ ClientPanel::ClientPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	this->InitClientPanel();
 
 	// Bind events
+	m_pAddClientBtn->Bind(wxEVT_BUTTON, &ClientPanel::OnAddClient, this);
 }
 
 ClientPanel::~ClientPanel()
 {
 	// Unbind events
+	m_pAddClientBtn->Unbind(wxEVT_BUTTON, &ClientPanel::OnAddClient, this);
+
 }
 
 void ClientPanel::InitClientPanel()
@@ -95,4 +154,15 @@ void ClientPanel::SetupSizers()
 	// add a separator
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pClientList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+}
+
+void ClientPanel::OnAddClient(wxCommandEvent& event)
+{
+	m_pNewClientDlg = new NewClientDlg(this, wxID_ANY);
+	m_pNewClientDlg->Show(true);
+
+	if (m_pNewClientDlg->ShowModal() == wxID_OK)
+	{
+
+	}
 }
