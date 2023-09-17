@@ -1,4 +1,5 @@
 #include <wx/statline.h>
+#include <wx/valgen.h>
 #include "ClientPanel.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
@@ -31,10 +32,34 @@ void NewClientDlg::SetupNewClientDlg()
 
 void NewClientDlg::SetupControls()
 {
+	m_pClientNameTxt = new wxTextCtrl(this, wxID_ANY);
+	m_pNumSessionsCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 7, 1);
+	m_pClientNameTxt->SetValidator(wxGenericValidator(&m_clientName));
+	m_pNumSessionsCtrl->SetValidator(wxGenericValidator(&m_numSessions));
+
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void NewClientDlg::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	this->SetSizerAndFit(m_pTopSizer);
+
+	// Controls
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Client Name:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pClientNameTxt, wxSizerFlags().Border(wxALL, 5).Expand());
+	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sessions per week:")), wxSizerFlags().Border(wxALL, 5));
+	m_pControlSizer->Add(m_pNumSessionsCtrl, wxSizerFlags().Border(wxALL, 5).Expand());
+	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().CentreHorizontal());
+
+	// Button sizer + static line
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().CentreHorizontal().Border(wxALL, 5));
 }
 
 void NewClientDlg::SetupSizing()
