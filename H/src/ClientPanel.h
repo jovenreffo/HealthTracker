@@ -6,20 +6,25 @@
 #include <wx/font.h>
 #include <wx/panel.h>
 #include <wx/listctrl.h>
+#include <wx/spinctrl.h>
 
 class NewClientDlg : public wxDialog
 {
 private:
 	// Controls
 	wxTextCtrl* m_pClientNameTxt;
+	wxSpinCtrl* m_pNumSessionsCtrl;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
 
 	// Sizers
-
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+	wxFlexGridSizer* m_pControlSizer;
 
 	// Validators
 	wxString m_clientName;
+	int m_numSessions;
 
 public:
 	NewClientDlg(wxWindow* parent,
@@ -29,6 +34,10 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX);
 	~NewClientDlg();
+
+	// Getters
+	const wxString& GetClientName() const { return m_clientName; }
+	const int GetNumSessions() const { return m_numSessions; }
 
 	// Setup
 	void SetupNewClientDlg();
