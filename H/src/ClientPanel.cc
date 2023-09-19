@@ -90,6 +90,16 @@ ClientList::ClientList(wxWindow* parent, wxWindowID id, const wxPoint& pos, cons
 	: wxListView(parent, id, pos, size, style)
 {
 	this->SetupList();
+	
+	// Bind events
+	this->Bind(wxEVT_LIST_ITEM_RIGHT_CLICK, &ClientList::OnRightClickItem, this);
+	m_pMenu->Bind(wxEVT_MENU, &ClientList::OnRemoveClient, this, wxID_REMOVE);
+}
+
+ClientList::~ClientList()
+{
+	this->Unbind(wxEVT_LIST_ITEM_RIGHT_CLICK, &ClientList::OnRightClickItem, this);
+	m_pMenu->Unbind(wxEVT_MENU, &ClientList::OnRemoveClient, this, wxID_REMOVE);
 }
 
 void ClientList::SetupList()
@@ -119,6 +129,8 @@ void ClientList::SetupImageList()
 void ClientList::SetupMenu()
 {
 	m_pMenu = new wxMenu();
+
+	m_pMenu->Append(wxID_REMOVE, _T("Remove Client"));
 }
 
 void ClientList::SetListFont()
@@ -130,6 +142,19 @@ void ClientList::AddItem(const wxString& name)
 {
 	this->InsertItem(0, name, 0);
 	this->SetItemFont(0, m_font);
+}
+
+void ClientList::OnRightClickItem(wxListEvent& event)
+{
+	this->PopupMenu(m_pMenu);
+}
+
+void ClientList::OnRemoveClient(wxCommandEvent& event)
+{
+	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+	if (wxMessageBox(_T("Are you sure you want to delete this client and all of their associated progress?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+		this->DeleteItem(selected);
 }
 
 // === ClientPanel === 
@@ -188,6 +213,6 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
-
+		m_pClientList->AddItem(m_pNewClientDlg->GetClientName());
 	}
 }
