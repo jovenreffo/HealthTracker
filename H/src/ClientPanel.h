@@ -20,6 +20,14 @@ public:
 		: m_clientName{ clientName }, m_sessionsPerWeek{ sessions }
 	{
 	}
+
+	// Getters
+	const wxString& GetClientName()	const { return m_clientName; }
+	const int GetNumSessions() const { return m_sessionsPerWeek; }
+
+	// Setters
+	void SetClientName(const wxString& name) { m_clientName = name; }
+	void SetNumSessions(const int num) { m_sessionsPerWeek = num; }
 };
 
 class NewClientDlg : public wxDialog
