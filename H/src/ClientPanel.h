@@ -8,6 +8,20 @@
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 
+// class for storing information about the client
+class ClientInfo
+{
+private:
+	wxString m_clientName;
+	int m_sessionsPerWeek;
+
+public:
+	ClientInfo(const wxString& clientName, int sessions)
+		: m_clientName{ clientName }, m_sessionsPerWeek{ sessions }
+	{
+	}
+};
+
 class NewClientDlg : public wxDialog
 {
 private:
@@ -68,6 +82,7 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT | wxLC_EDIT_LABELS);
+	~ClientList();
 
 	// Setup
 	void SetupList();
@@ -78,6 +93,9 @@ public:
 	
 	// Actions & events
 	void AddItem(const wxString& name);
+
+	void OnRightClickItem(wxListEvent& event);
+	void OnRemoveClient(wxCommandEvent& event);
 };
 
 class ClientPanel : public wxPanel
