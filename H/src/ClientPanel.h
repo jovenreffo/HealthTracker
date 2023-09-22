@@ -7,6 +7,7 @@
 #include <wx/panel.h>
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
+#include <wx/splitter.h>
 
 // class for storing information about the client
 class ClientInfo
@@ -114,6 +115,9 @@ private:
 	ClientList* m_pClientList;
 	NewClientDlg* m_pNewClientDlg;
 
+	// Splitter window for separating the client list and schedule
+	wxSplitterWindow* m_pSplitterWin;
+
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pTopButtonSizer;
@@ -129,6 +133,7 @@ public:
 	// Panel setup
 	void InitClientPanel();
 	void SetupMemberControls();
+	void SetupSplitterWin();
 	void SetupSizers();
 
 	// Events
