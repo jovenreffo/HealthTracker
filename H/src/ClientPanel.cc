@@ -177,6 +177,7 @@ ClientPanel::~ClientPanel()
 
 void ClientPanel::InitClientPanel()
 {
+	this->SetupSplitterWin();
 	this->SetupMemberControls();
 	this->SetupSizers();
 }
@@ -189,6 +190,11 @@ void ClientPanel::SetupMemberControls()
 	m_pAddClientBtn->SetBitmap(addBmp);
 
 	m_pClientList = new ClientList(this, wxID_ANY);
+}
+
+void ClientPanel::SetupSplitterWin()
+{
+	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY);
 }
 
 void ClientPanel::SetupSizers()
