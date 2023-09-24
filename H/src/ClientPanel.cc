@@ -4,6 +4,14 @@
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
 
+// === ClientSchedule ===
+
+ClientSchedule::ClientSchedule(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style)
+{
+}
+
+
 // === NewClientDlg ===
 
 NewClientDlg::NewClientDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
@@ -182,6 +190,12 @@ void ClientPanel::InitClientPanel()
 	this->SetupSizers();
 }
 
+void ClientPanel::SetupClientListPanel()
+{
+	m_pClientListPanel = new wxPanel(m_pSplitterWin);
+	m_pClientList = new ClientList(m_pClientListPanel, wxID_ANY);
+}
+
 void ClientPanel::SetupMemberControls()
 {
 	// Set up an add button with a '+' icon.
@@ -189,19 +203,35 @@ void ClientPanel::SetupMemberControls()
 	m_pAddClientBtn = new wxButton(this, wxID_ANY, _T("Add New Client"));
 	m_pAddClientBtn->SetBitmap(addBmp);
 
-	m_pClientList = new ClientList(this, wxID_ANY);
+	this->SetupClientListPanel();
+	m_pClientSchedule = new ClientSchedule(m_pSplitterWin, wxID_ANY);
 }
 
 void ClientPanel::SetupSplitterWin()
 {
-	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY);
+	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
+	m_pSplitterWin->SetSashGravity(0.5);
+	m_pSplitterWin->SetMinimumPaneSize(150);
+	m_pSplitterWin->SetSashInvisible(false);
 }
 
 void ClientPanel::SetupSizers()
 {
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pClientListSizer = new wxBoxSizer(wxVERTICAL);
+	m_pClientSchedSizer = new wxBoxSizer(wxVERTICAL);
 	m_pTopButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	
 	this->SetSizerAndFit(m_pTopSizer);
+	m_pClientListPanel->SetSizerAndFit(m_pClientListSizer);
+	m_pClientSchedule->SetSizerAndFit(m_pClientSchedSizer);
+
+	// add list to list sizer
+	m_pClientListSizer->Add(m_pClientList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+
+
+	// Split the window
+	m_pSplitterWin->SplitVertically(m_pClientListPanel, m_pClientSchedule);
 
 	// Top button sizer
 	m_pTopButtonSizer->Add(m_pAddClientBtn, wxSizerFlags().Border(wxALL, 5));
@@ -209,7 +239,7 @@ void ClientPanel::SetupSizers()
 
 	// add a separator
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pClientList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pSplitterWin, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
 
 void ClientPanel::OnAddClient(wxCommandEvent& event)
