@@ -7,7 +7,36 @@
 // === ClientSchedule ===
 
 ClientSchedule::ClientSchedule(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style)
+	: wxListView(parent, id, pos, size, style)
+{
+}
+
+ClientSchedule::~ClientSchedule()
+{
+
+}
+
+void ClientSchedule::SetupList()
+{
+}
+
+void ClientSchedule::SetupColumns()
+{
+}
+
+void ClientSchedule::SetupImageList()
+{
+}
+
+void ClientSchedule::SetupMenu()
+{
+}
+
+void ClientSchedule::SetListFont()
+{
+}
+
+void ClientSchedule::OnRightClickItem(wxListEvent& event)
 {
 }
 
@@ -121,7 +150,9 @@ void ClientList::SetupList()
 void ClientList::SetupColumn()
 {
 	this->AppendColumn(_T("Clients"));
-	this->SetColumnWidth(0, 400);
+	this->AppendColumn(_T("Sessions per week"));
+	this->SetColumnWidth(0, 100); // Set the column width for list of client's names
+	this->SetColumnWidth(1, 125); // Width for num sessions
 }
 
 void ClientList::SetupImageList()
@@ -146,10 +177,14 @@ void ClientList::SetListFont()
 	m_font = Fonts::GetBoldFont(15);
 }
 
-void ClientList::AddItem(const wxString& name)
+void ClientList::AddItem(const wxString& name, int sessions)
 {
+	// Add the client name
 	this->InsertItem(0, name, 0);
 	this->SetItemFont(0, m_font);
+
+	// Add how many sessions they are doing per week
+	this->SetItem(0, 1, std::to_string(sessions), -1);
 }
 
 void ClientList::OnRightClickItem(wxListEvent& event)
@@ -193,7 +228,11 @@ void ClientPanel::InitClientPanel()
 void ClientPanel::SetupClientListPanel()
 {
 	m_pClientListPanel = new wxPanel(m_pSplitterWin);
+	m_pClientSchedPanel = new wxPanel(m_pSplitterWin);
+
+	// Initialize the client schedule and panel
 	m_pClientList = new ClientList(m_pClientListPanel, wxID_ANY);
+	m_pClientSchedule = new ClientSchedule(m_pClientSchedPanel, wxID_ANY);
 }
 
 void ClientPanel::SetupMemberControls()
@@ -204,14 +243,13 @@ void ClientPanel::SetupMemberControls()
 	m_pAddClientBtn->SetBitmap(addBmp);
 
 	this->SetupClientListPanel();
-	m_pClientSchedule = new ClientSchedule(m_pSplitterWin, wxID_ANY);
 }
 
 void ClientPanel::SetupSplitterWin()
 {
 	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
 	m_pSplitterWin->SetSashGravity(0.5);
-	m_pSplitterWin->SetMinimumPaneSize(150);
+	m_pSplitterWin->SetMinimumPaneSize(100);
 	m_pSplitterWin->SetSashInvisible(false);
 }
 
@@ -224,14 +262,14 @@ void ClientPanel::SetupSizers()
 	
 	this->SetSizerAndFit(m_pTopSizer);
 	m_pClientListPanel->SetSizerAndFit(m_pClientListSizer);
-	m_pClientSchedule->SetSizerAndFit(m_pClientSchedSizer);
+	m_pClientSchedPanel->SetSizerAndFit(m_pClientSchedSizer);
 
 	// add list to list sizer
 	m_pClientListSizer->Add(m_pClientList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-
+	m_pClientSchedSizer->Add(m_pClientSchedule, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 
 	// Split the window
-	m_pSplitterWin->SplitVertically(m_pClientListPanel, m_pClientSchedule);
+	m_pSplitterWin->SplitVertically(m_pClientListPanel, m_pClientSchedPanel);
 
 	// Top button sizer
 	m_pTopButtonSizer->Add(m_pAddClientBtn, wxSizerFlags().Border(wxALL, 5));
@@ -249,6 +287,6 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
-		m_pClientList->AddItem(m_pNewClientDlg->GetClientName());
+		m_pClientList->AddItem(m_pNewClientDlg->GetClientName(), m_pNewClientDlg->GetNumSessions());
 	}
 }
