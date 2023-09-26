@@ -31,6 +31,29 @@ public:
 	void SetNumSessions(const int num) { m_sessionsPerWeek = num; }
 };
 
+class ClientSchedule : public wxListView
+{
+public:
+	ClientSchedule(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxLC_REPORT | wxLC_EDIT_LABELS);
+	~ClientSchedule();
+
+	// Setup
+	void SetupList();
+	void SetupColumns();
+	void SetupImageList();
+	void SetupMenu();
+	void SetListFont();
+
+	// Actions & events
+	//void AddItem(const wxString& name, int sessions);
+
+	void OnRightClickItem(wxListEvent& event);
+};
+
 class NewClientDlg : public wxDialog
 {
 private:
@@ -101,7 +124,7 @@ public:
 	void SetListFont();
 	
 	// Actions & events
-	void AddItem(const wxString& name);
+	void AddItem(const wxString& name, int sessions);
 
 	void OnRightClickItem(wxListEvent& event);
 	void OnRemoveClient(wxCommandEvent& event);
@@ -113,13 +136,18 @@ private:
 	// Controls
 	wxButton* m_pAddClientBtn;
 	ClientList* m_pClientList;
+	ClientSchedule* m_pClientSchedule;
 	NewClientDlg* m_pNewClientDlg;
 
 	// Splitter window for separating the client list and schedule
+	wxPanel* m_pClientListPanel;
+	wxPanel* m_pClientSchedPanel;
 	wxSplitterWindow* m_pSplitterWin;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pClientListSizer;
+	wxBoxSizer* m_pClientSchedSizer;
 	wxBoxSizer* m_pTopButtonSizer;
 
 public:
@@ -132,6 +160,7 @@ public:
 
 	// Panel setup
 	void InitClientPanel();
+	void SetupClientListPanel();
 	void SetupMemberControls();
 	void SetupSplitterWin();
 	void SetupSizers();
