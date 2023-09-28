@@ -33,6 +33,17 @@ public:
 
 class ClientSchedule : public wxListView
 {
+private:
+	// List
+	wxArrayString m_daysOfWeekStr;
+	wxFont m_font;
+
+	// Menu
+	wxMenu* m_pMenu;
+
+	// Image list
+	wxImageList* m_pImageList;
+
 public:
 	ClientSchedule(wxWindow* parent,
 		wxWindowID id,
