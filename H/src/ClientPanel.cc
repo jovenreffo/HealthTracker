@@ -9,19 +9,41 @@
 ClientSchedule::ClientSchedule(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxListView(parent, id, pos, size, style)
 {
+	this->SetupList();
+	
+	// Bind events
+
 }
 
 ClientSchedule::~ClientSchedule()
 {
-
+	// unbind events
 }
 
 void ClientSchedule::SetupList()
 {
+	this->SetupColumns();
+	this->SetupImageList();
+	this->SetupMenu();
+	this->SetListFont();
 }
 
 void ClientSchedule::SetupColumns()
 {
+	// push all the days of the week into an array string
+	m_daysOfWeekStr.push_back(_T("Sunday"));
+	m_daysOfWeekStr.push_back(_T("Monday"));
+	m_daysOfWeekStr.push_back(_T("Tuesday"));
+	m_daysOfWeekStr.push_back(_T("Wednesday"));
+	m_daysOfWeekStr.push_back(_T("Thursday"));
+	m_daysOfWeekStr.push_back(_T("Friday"));
+	m_daysOfWeekStr.push_back(_T("Saturday"));
+
+	// loop through the array string and add columns
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		this->AppendColumn(m_daysOfWeekStr[i]);
+	}
 }
 
 void ClientSchedule::SetupImageList()
@@ -34,6 +56,7 @@ void ClientSchedule::SetupMenu()
 
 void ClientSchedule::SetListFont()
 {
+	m_font = Fonts::GetBoldFont(11);
 }
 
 void ClientSchedule::OnRightClickItem(wxListEvent& event)
@@ -248,9 +271,9 @@ void ClientPanel::SetupMemberControls()
 void ClientPanel::SetupSplitterWin()
 {
 	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
-	m_pSplitterWin->SetSashGravity(0.5);
+	m_pSplitterWin->SetSashGravity(0.3); // slight resize bias to the schedule window as it requires more space
 	m_pSplitterWin->SetMinimumPaneSize(100);
-	m_pSplitterWin->SetSashInvisible(false);
+	m_pSplitterWin->SetSashPosition(15, true);
 }
 
 void ClientPanel::SetupSizers()
