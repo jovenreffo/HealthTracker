@@ -168,6 +168,10 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 	~ClientPanel();
+	
+	// Config
+	void SaveConfig();
+	void LoadConfig();
 
 	// Panel setup
 	void InitClientPanel();
