@@ -1,5 +1,6 @@
 #include <wx/statline.h>
 #include <wx/valgen.h>
+#include <wx/config.h>
 #include "ClientPanel.h"
 #include "StandardPath.hpp"
 #include "Font/Font.hpp"
@@ -229,6 +230,7 @@ ClientPanel::ClientPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 	: wxPanel(parent, id, pos, size, style)
 {
 	this->InitClientPanel();
+	this->LoadConfig();
 
 	// Bind events
 	m_pAddClientBtn->Bind(wxEVT_BUTTON, &ClientPanel::OnAddClient, this);
@@ -236,9 +238,30 @@ ClientPanel::ClientPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, co
 
 ClientPanel::~ClientPanel()
 {
+	// Save the config
+	this->SaveConfig();
+
 	// Unbind events
 	m_pAddClientBtn->Unbind(wxEVT_BUTTON, &ClientPanel::OnAddClient, this);
 
+}
+
+void ClientPanel::SaveConfig() 
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/ClientPanel/"));
+}
+
+void ClientPanel::LoadConfig()
+{
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
+
+	pConfig->SetPath(_T("/ClientPanel/"));
 }
 
 void ClientPanel::InitClientPanel()
@@ -273,7 +296,6 @@ void ClientPanel::SetupSplitterWin()
 	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
 	m_pSplitterWin->SetSashGravity(0.3); // slight resize bias to the schedule window as it requires more space
 	m_pSplitterWin->SetMinimumPaneSize(100);
-	m_pSplitterWin->SetSashPosition(15, true);
 }
 
 void ClientPanel::SetupSizers()
