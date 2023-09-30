@@ -9,6 +9,8 @@
 #include <wx/spinctrl.h>
 #include <wx/splitter.h>
 
+#include <vector>
+
 // class for storing information about the client
 class ClientInfo
 {
@@ -73,11 +75,19 @@ private:
 	wxSpinCtrl* m_pNumSessionsCtrl;
 	wxButton* m_pOk;
 	wxButton* m_pCancel;
+	
+	// Days of week
+	wxArrayString m_daysOfWeekStr;
+	std::vector<wxCheckBox*> m_pDaysCheck; 
+
+	// Session times
+
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pButtonSizer;
 	wxFlexGridSizer* m_pControlSizer;
+	wxFlexGridSizer* m_pDayTimeSizer;
 
 	// Validators
 	wxString m_clientName;
@@ -98,6 +108,7 @@ public:
 
 	// Setup
 	void SetupNewClientDlg();
+	void SetupDaysArray();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
@@ -160,6 +171,9 @@ private:
 	wxBoxSizer* m_pClientListSizer;
 	wxBoxSizer* m_pClientSchedSizer;
 	wxBoxSizer* m_pTopButtonSizer;
+
+	// Config
+	int m_sashPosition;
 
 public:
 	ClientPanel(wxWindow* parent,
