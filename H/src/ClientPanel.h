@@ -8,8 +8,19 @@
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 #include <wx/splitter.h>
+#include <wx/timectrl.h>
 
 #include <vector>
+#include <utility>
+
+// typedef from the wxDateTime class to reduce writing & potential confusion
+typedef wxDateTime::wxDateTime_t wxDateTime_t;
+// storing a pair of data: client's selected days and times
+template <int index, wxDateTime_t>
+class ClientPair
+{
+
+};
 
 // class for storing information about the client
 class ClientInfo
@@ -81,7 +92,7 @@ private:
 	std::vector<wxCheckBox*> m_pDaysCheck; 
 
 	// Session times
-
+	std::vector<wxTimePickerCtrl*> m_pTimes;
 
 	// Sizers
 	wxBoxSizer* m_pTopSizer;
