@@ -86,9 +86,25 @@ NewClientDlg::~NewClientDlg()
 
 void NewClientDlg::SetupNewClientDlg()
 {
+	// information
+	this->SetupDaysArray();
+
+	// main dlg setup
 	this->SetupControls();
 	this->SetupSizers();
 	this->SetupSizing();
+}
+
+void NewClientDlg::SetupDaysArray()
+{
+	// push all the days of the week into an array string
+	m_daysOfWeekStr.push_back(_T("Sunday"));
+	m_daysOfWeekStr.push_back(_T("Monday"));
+	m_daysOfWeekStr.push_back(_T("Tuesday"));
+	m_daysOfWeekStr.push_back(_T("Wednesday"));
+	m_daysOfWeekStr.push_back(_T("Thursday"));
+	m_daysOfWeekStr.push_back(_T("Friday"));
+	m_daysOfWeekStr.push_back(_T("Saturday"));
 }
 
 void NewClientDlg::SetupControls()
@@ -100,13 +116,26 @@ void NewClientDlg::SetupControls()
 
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
+
+	// Set up the days of week checkboxes
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+		m_pDaysCheck.push_back(new wxCheckBox(this, wxID_ANY, m_daysOfWeekStr[i]));
+
+	// Times for each day
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		m_pTimes.push_back(new wxTimePickerCtrl(this, wxID_ANY));
+		m_pTimes[i]->SetTime(0, 0, 0);
+	}
 }
 
 void NewClientDlg::SetupSizers()
 {
+	wxBoxSizer* temp = new wxBoxSizer(wxVERTICAL);
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pDayTimeSizer = new wxFlexGridSizer(3, wxSize(5, 1));
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Controls
@@ -115,6 +144,15 @@ void NewClientDlg::SetupSizers()
 	m_pControlSizer->Add(new wxStaticText(this, wxID_STATIC, _T("Sessions per week:")), wxSizerFlags().Border(wxALL, 5));
 	m_pControlSizer->Add(m_pNumSessionsCtrl, wxSizerFlags().Border(wxALL, 5).Expand());
 	m_pTopSizer->Add(m_pControlSizer, wxSizerFlags().CentreHorizontal());
+
+	// Days of week
+	for (auto i{ 0 }; i < m_pDaysCheck.size(); ++i)
+	{
+		m_pDayTimeSizer->Add(m_pDaysCheck[i], wxSizerFlags().Border(wxALL, 5));
+		m_pDayTimeSizer->Add(new wxStaticText(this, wxID_ANY, _T("Time:")), wxSizerFlags().Border(wxALL, 5));
+		m_pDayTimeSizer->Add(m_pTimes[i], wxSizerFlags().Border(wxALL, 5));
+	}
+	m_pTopSizer->Add(m_pDayTimeSizer, wxSizerFlags().CentreHorizontal());
 
 	// Button sizer + static line
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
@@ -252,7 +290,12 @@ void ClientPanel::SaveConfig()
 	if (pConfig == nullptr)
 		return;
 
+	// set the path
 	pConfig->SetPath(_T("/ClientPanel/"));
+
+	// write values to the config
+	m_sashPosition = m_pSplitterWin->GetSashPosition();
+	pConfig->Write(_T("SashPos"), m_sashPosition);
 }
 
 void ClientPanel::LoadConfig()
@@ -261,7 +304,14 @@ void ClientPanel::LoadConfig()
 	if (pConfig == nullptr)
 		return;
 
+	// set the path
 	pConfig->SetPath(_T("/ClientPanel/"));
+
+	// read values into variables
+
+	// splitter win & sash
+	m_sashPosition = pConfig->Read(_T("SashPos"), 0L);
+	m_pSplitterWin->SetSashPosition(m_sashPosition, true); // set the sash position
 }
 
 void ClientPanel::InitClientPanel()
@@ -294,8 +344,6 @@ void ClientPanel::SetupMemberControls()
 void ClientPanel::SetupSplitterWin()
 {
 	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
-	m_pSplitterWin->SetSashGravity(0.3); // slight resize bias to the schedule window as it requires more space
-	m_pSplitterWin->SetMinimumPaneSize(100);
 }
 
 void ClientPanel::SetupSizers()
