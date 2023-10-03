@@ -13,9 +13,6 @@
 #include <vector>
 #include <utility>
 
-// typedef from the wxDateTime class to reduce writing & potential confusion
-typedef wxDateTime::wxDateTime_t wxDateTime_t;
-
 class ClientPair
 {
 private:
