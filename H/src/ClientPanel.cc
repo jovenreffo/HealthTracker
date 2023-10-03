@@ -84,6 +84,19 @@ NewClientDlg::~NewClientDlg()
 	m_pCancel->Unbind(wxEVT_BUTTON, &NewClientDlg::OnCancel, this);
 }
 
+const std::vector<ClientPair>& NewClientDlg::FillClientSessionData(std::vector<ClientPair>& vec)
+{
+	// Fill the vector that has been passed in with the data
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		// i = day index
+
+		vec.push_back(ClientPair(i, m_pTimes[i]->GetValue()));
+	}
+
+	return vec;
+}
+
 void NewClientDlg::SetupNewClientDlg()
 {
 	// information
@@ -380,6 +393,7 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
+		m_pNewClientDlg->FillClientSessionData(m_clientInfoPairs);
 		m_pClientList->AddItem(m_pNewClientDlg->GetClientName(), m_pNewClientDlg->GetNumSessions());
 	}
 }

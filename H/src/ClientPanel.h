@@ -15,11 +15,21 @@
 
 // typedef from the wxDateTime class to reduce writing & potential confusion
 typedef wxDateTime::wxDateTime_t wxDateTime_t;
-// storing a pair of data: client's selected days and times
-template <int index, wxDateTime_t>
+
 class ClientPair
 {
+private:
+	int m_dayIndex;
+	wxDateTime m_dateTime;
 
+public:
+	ClientPair(int dayIndex, wxDateTime dateTime)
+		: m_dayIndex{ dayIndex }, m_dateTime{ dateTime }
+	{ }
+
+	// Getters
+	const int GetDayIndex() const { return m_dayIndex; }
+	const wxDateTime GetTime() const { return m_dateTime; }
 };
 
 // class for storing information about the client
@@ -116,6 +126,7 @@ public:
 	// Getters
 	const wxString& GetClientName() const { return m_clientName; }
 	const int GetNumSessions() const { return m_numSessions; }
+	const std::vector<ClientPair>& FillClientSessionData(std::vector<ClientPair>& vec); // Only to be called after ShowModal() returns wxID_OK
 
 	// Setup
 	void SetupNewClientDlg();
@@ -171,6 +182,8 @@ private:
 	ClientList* m_pClientList;
 	ClientSchedule* m_pClientSchedule;
 	NewClientDlg* m_pNewClientDlg;
+	// Information from the dlg
+	std::vector<ClientPair> m_clientInfoPairs;
 
 	// Splitter window for separating the client list and schedule
 	wxPanel* m_pClientListPanel;
