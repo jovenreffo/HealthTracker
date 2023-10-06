@@ -80,7 +80,7 @@ public:
 	void SetListFont();
 
 	// Actions & events
-	//void AddItem(const wxString& name, int sessions);
+	void AddItem(int index, int col, const wxDateTime& time);
 
 	void OnRightClickItem(wxListEvent& event);
 };
@@ -123,6 +123,7 @@ public:
 	// Getters
 	const wxString& GetClientName() const { return m_clientName; }
 	const int GetNumSessions() const { return m_numSessions; }
+	const std::vector<wxCheckBox*>& GetDaysChecked() const { return m_pDaysCheck; }
 	const std::vector<ClientPair>& FillClientSessionData(std::vector<ClientPair>& vec); // Only to be called after ShowModal() returns wxID_OK
 
 	// Setup
