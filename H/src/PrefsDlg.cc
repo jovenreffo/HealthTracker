@@ -9,6 +9,7 @@
 #include <wx/stattext.h>
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
+#include <wx/combobox.h>
 #include "PrefsDlg.h"
 #include "Font/Font.hpp"
 #include "Journal.h"
@@ -60,6 +61,12 @@ private:
 
 	wxStaticText* m_pInfoDesc;
 
+	// icon colour select
+	wxStaticText* m_IconColTxt;
+	wxComboBox* m_pColComboBox;
+	wxArrayString m_colourStr;
+	int m_colourSelection;
+
 public:
 	GeneralPagePanel(wxWindow* parent)
 		: wxPanel(parent, -1, wxDefaultPosition, wxDefaultSize, 0L, _("generalpagepanel"))
@@ -108,12 +115,22 @@ public:
 		m_pSelectFont = new wxButton(this, static_cast<int>(Prefs::ID_SELECT_FONT), _("Select..."), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pResetDefFont = new wxButton(this, static_cast<int>(Prefs::ID_RESET_FONT), _("Reset"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
 		m_pWhatFont = new wxStaticText(this, wxID_STATIC, wxString(_("Current font: ")) << m_pCheckCustomFont->GetFont().GetFaceName(), wxDefaultPosition, wxDefaultSize);
+
+		// icon colour
+		m_colourStr.Add(_T("Default"));
+		m_colourStr.Add(_T("Red"));
+
+		m_IconColTxt = new wxStaticText(this, wxID_STATIC, _T("Icon colour:"));
+		m_pColComboBox = new wxComboBox(this, wxID_ANY, m_colourStr[0], wxDefaultPosition, wxDefaultSize, m_colourStr, wxCB_READONLY);
+
 		// control configurations
 		m_pSelectFont->Disable();
 		m_pWhatFont->SetForegroundColour(wxColour(128, 128, 128));
 		m_defaultFont = m_pCheckCustomFont->GetFont();
 
 		// Add items to the sizer
+		pEnvSizer->Add(m_IconColTxt, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
+		pEnvSizer->Add(m_pColComboBox, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pEnvSizer->Add(m_pEnableSpellCheck, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
 		pEnvSizer->AddSpacer(5);
 		pEnvSizer->Add(m_pCheckCustomFont, wxSizerFlags().CentreVertical().Expand().Border(wxALL, 5));
@@ -140,6 +157,7 @@ public:
 		this->SaveToConfig();
 	}
 
+
 	void LoadConfig()
 	{
 		wxConfigBase* pConfig = wxConfigBase::Get();
@@ -153,6 +171,10 @@ public:
 		m_emailStr = pConfig->Read("UserEmail", wxEmptyString);
 		m_pNameTxt->SetValue(m_nameStr);
 		m_pEmailTxt->SetValue(m_emailStr);
+
+		// Colour selection
+		m_colourSelection = pConfig->Read("ColourSelection", 0L);
+		m_pColComboBox->SetSelection(m_colourSelection);
 
 		// Load font prefs
 		m_pCheckCustomFont->SetValue(pConfig->Read("CheckFont", 0L));
@@ -187,6 +209,9 @@ public:
 		if (!m_pEmailTxt->IsEmpty())
 			pConfig->Write("/Preferences/UserEmail", m_pEmailTxt->GetValue());
 
+		// colour preference
+		pConfig->Write("/Preferences/ColourSelection", m_pColComboBox->GetSelection());
+
 		// font preferences
 		pConfig->Write("/Preferences/CheckFont", m_pCheckCustomFont->GetValue());
 		pConfig->Write("/Preferences/FaceName", m_faceName);
@@ -206,6 +231,10 @@ public:
 	{
 		return true;
 	}
+
+public:
+	// Getters
+	const wxComboBox* GetComboBox() const { return m_pColComboBox; }
 
 private:
 
