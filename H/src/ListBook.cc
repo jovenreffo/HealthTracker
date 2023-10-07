@@ -1,3 +1,4 @@
+#include <wx/config.h>
 #include "ListBook.h"
 #include "StandardPath.hpp"
 
@@ -10,17 +11,41 @@ Listbook::Listbook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wx
 
 void Listbook::SetupBitmaps()
 {
-	m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
-	m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise.png"), wxBITMAP_TYPE_PNG);
-	m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
-	m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc.png"), wxBITMAP_TYPE_PNG);
-	m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients.png"), wxBITMAP_TYPE_PNG);
+	// Load config
+	wxConfigBase* pConfig = wxConfigBase::Get();
+	if (pConfig == nullptr)
+		return;
 
-	m_journalBmp.ResetAlpha();
-	m_calendarBmp.ResetAlpha();
-	m_journalBmp.ResetAlpha();
-	m_settingsBmp.ResetAlpha();
-	m_clientsBmp.ResetAlpha();
+	pConfig->SetPath(_("/Preferences"));
+
+	if (pConfig->Read(_T("ColourSelection"), 0L) == 0) // default: black
+	{
+		m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
+		m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise.png"), wxBITMAP_TYPE_PNG);
+		m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
+		m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc.png"), wxBITMAP_TYPE_PNG);
+		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients.png"), wxBITMAP_TYPE_PNG);
+
+		m_journalBmp.ResetAlpha();
+		m_calendarBmp.ResetAlpha();
+		m_journalBmp.ResetAlpha();
+		m_settingsBmp.ResetAlpha();
+		m_clientsBmp.ResetAlpha();
+	}
+	else if (pConfig->Read(_T("ColourSelection"), 0L) == 1) // red
+	{
+		m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal_red.png"), wxBITMAP_TYPE_PNG);
+		m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise_red.png"), wxBITMAP_TYPE_PNG);
+		m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar_red.png"), wxBITMAP_TYPE_PNG);
+		m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc_red.png"), wxBITMAP_TYPE_PNG);
+		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients.png"), wxBITMAP_TYPE_PNG);
+
+		m_journalBmp.ResetAlpha();
+		m_calendarBmp.ResetAlpha();
+		m_journalBmp.ResetAlpha();
+		m_settingsBmp.ResetAlpha();
+		m_clientsBmp.ResetAlpha();
+	}
 
 	// Set up the image list to be used with the listbook
 	m_pImageList = new wxImageList(38, 38);
