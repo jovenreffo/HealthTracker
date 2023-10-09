@@ -154,6 +154,10 @@ public:
 
 	~GeneralPagePanel()
 	{
+		// Let the user know the program should be restarted for icon colour changes to take effect.
+		if (m_pColComboBox->GetSelection() != 0)
+			wxMessageBox(_T("Please restart the program for changes to take effect."), _T("Notice"));
+
 		this->SaveToConfig();
 	}
 
