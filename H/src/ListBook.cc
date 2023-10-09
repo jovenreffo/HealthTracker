@@ -38,7 +38,7 @@ void Listbook::SetupBitmaps()
 		m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise_red.png"), wxBITMAP_TYPE_PNG);
 		m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar_red.png"), wxBITMAP_TYPE_PNG);
 		m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc_red.png"), wxBITMAP_TYPE_PNG);
-		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients.png"), wxBITMAP_TYPE_PNG);
+		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients_red.png"), wxBITMAP_TYPE_PNG);
 
 		m_journalBmp.ResetAlpha();
 		m_calendarBmp.ResetAlpha();
