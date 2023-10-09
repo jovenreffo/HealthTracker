@@ -64,6 +64,18 @@ void ClientSchedule::OnRightClickItem(wxListEvent& event)
 {
 }
 
+void ClientSchedule::AddItem(const std::vector<ClientPair>& data)
+{
+	int itemIndex{ 0 };
+	this->InsertItem(0, data[0].GetTime().FormatTime());
+
+	// loop through all the days of week and add the time the coach has selected or allotted
+	for (auto i{ 1 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		this->SetItem(0, i, data[i].GetTime().FormatTime());
+	}
+}
+
 
 // === NewClientDlg ===
 
@@ -394,6 +406,12 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
 		m_pNewClientDlg->FillClientSessionData(m_clientInfoPairs);
+
+		if (m_clientInfoPairs.empty())
+			return;
+
+		m_pClientSchedule->AddItem(m_clientInfoPairs);
+
 		m_pClientList->AddItem(m_pNewClientDlg->GetClientName(), m_pNewClientDlg->GetNumSessions());
 	}
 }
