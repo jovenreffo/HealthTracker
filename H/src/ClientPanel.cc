@@ -405,6 +405,9 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
+		// Clear the vector of ClientPairs before filling it up again for a new client's schedule.
+		// Otherwise, the new schedule will just get tecked on and will not show.
+		m_clientInfoPairs.clear();
 		m_pNewClientDlg->FillClientSessionData(m_clientInfoPairs);
 
 		if (m_clientInfoPairs.empty())
