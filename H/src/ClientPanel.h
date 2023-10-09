@@ -80,7 +80,7 @@ public:
 	void SetListFont();
 
 	// Actions & events
-	void AddItem(int index, int col, const wxDateTime& time);
+	void AddItem(const std::vector<ClientPair>& data);
 
 	void OnRightClickItem(wxListEvent& event);
 };
