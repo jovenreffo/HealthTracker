@@ -78,7 +78,7 @@ public:
 		this->SetSizerAndFit(pTopSizer);
 
 		// =============== info section ===============
-		wxStaticText* pInfoTitle = new wxStaticText(this, wxID_STATIC, _T("Information about the user"));
+		wxStaticText* pInfoTitle = new wxStaticText(this, wxID_STATIC, _T("User information"));
 		pInfoTitle->SetFont(Fonts::GetBoldFont(10));
 		pTopSizer->Add(pInfoTitle, wxSizerFlags().CentreHorizontal().Left().Border(wxALL, 5));
 
