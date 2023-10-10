@@ -66,6 +66,8 @@ private:
 	wxComboBox* m_pColComboBox;
 	wxArrayString m_colourStr;
 	int m_colourSelection;
+	bool m_bChangeIconCol{ false };
+	bool m_bColChanged{ false };
 
 public:
 	GeneralPagePanel(wxWindow* parent)
@@ -142,6 +144,7 @@ public:
 
 		// Event binding
 		m_pCheckCustomFont->Bind(wxEVT_CHECKBOX, &GeneralPagePanel::OnUseCustomFont, this);
+		m_pColComboBox->Bind(wxEVT_COMBOBOX, &GeneralPagePanel::OnSelectIconColour, this);
 		m_pSelectFont->Bind(wxEVT_BUTTON, [=](wxCommandEvent&){ this->DoFontSelect(); }, -1);
 		m_pSelectFont->Bind(wxEVT_UPDATE_UI, &GeneralPagePanel::UpdateFontSelect, this);
 		m_pResetDefFont->Bind(wxEVT_BUTTON, &GeneralPagePanel::OnResetFont, this);
@@ -155,7 +158,7 @@ public:
 	~GeneralPagePanel()
 	{
 		// Let the user know the program should be restarted for icon colour changes to take effect.
-		if (m_pColComboBox->GetSelection() != 0)
+		if (m_bColChanged)
 			wxMessageBox(_T("Please restart the program for changes to take effect."), _T("Notice"));
 
 		this->SaveToConfig();
@@ -253,6 +256,13 @@ private:
 	}
 
 	// events
+
+	void OnSelectIconColour(wxCommandEvent& event)
+	{
+		// set the bool to the opposite of its current value
+		m_bChangeIconCol = !m_bChangeIconCol;
+		m_bColChanged = true;
+	}
 
 	void OnResetFont(wxCommandEvent& event)
 	{
