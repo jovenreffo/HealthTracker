@@ -6,6 +6,14 @@
 
 class ArticlePanel : public wxPanel
 {
+public:
+	ArticlePanel(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = 0L);
+	~ArticlePanel();
+
 
 };
 
