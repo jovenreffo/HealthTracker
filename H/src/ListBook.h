@@ -9,6 +9,7 @@
 #include "ExercisePanel.h"
 #include "Settings.h"
 #include "ClientPanel.h"
+#include "Articles.h"
 
 class Listbook: public wxListbook
 {
@@ -19,12 +20,13 @@ private:
 	ExerciseBook* m_pExerciseBook;
 	Settings* m_pSettings;
 	ClientPanel* m_pClientPanel;
+	ArticlePanel* m_pArticlePanel;
 
 	wxImageList* m_pImageList;
 	wxBitmap m_journalBmp;
 	wxBitmap m_calendarBmp;
 	wxBitmap m_exerciseBmp;
-	wxBitmap m_settingsBmp;
+	wxBitmap m_articlesBmp;
 	wxBitmap m_clientsBmp;
 
 public:

@@ -23,13 +23,13 @@ void Listbook::SetupBitmaps()
 		m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal.png"), wxBITMAP_TYPE_PNG);
 		m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise.png"), wxBITMAP_TYPE_PNG);
 		m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar.png"), wxBITMAP_TYPE_PNG);
-		m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc.png"), wxBITMAP_TYPE_PNG);
+		m_articlesBmp = wxBitmap(path_data::dataDir + _T("\\Images\\articles.png"), wxBITMAP_TYPE_PNG);
 		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients.png"), wxBITMAP_TYPE_PNG);
 
 		m_journalBmp.ResetAlpha();
 		m_calendarBmp.ResetAlpha();
 		m_journalBmp.ResetAlpha();
-		m_settingsBmp.ResetAlpha();
+		m_articlesBmp.ResetAlpha();
 		m_clientsBmp.ResetAlpha();
 	}
 	else if (pConfig->Read(_T("ColourSelection"), 0L) == 1) // red
@@ -37,13 +37,13 @@ void Listbook::SetupBitmaps()
 		m_journalBmp = wxBitmap(path_data::dataDir + _T("\\Images\\journal_red.png"), wxBITMAP_TYPE_PNG);
 		m_exerciseBmp = wxBitmap(path_data::dataDir + _T("\\Images\\exercise_red.png"), wxBITMAP_TYPE_PNG);
 		m_calendarBmp = wxBitmap(path_data::dataDir + _T("\\Images\\calendar_red.png"), wxBITMAP_TYPE_PNG);
-		m_settingsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc_red.png"), wxBITMAP_TYPE_PNG);
+		m_articlesBmp = wxBitmap(path_data::dataDir + _T("\\Images\\misc_red.png"), wxBITMAP_TYPE_PNG);
 		m_clientsBmp = wxBitmap(path_data::dataDir + _T("\\Images\\clients_red.png"), wxBITMAP_TYPE_PNG);
 
 		m_journalBmp.ResetAlpha();
 		m_calendarBmp.ResetAlpha();
 		m_journalBmp.ResetAlpha();
-		m_settingsBmp.ResetAlpha();
+		m_articlesBmp.ResetAlpha();
 		m_clientsBmp.ResetAlpha();
 	}
 
@@ -52,7 +52,7 @@ void Listbook::SetupBitmaps()
 	m_pImageList->Add(m_journalBmp);
 	m_pImageList->Add(m_exerciseBmp);
 	m_pImageList->Add(m_calendarBmp);
-	m_pImageList->Add(m_settingsBmp);
+	m_pImageList->Add(m_articlesBmp);
 	m_pImageList->Add(m_clientsBmp);
 }
 
@@ -66,11 +66,12 @@ void Listbook::SetupTabs()
 	m_pExerciseBook = new ExerciseBook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pSettings = new Settings(m_pExerciseBook, m_pJournal, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pClientPanel = new ClientPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pArticlePanel = new ArticlePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 
 	// Add tabs to the list
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
 	this->AddPage(m_pExerciseBook, _T("Activity"), false, 1);
 	this->AddPage(m_pPlanning, _T("Planning"), false, 2);
-	this->AddPage(m_pSettings, _T("Miscellaneous"), false, 3);
+	this->AddPage(m_pArticlePanel, _T("Articles"), false, 3);
 	this->AddPage(m_pClientPanel, _T("Client List"), false, 4);
 }
