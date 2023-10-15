@@ -6,8 +6,12 @@
 
 class ArticleHtmlPanel : public wxPanel
 {
+private:
+	wxString m_filePath;
+
 public:
-	ArticleHtmlPanel(wxWindow* parent,
+	ArticleHtmlPanel(const wxString& htmlFilePath,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
