@@ -18,10 +18,12 @@ class ClientPair
 private:
 	int m_dayIndex;
 	wxDateTime m_dateTime;
+	bool m_bChecked;
+
 
 public:
-	ClientPair(int dayIndex, wxDateTime dateTime)
-		: m_dayIndex{ dayIndex }, m_dateTime{ dateTime }
+	ClientPair(int dayIndex, wxDateTime dateTime, bool bChecked)
+		: m_dayIndex{ dayIndex }, m_dateTime{ dateTime }, m_bChecked{ bChecked }
 	{ }
 
 	// Getters
