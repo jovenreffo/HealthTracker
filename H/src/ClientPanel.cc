@@ -103,7 +103,7 @@ const std::vector<ClientPair>& NewClientDlg::FillClientSessionData(std::vector<C
 	{
 		// i = day index
 
-		vec.push_back(ClientPair(i, m_pTimes[i]->GetValue()));
+		vec.push_back(ClientPair(i, m_pTimes[i]->GetValue(), m_pDaysCheck[i]->IsChecked()));
 	}
 
 	return vec;
