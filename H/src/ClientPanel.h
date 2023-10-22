@@ -8,10 +8,13 @@
 #include <wx/listctrl.h>
 #include <wx/spinctrl.h>
 #include <wx/splitter.h>
+#include <wx/bmpbuttn.h>
 #include <wx/timectrl.h>
 
 #include <vector>
 #include <utility>
+
+#include "WorkoutWindow.h"
 
 class ClientPair
 {
@@ -87,6 +90,13 @@ public:
 	void OnRightClickItem(wxListEvent& event);
 };
 
+class WorkoutListWindowSmall : public wxDialog
+{
+public:
+	WorkoutListWindowSmall(wxWindow* parent);
+	~WorkoutListWindowSmall();
+};
+
 class NewClientDlg : public wxDialog
 {
 private:
@@ -98,7 +108,9 @@ private:
 	
 	// Days of week
 	wxArrayString m_daysOfWeekStr;
-	std::vector<wxCheckBox*> m_pDaysCheck; 
+	std::vector<wxCheckBox*> m_pDaysCheck;
+	std::vector<wxBitmapButton*> m_pAddWorkoutBtn;
+	WorkoutListWindowSmall* m_pWLWSmall;
 
 	// Session times
 	std::vector<wxTimePickerCtrl*> m_pTimes;
