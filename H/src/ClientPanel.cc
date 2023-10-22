@@ -76,6 +76,13 @@ void ClientSchedule::AddItem(const std::vector<ClientPair>& data)
 	}
 }
 
+// === WorkoutListWindowSmall === 
+
+WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent)
+	: wxDialog(parent, wxID_ANY, _T("Select Workout"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
+{
+
+}
 
 // === NewClientDlg ===
 
