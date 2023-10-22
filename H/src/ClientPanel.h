@@ -92,6 +92,19 @@ public:
 
 class WorkoutListWindowSmall : public wxDialog
 {
+private:
+	// members
+	WorkoutList* m_pWorkoutList;
+	WorkoutWindow* m_pWorkoutWin;
+
+	wxButton* m_pOk;
+	wxButton* m_pCancel;
+
+	// sizers
+	wxBoxSizer* m_pTopSizer;
+	wxBoxSizer* m_pButtonSizer;
+
+
 public:
 	WorkoutListWindowSmall(wxWindow* parent);
 	~WorkoutListWindowSmall();
