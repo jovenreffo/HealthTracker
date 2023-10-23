@@ -104,10 +104,21 @@ private:
 	wxBoxSizer* m_pTopSizer;
 	wxBoxSizer* m_pButtonSizer;
 
+	// validation
+	int m_selection; // put the value of the selected index of the list in this variable
 
 public:
 	WorkoutListWindowSmall(wxWindow* parent);
 	~WorkoutListWindowSmall();
+
+	// control setup
+	void SetupWorkoutListWindowSmall();
+	void SetupControls();
+	void SetupSizers();
+
+	// events
+	void OnOK(wxCommandEvent& event);
+	void OnCancel(wxCommandEvent& event);
 };
 
 class NewClientDlg : public wxDialog
