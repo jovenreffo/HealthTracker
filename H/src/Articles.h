@@ -4,11 +4,17 @@
 #include <wx/wx.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
+#include <wx/html/htmlwin.h>
 
 class ArticleHtmlPanel : public wxPanel
 {
 private:
 	wxString m_filePath;
+
+	wxHtmlWindow* m_pHtmlWindow;
+
+	// sizer
+	wxBoxSizer* m_pTopSizer;
 
 public:
 	ArticleHtmlPanel(const wxString& htmlFilePath,
@@ -18,6 +24,12 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
 	~ArticleHtmlPanel();
+
+	// setup
+	void AddPageToSizer();
+
+	// actions
+	void AddArticle(const wxBitmap& bmp, const wxString& link, const wxString& articleTitle);
 };
 
 class ArticlePanel : public wxPanel
@@ -28,7 +40,6 @@ private:
 	wxStaticBoxSizer* m_pFitnessSizer;
 	wxStaticBoxSizer* m_pFocusSizer; // productivity & focus
 	wxStaticBoxSizer* m_pNutritionSizer;
-
 
 	// the static box from the sizers to be used as parents
 
@@ -49,8 +60,6 @@ public:
 	void SetupNutritionArticlePanel();
 	void SetupSizers();
 
-	// actions
-	void AddArticle(const wxBitmap& bmp, const wxString& link, const wxString& articleTitle);
 
 	// events
 
