@@ -108,7 +108,7 @@ private:
 	int m_selection; // put the value of the selected index of the list in this variable
 
 public:
-	WorkoutListWindowSmall(wxWindow* parent);
+	WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pWorkoutList);
 	~WorkoutListWindowSmall();
 
 	// control setup
@@ -134,6 +134,7 @@ private:
 	wxArrayString m_daysOfWeekStr;
 	std::vector<wxCheckBox*> m_pDaysCheck;
 	std::vector<wxBitmapButton*> m_pAddWorkoutBtn;
+	WorkoutList* m_pWorkoutList;
 	WorkoutListWindowSmall* m_pWLWSmall;
 
 	// Session times
@@ -150,7 +151,8 @@ private:
 	int m_numSessions;
 
 public:
-	NewClientDlg(wxWindow* parent,
+	NewClientDlg(WorkoutList* pWorkoutList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxString& title = _T("Add New Client"),
 		const wxPoint& pos = wxDefaultPosition,
@@ -220,6 +222,7 @@ private:
 	NewClientDlg* m_pNewClientDlg;
 	// Information from the dlg
 	std::vector<ClientPair> m_clientInfoPairs;
+	WorkoutList* m_pWorkoutList; // Add a WorkoutList member here b/c we have to take it through the ctor then pass it to the new client dlg then small dlg
 
 	// Splitter window for separating the client list and schedule
 	wxPanel* m_pClientListPanel;
@@ -236,7 +239,8 @@ private:
 	int m_sashPosition;
 
 public:
-	ClientPanel(wxWindow* parent,
+	ClientPanel(WorkoutList* pWorkoutList,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
