@@ -78,16 +78,40 @@ void ClientSchedule::AddItem(const std::vector<ClientPair>& data)
 
 // === WorkoutListWindowSmall === 
 
-WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent)
-	: wxDialog(parent, wxID_ANY, _T("Select Workout"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
+WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pWorkoutList)
+	: wxDialog(parent, wxID_ANY, _T("Select Workout"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX),
+	m_pWorkoutList{ pWorkoutList }
+{
+	this->SetupWorkoutListWindowSmall();
+
+	// bind events
+}
+
+WorkoutListWindowSmall::~WorkoutListWindowSmall()
+{
+	// unbind events
+}
+
+void WorkoutListWindowSmall::SetupWorkoutListWindowSmall()
+{
+	this->SetupControls();
+	this->SetupSizers();
+}
+
+void WorkoutListWindowSmall::SetupControls()
+{
+	
+}
+
+void WorkoutListWindowSmall::SetupSizers()
 {
 
 }
 
 // === NewClientDlg ===
 
-NewClientDlg::NewClientDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style)
+NewClientDlg::NewClientDlg(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style), m_pWorkoutList{ pWorkoutList }
 {
 	this->SetupNewClientDlg();
 
@@ -296,8 +320,8 @@ void ClientList::OnRemoveClient(wxCommandEvent& event)
 
 // === ClientPanel === 
 
-ClientPanel::ClientPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style)
+ClientPanel::ClientPanel(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style), m_pWorkoutList{ pWorkoutList }
 {
 	this->InitClientPanel();
 	this->LoadConfig();
@@ -407,7 +431,7 @@ void ClientPanel::SetupSizers()
 
 void ClientPanel::OnAddClient(wxCommandEvent& event)
 {
-	m_pNewClientDlg = new NewClientDlg(this, wxID_ANY);
+	m_pNewClientDlg = new NewClientDlg(m_pWorkoutList, this, wxID_ANY);
 	m_pNewClientDlg->Show(true);
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
