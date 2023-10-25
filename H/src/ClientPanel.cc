@@ -85,11 +85,15 @@ WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pW
 	this->SetupWorkoutListWindowSmall();
 
 	// bind events
+	m_pOk->Bind(wxEVT_BUTTON, &WorkoutListWindowSmall::OnOK, this);
+	m_pCancel->Bind(wxEVT_BUTTON, &WorkoutListWindowSmall::OnCancel, this);
 }
 
 WorkoutListWindowSmall::~WorkoutListWindowSmall()
 {
 	// unbind events
+	m_pOk->Unbind(wxEVT_BUTTON, &WorkoutListWindowSmall::OnOK, this);
+	m_pCancel->Unbind(wxEVT_BUTTON, &WorkoutListWindowSmall::OnCancel, this);
 }
 
 void WorkoutListWindowSmall::SetupWorkoutListWindowSmall()
@@ -101,6 +105,8 @@ void WorkoutListWindowSmall::SetupWorkoutListWindowSmall()
 void WorkoutListWindowSmall::SetupControls()
 {
 	
+	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
+	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void WorkoutListWindowSmall::SetupSizers()
