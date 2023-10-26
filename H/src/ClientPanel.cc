@@ -79,8 +79,7 @@ void ClientSchedule::AddItem(const std::vector<ClientPair>& data)
 // === WorkoutListWindowSmall === 
 
 WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pWorkoutList)
-	: wxDialog(parent, wxID_ANY, _T("Select Workout"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX),
-	m_pWorkoutList{ pWorkoutList }
+	: wxDialog(parent, wxID_ANY, _T("Select Workout"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX)
 {
 	this->SetupWorkoutListWindowSmall();
 
@@ -104,14 +103,31 @@ void WorkoutListWindowSmall::SetupWorkoutListWindowSmall()
 
 void WorkoutListWindowSmall::SetupControls()
 {
-	
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
 
 void WorkoutListWindowSmall::SetupSizers()
 {
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
+	this->SetSizerAndFit(m_pTopSizer);
 
+	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
+	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
+
+	if (m_pWorkoutList != nullptr)
+		m_pTopSizer->Add(m_pWorkoutList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
+}
+
+void WorkoutListWindowSmall::OnOK(wxCommandEvent& event)
+{
+}
+
+void WorkoutListWindowSmall::OnCancel(wxCommandEvent& event)
+{
 }
 
 // === NewClientDlg ===
@@ -169,8 +185,21 @@ void NewClientDlg::SetupDaysArray()
 	m_daysOfWeekStr.push_back(_T("Saturday"));
 }
 
+void NewClientDlg::SetupWorkoutBtns()
+{
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		m_pAddWorkoutBtn.push_back(new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + ("\\Images\\add.png"), wxBITMAP_TYPE_PNG)));
+		m_pAddWorkoutBtn[i]->SetToolTip(_T("Add a workout for this day"));
+	}
+}
+
 void NewClientDlg::SetupControls()
 {
+	// Start by initializing the workout buttons
+	this->SetupWorkoutBtns();
+
+	// then the other controls necessary for the dialog
 	m_pClientNameTxt = new wxTextCtrl(this, wxID_ANY);
 	m_pNumSessionsCtrl = new wxSpinCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER, 1, 7, 1);
 	m_pClientNameTxt->SetValidator(wxGenericValidator(&m_clientName));
@@ -197,7 +226,7 @@ void NewClientDlg::SetupSizers()
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-	m_pDayTimeSizer = new wxFlexGridSizer(3, wxSize(5, 1));
+	m_pDayTimeSizer = new wxFlexGridSizer(4, wxSize(5, 1));
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Controls
@@ -213,6 +242,7 @@ void NewClientDlg::SetupSizers()
 		m_pDayTimeSizer->Add(m_pDaysCheck[i], wxSizerFlags().Border(wxALL, 5));
 		m_pDayTimeSizer->Add(new wxStaticText(this, wxID_ANY, _T("Time:")), wxSizerFlags().Border(wxALL, 5));
 		m_pDayTimeSizer->Add(m_pTimes[i], wxSizerFlags().Border(wxALL, 5));
+		m_pDayTimeSizer->Add(m_pAddWorkoutBtn[i], wxSizerFlags().Border(wxALL, 5));
 	}
 	m_pTopSizer->Add(m_pDayTimeSizer, wxSizerFlags().CentreHorizontal());
 
