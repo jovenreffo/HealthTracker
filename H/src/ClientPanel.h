@@ -169,6 +169,7 @@ public:
 	// Setup
 	void SetupNewClientDlg();
 	void SetupDaysArray();
+	void SetupWorkoutBtns();
 	void SetupControls();
 	void SetupSizers();
 	void SetupSizing();
