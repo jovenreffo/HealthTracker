@@ -11,6 +11,10 @@
 #define NAME_CHAR_LIMIT (35)
 #define DESC_CHAR_LIMIT (100)
 
+#define MINOR  (0)
+#define MEDIUM (1)
+#define MAJOR  (2)
+
 Planning::Planning(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
 	: wxNotebook(parent, id, pos, size, style, _T("calendar"))
 {
@@ -452,13 +456,13 @@ void TodoItem::DrawPriority(int priorityLevel)
 
 	switch (priorityLevel)
 	{
-	case 0: // minor
+	case MINOR:
 		dc.SetBrush(wxBrush(*wxGREEN, wxBRUSHSTYLE_SOLID));
 		break;
-	case 1: // medium
+	case MEDIUM: 
 		dc.SetBrush(wxBrush(*wxYELLOW, wxBRUSHSTYLE_SOLID));
 		break;
-	case 2: // major
+	case MAJOR:
 		dc.SetBrush(wxBrush(*wxRED, wxBRUSHSTYLE_SOLID));
 		break;
 	}
