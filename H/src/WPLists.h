@@ -32,6 +32,11 @@ public:
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = WPLIST_STYLE);
+	~WorkoutList();
+
+	// config
+	void LoadFromConfig();
+	void SaveToConfig();
 
 	// setup
 	void Init();
