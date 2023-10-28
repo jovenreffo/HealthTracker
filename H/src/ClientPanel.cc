@@ -99,10 +99,13 @@ void WorkoutListWindowSmall::SetupWorkoutListWindowSmall()
 {
 	this->SetupControls();
 	this->SetupSizers();
+	this->SetupSizing();
 }
 
 void WorkoutListWindowSmall::SetupControls()
 {
+	m_pWorkoutList = new WorkoutList(this, wxID_ANY);
+
 	m_pOk = new wxButton(this, wxID_OK, _T("OK"));
 	m_pCancel = new wxButton(this, wxID_CANCEL, _T("Cancel"));
 }
@@ -116,24 +119,38 @@ void WorkoutListWindowSmall::SetupSizers()
 	m_pButtonSizer->Add(m_pOk, wxSizerFlags().Border(wxALL, 5));
 	m_pButtonSizer->Add(m_pCancel, wxSizerFlags().Border(wxALL, 5));
 
-	if (m_pWorkoutList != nullptr)
-		m_pTopSizer->Add(m_pWorkoutList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pTopSizer->Add(m_pWorkoutList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(new wxStaticLine(this, wxID_STATIC), wxSizerFlags().Expand().Border(wxALL, 5));
 	m_pTopSizer->Add(m_pButtonSizer, wxSizerFlags().Border(wxALL, 5));
 }
 
+void WorkoutListWindowSmall::SetupSizing()
+{
+	this->SetMinSize(this->GetBestSize());
+	this->SetInitialSize(this->GetBestSize());
+}
+
 void WorkoutListWindowSmall::OnOK(wxCommandEvent& event)
 {
+	if (Validate() && TransferDataFromWindow())
+	{
+		// retrieve the selected item
+
+		this->SetReturnCode(wxID_OK);
+		this->Show(false);
+	}
 }
 
 void WorkoutListWindowSmall::OnCancel(wxCommandEvent& event)
 {
+	this->SetReturnCode(wxID_CANCEL);
+	this->Show(false);
 }
 
 // === NewClientDlg ===
 
-NewClientDlg::NewClientDlg(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
-	: wxDialog(parent, id, title, pos, size, style), m_pWorkoutList{ pWorkoutList }
+NewClientDlg::NewClientDlg(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style)
+	: wxDialog(parent, id, title, pos, size, style)
 {
 	this->SetupNewClientDlg();
 
@@ -191,6 +208,9 @@ void NewClientDlg::SetupWorkoutBtns()
 	{
 		m_pAddWorkoutBtn.push_back(new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + ("\\Images\\add.png"), wxBITMAP_TYPE_PNG)));
 		m_pAddWorkoutBtn[i]->SetToolTip(_T("Add a workout for this day"));
+
+		// bind the OnAddWorkout event
+		m_pAddWorkoutBtn[i]->Bind(wxEVT_BUTTON, &NewClientDlg::OnAddWorkout, this);
 	}
 }
 
@@ -258,6 +278,17 @@ void NewClientDlg::SetupSizing()
 	wxSize size{ this->GetBestSize() };
 	this->SetMinSize(size);
 	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
+}
+
+void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
+{
+	m_pWLWSmall = new WorkoutListWindowSmall(this, m_pWorkoutList);
+	m_pWLWSmall->Show(true);
+
+	if (m_pWLWSmall->ShowModal() == wxID_OK)
+	{
+
+	}
 }
 
 void NewClientDlg::OnOK(wxCommandEvent& event)
@@ -356,8 +387,8 @@ void ClientList::OnRemoveClient(wxCommandEvent& event)
 
 // === ClientPanel === 
 
-ClientPanel::ClientPanel(WorkoutList* pWorkoutList, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style), m_pWorkoutList{ pWorkoutList }
+ClientPanel::ClientPanel(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style)
 {
 	this->InitClientPanel();
 	this->LoadConfig();
@@ -467,7 +498,7 @@ void ClientPanel::SetupSizers()
 
 void ClientPanel::OnAddClient(wxCommandEvent& event)
 {
-	m_pNewClientDlg = new NewClientDlg(m_pWorkoutList, this, wxID_ANY);
+	m_pNewClientDlg = new NewClientDlg(this, wxID_ANY);
 	m_pNewClientDlg->Show(true);
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
