@@ -26,6 +26,9 @@ private:
 	wxString m_currentItemName;
 	long m_selectionIndex;
 
+	// Config
+	int m_numEntries{ 0 };
+
 public:
 	WorkoutList(wxWindow* parent,
 		wxWindowID id,
