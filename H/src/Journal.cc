@@ -136,6 +136,7 @@ void Journal::LoadEntriesFromConfig()
 	// setup an array for content
 	wxArrayString entryContentArr;
 	pConfig->SetPath(_T("/Journal/EntryContent"));
+
 	for (auto i{ m_numEntries - 1 }; i >= 0; --i)
 	{
 		wxString curr;
