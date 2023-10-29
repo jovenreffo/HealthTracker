@@ -53,7 +53,10 @@ public:
 	void OpenWorkout();
 	void OpenWorkout(const wxString& name);
 
+	// Getters
 	const std::vector<EntryContent>& GetContent() const { return m_content; }
+	const long GetSelectionIndex() const { return m_selectionIndex; }
+	const wxString& GetCurrentItemName() const { return m_currentItemName; }
 
 	// events
 	void OnRightClick(wxListEvent& event);
