@@ -135,6 +135,8 @@ void WorkoutListWindowSmall::OnOK(wxCommandEvent& event)
 	if (Validate() && TransferDataFromWindow())
 	{
 		// retrieve the selected item
+		m_selectionIndex = m_pWorkoutList->GetSelectionIndex();
+		m_selectionStr = m_pWorkoutList->GetCurrentItemName();
 
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
@@ -238,6 +240,12 @@ void NewClientDlg::SetupControls()
 		m_pTimes.push_back(new wxTimePickerCtrl(this, wxID_ANY));
 		m_pTimes[i]->SetTime(0, 0, 0);
 	}
+
+	// Workout selections: start by initializing them all as an empty string then loop through an update when needed
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		m_pWorkoutSelections.push_back(new wxStaticText(this, wxID_STATIC, wxEmptyString));
+	}
 }
 
 void NewClientDlg::SetupSizers()
@@ -246,7 +254,7 @@ void NewClientDlg::SetupSizers()
 	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	m_pButtonSizer = new wxBoxSizer(wxHORIZONTAL);
 	m_pControlSizer = new wxFlexGridSizer(2, wxSize(5, 1));
-	m_pDayTimeSizer = new wxFlexGridSizer(4, wxSize(5, 1));
+	m_pDayTimeSizer = new wxFlexGridSizer(5, wxSize(5, 1));
 	this->SetSizerAndFit(m_pTopSizer);
 
 	// Controls
@@ -263,6 +271,7 @@ void NewClientDlg::SetupSizers()
 		m_pDayTimeSizer->Add(new wxStaticText(this, wxID_ANY, _T("Time:")), wxSizerFlags().Border(wxALL, 5));
 		m_pDayTimeSizer->Add(m_pTimes[i], wxSizerFlags().Border(wxALL, 5));
 		m_pDayTimeSizer->Add(m_pAddWorkoutBtn[i], wxSizerFlags().Border(wxALL, 5));
+		m_pDayTimeSizer->Add(m_pWorkoutSelections[i], wxSizerFlags().Border(wxALL, 5));
 	}
 	m_pTopSizer->Add(m_pDayTimeSizer, wxSizerFlags().CentreHorizontal());
 
