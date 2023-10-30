@@ -21,8 +21,8 @@ class ClientPair
 private:
 	int m_dayIndex;
 	wxDateTime m_dateTime;
+	wxString m_sWorkout; // the workout for the selected day(s)
 	bool m_bChecked;
-
 
 public:
 	ClientPair(int dayIndex, wxDateTime dateTime, bool bChecked)
@@ -105,7 +105,8 @@ private:
 	wxBoxSizer* m_pButtonSizer;
 
 	// validation
-	int m_selection; // put the value of the selected index of the list in this variable
+	int m_selectionIndex; // put the value of the selected index of the list in this variable
+	wxString m_selectionStr;
 
 public:
 	WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pWorkoutList);
@@ -115,6 +116,11 @@ public:
 	void SetupWorkoutListWindowSmall();
 	void SetupControls();
 	void SetupSizers();
+	void SetupSizing();
+
+	// getters
+	const int GetSelectionIndex() const { return m_selectionIndex; }
+	const wxString& GetSelectedName() const { return m_selectionStr; }
 
 	// events
 	void OnOK(wxCommandEvent& event);
@@ -134,6 +140,7 @@ private:
 	wxArrayString m_daysOfWeekStr;
 	std::vector<wxCheckBox*> m_pDaysCheck;
 	std::vector<wxBitmapButton*> m_pAddWorkoutBtn;
+	std::vector<wxStaticText*> m_pWorkoutSelections;
 	WorkoutList* m_pWorkoutList;
 	WorkoutListWindowSmall* m_pWLWSmall;
 
@@ -151,8 +158,7 @@ private:
 	int m_numSessions;
 
 public:
-	NewClientDlg(WorkoutList* pWorkoutList,
-		wxWindow* parent,
+	NewClientDlg(wxWindow* parent,
 		wxWindowID id,
 		const wxString& title = _T("Add New Client"),
 		const wxPoint& pos = wxDefaultPosition,
@@ -175,6 +181,7 @@ public:
 	void SetupSizing();
 
 	// Events
+	void OnAddWorkout(wxCommandEvent& event);
 	void OnOK(wxCommandEvent& event);
 	void OnCancel(wxCommandEvent& event);
 };
@@ -223,7 +230,6 @@ private:
 	NewClientDlg* m_pNewClientDlg;
 	// Information from the dlg
 	std::vector<ClientPair> m_clientInfoPairs;
-	WorkoutList* m_pWorkoutList; // Add a WorkoutList member here b/c we have to take it through the ctor then pass it to the new client dlg then small dlg
 
 	// Splitter window for separating the client list and schedule
 	wxPanel* m_pClientListPanel;
@@ -240,8 +246,7 @@ private:
 	int m_sashPosition;
 
 public:
-	ClientPanel(WorkoutList* pWorkoutList,
-		wxWindow* parent,
+	ClientPanel(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
