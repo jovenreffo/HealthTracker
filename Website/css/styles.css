@@ -69,6 +69,11 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     height: 600px;
 }
 
+#features {
+    display: block;
+    height: 400px;
+}
+
 .col {
     flex-basis: 0;
     flex-grow: 1;
@@ -94,6 +99,34 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
     background-color: rgb(88, 88, 88);
 }
 
+.bg-light {
+    background-color: rgb(211, 211, 211);
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    align-items: center;
+    vertical-align: baseline;
+}
+
+.justify-content {
+    justify-content: space-around !important;
+}
+
+@media (min-width: 700px){
+    .col-md {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+        align-items: center;
+        text-align: center;
+        display: flex;
+    }
+}
+
 h1.main-title {
     -webkit-user-select: none;
     color: rgb(207, 54, 54);
@@ -107,6 +140,13 @@ h1.main-title {
 h1.mt2 {
     color: white;
     text-shadow: 0.5px 0.5px 2px rgb(148, 148, 148);
+}
+
+h2.feature-title {
+    font-family: "Bebas Neue","Impact",sans-serif;
+    font-weight: 400;
+    color: rgb(207, 54, 54);
+    font-size: 1.75rem;
 }
 
 button.top-btn {
