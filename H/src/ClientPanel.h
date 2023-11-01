@@ -127,6 +127,18 @@ public:
 	void OnCancel(wxCommandEvent& event);
 };
 
+// enum for listing different IDs, used to identify which button was pressed
+enum class button_t : int
+{
+	ID_SUN = 0,
+	ID_MON,
+	ID_TUE,
+	ID_WED,
+	ID_THU,
+	ID_FRI,
+	ID_SAT
+};
+
 class NewClientDlg : public wxDialog
 {
 private:
@@ -143,6 +155,7 @@ private:
 	std::vector<wxStaticText*> m_pWorkoutSelections;
 	WorkoutList* m_pWorkoutList;
 	WorkoutListWindowSmall* m_pWLWSmall;
+	button_t btn_t;
 
 	// Session times
 	std::vector<wxTimePickerCtrl*> m_pTimes;
