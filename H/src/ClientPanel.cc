@@ -208,11 +208,12 @@ void NewClientDlg::SetupWorkoutBtns()
 {
 	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
 	{
-		m_pAddWorkoutBtn.push_back(new wxBitmapButton(this, wxID_ANY, wxBitmap(path_data::dataDir + ("\\Images\\add.png"), wxBITMAP_TYPE_PNG)));
+		wxWindowID id = (int)(button_t(i));
+		m_pAddWorkoutBtn.push_back(new wxBitmapButton(this, id, wxBitmap(path_data::dataDir + ("\\Images\\add.png"), wxBITMAP_TYPE_PNG)));
 		m_pAddWorkoutBtn[i]->SetToolTip(_T("Add a workout for this day"));
 
 		// bind the OnAddWorkout event
-		m_pAddWorkoutBtn[i]->Bind(wxEVT_BUTTON, &NewClientDlg::OnAddWorkout, this);
+		m_pAddWorkoutBtn[i]->Bind(wxEVT_BUTTON, &NewClientDlg::OnAddWorkout, this, id);
 	}
 }
 
@@ -291,12 +292,14 @@ void NewClientDlg::SetupSizing()
 
 void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
 {
+	wxLogMessage(_T("%d"), event.GetId());
+
 	m_pWLWSmall = new WorkoutListWindowSmall(this, m_pWorkoutList);
 	m_pWLWSmall->Show(true);
 
 	if (m_pWLWSmall->ShowModal() == wxID_OK)
 	{
-
+		wxMessageBox(m_pWLWSmall->GetSelectedName());
 	}
 }
 
