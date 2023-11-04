@@ -12,6 +12,7 @@
 #include <wx/timectrl.h>
 
 #include <vector>
+#include <array>
 #include <utility>
 
 #include "WorkoutWindow.h"
@@ -156,6 +157,9 @@ private:
 	WorkoutList* m_pWorkoutList;
 	WorkoutListWindowSmall* m_pWLWSmall;
 	button_t btn_t;
+	// array for holding and displaying workoutnames in statictext instances
+	wxArrayString m_workoutNames; // for when the dialog returns wxID_OK
+	std::array<wxStaticText*, 7> m_pWorkoutNameArr;
 
 	// Session times
 	std::vector<wxTimePickerCtrl*> m_pTimes;
