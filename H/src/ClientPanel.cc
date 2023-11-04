@@ -247,6 +247,11 @@ void NewClientDlg::SetupControls()
 	{
 		m_pWorkoutSelections.push_back(new wxStaticText(this, wxID_STATIC, wxEmptyString));
 	}
+
+	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+	{
+		m_pWorkoutNameArr.at(i) = new wxStaticText(this, wxID_ANY, wxEmptyString);
+	}
 }
 
 void NewClientDlg::SetupSizers()
