@@ -297,7 +297,9 @@ void NewClientDlg::SetupSizing()
 
 void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
 {
+#ifdef _DEBUG
 	wxLogMessage(_T("%d"), event.GetId());
+#endif
 
 	m_pWLWSmall = new WorkoutListWindowSmall(this, m_pWorkoutList);
 	m_pWLWSmall->Show(true);
