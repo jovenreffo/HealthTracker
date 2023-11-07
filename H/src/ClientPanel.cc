@@ -247,11 +247,6 @@ void NewClientDlg::SetupControls()
 	{
 		m_pWorkoutSelections.push_back(new wxStaticText(this, wxID_STATIC, wxEmptyString));
 	}
-
-	for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
-	{
-		m_pWorkoutNameArr.at(i) = new wxStaticText(this, wxID_ANY, wxEmptyString);
-	}
 }
 
 void NewClientDlg::SetupSizers()
@@ -292,7 +287,7 @@ void NewClientDlg::SetupSizing()
 {
 	wxSize size{ this->GetBestSize() };
 	this->SetMinSize(size);
-	this->SetInitialSize(wxSize(size.GetX() + 50, size.GetY() + 35));
+	this->SetInitialSize(wxSize(size.GetX() + 75, size.GetY() + 35));
 }
 
 void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
@@ -306,7 +301,8 @@ void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
 
 	if (m_pWLWSmall->ShowModal() == wxID_OK)
 	{
-		wxMessageBox(m_pWLWSmall->GetSelectedName());
+		// Set the string associated with the index
+		m_pWorkoutSelections[event.GetId()]->SetLabelText(m_pWLWSmall->GetSelectedName());
 	}
 }
 
@@ -314,6 +310,8 @@ void NewClientDlg::OnOK(wxCommandEvent& event)
 {
 	if (Validate() && TransferDataFromWindow())
 	{
+		// append the workout strings to the array.
+
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
 	}
@@ -486,6 +484,7 @@ void ClientPanel::SetupMemberControls()
 void ClientPanel::SetupSplitterWin()
 {
 	m_pSplitterWin = new wxSplitterWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_THIN_SASH | wxSP_LIVE_UPDATE | wxSP_NOBORDER);
+	m_pSplitterWin->SetMinimumPaneSize(50);
 }
 
 void ClientPanel::SetupSizers()
