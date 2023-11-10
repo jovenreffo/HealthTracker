@@ -64,15 +64,15 @@ void ClientSchedule::OnRightClickItem(wxListEvent& event)
 {
 }
 
-void ClientSchedule::AddItem(const std::vector<ClientPair>& data)
+void ClientSchedule::AddItem(const wxArrayString& workoutNames, const std::vector<ClientPair>& data)
 {
 	int itemIndex{ 0 };
-	this->InsertItem(0, data[0].GetTime().FormatTime());
+	this->InsertItem(0, wxString(data[0].GetTime().FormatTime()) << " - " << workoutNames[0]);
 
 	// loop through all the days of week and add the time the coach has selected or allotted
 	for (auto i{ 1 }; i < m_daysOfWeekStr.size(); ++i)
 	{
-		this->SetItem(0, i, data[i].GetTime().FormatTime());
+		this->SetItem(0, i, wxString(data[i].GetTime().FormatTime()) << " - " << workoutNames[i]);
 	}
 }
 
@@ -293,7 +293,7 @@ void NewClientDlg::SetupSizing()
 void NewClientDlg::OnAddWorkout(wxCommandEvent& event)
 {
 #ifdef _DEBUG
-	wxLogMessage(_T("%d"), event.GetId());
+	//wxLogMessage(_T("%d"), event.GetId());
 #endif
 
 	m_pWLWSmall = new WorkoutListWindowSmall(this, m_pWorkoutList);
@@ -311,6 +311,10 @@ void NewClientDlg::OnOK(wxCommandEvent& event)
 	if (Validate() && TransferDataFromWindow())
 	{
 		// append the workout strings to the array.
+		for (auto i{ 0 }; i < m_daysOfWeekStr.size(); ++i)
+		{
+			m_workoutNames.push_back(m_pWorkoutSelections[i]->GetLabelText());
+		}
 
 		this->SetReturnCode(wxID_OK);
 		this->Show(false);
@@ -521,6 +525,9 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 
 	if (m_pNewClientDlg->ShowModal() == wxID_OK)
 	{
+		// Get the list of workout names
+		m_workoutNames = m_pNewClientDlg->GetWorkoutNames();
+
 		// Clear the vector of ClientPairs before filling it up again for a new client's schedule.
 		// Otherwise, the new schedule will just get tecked on and will not show.
 		m_clientInfoPairs.clear();
@@ -529,7 +536,7 @@ void ClientPanel::OnAddClient(wxCommandEvent& event)
 		if (m_clientInfoPairs.empty())
 			return;
 
-		m_pClientSchedule->AddItem(m_clientInfoPairs);
+		m_pClientSchedule->AddItem(m_workoutNames, m_clientInfoPairs);
 
 		m_pClientList->AddItem(m_pNewClientDlg->GetClientName(), m_pNewClientDlg->GetNumSessions());
 	}
