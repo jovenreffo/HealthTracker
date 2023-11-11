@@ -66,13 +66,21 @@ void ClientSchedule::OnRightClickItem(wxListEvent& event)
 
 void ClientSchedule::AddItem(const wxArrayString& workoutNames, const std::vector<ClientPair>& data)
 {
-	int itemIndex{ 0 };
-	this->InsertItem(0, wxString(data[0].GetTime().FormatTime()) << " - " << workoutNames[0]);
+	// Ensure the items are not empty
+	// if the current workout name is an empty string, simply append "None" on the end
+	if (workoutNames[0].IsEmpty())
+		this->InsertItem(0, wxString(data[0].GetTime().FormatTime()) << " - " << "None");
+	else
+		this->InsertItem(0, wxString(data[0].GetTime().FormatTime()) << " - " << workoutNames[0]);
+
 
 	// loop through all the days of week and add the time the coach has selected or allotted
 	for (auto i{ 1 }; i < m_daysOfWeekStr.size(); ++i)
 	{
-		this->SetItem(0, i, wxString(data[i].GetTime().FormatTime()) << " - " << workoutNames[i]);
+		if (workoutNames[i].IsEmpty())
+			this->SetItem(0, i, wxString(data[i].GetTime().FormatTime()) << " - " << "None");
+		else
+			this->SetItem(0, i, wxString(data[i].GetTime().FormatTime()) << " - " << workoutNames[i]);
 	}
 }
 
