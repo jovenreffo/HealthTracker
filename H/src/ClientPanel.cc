@@ -76,6 +76,11 @@ void ClientSchedule::AddItem(const wxArrayString& workoutNames, const std::vecto
 	}
 }
 
+void ClientSchedule::RemoveItem(int index)
+{
+	this->DeleteItem(index);
+}
+
 // === WorkoutListWindowSmall === 
 
 WorkoutListWindowSmall::WorkoutListWindowSmall(wxWindow* parent, WorkoutList* pWorkoutList)
@@ -329,8 +334,8 @@ void NewClientDlg::OnCancel(wxCommandEvent& event)
 
 // === ClientList === 
 
-ClientList::ClientList(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxListView(parent, id, pos, size, style)
+ClientList::ClientList(ClientSchedule* pClientSchedule, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxListView(parent, id, pos, size, style), m_pClientSchedule{ pClientSchedule }
 {
 	this->SetupList();
 	
@@ -403,7 +408,10 @@ void ClientList::OnRemoveClient(wxCommandEvent& event)
 	int selected = GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
 
 	if (wxMessageBox(_T("Are you sure you want to delete this client and all of their associated progress?"), _T("Confirm"), wxYES_NO | wxICON_EXCLAMATION) == wxYES)
+	{
 		this->DeleteItem(selected);
+		m_pClientSchedule->RemoveItem(selected);
+	}
 }
 
 // === ClientPanel === 
@@ -471,8 +479,8 @@ void ClientPanel::SetupClientListPanel()
 	m_pClientSchedPanel = new wxPanel(m_pSplitterWin);
 
 	// Initialize the client schedule and panel
-	m_pClientList = new ClientList(m_pClientListPanel, wxID_ANY);
 	m_pClientSchedule = new ClientSchedule(m_pClientSchedPanel, wxID_ANY);
+	m_pClientList = new ClientList(m_pClientSchedule, m_pClientListPanel, wxID_ANY);
 }
 
 void ClientPanel::SetupMemberControls()
