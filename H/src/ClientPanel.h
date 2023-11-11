@@ -86,7 +86,8 @@ public:
 	void SetListFont();
 
 	// Actions & events
-	void AddItem(const std::vector<ClientPair>& data);
+	void AddItem(const wxArrayString& workoutNames, const std::vector<ClientPair>& data);
+	void RemoveItem(int index);
 
 	void OnRightClickItem(wxListEvent& event);
 };
@@ -187,6 +188,7 @@ public:
 	const int GetNumSessions() const { return m_numSessions; }
 	const std::vector<wxCheckBox*>& GetDaysChecked() const { return m_pDaysCheck; }
 	const std::vector<ClientPair>& FillClientSessionData(std::vector<ClientPair>& vec); // Only to be called after ShowModal() returns wxID_OK
+	const wxArrayString& GetWorkoutNames() const { return m_workoutNames; }
 
 	// Setup
 	void SetupNewClientDlg();
@@ -210,12 +212,14 @@ private:
 	// Controls
 	wxMenu* m_pMenu;
 	wxImageList* m_pImageList;
+	ClientSchedule* m_pClientSchedule; // Pass by pointer so an item can be deleted
 
 	// Bitmaps, icons, images
 	wxBitmap m_clientIconBmp;
 
 public:
-	ClientList(wxWindow* parent,
+	ClientList(ClientSchedule* pClientSchedule,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
@@ -246,6 +250,7 @@ private:
 	NewClientDlg* m_pNewClientDlg;
 	// Information from the dlg
 	std::vector<ClientPair> m_clientInfoPairs;
+	wxArrayString m_workoutNames; // for when the new client dialog returns wxID_OK
 
 	// Splitter window for separating the client list and schedule
 	wxPanel* m_pClientListPanel;
