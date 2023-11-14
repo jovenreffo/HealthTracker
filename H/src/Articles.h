@@ -4,32 +4,18 @@
 #include <wx/wx.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
+#include <wx/listctrl.h>
 #include <wx/html/htmlwin.h>
 
-class ArticleHtmlPanel : public wxPanel
+class ArticleContainer : public wxPanel
 {
-private:
-	wxString m_filePath;
-
-	wxHtmlWindow* m_pHtmlWindow;
-
-	// sizer
-	wxBoxSizer* m_pTopSizer;
-
 public:
-	ArticleHtmlPanel(const wxString& htmlFilePath,
-		wxWindow* parent,
+	ArticleContainer(wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = 0L);
-	~ArticleHtmlPanel();
-
-	// setup
-	void AddPageToSizer();
-
-	// actions
-	void AddArticle(const wxBitmap& bmp, const wxString& link, const wxString& articleTitle);
+	~ArticleContainer();
 };
 
 class ArticlePanel : public wxPanel
