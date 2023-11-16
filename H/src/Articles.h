@@ -7,6 +7,26 @@
 #include <wx/listctrl.h>
 #include <wx/clipbrd.h>
 
+class ArticleList : public wxListView
+{
+private:
+	wxMenu* m_pMenu;
+
+public:
+	// setup
+	ArticleList(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = wxLC_REPORT);
+	~ArticleList();
+
+	// actions
+
+	// events
+	void OnRightClickItem(wxListEvent& event);
+};
+
 class ArticleContainer : public wxPanel
 {
 private:
@@ -14,9 +34,6 @@ private:
 	// when an item from m_pArticleList is double clicked or Right click -> Open, the prgram will launch the default browser and pass in the link
 	wxListView* m_pArticleList;
 	wxArrayString m_articleLinkArr;
-
-	// wxMenu for when m_pArticleList is right clicked and actions must be displayed
-	wxMenu* m_pMenu;
 
 public:
 	ArticleContainer(wxWindow* parent,
@@ -32,7 +49,6 @@ public:
 	void AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail);
 
 	// Events
-	void OnRightClickItem(wxListEvent& event);
 	void OnOpenArticle(wxCommandEvent& event);
 	void OnCopyArticleLink(wxCommandEvent& event);
 };
