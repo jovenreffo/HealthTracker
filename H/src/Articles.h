@@ -11,17 +11,27 @@ class ArticleList : public wxListView
 {
 private:
 	wxMenu* m_pMenu;
+	wxArrayString m_articleLinksArr;
+	wxString m_listTitle;
+	wxBoxSizer* m_pTopSizer;
 
 public:
 	// setup
-	ArticleList(wxWindow* parent,
+	ArticleList(const wxString& which,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
 		long style = wxLC_REPORT);
 	~ArticleList();
 
+	void InitializeArticleList();
+	void SetupMenu();
+	void SetupList();
+	void SetupSizer();
+
 	// actions
+	void AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail);
 
 	// events
 	void OnRightClickItem(wxListEvent& event);
@@ -32,8 +42,7 @@ class ArticleContainer : public wxPanel
 private:
 	// a list view and a string array for holding the links of each article
 	// when an item from m_pArticleList is double clicked or Right click -> Open, the prgram will launch the default browser and pass in the link
-	wxListView* m_pArticleList;
-	wxArrayString m_articleLinkArr;
+	ArticleList* m_pArticleList;
 
 public:
 	ArticleContainer(wxWindow* parent,
@@ -46,7 +55,9 @@ public:
 	// Member and general setup for article list
 	void InitializeList();
 	void SetupMenu();
-	void AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail);
+	
+	// Getter
+	const ArticleList* GetArticleList() { return m_pArticleList; }
 
 	// Events
 	void OnOpenArticle(wxCommandEvent& event);
