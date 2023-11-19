@@ -76,7 +76,9 @@ private:
 	wxStaticBoxSizer* m_pNutritionSizer;
 
 	// the static box from the sizers to be used as parents
-
+	ArticleContainer* m_pFitnessContainer;
+	ArticleContainer* m_pFocusContainer;
+	ArticleContainer* m_pNutritionContainer;
 
 public:
 	ArticlePanel(wxWindow* parent,
@@ -89,9 +91,12 @@ public:
 	// setup
 	void SetupArticlePanel();
 
-	void SetupFitnessArticlePanel();
-	void SetupFocusArticlePanel();
-	void SetupNutritionArticlePanel();
+	// setup for article containers
+	void SetupContainers();
+	void SetupFitnessContainer();
+	void SetupFocusContainer();
+	void SetupNutritionContainer();
+
 	void SetupSizers();
 
 
