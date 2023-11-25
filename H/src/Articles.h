@@ -35,6 +35,7 @@ public:
 
 	// events
 	void OnRightClickItem(wxListEvent& event);
+	void OnOpenLinkInBrowser(wxCommandEvent& event); // for m_pMenu
 };
 
 class ArticleContainer : public wxPanel
@@ -54,14 +55,9 @@ public:
 
 	// Member and general setup for article list
 	void InitializeList();
-	void SetupMenu();
 	
 	// Getter
 	const ArticleList* GetArticleList() { return m_pArticleList; }
-
-	// Events
-	void OnOpenArticle(wxCommandEvent& event);
-	void OnCopyArticleLink(wxCommandEvent& event);
 };
 
 // === ArticlePanel ===
