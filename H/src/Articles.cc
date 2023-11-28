@@ -55,8 +55,8 @@ void ArticleList::OnOpenLinkInBrowser(wxCommandEvent& event)
 
 // ArticleContainer
 
-ArticleContainer::ArticleContainer(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
-	: wxPanel(parent, id, pos, size, style)
+ArticleContainer::ArticleContainer(const wxString& which, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+	: wxPanel(parent, id, pos, size, style), m_which{ which }
 {
 	this->InitializeList();
 
@@ -69,7 +69,7 @@ ArticleContainer::~ArticleContainer()
 
 void ArticleContainer::InitializeList()
 {
-	ArticleList* m_pArticleList;
+	ArticleList* m_pArticleList = new ArticleList(m_which, this, wxID_ANY);
 }
 
 
@@ -103,18 +103,18 @@ void ArticlePanel::SetupContainers()
 
 void ArticlePanel::SetupFitnessContainer()
 {
-	m_pFitnessContainer = new ArticleContainer(this, wxID_ANY);
+	m_pFitnessContainer = new ArticleContainer(_T("Fitness"), this, wxID_ANY);
 }
 
 void ArticlePanel::SetupFocusContainer()
 {
-	m_pFocusContainer = new ArticleContainer(this, wxID_ANY);
+	m_pFocusContainer = new ArticleContainer(_T("Focus && Productivity"), this, wxID_ANY);
 
 }
 
 void ArticlePanel::SetupNutritionContainer()
 {
-	m_pNutritionContainer = new ArticleContainer(this, wxID_ANY);
+	m_pNutritionContainer = new ArticleContainer(_T("Food & Nutrition"), this, wxID_ANY);
 
 }
 
