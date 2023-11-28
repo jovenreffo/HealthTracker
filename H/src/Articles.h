@@ -44,9 +44,11 @@ private:
 	// a list view and a string array for holding the links of each article
 	// when an item from m_pArticleList is double clicked or Right click -> Open, the prgram will launch the default browser and pass in the link
 	ArticleList* m_pArticleList;
+	wxString m_which;
 
 public:
-	ArticleContainer(wxWindow* parent,
+	ArticleContainer(const wxString& which,
+		wxWindow* parent,
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
