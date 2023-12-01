@@ -22,13 +22,12 @@ public:
 		wxWindowID id,
 		const wxPoint& pos = wxDefaultPosition,
 		const wxSize& size = wxDefaultSize,
-		long style = wxLC_REPORT);
+		long style = wxLC_ICON);
 	~ArticleList();
 
 	void InitializeArticleList();
 	void SetupMenu();
 	void SetupList();
-	void SetupSizer();
 
 	// actions
 	void AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail);
@@ -46,6 +45,9 @@ private:
 	ArticleList* m_pArticleList;
 	wxString m_which;
 
+	// sizer
+	wxBoxSizer* m_pTopSizer;
+
 public:
 	ArticleContainer(const wxString& which,
 		wxWindow* parent,
@@ -57,6 +59,8 @@ public:
 
 	// Member and general setup for article list
 	void InitializeList();
+	void SetupSizer();
+
 	
 	// Getter
 	const ArticleList* GetArticleList() { return m_pArticleList; }
