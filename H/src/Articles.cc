@@ -23,7 +23,6 @@ void ArticleList::InitializeArticleList()
 {
 	this->SetupMenu();
 	this->SetupList();
-	this->SetupSizer();
 }
 
 void ArticleList::SetupMenu()
@@ -35,10 +34,6 @@ void ArticleList::SetupMenu()
 void ArticleList::SetupList()
 {
 	this->AppendColumn(m_listTitle);
-}
-
-void ArticleList::SetupSizer()
-{
 }
 
 void ArticleList::AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail)
@@ -59,6 +54,7 @@ ArticleContainer::ArticleContainer(const wxString& which, wxWindow* parent, wxWi
 	: wxPanel(parent, id, pos, size, style), m_which{ which }
 {
 	this->InitializeList();
+	this->SetupSizer();
 
 	this->SetBackgroundColour(*wxWHITE);
 }
@@ -69,9 +65,14 @@ ArticleContainer::~ArticleContainer()
 
 void ArticleContainer::InitializeList()
 {
-	ArticleList* m_pArticleList = new ArticleList(m_which, this, wxID_ANY);
+	m_pArticleList = new ArticleList(m_which, this, wxID_ANY);
 }
 
+void ArticleContainer::SetupSizer()
+{
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
+	m_pTopSizer->Add(m_pArticleList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+}
 
 // ArticlePanel
 
