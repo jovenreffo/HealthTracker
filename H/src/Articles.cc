@@ -1,6 +1,9 @@
 #include "Articles.h"
 #include "StandardPath.hpp"
 
+// add  preprocessor definition for the path so it doesn't have to be typed out
+#define ARTICLE_IMG_PATH (path_data::dataDir + _T("\\Images\\Articles\\"))
+
 // ArticleList
 
 ArticleList::ArticleList(const wxString& which, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -16,13 +19,20 @@ ArticleList::ArticleList(const wxString& which, wxWindow* parent, wxWindowID id,
 ArticleList::~ArticleList()
 {
 	// unbind
-
 }
 
 void ArticleList::InitializeArticleList()
 {
 	this->SetupMenu();
 	this->SetupList();
+	this->SetupImageList();
+}
+
+void ArticleList::SetupImageList()
+{
+	m_pImageList = new wxImageList(64, 64);
+
+	this->AssignImageList(m_pImageList, wxIMAGE_LIST_NORMAL);
 }
 
 void ArticleList::SetupMenu()
@@ -38,6 +48,8 @@ void ArticleList::SetupList()
 
 void ArticleList::AddArticleItem(const wxString& articleLink, const wxString& articleTitle, const wxBitmap& articleThumbnail)
 {
+	m_pImageList->Add(articleThumbnail);
+	this->InsertItem(m_currentIndex, articleTitle, m_currentIndex);
 }
 
 void ArticleList::OnRightClickItem(wxListEvent& event)
@@ -105,6 +117,12 @@ void ArticlePanel::SetupContainers()
 void ArticlePanel::SetupFitnessContainer()
 {
 	m_pFitnessContainer = new ArticleContainer(_T("Fitness"), this, wxID_ANY);
+
+	// Bitmaps
+	wxBitmap runPng = wxBitmap(path_data::dataDir + "\\Images\\Articles\\run-test.png", wxBITMAP_TYPE_PNG);
+
+	// Add to list
+	m_pFitnessContainer->GetArticleList()->AddArticleItem(wxEmptyString, _T("Running Benefits"), runPng);
 }
 
 void ArticlePanel::SetupFocusContainer()
