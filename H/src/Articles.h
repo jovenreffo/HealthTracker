@@ -6,13 +6,21 @@
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
 #include <wx/clipbrd.h>
+#include <utility>
 
 class ArticleList : public wxListView
 {
 private:
+	// List members
 	wxMenu* m_pMenu;
 	wxArrayString m_articleLinksArr;
 	wxString m_listTitle;
+
+	// Image list
+	wxImageList* m_pImageList;
+	int m_currentIndex{ 0 };
+
+	// sizer
 	wxBoxSizer* m_pTopSizer;
 
 public:
@@ -26,6 +34,7 @@ public:
 	~ArticleList();
 
 	void InitializeArticleList();
+	void SetupImageList();
 	void SetupMenu();
 	void SetupList();
 
@@ -63,7 +72,7 @@ public:
 
 	
 	// Getter
-	const ArticleList* GetArticleList() { return m_pArticleList; }
+	ArticleList* GetArticleList() { return m_pArticleList; }
 };
 
 // === ArticlePanel ===
