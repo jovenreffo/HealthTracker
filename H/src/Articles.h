@@ -6,7 +6,9 @@
 #include <wx/sizer.h>
 #include <wx/listctrl.h>
 #include <wx/clipbrd.h>
+#include <wx/splitter.h>
 #include <utility>
+
 
 class ArticleList : public wxListView
 {
@@ -91,6 +93,10 @@ private:
 	ArticleContainer* m_pFocusContainer;
 	ArticleContainer* m_pNutritionContainer;
 
+	// Splitter windows
+	wxSplitterWindow* m_pSplitterMain;
+	wxSplitterWindow* m_pSplitter2;
+
 public:
 	ArticlePanel(wxWindow* parent,
 		wxWindowID id,
@@ -108,8 +114,9 @@ public:
 	void SetupFocusContainer();
 	void SetupNutritionContainer();
 
+	// sizers & splitters
 	void SetupSizers();
-
+	void SetupSplitters();
 
 	// events
 
