@@ -93,6 +93,9 @@ private:
 	wxStaticBoxSizer* m_pFocusSizer; // productivity & focus
 	wxStaticBoxSizer* m_pNutritionSizer;
 
+	// Notebook members
+	wxImageList* m_pImageList;
+
 public:
 	ArticleNotebook(wxWindow* parent,
 		wxWindowID id,
@@ -106,7 +109,7 @@ public:
 	void Init();
 	void SetupControls();
 	void SetupPanels();
-	void ArrangeElements();
+	void SetupSizer();
 	void SetupNotebook();
 };
 
