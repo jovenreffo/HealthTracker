@@ -60,6 +60,45 @@ void ArticleList::OnOpenLinkInBrowser(wxCommandEvent& event)
 {
 }
 
+// ArticleNotebook
+
+ArticleNotebook::ArticleNotebook(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
+{
+	this->Init();
+}
+
+ArticleNotebook::~ArticleNotebook()
+{
+	this->DestroyChildren();
+}
+
+void ArticleNotebook::Init()
+{
+	this->SetupControls();
+	this->SetupPanels();
+	this->SetupSizer();
+	this->SetupNotebook();
+}
+
+void ArticleNotebook::SetupControls()
+{
+}
+
+void ArticleNotebook::SetupPanels()
+{
+}
+
+void ArticleNotebook::SetupSizer()
+{
+}
+
+void ArticleNotebook::SetupNotebook()
+{
+	m_pImageList = new wxImageList(26, 26);
+
+	this->AssignImageList(m_pImageList);
+}
+
 // ArticleContainer
 
 ArticleContainer::ArticleContainer(const wxString& which, wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style)
@@ -101,61 +140,14 @@ ArticlePanel::~ArticlePanel()
 
 void ArticlePanel::SetupArticlePanel()
 {
-	// setup individual HTML windows
-	this->SetupContainers();
-
 	this->SetupSizers();
 }
 
-void ArticlePanel::SetupContainers()
-{
-	this->SetupFitnessContainer();
-	this->SetupFocusContainer();
-	this->SetupNutritionContainer();
-}
-
-void ArticlePanel::SetupFitnessContainer()
-{
-	m_pFitnessContainer = new ArticleContainer(_T("Fitness"), this, wxID_ANY);
-
-	// Bitmaps
-	wxBitmap runPng = wxBitmap(path_data::dataDir + "\\Images\\Articles\\run-test.png", wxBITMAP_TYPE_PNG);
-
-	// Add to list
-	m_pFitnessContainer->GetArticleList()->AddArticleItem(wxEmptyString, _T("Running Benefits"), runPng);
-}
-
-void ArticlePanel::SetupFocusContainer()
-{
-	m_pFocusContainer = new ArticleContainer(_T("Focus && Productivity"), this, wxID_ANY);
-
-}
-
-void ArticlePanel::SetupNutritionContainer()
-{
-	m_pNutritionContainer = new ArticleContainer(_T("Food & Nutrition"), this, wxID_ANY);
-
-}
 
 void ArticlePanel::SetupSizers()
 {
 	// Initialize the top sizer
-	m_pTopSizer = new wxFlexGridSizer(2, wxSize(5, 1));
+	m_pTopSizer = new wxBoxSizer(wxVERTICAL);
 	this->SetSizerAndFit(m_pTopSizer);
-
-	// Sizers that will be 'containers' for articles
-	m_pFitnessSizer = new wxStaticBoxSizer(wxVERTICAL, this, _T("Fitness"));
-	m_pFocusSizer = new wxStaticBoxSizer(wxVERTICAL, this, _T("Productivity && Focus")); // use double ampersands because wxwidgets treats a single one as an accelerator
-	m_pNutritionSizer = new wxStaticBoxSizer(wxVERTICAL, this, _T("Food && Nutrition"));
-
-	// add containers to sizers
-	m_pFitnessSizer->Add(m_pFitnessContainer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pFocusSizer->Add(m_pFocusContainer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pNutritionSizer->Add(m_pNutritionContainer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-
-
-	// add all sizers to the main sizer
-	m_pTopSizer->Add(m_pFitnessSizer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pFocusSizer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
-	m_pTopSizer->Add(m_pNutritionSizer, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
 }
+
