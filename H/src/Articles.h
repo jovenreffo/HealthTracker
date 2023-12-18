@@ -7,6 +7,7 @@
 #include <wx/listctrl.h>
 #include <wx/clipbrd.h>
 #include <wx/splitter.h>
+#include <wx/notebook.h>
 #include <utility>
 
 
@@ -77,25 +78,51 @@ public:
 	ArticleList* GetArticleList() { return m_pArticleList; }
 };
 
+// === ArticleNotebook ===
+
+class ArticleNotebook : public wxNotebook
+{
+private:
+	// Container lists
+	ArticleContainer* m_pFitnessContainer;
+	ArticleContainer* m_pFocusContainer;
+	ArticleContainer* m_pNutritionContainer;
+
+	// Sizers for different article sections
+	wxStaticBoxSizer* m_pFitnessSizer;
+	wxStaticBoxSizer* m_pFocusSizer; // productivity & focus
+	wxStaticBoxSizer* m_pNutritionSizer;
+
+	// Notebook members
+	wxImageList* m_pImageList;
+
+public:
+	ArticleNotebook(wxWindow* parent,
+		wxWindowID id,
+		const wxPoint& pos = wxDefaultPosition,
+		const wxSize& size = wxDefaultSize,
+		long style = 0L);
+
+	~ArticleNotebook();
+
+	// Setup
+	void Init();
+	void SetupControls();
+	void SetupPanels();
+	void SetupSizer();
+	void SetupNotebook();
+};
+
 // === ArticlePanel ===
 
 class ArticlePanel : public wxPanel
 {
 private:
-	// sizers for different article sections
-	wxFlexGridSizer* m_pTopSizer;
-	wxStaticBoxSizer* m_pFitnessSizer;
-	wxStaticBoxSizer* m_pFocusSizer; // productivity & focus
-	wxStaticBoxSizer* m_pNutritionSizer;
+	// sizers 
+	wxBoxSizer* m_pTopSizer;
 
-	// the static box from the sizers to be used as parents
-	ArticleContainer* m_pFitnessContainer;
-	ArticleContainer* m_pFocusContainer;
-	ArticleContainer* m_pNutritionContainer;
-
-	// Splitter windows
-	wxSplitterWindow* m_pSplitterMain;
-	wxSplitterWindow* m_pSplitter2;
+	// Article notebook
+	ArticleNotebook* m_pArticleNotebook;
 
 public:
 	ArticlePanel(wxWindow* parent,
@@ -108,15 +135,8 @@ public:
 	// setup
 	void SetupArticlePanel();
 
-	// setup for article containers
-	void SetupContainers();
-	void SetupFitnessContainer();
-	void SetupFocusContainer();
-	void SetupNutritionContainer();
-
 	// sizers & splitters
 	void SetupSizers();
-	void SetupSplitters();
 
 	// events
 
