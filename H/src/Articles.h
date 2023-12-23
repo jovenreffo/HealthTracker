@@ -95,6 +95,9 @@ private:
 
 	// Notebook members
 	wxImageList* m_pImageList;
+	wxBitmap m_fitnessBmp;
+	wxBitmap m_focusBmp;
+	wxBitmap m_nutritionBmp;
 
 public:
 	ArticleNotebook(wxWindow* parent,
