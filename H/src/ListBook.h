@@ -20,7 +20,7 @@ private:
 	ExerciseBook* m_pExerciseBook;
 	Settings* m_pSettings;
 	ClientPanel* m_pClientPanel;
-	ArticlePanel* m_pArticlePanel;
+	ArticleNotebook* m_pArticleBook;
 
 	wxImageList* m_pImageList;
 	wxBitmap m_journalBmp;

@@ -66,12 +66,12 @@ void Listbook::SetupTabs()
 	m_pExerciseBook = new ExerciseBook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pSettings = new Settings(m_pExerciseBook, m_pJournal, this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	m_pClientPanel = new ClientPanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	m_pArticlePanel = new ArticlePanel(this, wxID_ANY, wxDefaultPosition, wxDefaultSize);
+	m_pArticleBook = new ArticleNotebook(this, wxID_ANY);
 
 	// Add tabs to the list
 	this->AddPage(m_pJournal, _T("Journal"), true, 0);
 	this->AddPage(m_pExerciseBook, _T("Activity"), false, 1);
 	this->AddPage(m_pPlanning, _T("Planning"), false, 2);
-	this->AddPage(m_pArticlePanel, _T("Articles"), false, 3);
+	this->AddPage(m_pArticleBook, _T("Articles"), false, 3);
 	this->AddPage(m_pClientPanel, _T("Client List"), false, 4);
 }
