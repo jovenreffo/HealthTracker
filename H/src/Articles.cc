@@ -131,14 +131,17 @@ void ArticleNotebook::SetupNotebook()
 
 	m_fitnessBmp = wxBitmap(path_data::dataDir + _T("\\Images\\Articles\\run.png"), wxBITMAP_TYPE_PNG);
 	m_focusBmp = wxBitmap(path_data::dataDir + _T("\\Images\\Articles\\growth.png"), wxBITMAP_TYPE_PNG);
+	m_nutritionBmp = wxBitmap(path_data::dataDir + _T("\\Images\\nutrition.png"), wxBITMAP_TYPE_PNG);
 
 	m_pImageList->Add(m_fitnessBmp);
 	m_pImageList->Add(m_focusBmp);
+	m_pImageList->Add(m_nutritionBmp);
 	this->AssignImageList(m_pImageList);
 
 	// Add pages
 	this->AddPage(m_pFitnessContainer, _T("Health && Fitness"), true, 0);
 	this->AddPage(m_pFocusContainer, _T("Focus && Productivity"), false, 1);
+	this->AddPage(m_pNutritionContainer, _T("Food && Nutrition"), false, 2);
 }
 
 // ArticlePanel
