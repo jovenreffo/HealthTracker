@@ -79,6 +79,7 @@ ArticleContainer::~ArticleContainer()
 void ArticleContainer::InitializeList()
 {
 	m_pArticleList = new ArticleList(m_which, this, wxID_ANY);
+	
 }
 
 void ArticleContainer::SetupSizer()
@@ -103,26 +104,43 @@ ArticleNotebook::~ArticleNotebook()
 void ArticleNotebook::Init()
 {
 	this->SetupControls();
-	this->SetupPanels();
 	this->SetupSizer();
 	this->SetupNotebook();
 }
 
 void ArticleNotebook::SetupControls()
 {
-	m_pFitnessContainer = new ArticleContainer(_T("Health && Fitness"), this, wxID_ANY);
-	m_pFocusContainer = new ArticleContainer(_T("Focus && Productivity"), this, wxID_ANY);
-	m_pNutritionContainer = new ArticleContainer(_T("Food && Nutrition"), this, wxID_ANY);
+	// Parent panels
+	m_pFitnessContainer = new wxPanel(this, wxID_ANY);
+	m_pFocusContainer = new wxPanel(this, wxID_ANY);
+	m_pNutritionContainer = new wxPanel(this, wxID_ANY);
 	
-}
+	// Lists
+	m_pFitnessArtList = new ArticleList(_T("Health && Fitness"), m_pFitnessContainer, wxID_ANY);
+	m_pFocusArtList = new ArticleList(_T("Focus && Productivity"), m_pFocusContainer, wxID_ANY);
+	m_pNutritionArtList = new ArticleList(_T("Food && Nutrition"), m_pNutritionContainer, wxID_ANY);
 
-void ArticleNotebook::SetupPanels()
-{
 }
 
 void ArticleNotebook::SetupSizer()
 {
+	// Initialize
+	m_pFitnessSizer = new wxBoxSizer(wxVERTICAL);
+	m_pFocusSizer = new wxBoxSizer(wxVERTICAL);
+	m_pNutrSizer = new wxBoxSizer(wxVERTICAL);
+
+	// Set
+	m_pFitnessContainer->SetSizerAndFit(m_pFitnessSizer);
+	m_pFocusContainer->SetSizerAndFit(m_pFocusSizer);
+	m_pNutritionContainer->SetSizerAndFit(m_pNutrSizer);
+
+	// Add
+	m_pFitnessSizer->Add(m_pFitnessArtList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pFocusSizer->Add(m_pFocusArtList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+	m_pNutrSizer->Add(m_pNutritionArtList, wxSizerFlags().Proportion(1).Expand().Border(wxALL, 5));
+
 }
+
 
 void ArticleNotebook::SetupNotebook()
 {
