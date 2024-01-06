@@ -632,7 +632,7 @@ void DynamicPlan::Init()
 void DynamicPlan::SetupControls()
 {
 	// Top-level buttons
-	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
+	m_addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\Add_Circle.png"), wxBITMAP_TYPE_PNG);
 	m_spreadsheetBmp = wxBitmap(path_data::dataDir + _T("\\Images\\spreadsheet.png"), wxBITMAP_TYPE_PNG);
 
 	m_pAddExercise = new wxButton(this, wxID_ANY, _T("Add Exercise"), wxDefaultPosition, wxDefaultSize);
