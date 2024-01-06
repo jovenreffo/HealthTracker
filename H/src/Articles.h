@@ -83,15 +83,18 @@ public:
 class ArticleNotebook : public wxNotebook
 {
 private:
-	// Container lists
-	ArticleContainer* m_pFitnessContainer;
-	ArticleContainer* m_pFocusContainer;
-	ArticleContainer* m_pNutritionContainer;
-
-	// Sizers for different article sections
-	wxStaticBoxSizer* m_pFitnessSizer;
-	wxStaticBoxSizer* m_pFocusSizer; // productivity & focus
-	wxStaticBoxSizer* m_pNutritionSizer;
+	// Article panels
+	wxPanel* m_pFitnessContainer;
+	wxPanel* m_pFocusContainer;
+	wxPanel* m_pNutritionContainer;
+	// Article lists
+	ArticleList* m_pFitnessArtList;
+	ArticleList* m_pFocusArtList;
+	ArticleList* m_pNutritionArtList;
+	// Article sizers
+	wxBoxSizer* m_pFitnessSizer;
+	wxBoxSizer* m_pFocusSizer;
+	wxBoxSizer* m_pNutrSizer;;
 
 	// Notebook members
 	wxImageList* m_pImageList;
@@ -111,7 +114,6 @@ public:
 	// Setup
 	void Init();
 	void SetupControls();
-	void SetupPanels();
 	void SetupSizer();
 	void SetupNotebook();
 };
