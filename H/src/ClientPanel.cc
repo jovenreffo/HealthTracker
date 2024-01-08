@@ -494,7 +494,7 @@ void ClientPanel::SetupClientListPanel()
 void ClientPanel::SetupMemberControls()
 {
 	// Set up an add button with a '+' icon.
-	wxBitmap addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\add.png"), wxBITMAP_TYPE_PNG);
+	wxBitmap addBmp = wxBitmap(path_data::dataDir + _T("\\Images\\Add_Circle.png"), wxBITMAP_TYPE_PNG);
 	m_pAddClientBtn = new wxButton(this, wxID_ANY, _T("Add New Client"));
 	m_pAddClientBtn->SetBitmap(addBmp);
 
